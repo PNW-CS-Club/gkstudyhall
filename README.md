@@ -13,7 +13,7 @@ Recreating the simplified version of Gatekeeper found on https://gatekeeperonlin
 
 # How to Contribute
 
-View the issues available
+View the issues available at https://github.com/PNW-CS-Club/gkstudyhall/issues
 Assign Yourself to an Issue
 - Add a title
 - Add a description
@@ -23,7 +23,7 @@ Assign Yourself to an Issue
 - Select a milestone if available
 - Select the branch associated with the issue
 
-View the feature board in Projects
+View the feature board in Projects at https://github.com/orgs/PNW-CS-Club/projects/2
 - Add an item to Planning or Ready
 - Move an item from Planning to Ready, create an issue for the item, create a branch for the issue
 - Move an item from Ready to In Progress, create an issue for the item, then follow the steps for assigning yourself to an issue
