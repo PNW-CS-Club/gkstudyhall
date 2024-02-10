@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HandleOnclick : MonoBehaviour
 {
     public void StartGame() {
-        Debug.Log("start pressed");
+        // loads the main game scene asynchronously to prevent stutter
+        AsyncOperation _ = SceneManager.LoadSceneAsync("GkScene");
     }
 
     public void QuitGame() {
-        Debug.Log("quit pressed");
+        // stops the exe application
+        Application.Quit();
+
+        // stops the in-editor application
+        UnityEditor.EditorApplication.isPlaying = false; 
     }
 }
