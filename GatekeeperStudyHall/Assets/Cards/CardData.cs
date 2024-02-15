@@ -11,4 +11,14 @@ public class CardData : ScriptableObject
     public string[] actionNames = new string[4];
     public string[] actionDescriptions = new string[4];
     public Sprite art;
+
+    public override string ToString() {
+        string actionStr = "{ ";
+        for (int i = 0; i < 3; i++) {
+            actionStr += $"({i+1}) {actionNames[i]}: {actionDescriptions[i]}; ";
+        }
+        actionStr += $"(4) {actionNames[3]}: {actionDescriptions[3]} }}";
+
+        return $"CardData[name={name}, art={art}, actions={actionStr}]";
+    }
 }
