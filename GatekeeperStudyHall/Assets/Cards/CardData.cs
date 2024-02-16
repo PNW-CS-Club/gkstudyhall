@@ -2,23 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New CardData", menuName = "CardData")] 
 // makes a new entry in asset creation menu (in Project tab)
+[CreateAssetMenu(fileName = "New CardData", menuName = "CardData")] 
 public class CardData : ScriptableObject
 {
     // do not set these attributes anywhere other than the editor
+    [Header("Character Info")]
     public new string name;
-    public string[] actionNames = new string[4];
-    public string[] actionDescriptions = new string[4];
+    public string origin;
+    public string title;
+    public string element;
+
+    [Header("Traits")]
+    public string[] traitNames = new string[4];
+    public string[] traitDescriptions = new string[4];
+
+    [Header("Flavor Text")]
+    public string flavorText;
+    public Color flavorTextColor = Color.black;
+
+    [Header("Artwork and Colors")]
+    public Color outerColor = new Color(0.25f, 0.25f, 0.25f);
+    public Color detailColor = Color.gray;
+    public Color innerColor = Color.black;
     public Sprite art;
 
     public override string ToString() {
-        string actionStr = "{ ";
-        for (int i = 0; i < 3; i++) {
-            actionStr += $"({i+1}) {actionNames[i]}: {actionDescriptions[i]}; ";
-        }
-        actionStr += $"(4) {actionNames[3]}: {actionDescriptions[3]} }}";
-
-        return $"CardData[name={name}, art={art}, actions={actionStr}]";
+        return $"CardData[name=\"{name}\", origin=\"{origin}\", title=\"{title}\", element=\"{element}\", flavorText=\"{flavorText}\"]";
     }
 }

@@ -13,14 +13,22 @@ MonoBehaviour:
   m_Name: Sample Card
   m_EditorClassIdentifier: 
   name: Harold
-  actionNames:
+  origin: Planet H
+  title: Hobo of the Highest Order
+  element: Restoration
+  traitNames:
   - Healthy Harold
-  - Hale Harold
+  - Happy Harold
   - Helpful Harold
   - Harold of Doom
-  actionDescriptions:
-  - Gain 3 health
+  traitDescriptions:
+  - Gain 2 health
   - Roll again; gain half that in health
   - +2 to your and the next player's next attack
   - Halve each player's health; set yours to 1
+  flavorText: Hello hi
+  flavorTextColor: {r: 0, g: 0, b: 0, a: 1}
+  outerColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+  detailColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  innerColor: {r: 0, g: 0, b: 0, a: 1}
   art: {fileID: 21300000, guid: a016932765820a6408a6bf7a6693dc65, type: 3}
