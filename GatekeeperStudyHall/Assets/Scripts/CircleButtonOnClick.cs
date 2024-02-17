@@ -6,15 +6,16 @@ using UnityEngine.EventSystems;
 
 public class CircleButtonOnClick : MonoBehaviour, IPointerClickHandler
 {
+    public UnityEngine.Events.UnityEvent onClickEvent;
+
     private Image circleButton;
-    // Start is called before the first frame update
     void Start()
     {
         circleButton = GetComponent<Image>();
     }
 
     
-    public void OnPointerClick(PointerEventData eventData){
+    public void OnPointerClick(PointerEventData eventData) {
         //Get position of the click relative to the center of the button
         Vector2 localClickPosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(circleButton.rectTransform, eventData.position, eventData.pressEventCamera, out localClickPosition);
@@ -23,8 +24,8 @@ public class CircleButtonOnClick : MonoBehaviour, IPointerClickHandler
         float distance = localClickPosition.magnitude;
 
         //if the distance is within the radius of the button
-        if(distance <= circleButton.rectTransform.sizeDelta.x / 2f){
-            Debug.Log(Random.Range(1,7));
+        if (distance <= circleButton.rectTransform.sizeDelta.x / 2f) {
+            onClickEvent.Invoke();
         }
     }
 }
