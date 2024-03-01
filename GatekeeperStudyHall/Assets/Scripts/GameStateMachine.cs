@@ -26,4 +26,9 @@ public class GameStateMachine : MonoBehaviour
         State = newState;
         Debug.Log("The new state is " + newState.ToString());
     }
+    // use this wrapper function to call from an event defined
+    // in the editor because enums dont work for some reason
+    public void SetState(GameStateObject gso) {
+        SetState(gso.gameState);
+    }
 }
