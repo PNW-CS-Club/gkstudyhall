@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 
 [System.Serializable]
@@ -36,5 +37,21 @@ public class GameStateMachine : MonoBehaviour
     // in the editor because enums dont work for some reason
     public void SetState(GameStateObject gso) {
         SetState(gso.gameState);
+    }
+}
+
+
+[CustomEditor(typeof(GameStateMachine))]
+public class GameStateMachineEditor : Editor
+{
+    public override void OnInspectorGUI() {
+        DrawDefaultInspector();
+
+        // draws a label beneath the default inspector that shows the current state
+        GameStateMachine stateMachine = (GameStateMachine)target;
+        GUILayout.Label("Current State: " + stateMachine.State.ToString());
+
+        // lets it refresh during play mode
+        Repaint();
     }
 }
