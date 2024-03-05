@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76893895183749f4fbfa1b4389388a53, type: 3}
-  m_Name: ATTACKING_GATE
+  m_Name: Rolling Gate Effect
   m_EditorClassIdentifier: 
-  gameState: 2
+  gameState: 3

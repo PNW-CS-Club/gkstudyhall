@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 
 [System.Serializable]
 public enum GameState
 {
+    [InspectorName("Rolling Trait")]
     ROLLING_TRAIT = 0,
+    [InspectorName("Choosing Gate")]
     CHOOSING_GATE = 1,
+    [InspectorName("Attacking Gate")]
     ATTACKING_GATE = 2,
+    [InspectorName("Rolling Gate Effect")]
     ROLLING_GATE_EFFECT = 3,
+    [InspectorName("Battling")]
     BATTLING = 4,
 }
 

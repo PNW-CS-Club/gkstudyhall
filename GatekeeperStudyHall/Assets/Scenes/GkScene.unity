@@ -257,24 +257,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16192537}
   m_CullTransparentMesh: 1
---- !u!1 &119549834 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5596206140620195635, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+--- !u!114 &119549835 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9026015488554050047, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
   m_PrefabInstance: {fileID: 8942779742441322121}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &119549835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 119549834}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29a0e0efa681e954fa488e7e77f4b485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textBox: {fileID: 563131015}
 --- !u!1 &458223430
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,13 +1753,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 9026015488554050047, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+      propertyPath: textBox
+      value: 
+      objectReference: {fileID: 563131015}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5596206140620195635, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 119549835}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
