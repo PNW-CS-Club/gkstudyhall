@@ -31,3 +31,21 @@ View the feature board in Projects at https://github.com/orgs/PNW-CS-Club/projec
 When finished with a branch/issue
 - Create a pull request
 When 2 people have approved the request, pull the changes to main. Ensure that there are no merge conflicts before pulling
+
+# Game Loop
+Start Menu -> Character Select -> Gameplay -> End Menu -> Start Menu
+### Start Menu
+* Start Game
+* Close Game
+### Character Select
+* 1 Player Minimum
+* Can add up to 3 more Players, any Players that are not added are filled with Bots
+* Each Player chooses a Character, Bots will be randomly given a remaining Character
+### Gameplay
+* Perform Trait Roll
+  - If possible, select gate or player to attack
+* End Turn, switch to next player and restart Gameplay loop
+* If a win condition is met, go to End Menu
+### End Menu
+* Display which player won the game
+* Display some stats (Ex: damage to gates, damage to players)
