@@ -31,3 +31,5 @@ View the feature board in Projects at https://github.com/orgs/PNW-CS-Club/projec
 When finished with a branch/issue
 - Create a pull request
 When 2 people have approved the request, pull the changes to main. Ensure that there are no merge conflicts before pulling
+
+# Game Rules
