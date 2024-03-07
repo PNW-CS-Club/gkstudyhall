@@ -14,7 +14,7 @@ public enum Trait
 
 public class TraitHandler : MonoBehaviour
 {
-    public Trait myTrait = Trait.TRAIT_A;
+    public Trait myTrait = Trait.TRAIT_A; //temporary, for testing with function runner
 
     public void ActivateTraitBehavior() {
         switch (myTrait) {
