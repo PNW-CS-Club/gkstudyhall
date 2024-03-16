@@ -14,7 +14,9 @@ public class HandleOnclick : MonoBehaviour
         // stops the exe application
         Application.Quit();
 
-        // stops the in-editor application
-        UnityEditor.EditorApplication.isPlaying = false; 
+        #if UNITY_EDITOR
+            // stops the in-editor application
+            UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 }

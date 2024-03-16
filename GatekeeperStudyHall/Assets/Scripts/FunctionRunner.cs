@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class FunctionRunner : MonoBehaviour
 {
@@ -9,6 +12,7 @@ public class FunctionRunner : MonoBehaviour
 }
 
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(FunctionRunner))]
 public class FunctionRunnerEditor : Editor
 {
@@ -22,3 +26,4 @@ public class FunctionRunnerEditor : Editor
         }
     }
 }
+#endif
