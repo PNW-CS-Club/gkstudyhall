@@ -59,11 +59,6 @@ public class CardDisplay : MonoBehaviour
         RectTransform rectTransform = transform.GetComponent<RectTransform>();
         Rect rect = rectTransform.rect;
         rectTransform.sizeDelta = new Vector2(rect.width, rect.height - COLLAPSE_HEIGHT_DIFF);
-
-        rectTransform.Translate(0f, COLLAPSE_HEIGHT_DIFF / 2f, 0f); 
-        for (int i = 0; i < transform.childCount; i++) {
-            transform.GetChild(i).Translate(0f, -COLLAPSE_HEIGHT_DIFF / 2f, 0f);
-        }
     }
 
 
@@ -71,11 +66,6 @@ public class CardDisplay : MonoBehaviour
         RectTransform rectTransform = transform.GetComponent<RectTransform>();
         Rect rect = rectTransform.rect;
         rectTransform.sizeDelta = new Vector2(rect.width, rect.height + COLLAPSE_HEIGHT_DIFF);
-
-        rectTransform.Translate(0f, -COLLAPSE_HEIGHT_DIFF / 2f, 0f);
-        for (int i = 0; i < transform.childCount; i++) {
-            transform.GetChild(i).Translate(0f, COLLAPSE_HEIGHT_DIFF / 2f, 0f);
-        }
 
         transform.GetChild(2).gameObject.SetActive(true);
     }
