@@ -2824,6 +2824,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1263615590}
     m_Modifications:
+    - target: {fileID: 3679933117961865950, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: m_AspectRatio
+      value: 0.375
+      objectReference: {fileID: 0}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
