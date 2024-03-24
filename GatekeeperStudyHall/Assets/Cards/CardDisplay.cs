@@ -41,14 +41,15 @@ public class CardDisplay : MonoBehaviour
         if (cardData != null) {
             transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = cardData.name;
 
-            transform.GetChild(1).GetComponent<Image>().sprite = cardData.art;
+            transform.GetChild(1).GetComponent<Image>().color = cardData.outerColor;
+            transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = cardData.art;
 
             for (int i = 0; i < 4; i++) {
                 transform.GetChild(2).GetChild(i + 4).GetComponent<TMPro.TMP_Text>().text = cardData.traitNames[i];
                 transform.GetChild(2).GetChild(i + 8).GetComponent<TMPro.TMP_Text>().text = cardData.traitDescriptions[i];
             }
 
-            transform.GetComponent<Image>().color = cardData.outerColor;
+            transform.GetComponent<Image>().color = cardData.innerColor;
         }
     }
 
@@ -59,11 +60,6 @@ public class CardDisplay : MonoBehaviour
         RectTransform rectTransform = transform.GetComponent<RectTransform>();
         Rect rect = rectTransform.rect;
         rectTransform.sizeDelta = new Vector2(rect.width, rect.height - COLLAPSE_HEIGHT_DIFF);
-
-        rectTransform.Translate(0f, COLLAPSE_HEIGHT_DIFF / 2f, 0f); 
-        for (int i = 0; i < transform.childCount; i++) {
-            transform.GetChild(i).Translate(0f, -COLLAPSE_HEIGHT_DIFF / 2f, 0f);
-        }
     }
 
 
@@ -71,11 +67,6 @@ public class CardDisplay : MonoBehaviour
         RectTransform rectTransform = transform.GetComponent<RectTransform>();
         Rect rect = rectTransform.rect;
         rectTransform.sizeDelta = new Vector2(rect.width, rect.height + COLLAPSE_HEIGHT_DIFF);
-
-        rectTransform.Translate(0f, -COLLAPSE_HEIGHT_DIFF / 2f, 0f);
-        for (int i = 0; i < transform.childCount; i++) {
-            transform.GetChild(i).Translate(0f, COLLAPSE_HEIGHT_DIFF / 2f, 0f);
-        }
 
         transform.GetChild(2).gameObject.SetActive(true);
     }

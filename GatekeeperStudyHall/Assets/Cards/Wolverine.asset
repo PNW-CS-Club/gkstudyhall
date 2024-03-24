@@ -23,7 +23,7 @@ MonoBehaviour:
   - Woot
   traitDescriptions:
   - Deal 3 damage to target player
-  - -2 gate damage
+  - -2 to gate attack roll
   - Gain 1 health
   - Double gate abilities this turn
   flavorText: '"I''ll pop my claws and mangle your paws!"'
@@ -31,4 +31,4 @@ MonoBehaviour:
   outerColor: {r: 0.4156863, g: 0.56078434, b: 0.6862745, a: 1}
   detailColor: {r: 0.43921572, g: 0.3372549, b: 0.2784314, a: 1}
   innerColor: {r: 0.03529412, g: 0.29411766, b: 0.45882356, a: 1}
-  art: {fileID: 21300000, guid: b971b6d63e340ed46b52c6ab5c0f1bde, type: 3}
+  art: {fileID: 21300000, guid: fb4d99bbcb10f704188093613c31e8b5, type: 3}
