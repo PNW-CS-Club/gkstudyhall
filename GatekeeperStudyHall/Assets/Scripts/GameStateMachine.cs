@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 
 [System.Serializable]
@@ -41,6 +44,7 @@ public class GameStateMachine : MonoBehaviour
 }
 
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(GameStateMachine))]
 public class GameStateMachineEditor : Editor
 {
@@ -55,3 +59,4 @@ public class GameStateMachineEditor : Editor
         Repaint();
     }
 }
+#endif
