@@ -2,16 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class CardDisplay : MonoBehaviour
+public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public CardData cardData;
+    public bool highlightOnMouseOver = true;
 
     // if these are different, it means that the checkbox was toggled last frame
     public bool collapsed;
     bool wasCollapsed;
 
     const float COLLAPSE_HEIGHT_DIFF = 172f;
+    const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
+
+
+
+    // enter and exit functions turn the highlight on and off
+    public void OnPointerEnter(PointerEventData eventData) {
+        if (highlightOnMouseOver) {
+            transform.GetComponent<Image>().color = Color.Lerp(cardData.innerColor, Color.white, HIGHLIGHT_STRENGTH);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        transform.GetComponent<Image>().color = cardData.innerColor;
+    }
+
+
 
     void Start()
     {
@@ -37,6 +55,7 @@ public class CardDisplay : MonoBehaviour
     }
 
 
+
     private void UpdateDisplay() {
         if (cardData != null) {
             transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = cardData.name;
@@ -54,6 +73,7 @@ public class CardDisplay : MonoBehaviour
     }
 
 
+
     private void Collapse() {
         transform.GetChild(2).gameObject.SetActive(false);
 
@@ -61,7 +81,6 @@ public class CardDisplay : MonoBehaviour
         Rect rect = rectTransform.rect;
         rectTransform.sizeDelta = new Vector2(rect.width, rect.height - COLLAPSE_HEIGHT_DIFF);
     }
-
 
     private void Expand() {
         RectTransform rectTransform = transform.GetComponent<RectTransform>();

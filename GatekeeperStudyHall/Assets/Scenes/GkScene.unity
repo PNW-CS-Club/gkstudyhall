@@ -1927,6 +1927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardData: {fileID: 11400000, guid: 84214628ae6ad8642a86c72918382975, type: 2}
+  highlightOnMouseOver: 1
   collapsed: 0
 --- !u!4 &1165107789
 Transform:
