@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public CardData cardData;
-    public bool highlightOnMouseOver = true;
+    public bool canMagnify = true;
+
+    public CardMagnifier cardMagnifier;
 
     // if these are different, it means that the checkbox was toggled last frame
     public bool collapsed;
@@ -20,19 +22,41 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     // enter and exit functions turn the highlight on and off
     public void OnPointerEnter(PointerEventData eventData) {
-        if (highlightOnMouseOver) {
+        if (canMagnify && cardData != null) {
             transform.GetComponent<Image>().color = Color.Lerp(cardData.innerColor, Color.white, HIGHLIGHT_STRENGTH);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        transform.GetComponent<Image>().color = cardData.innerColor;
+        if (cardData != null) {
+            transform.GetComponent<Image>().color = cardData.innerColor;
+        }
+    }
+
+    // on click, magnify this card
+    public void OnPointerClick(PointerEventData eventData) {
+        if (canMagnify && cardData != null) {
+            cardMagnifier.Show(cardData);
+        }
+    }
+
+
+
+    // change which card this gameobject is displaying
+    public void ChangeCardData(CardData data) {
+        cardData = data;
+        UpdateDisplay();
     }
 
 
 
     void Start()
     {
+        cardMagnifier = (CardMagnifier) FindAnyObjectByType(typeof(CardMagnifier), FindObjectsInactive.Include);
+        if (cardMagnifier == null) {
+            Debug.LogError("Could not find a CardMagnifier in scene");
+        }
+
         // start expanded by default
         wasCollapsed = collapsed;
         if (collapsed) {
@@ -56,6 +80,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
 
 
+    // set the display's colors, text, and art to the values in the current CardData
     private void UpdateDisplay() {
         if (cardData != null) {
             transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = cardData.name;
