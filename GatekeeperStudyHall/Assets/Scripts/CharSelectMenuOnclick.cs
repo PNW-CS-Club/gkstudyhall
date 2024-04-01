@@ -5,15 +5,32 @@ using UnityEngine.SceneManagement;
 
 public class CharSelectMenuOnClick : MonoBehaviour
 {
-    // Start is called before the first frame update
     public void StartGame()
     {
         AsyncOperation _ = SceneManager.LoadSceneAsync("GkScene");
     }
-
-    // Update is called once per frame
     public void StartMenu()
     {
         AsyncOperation _ = SceneManager.LoadSceneAsync("StartScene");
+    }
+
+    public void AddPlayer()
+    {
+        //This function will be for the AddPlayerButton
+        //When the button is clicked, an instance of the Player class should be made and added to the list of players
+
+    }
+
+    public void AddBot()
+    {
+        //This function will be for the AddBotButton
+        //When the button is clicked, an instance of the Bot class should be made and added to the list of players
+    
+    }
+
+    public void RemovePlayer()
+    {
+        //This function will be for the RemovePLayerButton on both Bots and Players
+        //When the button is clicked, remove the Player/Bot from the list of players and make the card available again
     }
 }
