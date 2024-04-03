@@ -12,9 +12,9 @@ public class MainManager : MonoBehaviour
     // Note: static means that the values stored in this class will be shared by all the instances of this class
 
     // Variables we want to transfer between scenes
-    int turn = 0;
-    int numPlayers = 0;
-    List<PlayerInfo> playerList = new List<PlayerInfo>{};
+    public int Turn = 0; // The current turn is global because we may have a way to choose turn order in a menu prior to starting the game
+    public int NumPlayers = 0;
+    public List<PlayerInfo> PlayerList = new List<PlayerInfo>();
 
 
     // Awake() is called as soon as the object is created
@@ -38,8 +38,8 @@ public class MainManager : MonoBehaviour
         /*
         // If a player is dead, their turn will be skipped.
         do{
-            turn = (turn + 1) % numPlayers;
-        } while (playerList[turn].isdead);
+            Turn = (Turn + 1) % NumPlayers;
+        } while (PlayerList[Turn].isdead);
         */
     }
 

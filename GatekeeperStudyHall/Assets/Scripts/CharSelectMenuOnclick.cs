@@ -14,10 +14,12 @@ public class CharSelectMenuOnClick : MonoBehaviour
         AsyncOperation _ = SceneManager.LoadSceneAsync("StartScene");
     }
 
-    public void AddPlayer()
+    public void AddPlayer(PlayerInfo p)
     {
         //This function will be for the AddPlayerButton
-        //When the button is clicked, an instance of the Player class should be made and added to the list of players
+        //When the button is clicked, the player should be added to the list of players
+        MainManager.Instance.PlayerList.Add(p);
+        MainManager.Instance.NumPlayers += 1;
 
     }
 

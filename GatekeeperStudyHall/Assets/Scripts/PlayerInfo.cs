@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInfo : MonoBehaviour
+[CreateAssetMenu(fileName = "New Player", menuName = "Player")]
+public class PlayerInfo : ScriptableObject
 {
     /*
         Stores the following information:
