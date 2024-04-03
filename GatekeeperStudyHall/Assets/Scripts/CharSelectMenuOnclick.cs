@@ -33,9 +33,13 @@ public class CharSelectMenuOnClick : MonoBehaviour
     
     }
 
-    public void RemovePlayer()
+    public void RemovePlayer(PlayerInfo p)
     {
         //This function will be for the RemovePLayerButton on both Bots and Players
         //When the button is clicked, remove the Player/Bot from the list of players and make the card available again
+        if(MainManager.Instance != null && MainManager.Instance.PlayerList.Contains(p)){
+            MainManager.Instance.PlayerList.Remove(p);
+            MainManager.Instance.NumPlayers -= 1;
+        }
     }
 }
