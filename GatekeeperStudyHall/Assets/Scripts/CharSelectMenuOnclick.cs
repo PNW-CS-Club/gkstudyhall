@@ -18,8 +18,11 @@ public class CharSelectMenuOnClick : MonoBehaviour
     {
         //This function will be for the AddPlayerButton
         //When the button is clicked, the player should be added to the list of players
-        MainManager.Instance.PlayerList.Add(p);
-        MainManager.Instance.NumPlayers += 1;
+        if(MainManager.Instance != null && !MainManager.Instance.PlayerList.Contains(p)){
+            MainManager.Instance.PlayerList.Add(p);
+            MainManager.Instance.NumPlayers += 1;
+        }
+        
 
     }
 
