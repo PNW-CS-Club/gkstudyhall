@@ -58,7 +58,7 @@ public class Gate {
 
     // this shouldn't be used to deal damage, but may be used
     // in "meta" situations, if any ever arise
-    public int Health() { get; set; } = this.Gate.MAX_HEALTH;
+    public int Health { get; set; } = Gate.MAX_HEALTH;
 
     // called when the gate takes damage
     // calls its own onBreak action and resets its health
@@ -69,8 +69,7 @@ public class Gate {
         health -= damage;
 
         if ( health <= 0 ) {
-            //this.onBreak( ply );
-            this.SetHealth( Gate.MAX_HEALTH );
+            
             return true;
         }
 
