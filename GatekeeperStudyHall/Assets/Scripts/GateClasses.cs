@@ -39,16 +39,7 @@ public class Gate {
         }, even: delegate( Gate gate, PlayerInfo ply ) {} )
     };
 
-    public static List< Action< Gate, PlayerInfo > > GateBreak = new List< Action< Gate, PlayerInfo > > {
-        // 0 = BLACK
-        delegate( Gate gate, PlayerInfo ply ) {},
-        // 1 = GREEN
-        delegate( Gate gate, PlayerInfo ply ) {},
-        // 2 = RED
-        delegate( Gate gate, PlayerInfo ply ) {},
-        // 3 = BLUE
-        delegate( Gate gate, PlayerInfo ply ) {},
-    };
+ 
 
     // store gate color here.  use GateColor.BLACK etc
     public readonly GateColor gateColor;
@@ -67,14 +58,7 @@ public class Gate {
 
     // this shouldn't be used to deal damage, but may be used
     // in "meta" situations, if any ever arise
-    public void SetHealth( int health ) {
-        this.health = health;
-    }
-
-    // self-explanatory
-    public int GetHealth() {
-        return this.health;
-    }
+    public int Health() { get; set; } = this.Gate.MAX_HEALTH;
 
     // called when the gate takes damage
     // calls its own onBreak action and resets its health
@@ -85,7 +69,7 @@ public class Gate {
         health -= damage;
 
         if ( health <= 0 ) {
-            this.onBreak( ply );
+            //this.onBreak( ply );
             this.SetHealth( Gate.MAX_HEALTH );
             return true;
         }
