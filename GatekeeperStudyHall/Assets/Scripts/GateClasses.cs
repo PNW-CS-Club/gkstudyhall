@@ -2,78 +2,82 @@ using System;
 using System.Collections.Generic;
 
 public enum GateColor {
-    BLACK, GREEN, RED, BLUE
+    BLACK = 0, GREEN = 1, RED = 2, BLUE = 3
 }
 
+
 public class Gate {
-    // magic numbers are evil!
-    public static int MAX_HEALTH = 6;
+    
+    public const int MAX_HEALTH = 6; // magic numbers are evil!
 
-    // warning:  this is gross!
-    // call these like Gate.GateRoll[ gateInstance.gateColor ].odd( playerInstance )
-    public static List< ( Action < Gate, PlayerInfo > odd, Action< Gate, PlayerInfo > even ) > GateRoll = new List< ( Action < Gate, PlayerInfo > odd, Action< Gate, PlayerInfo > even ) > {
-        // 0 = BLACK
-        ( odd: delegate( Gate gate, PlayerInfo ply ) {
-            ply.AttackGate( gate, 4 );
-        }, even: delegate( Gate gate, PlayerInfo ply ) {
-            ply.TakeDamage( 4 );
-        } ),
-
-        // 1 = GREEN
-        ( odd: delegate( Gate gate, PlayerInfo ply ) {
-            ply.AddHealth( 3 );
-        }, even: delegate( Gate gate, PlayerInfo ply ) {
-            // NOTIMPL: Center gate gains 3 HP
-        } ),
-
-        // 2 = RED
-        ( odd: delegate( Gate gate, PlayerInfo ply ) {
-            ply.doubleDamageToCenter = true;
-        }, even: delegate( Gate gate, PlayerInfo ply ) {
-            ply.doubleDamageToSelf = true;
-        } ),
-
-        // 3 = BLUE
-        ( odd: delegate( Gate gate, PlayerInfo ply ) {
-            ply.GiveShield();
-        }, even: delegate( Gate gate, PlayerInfo ply ) {} )
-    };
-
- 
-
-    // store gate color here.  use GateColor.BLACK etc
     public readonly GateColor gateColor;
 
-    // store actions for rolls and when it breaks
-    // ngl i don't know when these are called but combining the image
-    // of the game board and the issue description resulted in this
-    private readonly Action< PlayerInfo > onBreak;
+    private int health = MAX_HEALTH;
 
-    private int health = Gate.MAX_HEALTH;
+    // this shouldn't be used to deal damage, but we will need to access health 
+    // in order to display the gate health
+    public int Health {
+        get { return health; }
+        set { health = value; }
+    }
 
-    // ctor, for now just set the color
+
     public Gate( GateColor gateColor ) {
         this.gateColor = gateColor;
     }
 
-    // this shouldn't be used to deal damage, but may be used
-    // in "meta" situations, if any ever arise
-    public int Health { get; set; } = Gate.MAX_HEALTH;
 
-    // called when the gate takes damage
-    // calls its own onBreak action and resets its health
-    // as far as i know, that's all that needs to happen
-    // returns whether or not the gate was destroyed this damage,
-    // maybe for use later
-    public bool TakeDamage( PlayerInfo ply, int damage ) {
+    // returns whether or not the gate was destroyed by this damage
+    public bool TakeDamage(PlayerInfo player, int damage) {
         health -= damage;
 
-        if ( health <= 0 ) {
-            
+        if (health <= 0) {
             return true;
         }
 
         return false;
+
+        // TODO: wait for player to roll again, then break gate 
+        // we can do that outside of this function
+    }
+
+
+    // this should be called after this gate has been broken
+    // and a player has rolled even or odd
+    public void DoBreakEffect(PlayerInfo player, int roll) {
+        if (roll % 2 != 0) {
+            // odd roll, positive effect
+            switch (gateColor) {
+                case GateColor.BLACK:
+                    /* TODO: damage center gate by 4 */ break;
+
+                case GateColor.GREEN:
+                    player.AddHealth(3); break;
+
+                case GateColor.RED:
+                    player.doubleDamageToCenter = true; break;
+
+                case GateColor.BLUE:
+                    player.GiveShield(); break;
+            }
+        }
+
+        else {
+            // even roll, negative effect
+            switch (gateColor) {
+                case GateColor.BLACK:
+                    player.TakeDamage(4); break;
+
+                case GateColor.GREEN:
+                    /* TODO: center gate gains 3 hp */ break;
+
+                case GateColor.RED:
+                    player.doubleDamageToSelf = true; break;
+
+                case GateColor.BLUE:
+                    /* TODO: center gate gets sheild */ break;
+            }
+        }
     }
 
 }
