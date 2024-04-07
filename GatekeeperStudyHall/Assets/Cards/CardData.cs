@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // makes a new entry in asset creation menu (in Project tab)
-[CreateAssetMenu(fileName = "New CardData", menuName = "CardData")] 
+[CreateAssetMenu(fileName = "New CardData", menuName = "Scriptable Objects/CardData")] 
 public class CardData : ScriptableObject
 {
     // do not set these attributes anywhere other than the editor

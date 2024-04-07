@@ -2,20 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Player", menuName = "Player")]
+[CreateAssetMenu(fileName = "New Player", menuName = "Scriptable Objects/PlayerInfo")]
 public class PlayerInfo : ScriptableObject
 {
-    /*
-        Stores the following information:
-
-        Player Card
-        Health - Initialize to 10 HP
-        Stockades - 0 (Player takes no damage when stockade >= 1)
-
-        Maybe TurnOrder / Player Number (Could be handled elsewhere)
-    */
-
-    // public CardData PlayerCard { get; set; }
-    public int Health { get; set; } = 10;
-    public int Stockades { get; set; } = 0;
+    // These are regular fields so that we can inspect them in the editor.
+    // Using a boolean for the stockade because it doesn't seem like we'll use the multiple stockade rule.
+    public CardData card;
+    public int health = 10;
+    public bool hasStockade = false;
 }
