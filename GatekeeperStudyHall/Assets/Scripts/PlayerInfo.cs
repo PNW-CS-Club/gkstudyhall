@@ -15,7 +15,7 @@ public class PlayerInfo : ScriptableObject
         Maybe TurnOrder / Player Number (Could be handled elsewhere)
     */
 
-    // public Card? PlayerCard { get; private set; } // to be implemented
-    public int Health { get; private set; } = 10;
-    public int Stockades { get; private set; } = 0;
+    // public CardData PlayerCard { get; set; }
+    public int Health { get; set; } = 10;
+    public int Stockades { get; set; } = 0;
 }
