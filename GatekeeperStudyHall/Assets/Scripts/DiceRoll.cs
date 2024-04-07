@@ -55,9 +55,6 @@ public class DiceRoll : MonoBehaviour
             Debug.LogError($"There should be 6 sprites in DiceRoll array (actual: {sprites.Length})");
         }
 
-        // temporary debug message
-        endEvent.AddListener(x => Debug.Log($"You rolled a {roll}."));
-
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponentInChildren<Rigidbody2D>();
         barrier.SetActive(false);
