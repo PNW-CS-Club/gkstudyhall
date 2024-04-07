@@ -12,32 +12,39 @@ public class DiceRoll : MonoBehaviour
     bool isHeld = false;
     bool isSliding = false;
 
-    // angular velocities the dice is set to while held
-    [SerializeField] float maxAngularVel = 720f;
-    [SerializeField] float minAngularVel = 360f;
 
-    [SerializeField] Sprite[] sprites; // the 6 dice faces
-
-    SpriteRenderer spriteRenderer;
-    Rigidbody2D rb;
-
-    float shakeTimer = 0f;
+    [Header("Shaking")]
     [SerializeField, Range(0f, 1f)] float shakeInterval = 0.1f;
+    float shakeTimer = 0f;
+
+    // angular velocities the dice is set to while held
+    [SerializeField] float maxAngularVel = 1440f;
+    [SerializeField] float minAngularVel = 900f;
+
+    [SerializeField] float shakeSpeed = 3f;
+    [SerializeField] float shakeRadius = 0.25f;
+
+
+    [Header("Sliding")]
+    [SerializeField] float releaseMultiplier = 12f;
+    [SerializeField, Range(0, 0.1f)] float frictionFactor = 0.002f;
 
     float slideTimer = 0f;
-    [SerializeField, Range(0f, 2f)] float slideDuration = 0.75f;
+    [SerializeField, Range(0f, 1.5f)] float slideDuration = 0.75f;
 
-    [SerializeField, Range(0, 0.2f)] float frictionFactor = 0.03f;
 
-    [SerializeField] float shakeSpeed = 10f;
-    [SerializeField] float shakeRadius = 1f;
-    [SerializeField] float releaseMultiplier = 5f;
-
+    [Header("Boundaries")]
     // the dice is restricted between these while sliding
     [SerializeField] Vector2 topLeftBound;
     [SerializeField] Vector2 bottomRightBound;
 
     [SerializeField] GameObject barrier;
+    SpriteRenderer spriteRenderer;
+    Rigidbody2D rb;
+
+    [Space]
+    [SerializeField] Sprite[] sprites; // the 6 dice faces
+
 
     int roll = -1;
     public UnityEvent<int> endEvent; // functions to be called after the dice is done rolling
