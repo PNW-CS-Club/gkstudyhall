@@ -5,17 +5,25 @@ using System;
 
 namespace EnumExtension
 {
+    
     // Define an extension method in a non-nested static class.
     public static class Extensions
     {
-        public static void changeHealth(Player p, int amount) //are we allowed to use a Player object as a parameter? 
+        //The getters and setters in player and gate IDK how to call properly can be changed 
+
+        public static void changeHealth(PlayerInfo p, int amount) 
         {
-            // We should have a player method where they can change their health
-            //We use that method and change it according to the parameter amount.
+            p.setHealth(p.getHealth()-amount);
         }
-        public static void changeGateHealth(Gate g, int amount)
+        public static void changeGateHealth(GateClasses g, int amount)
         {
-            //Pretty similar to player. I assume we are going to have gate objects.
+            boolean dead = g.TakeDamage(player,amount);
+            if(dead == true){
+                g.setHealth(0);
+            }
+            else{
+                g.setHealth(g.getHealth()-amount);
+            }
 
         }
     }
@@ -36,11 +44,14 @@ namespace EnumExtension
         allMinus1HP = 10,
         chooseGateForOp = 11,
     }
-
+    
     public class TraitHandler : MonoBehaviour
     {
-        //This would have to be the trait of the players card which we will need to know
-        public Trait myTrait = Trait.deal3Dam;
+        private PlayerInfo player = new PlayerInfo();//tester player.
+        private Gate pGate = new Gate("BLACK");//tester gateclass.
+
+       public Trait myTrait = Trait.deal3Dam; //This would have to be the trait of the players card which we will need to know
+
         public void ActivateTraitBehavior()
         {
             switch (myTrait)
@@ -55,34 +66,39 @@ namespace EnumExtension
                      * wants to be dealt the damage.I dont know how hard that would be to code
                      * 
                      */
-                    Extensions.changeHealth(3);
+                    myTrait.changeHealth(player,3);//Need the array of players to access it.
                     Debug.Log("Trait A");
                     break;
+
                 case Trait.minus2gate:
                     //Selcted gates health -2
 
                     //Gate.changeHealth(-2)????
+                    myTrait.changeGateHealth(gate,-2)
                     Debug.Log("Trait B");
                     break;
                 case Trait.plus1Health:
                     //Change current players health
-                    Extensions.changeHealth(1);//This would be how one of the extension methods could be used
+                    myTrait.changeHealth(gate,1);//This would be how one of the extension methods could be used
                     Debug.Log("Trait C");
                     break;
                 case Trait.doubleGateAbil:
                     //I dont really know what to do here tbh;
+
                     break;
                 case Trait.deal2Dam:
-                    Extensions.changeHealth(2);
+                    myTrait.changeHealth(gate,2);//Need parameter.
                     break;
                 case Trait.reduceGateDamage:
-                    Extensions.changeGateHealth(-2); //For this we are gonna have to keep track of what the number is that they rolled and then just do minus 2 to it;
+                    myTrait.changeGateHealth(gate,-2); //For this we are gonna have to keep track of what the number is that they rolled and then just do minus 2 to it;
                                                      //Also have to check for the abilities of that gate.
                     break;
                 case Trait.noDamageTurn:
-                    Extensions.changeHealth(0);
+                    myTrait.changeHealth(player,0);
                     break;
                 case Trait.swapGateHP();
+                
+
                     break;
                 default:
                     //I don't think we would ever reach this statement.
