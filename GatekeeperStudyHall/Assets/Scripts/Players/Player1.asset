@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a42957912d8c19b47bc77e73fb084e8b, type: 3}
-  m_Name: Player2
+  m_Name: Player1
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 97a8a00ea8b7f804fbde4b2c248af807, type: 2}
+  card: {fileID: 11400000, guid: 8d206240aaf07a64c83811e8091fd269, type: 2}
   health: 10
   hasStockade: 0

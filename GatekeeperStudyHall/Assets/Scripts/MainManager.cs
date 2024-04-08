@@ -13,8 +13,9 @@ public class MainManager : MonoBehaviour
 
     // Variables we want to transfer between scenes
     public int Turn = 0; // The current turn is global because we may have a way to choose turn order in a menu prior to starting the game
-    public int NumPlayers = 0;
+    public int NumPlayers = 1;
     public List<PlayerInfo> PlayerList = new List<PlayerInfo>();
+    
 
 
     // Awake() is called as soon as the object is created
@@ -29,6 +30,7 @@ public class MainManager : MonoBehaviour
 
         Instance = this; // We can now call MainManager.Instance from any other script
         DontDestroyOnLoad(gameObject); // The MainManager GameObject attached to this script will not be destroyed when the scene changes
+        //PlayerList.Add(CreateInstance(Player1));
     }
 
 
