@@ -2,23 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInfo : MonoBehaviour
+[CreateAssetMenu(fileName = "New Player", menuName = "Scriptable Objects/PlayerInfo")]
+public class PlayerInfo : ScriptableObject
 {
+    // These are regular fields so that we can inspect them in the editor.
+    // Using a boolean for the stockade because it doesn't seem like we'll use the multiple stockade rule.
+    public CardData card;
+    public int health = 10;
+    public bool hasStockade = false;
     static int MAX_HEALTH = 10;
 
-    /*
-        Stores the following information:
-
-        Player Card
-        Health - Initialize to 10 HP
-        Stockades - 0 (Player takes no damage when stockade >= 1)
-
-        Maybe TurnOrder / Player Number (Could be handled elsewhere)
-    */
-
-    // public Card? PlayerCard { get; private set; } // to be implemented
-    public int Health { get; private set; } = PlayerInfo.MAX_HEALTH;
-    public int Stockades { get; private set; } = 0;
+  
 
     // not final
     // discuss:  could use a bitfield depending on how many vars we'll need
@@ -36,20 +30,22 @@ public class PlayerInfo : MonoBehaviour
 
     // TODO: STUB
     public void TakeDamage( int damage ) {
-        this.Health -= damage;
+        health -= damage;
         if ( this.Health <= 0 ) {
             // die func or something else
         }
     }
 
     // TODO: STUB
-    public void AddHealth( int health ) {
-        this.Health += health;
+    public void AddHealth( int inc ) {
+        health += inc;
         // clamp?
     }
 
     // TODO: STUB
     public void GiveShield() {
-        Stockades++;
+        hasStockade = true;
     }
+    
+   
 }

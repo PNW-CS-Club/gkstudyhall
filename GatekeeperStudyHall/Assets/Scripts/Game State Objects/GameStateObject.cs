@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // allows us to create GameStateObjects in the Project tab's create menu
-[CreateAssetMenu(fileName = "New GameStateObject", menuName = "GameStateObject")]
+[CreateAssetMenu(fileName = "New GameStateObject", menuName = "Scriptable Objects/GameStateObject")]
 /*
 This scriptable object is meant to just hold an enum so that 
 we can pass enums into event functions indirectly by passing 

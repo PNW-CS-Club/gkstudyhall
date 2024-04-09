@@ -7,7 +7,7 @@ public class HandleOnclick : MonoBehaviour
 {
     public void StartGame() {
         // loads the main game scene asynchronously to prevent stutter
-        AsyncOperation _ = SceneManager.LoadSceneAsync("GkScene");
+        AsyncOperation _ = SceneManager.LoadSceneAsync("CharSelectScene");
     }
 
     public void QuitGame() {
