@@ -1191,9 +1191,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 718441245}
-  - component: {fileID: 718441247}
-  - component: {fileID: 718441249}
-  - component: {fileID: 718441248}
   - component: {fileID: 718441246}
   m_Layer: 5
   m_Name: Card Queue Object
@@ -1219,7 +1216,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 30, y: -30}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &718441246
 MonoBehaviour:
@@ -1236,91 +1233,10 @@ MonoBehaviour:
   cardPrefab: {fileID: 5016061653640422755, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
   margin: 20
   playerList:
-  - {fileID: 11400000, guid: a4a7487d84203b04782561eff28cd666, type: 2}
-  - {fileID: 11400000, guid: a4a7487d84203b04782561eff28cd666, type: 2}
-  - {fileID: 11400000, guid: 65edbcc0e74374944bc5945ca2ab76bf, type: 2}
-  - {fileID: 11400000, guid: a4a7487d84203b04782561eff28cd666, type: 2}
---- !u!114 &718441247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 718441244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cec698bae7895fa4a873fedd488b252e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  events:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 718441246}
-        m_TargetAssemblyTypeName: CardQueue, Assembly-CSharp
-        m_MethodName: ChangeExpandedPlayer
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &718441248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 718441244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cec698bae7895fa4a873fedd488b252e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  events:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 718441246}
-        m_TargetAssemblyTypeName: CardQueue, Assembly-CSharp
-        m_MethodName: Remove
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: a4a7487d84203b04782561eff28cd666, type: 2}
-          m_ObjectArgumentAssemblyTypeName: PlayerInfo, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &718441249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 718441244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cec698bae7895fa4a873fedd488b252e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  events:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 718441246}
-        m_TargetAssemblyTypeName: CardQueue, Assembly-CSharp
-        m_MethodName: Add
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 65edbcc0e74374944bc5945ca2ab76bf, type: 2}
-          m_ObjectArgumentAssemblyTypeName: PlayerInfo, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
+  - {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
+  - {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
+  - {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
 --- !u!1 &882318604
 GameObject:
   m_ObjectHideFlags: 0

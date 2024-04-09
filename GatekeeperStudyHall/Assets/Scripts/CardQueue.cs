@@ -73,9 +73,14 @@ public class CardQueue : MonoBehaviour
         GameObject cardToDestroy = cards[index];
         cards.RemoveAt(index);
         Destroy(cardToDestroy);
-        UnityEditor.EditorUtility.SetDirty(gameObject);
+        EditorUtility.SetDirty(gameObject);
 
         if (playerList.Count == 0) { return; } // no more cards left to display
+
+        if (expandedIndex > index) 
+        {
+            expandedIndex--;
+        }
 
         expandedIndex %= playerList.Count;
 
@@ -111,6 +116,17 @@ public class CardQueue : MonoBehaviour
             }
         }
     }
+
+
+#if UNITY_EDITOR
+    void OnDrawGizmos() {
+        float gizmoRadius = 0.25f;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, gizmoRadius);
+        Handles.Label(transform.position + gizmoRadius * Vector3.right, "Card Queue");
+    }
+#endif
 }
 
 
@@ -119,11 +135,53 @@ public class CardQueue : MonoBehaviour
 [CustomEditor(typeof(CardQueue))]
 public class CardQueueEditor : Editor
 {
+    PlayerInfo playerInfo = null;
+    int index = 0;
+
     public override void OnInspectorGUI() {
         // idk why but this fixes the cognitohazard bug
         // https://forum.unity.com/threads/nullreferenceexception-serializedobject-of-serializedproperty-has-been-disposed.1443694/#post-9673649
         this.serializedObject.ApplyModifiedProperties();
         base.OnInspectorGUI();
+
+
+        CardQueue cq = (CardQueue) this.target;
+
+        if (Application.isPlaying) 
+        {
+            EditorGUILayout.LabelField("(Do not manually change playerList in play mode)");
+
+            EditorGUILayout.BeginHorizontal();
+
+            playerInfo = (PlayerInfo)EditorGUILayout.ObjectField(playerInfo, typeof(PlayerInfo), false);
+
+            if (GUILayout.Button("Add")) 
+            {
+                cq.Add(playerInfo);
+            }
+
+            if (GUILayout.Button("Remove")) 
+            {
+                cq.Remove(playerInfo);
+            }
+
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+
+            index = EditorGUILayout.IntField(index);
+
+            if (GUILayout.Button("Change Expanded Player")) 
+            {
+                cq.ChangeExpandedPlayer(index);
+            }
+
+            EditorGUILayout.EndHorizontal();
+        }
+        else 
+        {
+            EditorGUILayout.LabelField("(Custom controls appear here in play mode)");
+        }
     }
 }
 #endif
