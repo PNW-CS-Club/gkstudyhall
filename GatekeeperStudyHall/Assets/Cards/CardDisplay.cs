@@ -15,7 +15,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public bool collapsed;
     bool wasCollapsed;
 
-    const float COLLAPSE_HEIGHT_DIFF = 172f;
+    public const float COLLAPSE_HEIGHT_DIFF = 172f;
     const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
 
 
