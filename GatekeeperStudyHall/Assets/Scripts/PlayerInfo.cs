@@ -31,7 +31,7 @@ public class PlayerInfo : ScriptableObject
     // TODO: STUB
     public void TakeDamage( int damage ) {
         health -= damage;
-        if ( this.Health <= 0 ) {
+        if ( health <= 0 ) {
             // die func or something else
         }
     }
