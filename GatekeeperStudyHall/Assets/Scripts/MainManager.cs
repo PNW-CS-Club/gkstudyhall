@@ -30,7 +30,6 @@ public class MainManager : MonoBehaviour
 
         Instance = this; // We can now call MainManager.Instance from any other script
         DontDestroyOnLoad(gameObject); // The MainManager GameObject attached to this script will not be destroyed when the scene changes
-        //PlayerList.Add(CreateInstance(Player1));
     }
 
 
