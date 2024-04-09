@@ -11,13 +11,13 @@ public class CardQueue : MonoBehaviour
     [SerializeField] GameObject cardPrefab;
     [SerializeField, Min(0)] float margin = 20f;
     [SerializeField] List<PlayerInfo> playerList; // WARNING: Cognitohazard (looking directly at this list in the inspector may cause errors)
-    List<GameObject> cards;
+    List<GameObject> cards; // instances of cardPrefab
 
-    float expandedHeight;
-    float collapsedHeight;
-    Vector3 startingOffset;
+    float expandedHeight; // the height of an expanded card
+    float collapsedHeight; // the height of a collapsed card
+    Vector3 startingOffset; // the offset of the first card in the queue
 
-    int expandedIndex = 0;
+    int expandedIndex = 0; // determines which card is expanded (RepositionCards relies on this value)
 
     void Start()
     {
@@ -25,10 +25,12 @@ public class CardQueue : MonoBehaviour
 
         Vector2 expandedSize = cardPrefab.GetComponent<RectTransform>().sizeDelta;
 
+        // precalculate some values so we can use them in RepositionCards
         expandedHeight = expandedSize.y;
         collapsedHeight = expandedHeight - CardDisplay.COLLAPSE_HEIGHT_DIFF;
         startingOffset = new Vector3(expandedSize.x / 2f, -expandedSize.y / 2f, 0f);
 
+        // create all of the cards we will start with
         for (int i = 0; i < playerList.Count; i++) 
         {
             GameObject newCard = Instantiate(cardPrefab, transform);
@@ -69,19 +71,19 @@ public class CardQueue : MonoBehaviour
 
         if (index == -1) { return; } // player is not in playerList
 
+        // we have to be careful about the order we do these in
         playerList.RemoveAt(index);
         GameObject cardToDestroy = cards[index];
         cards.RemoveAt(index);
         Destroy(cardToDestroy);
-        EditorUtility.SetDirty(gameObject);
 
         if (playerList.Count == 0) { return; } // no more cards left to display
 
+        // fix expandedIndex after removal
         if (expandedIndex > index) 
         {
             expandedIndex--;
         }
-
         expandedIndex %= playerList.Count;
 
         RepositionCards();
@@ -90,6 +92,9 @@ public class CardQueue : MonoBehaviour
 
     private void RepositionCards() 
     {
+        // the real meat & potatoes of the card queue
+        // NOTE: relies on expandedIndex to determine which card should be expanded
+
         Vector3 offset = startingOffset;
 
         for (int i = 0; i < playerList.Count; i++) 
@@ -122,6 +127,7 @@ public class CardQueue : MonoBehaviour
     void OnDrawGizmos() {
         float gizmoRadius = 0.25f;
 
+        // this shows the position of the object as green sphere gizmo in the scene
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(transform.position, gizmoRadius);
         Handles.Label(transform.position + gizmoRadius * Vector3.right, "Card Queue");
@@ -135,11 +141,13 @@ public class CardQueue : MonoBehaviour
 [CustomEditor(typeof(CardQueue))]
 public class CardQueueEditor : Editor
 {
+    // these are for keeping track of state in the immediate mode gui
+    // (i.e. our custom editor fields don't store variables so we have to do it ourselves)
     PlayerInfo playerInfo = null;
     int index = 0;
 
     public override void OnInspectorGUI() {
-        // idk why but this fixes the cognitohazard bug
+        // idk why but this fixes the playerList cognitohazard bug
         // https://forum.unity.com/threads/nullreferenceexception-serializedobject-of-serializedproperty-has-been-disposed.1443694/#post-9673649
         this.serializedObject.ApplyModifiedProperties();
         base.OnInspectorGUI();
@@ -147,10 +155,12 @@ public class CardQueueEditor : Editor
 
         CardQueue cq = (CardQueue) this.target;
 
+        // some helpful controls that let us call CardQueue's methods in the editor while in play mode
         if (Application.isPlaying) 
         {
             EditorGUILayout.LabelField("(Do not manually change playerList in play mode)");
 
+            // this section lets the user call Add and Remove
             EditorGUILayout.BeginHorizontal();
 
             playerInfo = (PlayerInfo)EditorGUILayout.ObjectField(playerInfo, typeof(PlayerInfo), false);
@@ -167,6 +177,7 @@ public class CardQueueEditor : Editor
 
             EditorGUILayout.EndHorizontal();
 
+            // this section lets the user call ChangeExpandedPlayer
             EditorGUILayout.BeginHorizontal();
 
             index = EditorGUILayout.IntField(index);
