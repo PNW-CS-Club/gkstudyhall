@@ -23,7 +23,7 @@ public enum Trait
     
 public class TraitHandler : MonoBehaviour
 {
-    private PlayerInfo player = new PlayerInfo(); //tester player.
+    
     //private Gate pGate = new Gate("BLACK"); //tester gate.
 
     public Trait myTrait = Trait.deal3Dam; //This would have to be the trait of the players card which we will need to know
@@ -45,7 +45,7 @@ public class TraitHandler : MonoBehaviour
     }*/
 
 
-    public void ActivateTraitBehavior()
+    public void ActivateTraitBehavior(PlayerInfo player, int roll)
     {
         switch (myTrait)
         {
