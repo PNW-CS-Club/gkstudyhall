@@ -5,10 +5,9 @@ public enum GateColor {
     BLACK = 0, GREEN = 1, RED = 2, BLUE = 3
 }
 
-
 public class Gate {
     
-    public const int MAX_HEALTH = 6; // magic numbers are evil!
+    static readonly int MAX_HEALTH = 6;
 
     public readonly GateColor gateColor;
 
@@ -18,7 +17,7 @@ public class Gate {
     // in order to display the gate health
     public int Health {
         get { return health; }
-        set { health = value; }
+        private set { health = value; }
     }
 
 

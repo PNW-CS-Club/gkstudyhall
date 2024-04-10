@@ -7,15 +7,13 @@ public class PlayerInfo : ScriptableObject
 {
     // These are regular fields so that we can inspect them in the editor.
     // Using a boolean for the stockade because it doesn't seem like we'll use the multiple stockade rule.
+    static readonly int MAX_HEALTH = 10;
+
     public CardData card;
-    public int health = 10;
+    public int health = MAX_HEALTH;
     public bool hasStockade = false;
-    static int MAX_HEALTH = 10;
-
   
-
     // not final
-    // discuss:  could use a bitfield depending on how many vars we'll need
     public bool doubleDamageToCenter = false;
     public bool doubleDamageToSelf = false;
 
