@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewPlayer", menuName = "Scriptable Objects/Player")]
+[CreateAssetMenu(fileName = "New_PlayerSO", menuName = "Scriptable Objects/PlayerSO")]
 public class PlayerSO : ScriptableObject
 {
     public static readonly int STARTING_HEALTH = 10;

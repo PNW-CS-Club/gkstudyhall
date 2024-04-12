@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class MainManager : MonoBehaviour
 {
@@ -14,7 +11,10 @@ public class MainManager : MonoBehaviour
     // Variables we want to transfer between scenes
     public int Turn = 0; // The current turn is global because we may have a way to choose turn order in a menu prior to starting the game
     public int NumPlayers = 1;
-    public List<PlayerSO> PlayerList = new List<PlayerSO>();
+    [SerializeField] PlayerSO player1;
+
+    [SerializeField] PlayerListSO playerListObject;
+    public List<PlayerSO> PlayerList; // refers to list in playerListObject
     
 
 
@@ -30,18 +30,20 @@ public class MainManager : MonoBehaviour
 
         Instance = this; // We can now call MainManager.Instance from any other script
         DontDestroyOnLoad(gameObject); // The MainManager GameObject attached to this script will not be destroyed when the scene changes
+
+        PlayerList = playerListObject.list;
+        PlayerList.Clear();
+        PlayerList.Add(player1);
     }
 
 
     //Handle turn switching
-    void turnSwitch()
+    void NextTurn()
     {   
-        /*
         // If a player is dead, their turn will be skipped.
-        do{
+        do {
             Turn = (Turn + 1) % NumPlayers;
-        } while (PlayerList[Turn].isdead);
-        */
+        } while (!PlayerList[Turn].isAlive);
     }
 
 }

@@ -10,7 +10,9 @@ public class CardQueue : MonoBehaviour
 {
     [SerializeField] GameObject cardPrefab;
     [SerializeField, Min(0)] float margin = 20f;
-    [SerializeField] List<PlayerSO> playerList; // WARNING: Cognitohazard (looking directly at this list in the inspector may cause errors)
+
+    [SerializeField] PlayerListSO playerListObject;
+    List<PlayerSO> playerList; // refers to list in playerListObject
     List<GameObject> cards; // instances of cardPrefab
 
     float expandedHeight; // the height of an expanded card
@@ -21,6 +23,7 @@ public class CardQueue : MonoBehaviour
 
     void Start()
     {
+        playerList = playerListObject.list;
         cards = new();
 
         Vector2 expandedSize = cardPrefab.GetComponent<RectTransform>().sizeDelta;
@@ -54,7 +57,7 @@ public class CardQueue : MonoBehaviour
         RepositionCards();
     }
 
-
+    /*
     public void Add(PlayerSO player) 
     { 
         playerList.Add(player);
@@ -88,9 +91,10 @@ public class CardQueue : MonoBehaviour
 
         RepositionCards();
     }
+    */
 
 
-    private void RepositionCards() 
+    public void RepositionCards() 
     {
         // the real meat & potatoes of the card queue
         // NOTE: relies on expandedIndex to determine which card should be expanded
@@ -143,7 +147,7 @@ public class CardQueueEditor : Editor
 {
     // these are for keeping track of state in the immediate mode gui
     // (i.e. our custom editor fields don't store variables so we have to do it ourselves)
-    PlayerSO playerInfo = null;
+    //PlayerSO playerInfo = null;
     int index = 0;
 
     public override void OnInspectorGUI() {
@@ -159,12 +163,12 @@ public class CardQueueEditor : Editor
         if (Application.isPlaying) 
         {
             EditorGUILayout.LabelField("(Do not manually change playerList in play mode)");
-
+            /*
             // this section lets the user call Add and Remove
             EditorGUILayout.BeginHorizontal();
 
             playerInfo = (PlayerSO)EditorGUILayout.ObjectField(playerInfo, typeof(PlayerSO), false);
-
+            
             if (GUILayout.Button("Add")) 
             {
                 cq.Add(playerInfo);
@@ -176,7 +180,7 @@ public class CardQueueEditor : Editor
             }
 
             EditorGUILayout.EndHorizontal();
-
+            */
             // this section lets the user call ChangeExpandedPlayer
             EditorGUILayout.BeginHorizontal();
 

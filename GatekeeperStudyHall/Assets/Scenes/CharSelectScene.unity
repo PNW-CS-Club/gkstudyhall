@@ -330,7 +330,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: b50d6f6fe5f8fd345bae2e06ea9e783e, type: 2}
-          m_ObjectArgumentAssemblyTypeName: PlayerInfo, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: PlayerSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -709,7 +709,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: b5a7460747c7bab41906f3d7a94bc689, type: 2}
-          m_ObjectArgumentAssemblyTypeName: PlayerInfo, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: PlayerSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1381,7 +1381,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: b5a7460747c7bab41906f3d7a94bc689, type: 2}
-          m_ObjectArgumentAssemblyTypeName: PlayerInfo, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: PlayerSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1514,7 +1514,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: b50d6f6fe5f8fd345bae2e06ea9e783e, type: 2}
-          m_ObjectArgumentAssemblyTypeName: PlayerInfo, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: PlayerSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2260,8 +2260,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Turn: 0
   NumPlayers: 1
-  PlayerList:
-  - {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
+  player1: {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
+  playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
+  PlayerList: []
 --- !u!1001 &735981607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2505,7 +2506,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
-          m_ObjectArgumentAssemblyTypeName: PlayerInfo, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: PlayerSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3163,7 +3164,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
-          m_ObjectArgumentAssemblyTypeName: PlayerInfo, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: PlayerSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3266,8 +3267,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SELECT YOUR CHARACTERS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
-  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5193,8 +5194,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: START GAME
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
-  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
