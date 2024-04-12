@@ -5,9 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     //Player actions will be handled here
-    //Will interact with PlayerInfo and GateClasses
+    //Will interact with PlayerSO and GateClasses
 
-    public static void PlayerAttacksPlayer(PlayerInfo p1, PlayerInfo p2, int amount)
+    public static void PlayerAttacksPlayer(PlayerSO p1, PlayerSO p2, int amount)
     {
         p2.health -= amount;
 
@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
 
     //Change player health - Can occur when a trait activates
-    public static void PlayerChangeHealth(PlayerInfo player, int amount)
+    public static void PlayerChangeHealth(PlayerSO player, int amount)
     {
         player.health += amount;
 
@@ -26,15 +26,15 @@ public class GameManager : MonoBehaviour
         {
             player.isAlive = false;
         }
-        else if (player.health > PlayerInfo.MAX_HEALTH) 
+        else if (player.health > PlayerSO.MAX_HEALTH) 
         {
-            player.health = PlayerInfo.MAX_HEALTH;
+            player.health = PlayerSO.MAX_HEALTH;
         }
     }
 
 
     // Should be called whenever a player causes a gate to change health (traits / attacking)
-    public static void GateChangeHealth(PlayerInfo player, Gate gate, int amount) 
+    public static void GateChangeHealth(PlayerSO player, Gate gate, int amount) 
     {
         gate.health += amount;
 

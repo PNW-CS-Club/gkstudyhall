@@ -16,12 +16,12 @@ public class TraitDebuggerEditor : Editor
 {
     // these are for keeping track of state in the immediate mode gui
     // (i.e. our custom editor fields don't store variables so we have to do it ourselves)
-    PlayerInfo playerInfo = null;
+    PlayerSO playerInfo = null;
     int roll = 1;
 
     public override void OnInspectorGUI() 
     {
-        playerInfo = (PlayerInfo)EditorGUILayout.ObjectField("Player", playerInfo, typeof(PlayerInfo), false);
+        playerInfo = (PlayerSO)EditorGUILayout.ObjectField("Player", playerInfo, typeof(PlayerSO), false);
 
         roll = EditorGUILayout.IntField("Roll", roll);
         if (roll < 1) { roll = 1; }

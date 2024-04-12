@@ -14,7 +14,7 @@ public class CharSelectMenuOnClick : MonoBehaviour
         AsyncOperation _ = SceneManager.LoadSceneAsync("StartScene");
     }
 
-    public void AddPlayer(PlayerInfo p)
+    public void AddPlayer(PlayerSO p)
     {
         //This function will be for the AddPlayerButton
         //When the button is clicked, the player should be added to the list of players
@@ -33,7 +33,7 @@ public class CharSelectMenuOnClick : MonoBehaviour
     
     }
 
-    public void RemovePlayer(PlayerInfo p)
+    public void RemovePlayer(PlayerSO p)
     {
         //This function will be for the RemovePLayerButton on both Bots and Players
         //When the button is clicked, remove the Player/Bot from the list of players and make the card available again

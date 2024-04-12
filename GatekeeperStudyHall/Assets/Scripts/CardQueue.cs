@@ -10,7 +10,7 @@ public class CardQueue : MonoBehaviour
 {
     [SerializeField] GameObject cardPrefab;
     [SerializeField, Min(0)] float margin = 20f;
-    [SerializeField] List<PlayerInfo> playerList; // WARNING: Cognitohazard (looking directly at this list in the inspector may cause errors)
+    [SerializeField] List<PlayerSO> playerList; // WARNING: Cognitohazard (looking directly at this list in the inspector may cause errors)
     List<GameObject> cards; // instances of cardPrefab
 
     float expandedHeight; // the height of an expanded card
@@ -55,7 +55,7 @@ public class CardQueue : MonoBehaviour
     }
 
 
-    public void Add(PlayerInfo player) 
+    public void Add(PlayerSO player) 
     { 
         playerList.Add(player);
         GameObject newCard = Instantiate(cardPrefab, transform);
@@ -65,7 +65,7 @@ public class CardQueue : MonoBehaviour
     }
 
 
-    public void Remove(PlayerInfo player)
+    public void Remove(PlayerSO player)
     {
         int index = playerList.FindIndex(x => x == player);
 
@@ -143,7 +143,7 @@ public class CardQueueEditor : Editor
 {
     // these are for keeping track of state in the immediate mode gui
     // (i.e. our custom editor fields don't store variables so we have to do it ourselves)
-    PlayerInfo playerInfo = null;
+    PlayerSO playerInfo = null;
     int index = 0;
 
     public override void OnInspectorGUI() {
@@ -163,7 +163,7 @@ public class CardQueueEditor : Editor
             // this section lets the user call Add and Remove
             EditorGUILayout.BeginHorizontal();
 
-            playerInfo = (PlayerInfo)EditorGUILayout.ObjectField(playerInfo, typeof(PlayerInfo), false);
+            playerInfo = (PlayerSO)EditorGUILayout.ObjectField(playerInfo, typeof(PlayerSO), false);
 
             if (GUILayout.Button("Add")) 
             {

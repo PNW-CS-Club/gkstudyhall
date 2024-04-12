@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public CardData cardData;
+    public CardSO cardData;
     public bool canMagnify = true;
 
     public CardMagnifier cardMagnifier;
@@ -43,7 +43,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
 
     // change which card this gameobject is displaying
-    public void ChangeCardData(CardData data) {
+    public void ChangeCardData(CardSO data) {
         cardData = data;
         UpdateDisplay();
     }
@@ -80,7 +80,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
 
 
-    // set the display's colors, text, and art to the values in the current CardData
+    // set the display's colors, text, and art to the values in the current CardSO
     private void UpdateDisplay() {
         if (cardData != null) {
             transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = cardData.name;

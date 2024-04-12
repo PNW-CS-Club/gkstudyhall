@@ -14,7 +14,7 @@ public class MainManager : MonoBehaviour
     // Variables we want to transfer between scenes
     public int Turn = 0; // The current turn is global because we may have a way to choose turn order in a menu prior to starting the game
     public int NumPlayers = 1;
-    public List<PlayerInfo> PlayerList = new List<PlayerInfo>();
+    public List<PlayerSO> PlayerList = new List<PlayerSO>();
     
 
 

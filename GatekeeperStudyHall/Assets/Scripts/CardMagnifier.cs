@@ -13,7 +13,7 @@ public class CardMagnifier : MonoBehaviour, IPointerClickHandler
         gameObject.SetActive(false);
     }
 
-    public void Show(CardData cardData) {
+    public void Show(CardSO cardData) {
         magnifiedDisplay.ChangeCardData(cardData);
         gameObject.SetActive(true);
     }

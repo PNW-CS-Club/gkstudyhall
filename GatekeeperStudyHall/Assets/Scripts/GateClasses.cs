@@ -25,7 +25,7 @@ public class Gate
 
     // this should be called after this gate has been broken
     // and a player has rolled even or odd
-    public void DoBreakEffect(PlayerInfo player, int roll) 
+    public void DoBreakEffect(PlayerSO player, int roll) 
     {
         if (roll % 2 != 0) 
         {

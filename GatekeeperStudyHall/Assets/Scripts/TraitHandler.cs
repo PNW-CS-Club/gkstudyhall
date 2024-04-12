@@ -24,7 +24,7 @@ public enum Trait
 // static classes can't be instantiated
 public static class TraitHandler
 {
-    public static void ActivateTrait(PlayerInfo player, int roll)
+    public static void ActivateTrait(PlayerSO player, int roll)
     {
         // Trait trait = player.card.traits[roll];
         Trait trait = Trait.plus1Health;

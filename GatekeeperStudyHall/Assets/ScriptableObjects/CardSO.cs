@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // makes a new entry in asset creation menu (in Project tab)
-[CreateAssetMenu(fileName = "New CardData", menuName = "Scriptable Objects/CardData")] 
-public class CardData : ScriptableObject
+[CreateAssetMenu(fileName = "NewCardData", menuName = "Scriptable Objects/CardSO")] 
+public class CardSO : ScriptableObject
 {
     // do not set these attributes anywhere other than the editor
     [Header("Character Info")]
@@ -28,6 +28,6 @@ public class CardData : ScriptableObject
     public Sprite art;
 
     public override string ToString() {
-        return $"CardData[name=\"{name}\", origin=\"{origin}\", title=\"{title}\", element=\"{element}\", flavorText=\"{flavorText}\"]";
+        return $"CardSO[name=\"{name}\", origin=\"{origin}\", title=\"{title}\", element=\"{element}\", flavorText=\"{flavorText}\"]";
     }
 }
