@@ -20,10 +20,11 @@ public enum Trait
     allMinus1HP = 10,
     chooseGateForOp = 11,
 }
-    
-public class TraitHandler : MonoBehaviour
+
+// static classes can't be instantiated
+public static class TraitHandler
 {
-    public void ActivateTrait(PlayerInfo player, int roll)
+    public static void ActivateTrait(PlayerInfo player, int roll)
     {
         // Trait trait = player.card.traits[roll];
         Trait trait = Trait.plus1Health;
@@ -45,9 +46,7 @@ public class TraitHandler : MonoBehaviour
 
             case Trait.minus2gate:
                 //Selcted gates health -2
-
-                //Gate.changeHealth(-2)????
-                //changeGateHealth(gate, -2);
+                //changeGateHealth(player, selectedGate, -2);
                 Debug.LogWarning("Trait doubleGateAbil not implemented");
                 break;
 
@@ -66,7 +65,8 @@ public class TraitHandler : MonoBehaviour
 
             case Trait.reduceGateDamage:
                 // changeGateHealth(gate,-2); 
-                //For this we are gonna have to keep track of what the number is that they rolled and then just do minus 2 to it;
+                //For this we are gonna have to keep track of
+                //what number they rolled and then just do minus 2 to it;
                 //Also have to check for the abilities of that gate.
                 Debug.LogWarning("Trait reduceGateDamage not implemented");
                 break;
@@ -96,7 +96,7 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             default:
-                //I don't think we would ever reach this statement.
+                //We shouldn't ever reach this statement.
                 Debug.LogError($"Trait not handled: {trait}");
                 break;
         }

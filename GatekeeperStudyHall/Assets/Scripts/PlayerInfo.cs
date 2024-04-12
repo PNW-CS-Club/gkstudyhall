@@ -11,12 +11,24 @@ public class PlayerInfo : ScriptableObject
     // These are regular fields so that we can inspect them in the editor.
     // Using a boolean for the stockade because it doesn't seem like we'll use the multiple stockade rule.
     public CardData card;
-    public int health = STARTING_HEALTH;
-    public bool hasStockade = false;
+    public int health;
+    public bool hasStockade;
 
-    public bool isAlive = true;
+    public bool isAlive;
 
     // not final
-    public bool doubleDamageToCenter = false;
-    public bool doubleDamageToSelf = false;
+    public bool doubleDamageToCenter;
+    public bool doubleDamageToSelf;
+
+
+    // when this SO is loaded into a scene, reset values that may have been changed
+    private void OnEnable() {
+        health = STARTING_HEALTH;
+        hasStockade = false;
+
+        isAlive = true;
+
+        doubleDamageToCenter = false;
+        doubleDamageToSelf = false;
+    }
 }
