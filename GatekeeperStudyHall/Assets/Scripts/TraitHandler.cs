@@ -23,44 +23,24 @@ public enum Trait
     
 public class TraitHandler : MonoBehaviour
 {
-    
-    //private Gate pGate = new Gate("BLACK"); //tester gate.
-
-    public Trait myTrait = Trait.deal3Dam; //This would have to be the trait of the players card which we will need to know
-
-
-    //The getters and setters in player and gate IDK how to call properly can be changed 
-    public static void changeHealth(PlayerInfo p, int amount) {
-        //p.Health -= amount;
-    }
-    /*public static void changeGateHealth(Gate g, int amount) {
-        bool dead = g.TakeDamage(player, amount);
-        if (dead == true) {
-            g.setHealth(0);
-        }
-        else {
-            g.setHealth(g.getHealth() - amount);
-        }
-
-    }*/
-
-
-    public void ActivateTraitBehavior(PlayerInfo player, int roll)
+    public void ActivateTrait(PlayerInfo player, int roll)
     {
-        switch (myTrait)
+        // Trait trait = player.card.traits[roll];
+        Trait trait = Trait.plus1Health;
+
+        switch (trait)
         {
             case Trait.deal3Dam:
                 //Selected players health -3
 
                 /*
-                    * Idk how we wanna go with the selection process.
-                    * Maybe pulling up a list of the other plays and their health 
-                    * or we can just make it so you can click the card of the player that
-                    * wants to be dealt the damage.I dont know how hard that would be to code
-                    * 
-                    */
-                changeHealth(player,3);//Need the array of players to access it.
-                Debug.Log("Trait A");
+                 * Idk how we wanna go with the selection process.
+                 * Maybe pulling up a list of the other players and their health 
+                 * or we can just make it so you can click the card of the player that
+                 * wants to be dealt the damage. I dont know how hard that would be to code
+                 */
+                //changeHealth(player,3);//Need the array of players to access it.
+                Debug.LogWarning("Trait deal3Dam not implemented");
                 break;
 
             case Trait.minus2gate:
@@ -68,34 +48,56 @@ public class TraitHandler : MonoBehaviour
 
                 //Gate.changeHealth(-2)????
                 //changeGateHealth(gate, -2);
-                Debug.Log("Trait B");
+                Debug.LogWarning("Trait doubleGateAbil not implemented");
                 break;
-            case Trait.plus1Health:
-                //Change current players health
-                //changeHealth(gate,1);
-                Debug.Log("Trait C");
-                break;
-            case Trait.doubleGateAbil:
-                //I dont really know what to do here tbh;
 
+            case Trait.plus1Health:
+                GameManager.PlayerChangeHealth(player, 1);
                 break;
+
+            case Trait.doubleGateAbil:
+                Debug.LogWarning("Trait doubleGateAbil not implemented");
+                break;
+
             case Trait.deal2Dam:
                 //changeHealth(gate,2);//Need parameter.
+                Debug.LogWarning("Trait deal2Dam not implemented");
                 break;
+
             case Trait.reduceGateDamage:
                 // changeGateHealth(gate,-2); 
                 //For this we are gonna have to keep track of what the number is that they rolled and then just do minus 2 to it;
-                                                    //Also have to check for the abilities of that gate.
+                //Also have to check for the abilities of that gate.
+                Debug.LogWarning("Trait reduceGateDamage not implemented");
                 break;
+
             case Trait.noDamageTurn:
-                changeHealth(player,0);
+                Debug.LogWarning("Trait noDamageTurn not implemented");
                 break;
+
             case Trait.swapGateHP:
-                
+                Debug.LogWarning("Trait swapGateHP not implemented");
                 break;
+
+            case Trait.gateLoses1HP:
+                Debug.LogWarning("Trait gateLoses1HP not implemented");
+                break;
+
+            case Trait.minus2HP:
+                GameManager.PlayerChangeHealth(player, -2);
+                break;
+
+            case Trait.allMinus1HP:
+                Debug.LogWarning("Trait allMinus1HP not implemented");
+                break;
+
+            case Trait.chooseGateForOp:
+                Debug.LogWarning("Trait chooseGateForOp not implemented");
+                break;
+
             default:
                 //I don't think we would ever reach this statement.
-                Debug.Log("Invalid Trait");
+                Debug.LogError($"Trait not handled: {trait}");
                 break;
         }
     }
