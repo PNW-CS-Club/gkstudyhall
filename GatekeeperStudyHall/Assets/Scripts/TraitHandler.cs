@@ -26,11 +26,9 @@ public enum Trait
 public static class TraitHandler
 {
     [SerializeField] PlayerListSO playerListObject;
-    List<PlayerSO> playerList; // refers to list in playerListObject
+    List<PlayerSO> playerList = playerListObject.list; // refers to list in playerListObject
 
-    void Start(){
-        playerList = playerListObject.list();
-    }
+    
     public static void ActivateTrait(PlayerSO player, int roll)
     {
         // Trait trait = player.card.traits[roll];
@@ -95,8 +93,11 @@ public static class TraitHandler
                 break;
 
             case Trait.allMinus1HP:
-                //Debug.LogWarning("Trait allMinus1HP not implemented");
-                
+                //WARNING: This may currently be implemented incorrectly
+                //The current player's index should be 0
+                for(int i = 1; i < playerList.Count; i++){
+                    playerList[i] = GameManager.PlayerAttacksPlayer(playerList[0], playerList[i] , -1);
+                }
                 break;
 
             case Trait.chooseGateForOp:
