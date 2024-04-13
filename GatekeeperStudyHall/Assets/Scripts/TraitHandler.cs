@@ -19,11 +19,18 @@ public enum Trait
     minus2HP = 9,
     allMinus1HP = 10,
     chooseGateForOp = 11,
+    plusStockade = 12,
 }
 
 // static classes can't be instantiated
 public static class TraitHandler
 {
+    [SerializeField] PlayerListSO playerListObject;
+    List<PlayerSO> playerList; // refers to list in playerListObject
+
+    void Start(){
+        playerList = playerListObject.list();
+    }
     public static void ActivateTrait(PlayerSO player, int roll)
     {
         // Trait trait = player.card.traits[roll];
@@ -88,11 +95,16 @@ public static class TraitHandler
                 break;
 
             case Trait.allMinus1HP:
-                Debug.LogWarning("Trait allMinus1HP not implemented");
+                //Debug.LogWarning("Trait allMinus1HP not implemented");
+                
                 break;
 
             case Trait.chooseGateForOp:
                 Debug.LogWarning("Trait chooseGateForOp not implemented");
+                break;
+
+            case Trait.plusStockade:
+                player.hasStockade = true;
                 break;
 
             default:
