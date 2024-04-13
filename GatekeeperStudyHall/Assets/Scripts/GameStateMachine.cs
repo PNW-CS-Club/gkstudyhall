@@ -38,7 +38,7 @@ public class GameStateMachine : MonoBehaviour
     }
     // use this wrapper function to call from an event defined
     // in the editor because enums dont work for some reason
-    public void SetState(GameStateObject gso) {
+    public void SetState(GameStateSO gso) {
         SetState(gso.gameState);
     }
 }
