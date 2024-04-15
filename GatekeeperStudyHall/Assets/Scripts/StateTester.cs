@@ -52,64 +52,73 @@ public class TimerState : IState
 }
 
 
-public class StateTester : MonoBehaviour
+public class StateMachine
 {
-    [SerializeField] PlayerListSO playerListObject;
     List<PlayerSO> players;
 
-    TestEnterState enter;
-    TestExitState exit;
-    TestUpdateState update;
-    TimerState timer;
+    public TestEnterState enterState;
+    public TestExitState exitState;
+    public TestUpdateState updateState;
+    public TimerState timerState;
 
     IState currentState;
 
+    public StateMachine(List<PlayerSO> players) 
+    {
+        this.players = players;
+
+        enterState = new(players);
+        exitState = new();
+        updateState = new();
+        timerState = new();
+    }
+
+    public void Initialize(IState state) 
+    {
+        currentState = state;
+        currentState.Enter();
+    }
+
+    public void TransitionTo(IState state) 
+    {
+        currentState.Exit();
+        currentState = state;
+        currentState.Enter();
+    }
+
+    public void Update() 
+    {
+        currentState.Update();
+    }
+}
+
+
+class StateTester : MonoBehaviour
+{
+    [SerializeField] PlayerListSO playerListObject;
+    StateMachine stateMachine;
+
     void Start() 
     {
-        players = playerListObject.list;
-
-        enter = new(players);
-        exit = new();
-        update = new();
-        timer = new();
-
-        currentState = enter;
-        currentState.Enter();
+        stateMachine = new StateMachine(playerListObject.list);
+        stateMachine.Initialize(stateMachine.enterState);
     }
 
     void Update() 
     {
-        IState nextState = DoLogic();
-
-        if (nextState != null) 
-        {
-            currentState.Exit();
-            currentState = nextState;
-            currentState.Enter();
-        }
-
-        // note that the state changes BEFORE its update method is called
-        currentState.Update();
-    }
-
-    private IState DoLogic() 
-    {
-        // null value means maintain current state
-        IState nextState = null;
-
         if (Input.GetKeyUp(KeyCode.Alpha1)) {
-            nextState = enter;
+            stateMachine.TransitionTo(stateMachine.enterState);
         }
         if (Input.GetKeyUp(KeyCode.Alpha2)) {
-            nextState = update;
+            stateMachine.TransitionTo(stateMachine.updateState);
         }
         if (Input.GetKeyUp(KeyCode.Alpha3)) {
-            nextState = exit;
+            stateMachine.TransitionTo(stateMachine.exitState);
         }
         if (Input.GetKeyUp(KeyCode.Alpha4)) {
-            nextState = timer;
+            stateMachine.TransitionTo(stateMachine.timerState);
         }
 
-        return nextState;
+        stateMachine.Update();
     }
 }
