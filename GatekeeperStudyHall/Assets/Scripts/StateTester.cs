@@ -18,42 +18,63 @@ public interface IState
 
 public class TestEnterState : IState
 {
-    public void Enter() 
-    {
-        Debug.Log("Hello from TestEnterState");
+    List<PlayerSO> players;
+
+    public TestEnterState(List<PlayerSO> players) {
+        this.players = players;
     }
+
+    public void Enter() => Debug.Log($"Hello from TestEnterState, there are {players.Count} players");
 }
 
 
 public class TestUpdateState : IState
 {
-    public void Update() 
-    {
-        Debug.Log("Hello from TestUpdateState");
-    }
+    public void Update() => Debug.Log("Hello from TestUpdateState");
 }
 
 
 public class TestExitState : IState
 {
-    public void Exit() 
-    {
-        Debug.Log("Hello from TestExitState");
-    }
+    public void Exit() => Debug.Log("Hello from TestExitState");
+}
+
+
+public class TimerState : IState
+{
+    float timer = 0f;
+
+    public void Enter() => timer = 0f;
+
+    public void Update() => timer += Time.deltaTime;
+
+    public void Exit() => Debug.Log($"Time in this state: {timer:N2}s");
 }
 
 
 public class StateTester : MonoBehaviour
 {
-    TestEnterState enter = new();
-    TestExitState exit = new();
-    TestUpdateState update = new();
+    [SerializeField] PlayerListSO playerListObject;
+    List<PlayerSO> players;
+
+    TestEnterState enter;
+    TestExitState exit;
+    TestUpdateState update;
+    TimerState timer;
 
     IState currentState;
 
     void Start() 
     {
+        players = playerListObject.list;
+
+        enter = new(players);
+        exit = new();
+        update = new();
+        timer = new();
+
         currentState = enter;
+        currentState.Enter();
     }
 
     void Update() 
@@ -84,6 +105,9 @@ public class StateTester : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.Alpha3)) {
             nextState = exit;
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha4)) {
+            nextState = timer;
         }
 
         return nextState;
