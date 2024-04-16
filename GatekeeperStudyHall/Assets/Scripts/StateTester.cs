@@ -51,6 +51,24 @@ public class TimerState : IState
     public void Exit() => Debug.Log($"Time in this state: {timer:N2}s");
 }
 
+public class TraitrollState: IState
+{
+    [SerializeField] PlayerListSO playerListObject;
+    List<PlayerSO> playerList = playerListObject.list;
+    int roll = 4; // I didnt know how we are tracking what the player gets when they roll.
+    
+    public void Enter(){
+        roll = 4;
+
+    }
+    public void update(){
+        TraitHandler.ActivateTrait(playerList[0],roll);
+    }
+
+    public void Exit() => Debug.Log("Testing TraitrollState");
+
+}
+
 
 public class StateMachine
 {
