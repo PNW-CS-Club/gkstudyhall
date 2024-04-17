@@ -7,19 +7,19 @@ using System;
 // warning: changing enum int values here causes them to desync in the editor
 public enum Trait
 {
-    deal3Dam = 0,
-    minus2gate = 1,
-    plus1Health = 2,
-    doubleGateAbil = 3,
-    deal2Dam = 4,
-    reduceGateDamage = 5,
-    noDamageTurn = 6,
-    swapGateHP = 7,
-    gateLoses1HP = 8,
-    minus2HP = 9,
-    allMinus1HP = 10,
-    chooseGateForOp = 11,
-    plusStockade = 12,
+    [InspectorName("Deal 3 Damage")]                deal3Dam = 0,
+    [InspectorName("-2 to Gate Roll")]              minus2gate = 1,
+    [InspectorName("+1 Health")]                    plus1Health = 2,
+    [InspectorName("x2 Gate Ability")]              doubleGateAbil = 3,
+    [InspectorName("Deal 2 Damage")]                deal2Dam = 4,
+    [InspectorName("reduceGateDamage (??)")]        reduceGateDamage = 5,
+    [InspectorName("Take No Damage This Turn")]     noDamageTurn = 6,
+    [InspectorName("Swap Gate HP")]                 swapGateHP = 7,
+    [InspectorName("Gate Loses 1 HP")]              gateLoses1HP = 8,
+    [InspectorName("Lose 2 Health")]                minus2HP = 9,
+    [InspectorName("Deal 1 Damage to Everyone")]    allMinus1HP = 10,
+    [InspectorName("Choose Gate for Other Player")] chooseGateForOp = 11,
+    [InspectorName("Gain Stockade")]                plusStockade = 12,
 }
 
 // static classes can't be instantiated
