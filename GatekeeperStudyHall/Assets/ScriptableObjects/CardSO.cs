@@ -27,6 +27,7 @@ public class CardSO : ScriptableObject
     public Color innerColor = Color.black;
     public Sprite art;
 
+    public int[] traitList = new int[4];
     public override string ToString() {
         return $"CardSO[name=\"{name}\", origin=\"{origin}\", title=\"{title}\", element=\"{element}\", flavorText=\"{flavorText}\"]";
     }
