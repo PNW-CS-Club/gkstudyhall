@@ -16,6 +16,7 @@ public class CardSO : ScriptableObject
     [Header("Traits")]
     public string[] traitNames = new string[4];
     public string[] traitDescriptions = new string[4];
+    public Trait[] traits;
 
     [Header("Flavor Text")]
     public string flavorText;
