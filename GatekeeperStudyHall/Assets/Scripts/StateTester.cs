@@ -55,7 +55,7 @@ public class TimerState : IState
 public class TraitRollState : IState
 {
     List<PlayerSO> players;
-    int roll = 4; // I didnt know how we are tracking what the player gets when they roll.
+    int roll = DiceRoll.roll; // I didnt know how we are tracking what the player gets when they roll.
 
     public TraitRollState(List<PlayerSO> players) {
         this.players = players;
@@ -69,6 +69,26 @@ public class TraitRollState : IState
 
     public void Exit() => Debug.Log("Testing TraitRollState");
 
+}
+
+public class AttackingState: IState
+{
+    List<PlayerSO> players;
+    Gate the;
+    int roll;
+    public AttackingState(List<PlayerSO> players, Gate the){
+        this.players = players;
+        this.the = the;
+
+    }
+    public void Enter(){
+        roll = DiceRoll.roll;
+        GameManager.GateChangeHealth(players[0],the,roll);
+
+    }
+
+     public void Exit() => Debug.Log("Testing TraitRollState");
+    
 }
 
 
