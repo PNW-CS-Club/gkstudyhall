@@ -98,6 +98,7 @@ public static class TraitHandler
                 /*for(int i = 1; i < playerList.Count; i++){
                     playerList[i] = GameManager.PlayerAttacksPlayer(playerList[0], playerList[i] , -1);
                 }*/
+                Debug.LogWarning("Trait allMinus1HP not implemented");
                 break;
 
             case Trait.chooseGateForOp:
