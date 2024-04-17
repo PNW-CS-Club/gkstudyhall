@@ -55,7 +55,7 @@ public class TimerState : IState
 public class TraitRollState : IState
 {
     List<PlayerSO> players;
-    int roll = DiceRoll.roll; // I didnt know how we are tracking what the player gets when they roll.
+    int roll = 1; // I didnt know how we are tracking what the player gets when they roll.
 
     public TraitRollState(List<PlayerSO> players) {
         this.players = players;
@@ -71,6 +71,7 @@ public class TraitRollState : IState
 
 }
 
+/*
 public class AttackingState: IState
 {
     List<PlayerSO> players;
@@ -89,7 +90,7 @@ public class AttackingState: IState
 
      public void Exit() => Debug.Log("Testing TraitRollState");
     
-}
+}*/
 
 
 public class StateMachine
