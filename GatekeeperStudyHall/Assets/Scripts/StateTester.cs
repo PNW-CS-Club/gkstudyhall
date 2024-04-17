@@ -51,21 +51,23 @@ public class TimerState : IState
     public void Exit() => Debug.Log($"Time in this state: {timer:N2}s");
 }
 
-public class TraitrollState: IState
+
+public class TraitRollState : IState
 {
-    [SerializeField] PlayerListSO playerListObject;
-    List<PlayerSO> playerList = playerListObject.list;
+    List<PlayerSO> players;
     int roll = 4; // I didnt know how we are tracking what the player gets when they roll.
+
+    public TraitRollState(List<PlayerSO> players) {
+        this.players = players;
+    }
+
     
-    public void Enter(){
-        roll = 4;
-
-    }
-    public void update(){
-        TraitHandler.ActivateTrait(playerList[0],roll);
+    public void Enter() {
+        roll = 4; 
+        TraitHandler.ActivateTrait(players[0], roll);
     }
 
-    public void Exit() => Debug.Log("Testing TraitrollState");
+    public void Exit() => Debug.Log("Testing TraitRollState");
 
 }
 
@@ -78,6 +80,7 @@ public class StateMachine
     public TestExitState exitState;
     public TestUpdateState updateState;
     public TimerState timerState;
+    public TraitRollState traitRollState;
 
     IState currentState;
 
@@ -89,6 +92,7 @@ public class StateMachine
         exitState = new();
         updateState = new();
         timerState = new();
+        traitRollState = new(players);
     }
 
     public void Initialize(IState state) 
@@ -135,6 +139,9 @@ class StateTester : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.Alpha4)) {
             stateMachine.TransitionTo(stateMachine.timerState);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha5)) {
+            stateMachine.TransitionTo(stateMachine.traitRollState);
         }
 
         stateMachine.Update();
