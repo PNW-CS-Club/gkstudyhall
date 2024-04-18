@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,11 +16,13 @@ public interface IState
     public void Exit() { }
 }
 
-
+[Serializable]
 public class TraitRollState : IState
 {
     List<PlayerSO> players;
-    int roll = 1; // I didnt know how we are tracking what the player gets when they roll.
+    [SerializeField] int roll = 1; // I didnt know how we are tracking what the player gets when they roll.
+    // ^^^ we can use SerializeField here because TraitRollStates are Serializable
+    // this is just an example, idk if we want this to be visible in the inspector
 
     public TraitRollState(List<PlayerSO> players) {
         this.players = players;
@@ -37,6 +40,7 @@ public class TraitRollState : IState
 
 
 /*
+[Serializable]
 public class AttackingState: IState
 {
     List<PlayerSO> players;
