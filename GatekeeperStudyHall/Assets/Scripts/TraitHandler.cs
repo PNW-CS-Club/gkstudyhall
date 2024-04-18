@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 
-// warning: changing enum int values here causes them to desync in the editor
+// warning: changing enum int values here does not update them in the editor
 public enum Trait
 {
     [InspectorName("Deal 3 Damage")]                deal3Dam = 0,
