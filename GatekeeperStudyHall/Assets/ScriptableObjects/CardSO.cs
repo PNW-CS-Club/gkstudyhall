@@ -16,7 +16,7 @@ public class CardSO : ScriptableObject
     [Header("Traits")]
     public string[] traitNames = new string[4];
     public string[] traitDescriptions = new string[4];
-    public Trait[] traits;
+    public Trait[] traits = new Trait[4];
 
     [Header("Flavor Text")]
     public string flavorText;
@@ -28,7 +28,6 @@ public class CardSO : ScriptableObject
     public Color innerColor = Color.black;
     public Sprite art;
 
-    public int[] traitList = new int[4];
     public override string ToString() {
         return $"CardSO[name=\"{name}\", origin=\"{origin}\", title=\"{title}\", element=\"{element}\", flavorText=\"{flavorText}\"]";
     }
