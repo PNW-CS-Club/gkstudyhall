@@ -23,6 +23,7 @@ public class TraitRollState : IState
     [SerializeField] int roll = 1; // I didnt know how we are tracking what the player gets when they roll.
     // ^^^ we can use SerializeField here because TraitRollStates are Serializable
     // this is just an example, idk if we want this to be visible in the inspector
+    [SerializeField] TraitHandlerSO traitHandler;
 
     public TraitRollState(List<PlayerSO> players) {
         this.players = players;
@@ -31,7 +32,7 @@ public class TraitRollState : IState
 
     public void Enter() {
         roll = 4;
-        TraitHandler.ActivateTrait(players[0], roll);
+        traitHandler.ActivateTrait(players[0], roll);
     }
 
     public void Exit() => Debug.Log("Testing TraitRollState");
