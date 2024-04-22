@@ -20,7 +20,6 @@ public class CharSelectMenuOnClick : MonoBehaviour
         //When the button is clicked, the player should be added to the list of players
         if(MainManager.Instance != null && !MainManager.Instance.PlayerList.Contains(p)){
             MainManager.Instance.PlayerList.Add(p);
-            MainManager.Instance.NumPlayers += 1;
         }
         
 
@@ -39,7 +38,6 @@ public class CharSelectMenuOnClick : MonoBehaviour
         //When the button is clicked, remove the Player/Bot from the list of players and make the card available again
         if(MainManager.Instance != null && MainManager.Instance.PlayerList.Contains(p)){
             MainManager.Instance.PlayerList.Remove(p);
-            MainManager.Instance.NumPlayers -= 1;
         }
     }
 }
