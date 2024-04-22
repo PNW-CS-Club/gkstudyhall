@@ -5,6 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class CharSelectMenuOnClick : MonoBehaviour
 {
+    [SerializeField] PlayerListSO playerListObject;
+    List<PlayerSO> players;
+
+    void Start() 
+    {
+        players = playerListObject.list;
+    }
+
     public void StartGame()
     {
         AsyncOperation _ = SceneManager.LoadSceneAsync("GkScene");
@@ -18,11 +26,10 @@ public class CharSelectMenuOnClick : MonoBehaviour
     {
         //This function will be for the AddPlayerButton
         //When the button is clicked, the player should be added to the list of players
-        if(MainManager.Instance != null && !MainManager.Instance.PlayerList.Contains(p)){
-            MainManager.Instance.PlayerList.Add(p);
+        if (!players.Contains(p)) 
+        {
+            players.Add(p);
         }
-        
-
     }
 
     public void AddBot()
@@ -36,8 +43,9 @@ public class CharSelectMenuOnClick : MonoBehaviour
     {
         //This function will be for the RemovePLayerButton on both Bots and Players
         //When the button is clicked, remove the Player/Bot from the list of players and make the card available again
-        if(MainManager.Instance != null && MainManager.Instance.PlayerList.Contains(p)){
-            MainManager.Instance.PlayerList.Remove(p);
+        if (players.Contains(p)) 
+        {
+            players.Remove(p);
         }
     }
 }
