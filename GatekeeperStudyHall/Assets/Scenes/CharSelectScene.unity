@@ -2277,6 +2277,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
+  stateMachine:
+    traitRollState:
+      roll: 0
+      traitHandler: {fileID: 11400000, guid: 1f0b0bb7746e7b7468212b593603fc26, type: 2}
 --- !u!1001 &735981607
 PrefabInstance:
   m_ObjectHideFlags: 0
