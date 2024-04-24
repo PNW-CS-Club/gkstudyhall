@@ -6,6 +6,7 @@ public enum GateColor
     BLACK = 0, GREEN = 1, RED = 2, BLUE = 3
 }
 
+[Serializable]
 public class Gate 
 {
     public static readonly int STARTING_HEALTH = 6;
@@ -13,7 +14,9 @@ public class Gate
 
     public readonly GateColor gateColor;
 
-    // if the player is being attacked, change their health through the GameManager methods
+    /// <summary>
+    /// NOTE: If the player is being attacked, change their health through the GameManager methods.
+    /// </summary>
     public int health = STARTING_HEALTH;
 
 
@@ -23,8 +26,10 @@ public class Gate
     }
 
 
-    // this should be called after this gate has been broken
-    // and a player has rolled even or odd
+    /// <summary>
+    /// This should be called after this gate has been broken
+    /// and a player has rolled even or odd.
+    /// </summary>
     public void DoBreakEffect(PlayerSO player, int roll) 
     {
         if (roll % 2 != 0) 
