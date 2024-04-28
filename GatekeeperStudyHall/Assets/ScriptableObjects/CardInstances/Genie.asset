@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93143415c82fab74d9f6add02829aa7e, type: 3}
-  m_Name: Genie of the East
+  m_Name: Genie
   m_EditorClassIdentifier: 
-  name: Genie of the East
+  characterName: Genie of the East
   origin: 
   title: 
   element: 
@@ -26,6 +26,7 @@ MonoBehaviour:
   - -2 to gate attack roll
   - Take no damage this turn
   - Swap the HP of two gates
+  traits: 
   flavorText: 
   flavorTextColor: {r: 1, g: 1, b: 1, a: 1}
   outerColor: {r: 0.26666668, g: 0.31764707, b: 0.5137255, a: 1}

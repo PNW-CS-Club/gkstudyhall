@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93143415c82fab74d9f6add02829aa7e, type: 3}
   m_Name: Eldarian
   m_EditorClassIdentifier: 
-  name: Eldarian
+  characterName: Eldarian
   origin: 
   title: 
   element: 
@@ -26,6 +26,7 @@ MonoBehaviour:
   - Lose shield
   - +1 to gate attack roll
   - Target player loses turn
+  traits: 
   flavorText: 
   flavorTextColor: {r: 1, g: 1, b: 1, a: 1}
   outerColor: {r: 0.13725491, g: 0.38431376, b: 0.3529412, a: 1}

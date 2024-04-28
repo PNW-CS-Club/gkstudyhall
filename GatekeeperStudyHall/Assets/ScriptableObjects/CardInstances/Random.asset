@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93143415c82fab74d9f6add02829aa7e, type: 3}
   m_Name: Random
   m_EditorClassIdentifier: 
-  name: Random
+  characterName: Random
   origin: 
   title: 
   element: 
@@ -26,6 +26,7 @@ MonoBehaviour:
   - 
   - 
   - 
+  traits: 
   flavorText: 
   flavorTextColor: {r: 0, g: 0, b: 0, a: 1}
   outerColor: {r: 0.91764706, g: 0.91764706, b: 0.91764706, a: 1}

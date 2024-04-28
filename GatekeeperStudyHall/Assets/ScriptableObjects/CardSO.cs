@@ -8,7 +8,7 @@ public class CardSO : ScriptableObject
 {
     // do not set these attributes anywhere other than the editor
     [Header("Character Info")]
-    public new string name;
+    public string characterName;
     public string origin;
     public string title;
     public string element;
