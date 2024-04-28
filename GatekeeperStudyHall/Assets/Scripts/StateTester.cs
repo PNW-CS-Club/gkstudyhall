@@ -10,8 +10,7 @@ class StateTester : MonoBehaviour
 
     void Start() 
     {
-        stateMachine = new StateMachine(playerListObject.list);
-        stateMachine.Initialize(stateMachine.traitRollState);
+        stateMachine.Initialize(playerListObject.list, stateMachine.traitRollState);
     }
 
     void Update() 

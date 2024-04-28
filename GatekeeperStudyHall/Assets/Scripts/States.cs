@@ -25,7 +25,7 @@ public class TraitRollState : IState
     // this is just an example, idk if we want this to be visible in the inspector
     [SerializeField] TraitHandlerSO traitHandler;
 
-    public TraitRollState(List<PlayerSO> players) {
+    public void Initialize(List<PlayerSO> players) {
         this.players = players;
     }
 

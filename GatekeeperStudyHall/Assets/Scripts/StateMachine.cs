@@ -14,14 +14,12 @@ public class StateMachine
 
     IState currentState;
 
-    public StateMachine(List<PlayerSO> players) {
+    public void Initialize(List<PlayerSO> players, IState state) {
         this.players = players;
 
-        traitRollState = new(players);
-        // attackingState = ...
-    }
+        traitRollState.Initialize(players);
+        // attackingState ...
 
-    public void Initialize(IState state) {
         currentState = state;
         currentState.Enter();
     }
