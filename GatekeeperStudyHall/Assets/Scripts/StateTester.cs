@@ -6,7 +6,7 @@ using UnityEngine;
 class StateTester : MonoBehaviour
 {
     [SerializeField] PlayerListSO playerListObject;
-    [SerializeField] StateMachine stateMachine;
+    public StateMachine stateMachine;
 
     void Start() 
     {

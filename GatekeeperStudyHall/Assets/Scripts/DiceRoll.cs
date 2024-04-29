@@ -44,10 +44,27 @@ public class DiceRoll : MonoBehaviour
 
     [Space]
     [SerializeField] Sprite[] sprites; // the 6 dice faces
+    [SerializeField] StateTester stateTester;
 
 
     int roll = -1;
     public UnityEvent<int> endEvent; // functions to be called after the dice is done rolling
+
+
+    void Awake() {
+        stateTester.stateMachine.stateChangedEvent += OnStateChanged;
+    }
+
+
+    private void OnStateChanged(object sender, IState state) {
+        // magical C# construct that lets us easily chack the type of the state
+        bool canInteract = state switch {
+            // only let the user interact with the dice during these states:
+            TraitRollState => true,
+            _ => false,
+        };
+        Debug.Log($"canInteract: {canInteract}");
+    }
 
 
     void Start() {
@@ -59,6 +76,7 @@ public class DiceRoll : MonoBehaviour
         rb = GetComponentInChildren<Rigidbody2D>();
         barrier.SetActive(false);
     }
+
 
     void Update() {
         if (isHeld) {

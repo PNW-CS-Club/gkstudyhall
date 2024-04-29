@@ -403,6 +403,10 @@ PrefabInstance:
       propertyPath: barrier
       value: 
       objectReference: {fileID: 905177514}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: stateTester
+      value: 
+      objectReference: {fileID: 1929277366}
     - target: {fileID: 3541283527795119838, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
       propertyPath: m_Name
       value: Dice Base
@@ -2113,6 +2117,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a6c879ace24d54f8f91199342ec9bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1929277366 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3442155616907489254, guid: e034103e2926ec641a1b009b1fcad7e6, type: 3}
+  m_PrefabInstance: {fileID: 8032676241996327843}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9aa23e33b178fc4d8c8f8d24169a5d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2019695655
 GameObject:
   m_ObjectHideFlags: 0
@@ -2226,6 +2241,18 @@ PrefabInstance:
     - target: {fileID: 932712801496149847, guid: e034103e2926ec641a1b009b1fcad7e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3442155616907489254, guid: e034103e2926ec641a1b009b1fcad7e6, type: 3}
+      propertyPath: stateMachine.onStateChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3442155616907489254, guid: e034103e2926ec641a1b009b1fcad7e6, type: 3}
+      propertyPath: stateMachine.onStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8923845991972119183, guid: e034103e2926ec641a1b009b1fcad7e6, type: 3}
+    - target: {fileID: 3442155616907489254, guid: e034103e2926ec641a1b009b1fcad7e6, type: 3}
+      propertyPath: stateMachine.onStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8923845991972119183, guid: e034103e2926ec641a1b009b1fcad7e6, type: 3}
       propertyPath: m_Name
