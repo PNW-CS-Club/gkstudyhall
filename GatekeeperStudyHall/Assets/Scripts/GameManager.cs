@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     //Player actions will be handled here
     //Will interact with PlayerSO and GateClasses
 
+    // we can make any of these methods non-static if needed
+
     public static void PlayerAttacksPlayer(PlayerSO p1, PlayerSO p2, int amount)
     {
         p2.health -= amount;
@@ -52,14 +54,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    void Start()
+    public static void NextTurn(List<PlayerSO> players, CardQueue cq) 
     {
-        
-    }
+        do {
+            PlayerSO nextPlayer = players[players.Count - 1];
+            players.RemoveAt(players.Count - 1);
+            players.Insert(0, nextPlayer);
+        } 
+        while (!players[0].isAlive);
 
-    void Update()
-    {
-        
+        cq.RepositionCards();
     }
 }
