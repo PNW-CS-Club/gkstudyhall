@@ -10,6 +10,7 @@ public class StateMachine
     List<PlayerSO> players;
 
     public TraitRollState traitRollState;
+    // public AttackingState attackingState;
 
     IState currentState;
 
@@ -17,6 +18,7 @@ public class StateMachine
         this.players = players;
 
         traitRollState = new(players);
+        // attackingState = ...
     }
 
     public void Initialize(IState state) {
