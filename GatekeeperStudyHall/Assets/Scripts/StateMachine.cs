@@ -10,6 +10,7 @@ public class StateMachine
     List<PlayerSO> players;
 
     public TraitRollState traitRollState;
+    public NoRollState noRollState;
     // public AttackingState attackingState;
 
     // avoid invoking this directly

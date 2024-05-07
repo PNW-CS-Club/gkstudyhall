@@ -39,6 +39,13 @@ public class TraitRollState : IState
 
 }
 
+// TEMP state for testing
+[Serializable]
+public class NoRollState : IState
+{
+    public void Enter() => Debug.Log("no more rolling");
+}
+
 
 /*
 [Serializable]

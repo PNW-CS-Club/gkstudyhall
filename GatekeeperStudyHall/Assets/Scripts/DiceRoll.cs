@@ -48,22 +48,36 @@ public class DiceRoll : MonoBehaviour
 
 
     int roll = -1;
+    bool userCanRoll = false;
     public UnityEvent<int> endEvent; // functions to be called after the dice is done rolling
 
 
-    void Awake() {
+    void OnEnable() 
+    {
         stateTester.stateMachine.stateChangedEvent += OnStateChanged;
     }
 
+    void OnDestroy() 
+    {
+        stateTester.stateMachine.stateChangedEvent -= OnStateChanged;
+    }
 
-    private void OnStateChanged(object sender, IState state) {
-        // magical C# construct that lets us easily chack the type of the state
-        bool canInteract = state switch {
+
+    // you can rely on this method to run whenever the state changes
+    private void OnStateChanged(object sender, IState state) 
+    {
+        // magical C# construct that lets us easily check the type of the state
+        userCanRoll = state switch 
+        {
             // only let the user interact with the dice during these states:
             TraitRollState => true,
+            //AttackingGateState => true,
+            //BreakingGateState => true,
+
             _ => false,
         };
-        Debug.Log($"canInteract: {canInteract}");
+
+        Debug.Log($"New state: {state.GetType()},  userCanRoll: {userCanRoll}");
     }
 
 
@@ -90,10 +104,10 @@ public class DiceRoll : MonoBehaviour
 
 
     // called whenever the dice is clicked on
-    public void MouseDownFunc() {
-        // we will likely have to change the condition here to account for
-        // all the times you are and aren't allowed to pick up the dice
-        if (!isSliding) {
+    public void MouseDownFunc() 
+    {
+        if (userCanRoll && !isSliding) 
+        {
             isHeld = true;
             shakeTimer = shakeInterval;
         }

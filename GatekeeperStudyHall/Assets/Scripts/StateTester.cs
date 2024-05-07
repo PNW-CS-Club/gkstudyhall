@@ -18,6 +18,9 @@ class StateTester : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Alpha1)) {
             stateMachine.TransitionTo(stateMachine.traitRollState);
         }
+        if (Input.GetKeyUp(KeyCode.Alpha2)) {
+            stateMachine.TransitionTo(stateMachine.noRollState);
+        }
 
         stateMachine.Update();
     }
