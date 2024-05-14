@@ -37,8 +37,7 @@ public class TraitHandlerSO : ScriptableObject
 
     public void ActivateTrait(PlayerSO player, int roll)
     {
-        // Trait trait = player.card.traits[roll-1];
-        Trait trait = Trait.plus1Health;
+        Trait trait = player.card.traits[roll - 1];
 
         switch (trait)
         {
@@ -96,6 +95,7 @@ public class TraitHandlerSO : ScriptableObject
 
             case Trait.minus2HP:
                 GameManager.PlayerChangeHealth(player, -2);
+                Debug.Log("Player took 2 damage");
                 break;
 
             case Trait.allMinus1HP:
