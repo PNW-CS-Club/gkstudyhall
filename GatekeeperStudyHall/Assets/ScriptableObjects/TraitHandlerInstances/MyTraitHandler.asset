@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76893895183749f4fbfa1b4389388a53, type: 3}
-  m_Name: Choosing Gate
+  m_Script: {fileID: 11500000, guid: 3346e94a9ee221f4a8c66b42f0783a24, type: 3}
+  m_Name: MyTraitHandler
   m_EditorClassIdentifier: 
-  gameState: 1
+  playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}

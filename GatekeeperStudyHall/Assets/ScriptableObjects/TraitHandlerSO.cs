@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 
-// warning: changing enum int values here causes them to desync in the editor
+// warning: changing enum int values here does not update them in the editor
 public enum Trait
 {
     [InspectorName("Deal 3 Damage")]                deal3Dam = 0,
@@ -22,15 +22,22 @@ public enum Trait
     [InspectorName("Gain Stockade")]                plusStockade = 12,
 }
 
-// static classes can't be instantiated
-public static class TraitHandler
-{
-    //[SerializeField] PlayerListSO playerListObject;
-    //List<PlayerSO> playerList = playerListObject.list; // refers to list in playerListObject
 
-    public static void ActivateTrait(PlayerSO player, int roll)
+[CreateAssetMenu(fileName = "New_TraitHandlerSO", menuName = "Scriptable Objects/TraitHandlerSO")]
+public class TraitHandlerSO : ScriptableObject
+{
+    [SerializeField] PlayerListSO playerListObject;
+    List<PlayerSO> players; // refers to list in playerListObject
+
+
+    void OnEnable() {
+        players = playerListObject.list;
+    }
+
+
+    public void ActivateTrait(PlayerSO player, int roll)
     {
-        // Trait trait = player.card.traits[roll];
+        // Trait trait = player.card.traits[roll-1];
         Trait trait = Trait.plus1Health;
 
         switch (trait)
@@ -92,11 +99,12 @@ public static class TraitHandler
                 break;
 
             case Trait.allMinus1HP:
+                //WARNING: This may currently be implemented incorrectly
                 //The current player's index should be 0
-                /*for(int i = 1; i < playerList.Count; i++){
-                    playerList[i] = GameManager.PlayerAttacksPlayer(playerList[0], playerList[i] , -1);
-                }*/
-                Debug.LogWarning("Trait allMinus1HP not implemented");
+                for(int i = 1; i < players.Count; i++){
+                    GameManager.PlayerAttacksPlayer(players[0], players[i] , -1);
+                }
+                //Debug.LogWarning("Trait allMinus1HP not implemented");
                 break;
 
             case Trait.chooseGateForOp:
