@@ -14,25 +14,29 @@ public class StateMachine
 
     IState currentState;
 
-    public StateMachine(List<PlayerSO> players) {
+    public StateMachine(List<PlayerSO> players) 
+    {
         this.players = players;
 
         traitRollState = new(players);
         // attackingState = ...
     }
 
-    public void Initialize(IState state) {
+    public void Initialize(IState state) 
+    {
         currentState = state;
         currentState.Enter();
     }
 
-    public void TransitionTo(IState state) {
+    public void TransitionTo(IState state) 
+    {
         currentState.Exit();
         currentState = state;
         currentState.Enter();
     }
 
-    public void Update() {
+    public void Update() 
+    {
         currentState.Update();
     }
 }

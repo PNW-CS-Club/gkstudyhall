@@ -25,14 +25,15 @@ public class TraitRollState : IState
     // this is just an example, idk if we want this to be visible in the inspector
     [SerializeField] TraitHandlerSO traitHandler;
 
-    public TraitRollState(List<PlayerSO> players) {
+    public TraitRollState(List<PlayerSO> players) 
+    {
         this.players = players;
     }
 
-
-    public void Enter() {
         roll = 4;
         traitHandler.ActivateTrait(players[0], roll);
+    public void Enter() 
+    {
     }
 
     public void Exit() => Debug.Log("Testing TraitRollState");
