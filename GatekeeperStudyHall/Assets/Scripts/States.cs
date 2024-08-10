@@ -20,9 +20,6 @@ public interface IState
 public class TraitRollState : IState
 {
     List<PlayerSO> players;
-    [SerializeField] int roll = 1; // I didnt know how we are tracking what the player gets when they roll.
-    // ^^^ we can use SerializeField here because TraitRollStates are Serializable
-    // this is just an example, idk if we want this to be visible in the inspector
     [SerializeField] TraitHandlerSO traitHandler;
 
     public TraitRollState(List<PlayerSO> players) 
@@ -30,14 +27,27 @@ public class TraitRollState : IState
         this.players = players;
     }
 
-        roll = 4;
-        traitHandler.ActivateTrait(players[0], roll);
     public void Enter() 
     {
+        Debug.Log($"It's {players[0].name}'s turn.");
+    }
+}
+
+
+[Serializable]
+public class ChoosingGateState : IState
+{
+    List<PlayerSO> players;
+    
+    public ChoosingGateState(List<PlayerSO> players) 
+    {
+        this.players = players;
     }
 
-    public void Exit() => Debug.Log("Testing TraitRollState");
-
+    public void Enter() 
+    {
+        Debug.Log("Time to choose a gate to attack.");
+    }
 }
 
 

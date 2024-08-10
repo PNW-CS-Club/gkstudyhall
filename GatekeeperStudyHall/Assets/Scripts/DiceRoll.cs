@@ -44,6 +44,7 @@ public class DiceRoll : MonoBehaviour
 
     [Space]
     [SerializeField] Sprite[] sprites; // the 6 dice faces
+    StateMachine stateMachine;
 
 
     int roll = -1;
@@ -59,6 +60,13 @@ public class DiceRoll : MonoBehaviour
         rb = GetComponentInChildren<Rigidbody2D>();
         barrier.SetActive(false);
     }
+
+
+    public void Initialize(StateMachine stateMachine) {
+        this.stateMachine = stateMachine;
+        endEvent.AddListener(_ => stateMachine.TransitionTo(stateMachine.choosingGateState));
+    }
+
 
     void Update() {
         if (isHeld) {
