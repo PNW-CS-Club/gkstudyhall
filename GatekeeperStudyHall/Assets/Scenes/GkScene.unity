@@ -150,18 +150,18 @@ PrefabInstance:
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1743183961}
+      objectReference: {fileID: 1085388488}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DiceRoll
+      value: ChooseGreenGate
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: RollButtonAction, Assembly-CSharp
+      value: GateButtonActions, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -284,18 +284,18 @@ PrefabInstance:
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1743183961}
+      objectReference: {fileID: 1085388488}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DiceRoll
+      value: ChooseBlackGate
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: RollButtonAction, Assembly-CSharp
+      value: GateButtonActions, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -665,7 +665,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9141685807667293640, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1085388488}
   m_SourcePrefab: {fileID: 100100000, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
 --- !u!1 &445861930
 GameObject:
@@ -1198,9 +1201,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1743183961}
-        m_TargetAssemblyTypeName: RollButtonAction, Assembly-CSharp
-        m_MethodName: DiceRoll
+      - m_Target: {fileID: 1085388488}
+        m_TargetAssemblyTypeName: GateButtonActions, Assembly-CSharp
+        m_MethodName: ChooseBlackGate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1330,9 +1333,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1743183961}
-        m_TargetAssemblyTypeName: RollButtonAction, Assembly-CSharp
-        m_MethodName: DiceRoll
+      - m_Target: {fileID: 1085388488}
+        m_TargetAssemblyTypeName: GateButtonActions, Assembly-CSharp
+        m_MethodName: ChooseGreenGate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1407,18 +1410,18 @@ PrefabInstance:
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1743183961}
+      objectReference: {fileID: 1085388488}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DiceRoll
+      value: ChooseBlueGate
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: RollButtonAction, Assembly-CSharp
+      value: GateButtonActions, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1551,6 +1554,23 @@ RectTransform:
   m_AnchoredPosition: {x: 287, y: 0}
   m_SizeDelta: {x: 160, y: 418.3522}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1085388485 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9141685807667293640, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+  m_PrefabInstance: {fileID: 413017097}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1085388488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085388485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7b3b53bc36d9f4c8b4a5d89420ad83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1168442432
 GameObject:
   m_ObjectHideFlags: 0
@@ -1633,9 +1653,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1743183961}
-        m_TargetAssemblyTypeName: RollButtonAction, Assembly-CSharp
-        m_MethodName: DiceRoll
+      - m_Target: {fileID: 1085388488}
+        m_TargetAssemblyTypeName: GateButtonActions, Assembly-CSharp
+        m_MethodName: ChooseBlueGate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1982,9 +2002,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1743183961}
-        m_TargetAssemblyTypeName: RollButtonAction, Assembly-CSharp
-        m_MethodName: DiceRoll
+      - m_Target: {fileID: 1085388488}
+        m_TargetAssemblyTypeName: GateButtonActions, Assembly-CSharp
+        m_MethodName: ChooseRedGate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2059,18 +2079,18 @@ PrefabInstance:
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1743183961}
+      objectReference: {fileID: 1085388488}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DiceRoll
+      value: ChooseRedGate
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: RollButtonAction, Assembly-CSharp
+      value: GateButtonActions, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2161,17 +2181,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
---- !u!114 &1743183961 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 790119601430045867, guid: 7f72cda20bcb62d46a6df062e20dbd0f, type: 3}
-  m_PrefabInstance: {fileID: 1175071093}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65a6c879ace24d54f8f91199342ec9bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2019695655
 GameObject:
   m_ObjectHideFlags: 0
@@ -2294,6 +2303,10 @@ PrefabInstance:
       propertyPath: diceRoll
       value: 
       objectReference: {fileID: 1177273988}
+    - target: {fileID: 3442155616907489254, guid: e034103e2926ec641a1b009b1fcad7e6, type: 3}
+      propertyPath: gateButtonActions
+      value: 
+      objectReference: {fileID: 1085388488}
     - target: {fileID: 8923845991972119183, guid: e034103e2926ec641a1b009b1fcad7e6, type: 3}
       propertyPath: m_Name
       value: Debugger

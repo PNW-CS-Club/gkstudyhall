@@ -14,6 +14,7 @@ public class StateMachine
     // public AttackingState attackingState;
 
     IState currentState;
+    public IState CurrentState { get => currentState; }
 
     public StateMachine(List<PlayerSO> players) 
     {

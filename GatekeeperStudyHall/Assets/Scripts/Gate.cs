@@ -12,7 +12,7 @@ public class Gate
     public static readonly int STARTING_HEALTH = 6;
     public static readonly int MAX_HEALTH = 6;
 
-    public readonly GateColor gateColor;
+    public readonly GateColor color;
 
     /// <summary>
     /// NOTE: If the player is being attacked, change their health through the GameManager methods.
@@ -20,9 +20,9 @@ public class Gate
     public int health = STARTING_HEALTH;
 
 
-    public Gate(GateColor gateColor) 
+    public Gate(GateColor color) 
     {
-        this.gateColor = gateColor;
+        this.color = color;
     }
 
 
@@ -35,7 +35,7 @@ public class Gate
         if (roll % 2 != 0) 
         {
             // odd roll, positive effect
-            switch (gateColor) 
+            switch (color) 
             {
                 case GateColor.BLACK:
                     /* TODO: damage center gate by 4 */ break;
@@ -53,7 +53,7 @@ public class Gate
         else 
         {
             // even roll, negative effect
-            switch (gateColor) 
+            switch (color) 
             {
                 case GateColor.BLACK:
                     GameManager.PlayerChangeHealth(player, -4); break;

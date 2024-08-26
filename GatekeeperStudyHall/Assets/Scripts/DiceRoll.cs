@@ -64,7 +64,7 @@ public class DiceRoll : MonoBehaviour
 
     public void Initialize(StateMachine stateMachine) {
         this.stateMachine = stateMachine;
-        endEvent.AddListener(_ => stateMachine.TransitionTo(stateMachine.choosingGateState));
+        endEvent.AddListener(_ => stateMachine.TransitionTo(this.stateMachine.choosingGateState));
     }
 
 

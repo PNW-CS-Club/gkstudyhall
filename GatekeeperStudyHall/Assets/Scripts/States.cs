@@ -29,7 +29,7 @@ public class TraitRollState : IState
 
     public void Enter() 
     {
-        Debug.Log($"It's {players[0].name}'s turn.");
+        Debug.Log($"It's {players[0].name}'s turn to roll their trait.");
     }
 }
 

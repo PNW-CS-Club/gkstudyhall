@@ -8,12 +8,14 @@ class StateTester : MonoBehaviour
     [SerializeField] PlayerListSO playerListObject;
     [SerializeField] StateMachine stateMachine;
     [SerializeField] DiceRoll diceRoll;
+    [SerializeField] GateButtonActions gateButtonActions;
 
     void Start() 
     {
         stateMachine = new StateMachine(playerListObject.list);
         stateMachine.Initialize(stateMachine.traitRollState);
         diceRoll.Initialize(stateMachine);
+        gateButtonActions.Initialize(stateMachine);
     }
 
     void Update() 
