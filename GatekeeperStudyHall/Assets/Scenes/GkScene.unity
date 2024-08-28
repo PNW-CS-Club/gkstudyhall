@@ -404,6 +404,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 905177514}
     - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: traitHandler
+      value: 
+      objectReference: {fileID: 11400000, guid: 1f0b0bb7746e7b7468212b593603fc26, type: 2}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
       propertyPath: endEvent.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}

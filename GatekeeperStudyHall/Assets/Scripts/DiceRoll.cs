@@ -12,6 +12,10 @@ public class DiceRoll : MonoBehaviour
     bool isHeld = false;
     bool isSliding = false;
 
+    StateMachine stateMachine;
+    [SerializeField] Sprite[] sprites; // the 6 dice faces
+    [SerializeField] TraitHandlerSO traitHandler;
+
 
     [Header("Shaking")]
     [SerializeField, Range(0f, 1f)] float shakeInterval = 0.1f;
@@ -42,13 +46,8 @@ public class DiceRoll : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
 
-    [Space]
-    [SerializeField] Sprite[] sprites; // the 6 dice faces
-    StateMachine stateMachine;
-
 
     int roll = -1;
-    public UnityEvent<int> endEvent; // functions to be called after the dice is done rolling
 
 
     void Start() {
@@ -64,7 +63,6 @@ public class DiceRoll : MonoBehaviour
 
     public void Initialize(StateMachine stateMachine) {
         this.stateMachine = stateMachine;
-        endEvent.AddListener(_ => stateMachine.TransitionTo(this.stateMachine.choosingGateState));
     }
 
 
@@ -169,15 +167,22 @@ public class DiceRoll : MonoBehaviour
             transform.position = rb.transform.position;
             rb.transform.localPosition = Vector2.zero;
 
+            // clean up
             barrier.SetActive(false);
-
             isSliding = false;
 
-            // call some function after the dice is done rolling
-            endEvent.Invoke(roll);
+            // the dice is done rolling; transition to whatever is next
+            FinishRollWithValue(roll);
         }
 
         slideTimer += Time.deltaTime;
+    }
+
+
+    private void FinishRollWithValue(int roll) 
+    {
+        traitHandler.ActivateCurrentPlayerTrait(roll);
+        stateMachine.TransitionTo(this.stateMachine.choosingGateState);
     }
 
 
