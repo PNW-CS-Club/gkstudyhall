@@ -28,11 +28,12 @@ public class GateButtonActions : MonoBehaviour
 
     public void ChooseGate(Gate gate) 
     {
-        if (stateMachine.CurrentState != stateMachine.choosingGateState) return;
+        if (stateMachine.CurrentState != stateMachine.choosingGateState) 
+            return;
 
-        Debug.Log($"Chose gate: {gate.color} (TODO: transition to attackingGateState)");
-        // TODO: save `gate` globally somewhere
-        //stateMachine.TransitionTo(stateMachine.attackingGateState);
+        Debug.Log($"Chose gate: {gate.color}");
+        Globals.chosenGate = gate;
+        stateMachine.TransitionTo(stateMachine.attackingGateState);
     }
 
 

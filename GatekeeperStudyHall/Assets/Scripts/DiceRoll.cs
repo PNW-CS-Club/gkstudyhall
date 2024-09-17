@@ -181,8 +181,21 @@ public class DiceRoll : MonoBehaviour
 
     private void FinishRollWithValue(int roll) 
     {
-        traitHandler.ActivateCurrentPlayerTrait(roll);
-        stateMachine.TransitionTo(this.stateMachine.choosingGateState);
+        if (stateMachine.CurrentState == stateMachine.traitRollState) 
+        {
+            traitHandler.ActivateCurrentPlayerTrait(roll);
+            stateMachine.TransitionTo(stateMachine.choosingGateState);
+        }
+        else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
+        {
+            Debug.Log($"attacking for {roll} damage (TODO: deal damage & transition to the next state)");
+            //GameManager.GateChangeHealth(?, Globals.chosenGate, roll);
+            //stateMachine.TransitionTo(the next state);
+        }
+        else 
+        {
+            Debug.LogError("The player should not be able to roll the dice now!");
+        }
     }
 
 

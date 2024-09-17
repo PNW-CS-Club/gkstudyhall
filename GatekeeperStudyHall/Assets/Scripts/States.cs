@@ -51,25 +51,5 @@ public class ChoosingGateState : IState
 }
 
 
-/*
 [Serializable]
-public class AttackingState: IState
-{
-    List<PlayerSO> players;
-    Gate the;
-    int roll;
-    public AttackingState(List<PlayerSO> players, Gate the){
-        this.players = players;
-        this.the = the;
-
-    }
-    public void Enter(){
-        roll = DiceRoll.roll;
-        GameManager.GateChangeHealth(players[0],the,roll);
-
-    }
-
-     public void Exit() => Debug.Log("Testing TraitRollState");
-    
-}*/
-
+public class AttackingGateState : IState { }

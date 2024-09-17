@@ -11,7 +11,7 @@ public class StateMachine
 
     public TraitRollState traitRollState;
     public ChoosingGateState choosingGateState;
-    // public AttackingState attackingState;
+    public AttackingGateState attackingGateState;
 
     IState currentState;
     public IState CurrentState { get => currentState; }
@@ -20,9 +20,9 @@ public class StateMachine
     {
         this.players = players;
 
-        traitRollState = new(players);
-        choosingGateState = new(players);
-        // attackingState = ...
+        traitRollState = new(this.players);
+        choosingGateState = new(this.players);
+        attackingGateState = new();
     }
 
     public void Initialize(IState state) 
