@@ -18,7 +18,9 @@ public class StateMachine
 
     IState currentState;
 
-    public void Initialize(List<PlayerSO> players, IState state) {
+
+    public void Initialize(List<PlayerSO> players, IState state) 
+    {
         this.players = players;
 
         traitRollState.Initialize(players);
@@ -29,19 +31,25 @@ public class StateMachine
         currentState.Enter();
     }
 
-    public void TransitionTo(IState state) {
+
+    public void TransitionTo(IState state) 
+    {
         currentState.Exit();
         currentState = state;
         OnStateChanged(state);
         currentState.Enter();
     }
 
-    public void Update() {
+
+    public void Update() 
+    {
         currentState.Update();
     }
 
+
     // call this function instead of using `stateChangedEvent.Invoke(this, state);`
-    protected virtual void OnStateChanged(IState state) {
+    protected virtual void OnStateChanged(IState state) 
+    {
         // this line is important to avoid some sort of race condition
         var handler = stateChangedEvent;
 

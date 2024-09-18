@@ -35,6 +35,11 @@ public class TraitHandlerSO : ScriptableObject
     }
 
 
+    public void ActivateCurrentPlayerTrait(int roll) {
+        ActivateTrait(players[0], roll);
+    }
+
+
     public void ActivateTrait(PlayerSO player, int roll)
     {
         // Trait trait = player.card.traits[roll-1];

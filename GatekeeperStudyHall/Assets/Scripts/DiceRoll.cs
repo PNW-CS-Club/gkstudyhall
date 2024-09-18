@@ -82,6 +82,7 @@ public class DiceRoll : MonoBehaviour
 
 
     void Start() {
+        Debug.Log("Press 1 to enable rolling and 2 to disable it");
         if (sprites.Length != 6) {
             Debug.LogError($"There should be 6 sprites in DiceRoll array (actual: {sprites.Length})");
         }
