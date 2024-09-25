@@ -45,8 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb7671422870a146abdd60f89822a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAngularVel: 1440
-  minAngularVel: 900
   sprites:
   - {fileID: 21300000, guid: 1dcc1b7c113db5441a722833636e41b2, type: 3}
   - {fileID: 21300000, guid: 4bbe84f8e7488ca418c89524c392787f, type: 3}
@@ -54,18 +52,33 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4fc443a48e0f5064bae59de6b4a57903, type: 3}
   - {fileID: 21300000, guid: 7aefc93d93baf3a49a42e7e6d80b449d, type: 3}
   - {fileID: 21300000, guid: 6bb3ee664807ea7438df02d6d85468c8, type: 3}
+  traitHandler: {fileID: 11400000, guid: 1f0b0bb7746e7b7468212b593603fc26, type: 2}
   shakeInterval: 0.1
-  slideDuration: 0.75
-  frictionFactor: 0.002
+  maxAngularVel: 1440
+  minAngularVel: 900
   shakeSpeed: 3
   shakeRadius: 0.25
   releaseMultiplier: 12
+  frictionFactor: 0.002
+  slideDuration: 0.75
   topLeftBound: {x: -11.55556, y: 6.5}
   bottomRightBound: {x: 11.55556, y: -6.5}
   barrier: {fileID: 0}
   endEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 1f0b0bb7746e7b7468212b593603fc26, type: 2}
+        m_TargetAssemblyTypeName: TraitHandlerSO, Assembly-CSharp
+        m_MethodName: ActivateCurrentPlayerTrait
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5034943975444139374
 GameObject:
   m_ObjectHideFlags: 0

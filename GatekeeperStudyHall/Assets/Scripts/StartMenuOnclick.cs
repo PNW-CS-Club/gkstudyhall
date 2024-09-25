@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HandleOnclick : MonoBehaviour
+public class StartMenuOnclick : MonoBehaviour
 {
     public void StartGame() {
         // loads the main game scene asynchronously to prevent stutter

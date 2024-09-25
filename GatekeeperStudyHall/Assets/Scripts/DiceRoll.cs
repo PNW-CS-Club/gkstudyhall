@@ -12,6 +12,10 @@ public class DiceRoll : MonoBehaviour
     bool isHeld = false;
     bool isSliding = false;
 
+    [SerializeField] StateTester stateTester;
+    [SerializeField] Sprite[] sprites; // the 6 dice faces
+    [SerializeField] TraitHandlerSO traitHandler;
+
 
     [Header("Shaking")]
     [SerializeField, Range(0f, 1f)] float shakeInterval = 0.1f;
@@ -42,10 +46,6 @@ public class DiceRoll : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
 
-    [Space]
-    [SerializeField] Sprite[] sprites; // the 6 dice faces
-    [SerializeField] StateTester stateTester;
-
 
     int roll = -1;
     bool userCanRoll = false;
@@ -71,7 +71,7 @@ public class DiceRoll : MonoBehaviour
         {
             // only let the user interact with the dice during these states:
             TraitRollState => true,
-            //AttackingGateState => true,
+            AttackingGateState => true,
             //BreakingGateState => true,
 
             _ => false,
@@ -82,7 +82,6 @@ public class DiceRoll : MonoBehaviour
 
 
     void Start() {
-        Debug.Log("Press 1 to enable rolling and 2 to disable it");
         if (sprites.Length != 6) {
             Debug.LogError($"There should be 6 sprites in DiceRoll array (actual: {sprites.Length})");
         }
@@ -194,15 +193,48 @@ public class DiceRoll : MonoBehaviour
             transform.position = rb.transform.position;
             rb.transform.localPosition = Vector2.zero;
 
+            // clean up
             barrier.SetActive(false);
-
             isSliding = false;
 
-            // call some function after the dice is done rolling
-            endEvent.Invoke(roll);
+            // the dice is done rolling; transition to whatever is next
+            FinishRollWithValue(roll);
         }
 
         slideTimer += Time.deltaTime;
+    }
+
+
+    private void FinishRollWithValue(int roll) 
+    {
+        var stateMachine = stateTester.stateMachine;
+
+        if (stateMachine.CurrentState == stateMachine.traitRollState) 
+        {
+            if(roll <= 4){
+                traitHandler.ActivateCurrentPlayerTrait(roll);
+            }
+            else if(roll == 5){
+                //skip turn
+                Debug.Log("(TODO: Implement transition to next player traitRollState)");
+            }
+            else{
+                //player rolls a 6, initiate battle with another player
+                Debug.Log("(TODO: Implement battling with another player)");
+            }
+            
+            stateMachine.TransitionTo(stateMachine.choosingGateState);
+        }
+        else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
+        {
+            Debug.Log($"attacking for {roll} damage (TODO: deal damage & transition to the next state)");
+            //GameManager.GateChangeHealth(?, Globals.chosenGate, roll);
+            //stateMachine.TransitionTo(the next state);
+        }
+        else 
+        {
+            Debug.LogError("The player should not be able to roll the dice now!");
+        }
     }
 
 

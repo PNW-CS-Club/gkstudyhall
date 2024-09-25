@@ -10,13 +10,14 @@ public class StateMachine
     List<PlayerSO> players;
 
     public TraitRollState traitRollState;
-    public NoRollState noRollState;
-    // public AttackingState attackingState;
+    public ChoosingGateState choosingGateState;
+    public AttackingGateState attackingGateState;
 
     // avoid invoking this directly
     [HideInInspector] public event EventHandler<IState> stateChangedEvent; 
 
     IState currentState;
+    public IState CurrentState { get => currentState; }
 
 
     public void Initialize(List<PlayerSO> players, IState state) 
@@ -24,13 +25,12 @@ public class StateMachine
         this.players = players;
 
         traitRollState.Initialize(players);
-        // attackingState ...
+        choosingGateState.Initialize(players);
 
         currentState = state;
         OnStateChanged(state);
         currentState.Enter();
     }
-
 
     public void TransitionTo(IState state) 
     {
@@ -39,7 +39,6 @@ public class StateMachine
         OnStateChanged(state);
         currentState.Enter();
     }
-
 
     public void Update() 
     {
