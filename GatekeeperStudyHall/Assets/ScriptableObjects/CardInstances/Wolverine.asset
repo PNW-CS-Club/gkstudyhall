@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93143415c82fab74d9f6add02829aa7e, type: 3}
   m_Name: Wolverine
   m_EditorClassIdentifier: 
-  name: Wolverine
+  characterName: Wolverine
   origin: Riistifar
   title: Creator of the AntiMage Council
   element: Death
@@ -26,6 +26,7 @@ MonoBehaviour:
   - -2 to gate attack roll
   - Gain 1 health
   - Double gate abilities this turn
+  traits: 
   flavorText: '"I''ll pop my claws and mangle your paws!"'
   flavorTextColor: {r: 0, g: 0, b: 0, a: 1}
   outerColor: {r: 0.4156863, g: 0.56078434, b: 0.6862745, a: 1}

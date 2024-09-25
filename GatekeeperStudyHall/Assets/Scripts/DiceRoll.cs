@@ -44,13 +44,45 @@ public class DiceRoll : MonoBehaviour
 
     [Space]
     [SerializeField] Sprite[] sprites; // the 6 dice faces
+    [SerializeField] StateTester stateTester;
 
 
     int roll = -1;
+    bool userCanRoll = false;
     public UnityEvent<int> endEvent; // functions to be called after the dice is done rolling
 
 
+    void OnEnable() 
+    {
+        stateTester.stateMachine.stateChangedEvent += OnStateChanged;
+    }
+
+    void OnDestroy() 
+    {
+        stateTester.stateMachine.stateChangedEvent -= OnStateChanged;
+    }
+
+
+    // you can rely on this method to run whenever the state changes
+    private void OnStateChanged(object sender, IState state) 
+    {
+        // magical C# construct that lets us easily check the type of the state
+        userCanRoll = state switch 
+        {
+            // only let the user interact with the dice during these states:
+            TraitRollState => true,
+            //AttackingGateState => true,
+            //BreakingGateState => true,
+
+            _ => false,
+        };
+
+        Debug.Log($"New state: {state.GetType()},  userCanRoll: {userCanRoll}");
+    }
+
+
     void Start() {
+        Debug.Log("Press 1 to enable rolling and 2 to disable it");
         if (sprites.Length != 6) {
             Debug.LogError($"There should be 6 sprites in DiceRoll array (actual: {sprites.Length})");
         }
@@ -59,6 +91,7 @@ public class DiceRoll : MonoBehaviour
         rb = GetComponentInChildren<Rigidbody2D>();
         barrier.SetActive(false);
     }
+
 
     void Update() {
         if (isHeld) {
@@ -72,10 +105,10 @@ public class DiceRoll : MonoBehaviour
 
 
     // called whenever the dice is clicked on
-    public void MouseDownFunc() {
-        // we will likely have to change the condition here to account for
-        // all the times you are and aren't allowed to pick up the dice
-        if (!isSliding) {
+    public void MouseDownFunc() 
+    {
+        if (userCanRoll && !isSliding) 
+        {
             isHeld = true;
             shakeTimer = shakeInterval;
         }

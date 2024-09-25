@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93143415c82fab74d9f6add02829aa7e, type: 3}
   m_Name: Dova
   m_EditorClassIdentifier: 
-  name: Dova
+  characterName: Dova
   origin: 
   title: 
   element: 
@@ -26,6 +26,7 @@ MonoBehaviour:
   - -2 to gate attack roll
   - Take no damage this turn
   - Deal 4 damage to Gatekeeper
+  traits: 
   flavorText: 
   flavorTextColor: {r: 0, g: 0, b: 0, a: 1}
   outerColor: {r: 0.49411765, g: 0.4862745, b: 0.4862745, a: 1}
