@@ -6,24 +6,18 @@ using UnityEngine;
 class StateTester : MonoBehaviour
 {
     [SerializeField] PlayerListSO playerListObject;
-    [SerializeField] StateMachine stateMachine;
+    public StateMachine stateMachine;
     [SerializeField] DiceRoll diceRoll;
     [SerializeField] GateButtonActions gateButtonActions;
 
     void Start() 
     {
-        stateMachine = new StateMachine(playerListObject.list);
-        stateMachine.Initialize(stateMachine.traitRollState);
-        diceRoll.Initialize(stateMachine);
+        stateMachine.Initialize(playerListObject.list, stateMachine.traitRollState);
         gateButtonActions.Initialize(stateMachine);
     }
 
     void Update() 
     {
-        if (Input.GetKeyUp(KeyCode.Alpha1)) {
-            stateMachine.TransitionTo(stateMachine.traitRollState);
-        }
-
         stateMachine.Update();
     }
 }

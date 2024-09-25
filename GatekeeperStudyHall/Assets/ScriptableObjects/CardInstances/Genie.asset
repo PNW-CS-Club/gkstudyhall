@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93143415c82fab74d9f6add02829aa7e, type: 3}
-  m_Name: Genie of the East
+  m_Name: Genie
   m_EditorClassIdentifier: 
-  name: Genie of the East
+  characterName: Genie of the East
   origin: 
   title: 
   element: 

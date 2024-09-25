@@ -83,7 +83,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // set the display's colors, text, and art to the values in the current CardSO
     private void UpdateDisplay() {
         if (cardData != null) {
-            transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = cardData.name;
+            transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = cardData.characterName;
 
             transform.GetChild(1).GetComponent<Image>().color = cardData.outerColor;
             transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = cardData.art;

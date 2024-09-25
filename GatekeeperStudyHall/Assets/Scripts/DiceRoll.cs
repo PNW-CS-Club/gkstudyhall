@@ -12,7 +12,7 @@ public class DiceRoll : MonoBehaviour
     bool isHeld = false;
     bool isSliding = false;
 
-    StateMachine stateMachine;
+    [SerializeField] StateTester stateTester;
     [SerializeField] Sprite[] sprites; // the 6 dice faces
     [SerializeField] TraitHandlerSO traitHandler;
 
@@ -48,6 +48,37 @@ public class DiceRoll : MonoBehaviour
 
 
     int roll = -1;
+    bool userCanRoll = false;
+    public UnityEvent<int> endEvent; // functions to be called after the dice is done rolling
+
+
+    void OnEnable() 
+    {
+        stateTester.stateMachine.stateChangedEvent += OnStateChanged;
+    }
+
+    void OnDestroy() 
+    {
+        stateTester.stateMachine.stateChangedEvent -= OnStateChanged;
+    }
+
+
+    // you can rely on this method to run whenever the state changes
+    private void OnStateChanged(object sender, IState state) 
+    {
+        // magical C# construct that lets us easily check the type of the state
+        userCanRoll = state switch 
+        {
+            // only let the user interact with the dice during these states:
+            TraitRollState => true,
+            AttackingGateState => true,
+            //BreakingGateState => true,
+
+            _ => false,
+        };
+
+        Debug.Log($"New state: {state.GetType()},  userCanRoll: {userCanRoll}");
+    }
 
 
     void Start() {
@@ -58,11 +89,6 @@ public class DiceRoll : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponentInChildren<Rigidbody2D>();
         barrier.SetActive(false);
-    }
-
-
-    public void Initialize(StateMachine stateMachine) {
-        this.stateMachine = stateMachine;
     }
 
 
@@ -78,10 +104,10 @@ public class DiceRoll : MonoBehaviour
 
 
     // called whenever the dice is clicked on
-    public void MouseDownFunc() {
-        // we will likely have to change the condition here to account for
-        // all the times you are and aren't allowed to pick up the dice
-        if (!isSliding) {
+    public void MouseDownFunc() 
+    {
+        if (userCanRoll && !isSliding) 
+        {
             isHeld = true;
             shakeTimer = shakeInterval;
         }
@@ -181,6 +207,8 @@ public class DiceRoll : MonoBehaviour
 
     private void FinishRollWithValue(int roll) 
     {
+        var stateMachine = stateTester.stateMachine;
+
         if (stateMachine.CurrentState == stateMachine.traitRollState) 
         {
             traitHandler.ActivateCurrentPlayerTrait(roll);

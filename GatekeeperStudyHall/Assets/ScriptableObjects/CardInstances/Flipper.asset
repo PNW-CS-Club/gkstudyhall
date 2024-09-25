@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93143415c82fab74d9f6add02829aa7e, type: 3}
   m_Name: Flipper
   m_EditorClassIdentifier: 
-  name: Flipper
+  characterName: Flipper
   origin: 
   title: 
   element: 
@@ -26,6 +26,7 @@ MonoBehaviour:
   - Take 2 damage
   - Deal 1 damage to all opponents
   - Choose a gate for an opponent
+  traits: 
   flavorText: 
   flavorTextColor: {r: 0, g: 0, b: 0, a: 1}
   outerColor: {r: 0.80392164, g: 0.8196079, b: 0.91372555, a: 1}

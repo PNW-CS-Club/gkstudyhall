@@ -36,7 +36,7 @@ public class TraitRollState : IState
     List<PlayerSO> players;
     [SerializeField] TraitHandlerSO traitHandler;
 
-    public TraitRollState(List<PlayerSO> players) 
+    public void Initialize(List<PlayerSO> players) 
     {
         this.players = players;
     }
@@ -57,7 +57,7 @@ public class ChoosingGateState : IState
 {
     List<PlayerSO> players;
     
-    public ChoosingGateState(List<PlayerSO> players) 
+    public void Initialize(List<PlayerSO> players) 
     {
         this.players = players;
     }
