@@ -20,6 +20,8 @@ public class StateMachine
     {
         this.players = players;
 
+        // TODO: instances of these states already exist because they are serializable,
+        // use an initialize method to give them access to `players` instead of overwriting them with new
         traitRollState = new(this.players);
         choosingGateState = new(this.players);
         attackingGateState = new();
