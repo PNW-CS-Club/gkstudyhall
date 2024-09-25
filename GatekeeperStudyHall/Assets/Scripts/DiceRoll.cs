@@ -211,7 +211,18 @@ public class DiceRoll : MonoBehaviour
 
         if (stateMachine.CurrentState == stateMachine.traitRollState) 
         {
-            traitHandler.ActivateCurrentPlayerTrait(roll);
+            if(roll <= 4){
+                traitHandler.ActivateCurrentPlayerTrait(roll);
+            }
+            else if(roll == 5){
+                //skip turn
+                Debug.Log("(TODO: Implement transition to next player traitRollState)");
+            }
+            else{
+                //player rolls a 6, initiate battle with another player
+                Debug.Log("(TODO: Implement battling with another player)");
+            }
+            
             stateMachine.TransitionTo(stateMachine.choosingGateState);
         }
         else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
