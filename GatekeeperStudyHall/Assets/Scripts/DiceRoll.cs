@@ -7,6 +7,10 @@ using UnityEngine.Events;
 using UnityEditor;
 #endif
 
+/// <summary>
+/// This MonoBehavior is in charge of making the dice animate when the user interacts with it
+/// and triggering the relevant code when the dice is done rolling.
+/// </summary>
 public class DiceRoll : MonoBehaviour
 {
     bool isHeld = false;
@@ -50,6 +54,7 @@ public class DiceRoll : MonoBehaviour
     int roll = -1;
     bool userCanRoll = false;
     public UnityEvent<int> endEvent; // functions to be called after the dice is done rolling
+    // TODO: remove endEvent and put its functionality in FinishRollWithValue
 
 
     void OnEnable() 
@@ -63,7 +68,11 @@ public class DiceRoll : MonoBehaviour
     }
 
 
-    // you can rely on this method to run whenever the state changes
+    /// <summary>
+    /// Adjusts whether the user is allowed to roll the dice based on the new state. 
+    /// This method is called anytime the state changes. 
+    /// </summary>
+    /// <param name="state">The newly active state.</param>
     private void OnStateChanged(object sender, IState state) 
     {
         // magical C# construct that lets us easily check the type of the state
@@ -103,7 +112,10 @@ public class DiceRoll : MonoBehaviour
     }
 
 
-    // called whenever the dice is clicked on
+    /// <summary>
+    /// Method called whenever the user mouses down on the dice.
+    /// If the user is allowed to pick up the dice now, it begins shaking.
+    /// </summary>
     public void MouseDownFunc() 
     {
         if (userCanRoll && !isSliding) 
@@ -114,6 +126,9 @@ public class DiceRoll : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Continues the process of shaking the dice.
+    /// </summary>
     private void UpdateHeldDice() {
 
         // move the dice base to the mouse's x and y position
@@ -153,7 +168,10 @@ public class DiceRoll : MonoBehaviour
     }
 
 
-    // called whenever the dice stops being clicked on
+    /// <summary>
+    /// Method called whenever the user mouses up on the dice.
+    /// Stops shaking the dice, determines its final value, and begins to slide it.
+    /// </summary>
     public void MouseUpFunc() {
         if (!isHeld) {
             return;
@@ -176,6 +194,10 @@ public class DiceRoll : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Continues to slide the dice until <c>slideDuration</c> has passed.
+    /// If it has, cleans up and calls <c>FinishRollWithValue</c>.
+    /// </summary>
     private void UpdateSlidingDice() {
         // apply friction
         rb.angularVelocity *= Mathf.Pow(frictionFactor, Time.deltaTime);
@@ -205,6 +227,10 @@ public class DiceRoll : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Performs the action expected to happen at the end of the dice roll, depending on the state.
+    /// </summary>
+    /// <param name="roll">The rolled value of the dice.</param>
     private void FinishRollWithValue(int roll) 
     {
         var stateMachine = stateTester.stateMachine;
@@ -213,17 +239,16 @@ public class DiceRoll : MonoBehaviour
         {
             if(roll <= 4){
                 traitHandler.ActivateCurrentPlayerTrait(roll);
+                stateMachine.TransitionTo(stateMachine.choosingGateState);
             }
-            else if(roll == 5){
+            else if(roll == 6){
                 //skip turn
                 Debug.Log("(TODO: Implement transition to next player traitRollState)");
             }
             else{
-                //player rolls a 6, initiate battle with another player
+                //player rolls a 5, initiate battle with another player
                 Debug.Log("(TODO: Implement battling with another player)");
             }
-            
-            stateMachine.TransitionTo(stateMachine.choosingGateState);
         }
         else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
         {
@@ -238,7 +263,10 @@ public class DiceRoll : MonoBehaviour
     }
 
 
-    // restricts the dice's position so that it is between topLeftBound and bottomRightBound
+    /// <summary>
+    /// Restricts the dice's position so that it is inside the rectangle
+    /// formed by <c>topLeftBound</c> and <c>bottomRightBound</c>
+    /// </summary>
     private void ClampDice() {
         Vector2 clampedPosition = rb.transform.position;
         clampedPosition.x = Mathf.Clamp(clampedPosition.x, topLeftBound.x, bottomRightBound.x);
