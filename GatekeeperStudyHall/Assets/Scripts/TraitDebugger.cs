@@ -7,9 +7,13 @@ using UnityEditor;
 #endif
 
 
+/// <summary>
+/// A simple debug class that has a button in the inspector. 
+/// When the button is clicked, it activates the specified trait of the specified player.
+/// </summary>
 public class TraitDebugger : MonoBehaviour {
     public TraitHandlerSO traitHandler = null;
-    public PlayerSO playerInfo = null;
+    public PlayerSO player = null;
     public int roll = 1;
 }
 
@@ -24,13 +28,13 @@ public class TraitDebuggerEditor : Editor
 
         TraitDebugger dbg = (TraitDebugger)target;
 
-        if (dbg.roll < 1) { dbg.roll = 1; }
-        if (dbg.roll > 4) { dbg.roll = 4; }
+        dbg.roll = Mathf.Clamp(dbg.roll, 1, 4);
 
-        if (dbg.playerInfo != null
+        if (dbg.player != null
             && dbg.traitHandler != null
-            && GUILayout.Button($"traitHandler.ActivateTrait(<{dbg.playerInfo.name}>, {dbg.roll})")) {
-            dbg.traitHandler.ActivateTrait(dbg.playerInfo, dbg.roll);
+            && GUILayout.Button($"traitHandler.ActivateTrait(<{dbg.player.name}>, {dbg.roll})")) 
+        {
+            dbg.traitHandler.ActivateTrait(dbg.player, dbg.roll);
         }
     }
 }

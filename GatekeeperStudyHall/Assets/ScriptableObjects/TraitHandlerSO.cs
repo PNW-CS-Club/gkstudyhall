@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 
-// warning: changing enum int values here does not update them in the editor
+/// <summary>
+/// Represents the different types of traits that cards can have. 
+/// </summary>
 public enum Trait
 {
+    // warning: changing enum int values here does not update them in the editor
     [InspectorName("Deal 3 Damage")]                deal3Dam = 0,
     [InspectorName("-2 to Gate Roll")]              minus2gate = 1,
     [InspectorName("+1 Health")]                    plus1Health = 2,
@@ -23,26 +25,45 @@ public enum Trait
 }
 
 
+/// <summary>
+/// Has methods that perform the traits of given players at given rolls.
+/// </summary>
 [CreateAssetMenu(fileName = "New_TraitHandlerSO", menuName = "Scriptable Objects/TraitHandlerSO")]
-public class TraitHandlerSO : ScriptableObject
+public class TraitHandlerSO : ScriptableObject // why not make this a MonoBehavior?
 {
     [SerializeField] PlayerListSO playerListObject;
     List<PlayerSO> players; // refers to list in playerListObject
 
 
+    // We use OnEnable instead of Start here because this is a ScriptableObject
     void OnEnable() {
         players = playerListObject.list;
     }
 
-
+    /// <summary>
+    /// Determines the trait of the player whose turn it is at the given roll. 
+    /// Then performs the actions that that trait describes.
+    /// </summary>
+    /// <param name="roll">The roll (1-4) that the trait corresponds to.</param>
     public void ActivateCurrentPlayerTrait(int roll) 
     {
         ActivateTrait(players[0], roll);
     }
 
 
+    /// <summary>
+    /// Determines the trait to activate using the player and the roll. 
+    /// Then performs the actions that that trait describes.
+    /// </summary>
+    /// <param name="player">The player whose trait is being activated.</param>
+    /// <param name="roll">The roll (1-4) that the trait corresponds to.</param>
     public void ActivateTrait(PlayerSO player, int roll)
     {
+        if (roll > 4) {
+            Debug.LogError("Cannot activate trait with roll more than 4");
+            return;
+        }
+
         Trait trait = player.card.traits[roll - 1];
 
         switch (trait)
@@ -105,12 +126,11 @@ public class TraitHandlerSO : ScriptableObject
                 break;
 
             case Trait.allMinus1HP:
-                //WARNING: This may currently be implemented incorrectly
-                //The current player's index should be 0
-                for(int i = 1; i < players.Count; i++){
-                    GameManager.PlayerAttacksPlayer(players[0], players[i] , -1);
+                // WARNING: This may be implemented incorrectly
+                // Note: the index of the current player is always 0
+                for (int i = 1; i < players.Count; i++) {
+                    GameManager.PlayerAttacksPlayer(players[0], players[i], -1);
                 }
-                //Debug.LogWarning("Trait allMinus1HP not implemented");
                 break;
 
             case Trait.chooseGateForOp:
@@ -122,7 +142,7 @@ public class TraitHandlerSO : ScriptableObject
                 break;
 
             default:
-                //We shouldn't ever reach this statement.
+                // We shouldn't ever reach this statement.
                 Debug.LogError($"Trait not handled: {trait}");
                 break;
         }

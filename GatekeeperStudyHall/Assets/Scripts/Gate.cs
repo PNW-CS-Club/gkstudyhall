@@ -6,17 +6,17 @@ public enum GateColor
     BLACK = 0, GREEN = 1, RED = 2, BLUE = 3
 }
 
+
+/// <summary>
+/// Represents a gate with its color and health.
+/// </summary>
 [Serializable]
-public class Gate 
+public class Gate  // TODO: consider making this a MonoBehavior, SO, or even just a hashmap of health values
 {
     public static readonly int STARTING_HEALTH = 6;
     public static readonly int MAX_HEALTH = 6;
 
     public readonly GateColor color;
-
-    /// <summary>
-    /// NOTE: If the player is being attacked, change their health through the GameManager methods.
-    /// </summary>
     public int health = STARTING_HEALTH;
 
 
