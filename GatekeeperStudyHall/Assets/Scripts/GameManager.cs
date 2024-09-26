@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Handles actions related to health, damage, and turn flow.
+/// Provides methods for actions related to health, damage, and turn flow.
 /// </summary>
 public class GameManager : MonoBehaviour  // if this is the "Game Manager" then why isn't it at the top of the call hierarchy?
 {
