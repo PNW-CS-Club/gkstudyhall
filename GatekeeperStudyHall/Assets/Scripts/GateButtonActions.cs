@@ -19,7 +19,7 @@ public class GateButtonActions : MonoBehaviour
     Gate greenGate;
     Gate blackGate;
 
-    StateMachine stateMachine;
+    [SerializeField] StateMachine stateMachine;
 
 
     void Start()
@@ -28,14 +28,6 @@ public class GateButtonActions : MonoBehaviour
         blueGate = new Gate(GateColor.BLUE);
         greenGate = new Gate(GateColor.GREEN);
         blackGate = new Gate(GateColor.BLACK);
-    }
-
-    /// <summary>
-    /// Supplies the <c>GateButtonActions</c> instance with a reference to the state machine.
-    /// </summary>
-    public void Initialize(StateMachine stateMachine) 
-    {
-        this.stateMachine = stateMachine;
     }
 
 

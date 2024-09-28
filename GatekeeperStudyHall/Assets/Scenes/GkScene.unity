@@ -406,7 +406,11 @@ PrefabInstance:
     - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
       propertyPath: stateTester
       value: 
-      objectReference: {fileID: 1929277366}
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: stateMachine
+      value: 
+      objectReference: {fileID: 1085388489}
     - target: {fileID: 3541283527795119838, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
       propertyPath: m_Name
       value: Dice Base
@@ -1518,6 +1522,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7b3b53bc36d9f4c8b4a5d89420ad83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1085388489 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1430531344522203847, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+  m_PrefabInstance: {fileID: 413017097}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3b295ef571cf940b16e7feb2de4ce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1168442432
 GameObject:
   m_ObjectHideFlags: 0
@@ -2099,17 +2114,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
---- !u!114 &1929277366 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3442155616907489254, guid: e034103e2926ec641a1b009b1fcad7e6, type: 3}
-  m_PrefabInstance: {fileID: 8032676241996327843}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9aa23e33b178fc4d8c8f8d24169a5d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2019695655
 GameObject:
   m_ObjectHideFlags: 0
@@ -2236,7 +2240,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Debugger
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3442155616907489254, guid: e034103e2926ec641a1b009b1fcad7e6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

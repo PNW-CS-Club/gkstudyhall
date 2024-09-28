@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[Serializable]
-public class StateMachine  // TODO: make this class derive from MonoBehavior
+/// <summary>
+/// The <c>StateMachine</c> class holds an <c>IState</c> object that represents the state that the program is in.
+/// It also stores and initializes all of the instances of the states.
+/// </summary>
+public class StateMachine : MonoBehaviour
 {
-    List<PlayerSO> players;
+    [SerializeField] PlayerListSO playerListSO;
 
     public TraitRollState traitRollState;
     public ChoosingGateState choosingGateState;
@@ -17,7 +20,7 @@ public class StateMachine  // TODO: make this class derive from MonoBehavior
     /// This event is triggered whenever the state changes. 
     /// You can subscribe and unsubscribe to it freely, but avoid invoking it directly.
     /// </summary>
-    [HideInInspector] public event EventHandler<IState> stateChangedEvent; 
+    [HideInInspector] public event EventHandler<IState> StateChangedEvent; 
 
     // This setup allows code outside this class to read the current state but not write to it.
     public IState CurrentState { get => currentState; }
@@ -25,20 +28,23 @@ public class StateMachine  // TODO: make this class derive from MonoBehavior
 
 
     /// <summary>
-    /// Because <c>StateMachine</c> is <c>Serializable</c>, instances are created before the game starts, 
-    /// so instead of a constructor or Start method, we need this <c>Initialize</c> method to give it its proper initial values.
+    /// Initializes the states that live in the <c>StateMachine</c>, and then enters the initial state.
     /// </summary>
-    public void Initialize(List<PlayerSO> players, IState state) 
+    void Start() 
     {
-        this.players = players;
+        traitRollState.Initialize(playerListSO.list);
+        choosingGateState.Initialize(playerListSO.list);
 
-        traitRollState.Initialize(players);
-        choosingGateState.Initialize(players);
-
-        currentState = state;
-        BroadcastStateWasChanged(state);
+        currentState = traitRollState;
+        StateChangedEvent?.Invoke(this, currentState);
         currentState.Enter();
     }
+
+    void Update() 
+    {
+        currentState.Update();
+    }
+
 
     /// <summary>
     /// Transitions from the previous state to the given next state.
@@ -48,25 +54,8 @@ public class StateMachine  // TODO: make this class derive from MonoBehavior
     {
         currentState.Exit();
         currentState = state;
-        BroadcastStateWasChanged(state);
+        StateChangedEvent?.Invoke(this, currentState);
         currentState.Enter();
-    }
-
-    public void Update() 
-    {
-        currentState.Update();
-    }
-
-
-    // call this function instead of using `stateChangedEvent.Invoke(this, state);`
-    private void BroadcastStateWasChanged(IState state) 
-    {
-        // this line is important to avoid some sort of race condition
-        var broadcaster = stateChangedEvent;
-
-        if (broadcaster != null) {
-            broadcaster(this, state);
-        }
     }
 }
 
