@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28b3404748e1fbb4e880834201a6e93c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  traitHandler: {fileID: 11400000, guid: 1f0b0bb7746e7b7468212b593603fc26, type: 2}
-  player: {fileID: 0}
+  traitHandler: {fileID: 0}
+  player: {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
   roll: 1

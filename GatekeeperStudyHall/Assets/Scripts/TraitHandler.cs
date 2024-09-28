@@ -28,15 +28,13 @@ public enum Trait
 /// <summary>
 /// Has methods that perform the traits of given players at given rolls.
 /// </summary>
-[CreateAssetMenu(fileName = "New_TraitHandlerSO", menuName = "Scriptable Objects/TraitHandlerSO")]
-public class TraitHandlerSO : ScriptableObject // why not make this a MonoBehavior?
+public class TraitHandler : MonoBehaviour
 {
     [SerializeField] PlayerListSO playerListObject;
     List<PlayerSO> players; // refers to list in playerListObject
 
 
-    // We use OnEnable instead of Start here because this is a ScriptableObject
-    void OnEnable() {
+    void Start() {
         players = playerListObject.list;
     }
 

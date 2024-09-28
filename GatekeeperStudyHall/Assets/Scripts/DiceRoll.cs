@@ -18,7 +18,7 @@ public class DiceRoll : MonoBehaviour
 
     [SerializeField] StateMachine stateMachine;
     [SerializeField] Sprite[] sprites; // the 6 dice faces
-    [SerializeField] TraitHandlerSO traitHandler;
+    [SerializeField] TraitHandler traitHandler;
 
 
     [Header("Shaking")]

@@ -34,7 +34,6 @@ public interface IState
 public class TraitRollState : IState
 {
     List<PlayerSO> players;
-    [SerializeField] TraitHandlerSO traitHandler;
 
     public void Initialize(List<PlayerSO> players) 
     {
