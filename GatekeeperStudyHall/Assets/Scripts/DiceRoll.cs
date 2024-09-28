@@ -17,6 +17,8 @@ public class DiceRoll : MonoBehaviour
     bool isSliding = false;
 
     [SerializeField] StateMachine stateMachine;
+
+    [SerializeField] GameManager gameManager;
     [SerializeField] Sprite[] sprites; // the 6 dice faces
     [SerializeField] TraitHandler traitHandler;
 
@@ -222,6 +224,8 @@ public class DiceRoll : MonoBehaviour
         }
 
         slideTimer += Time.deltaTime;
+
+        // TODO: Change this function into public int FinishRollWithValue() and return the roll so that GameManager can use this.
     }
 
 
@@ -231,26 +235,33 @@ public class DiceRoll : MonoBehaviour
     /// <param name="roll">The rolled value of the dice.</param>
     private void FinishRollWithValue(int roll) 
     {
+        // This should all be handled in our Game Manager
         if (stateMachine.CurrentState == stateMachine.traitRollState) 
         {
             if(roll <= 4){
                 traitHandler.ActivateCurrentPlayerTrait(roll);
                 stateMachine.TransitionTo(stateMachine.choosingGateState);
             }
-            else if(roll == 6){
-                //skip turn
-                Debug.Log("(TODO: Implement transition to next player traitRollState)");
+            else if(roll == 5){
+                // Player rolls a 5, initiate battle with another player
+                Debug.Log("(TODO: Implement battling with another player)");
+                
             }
             else{
-                //player rolls a 5, initiate battle with another player
-                Debug.Log("(TODO: Implement battling with another player)");
+                // Skip turn
+                Debug.Log("(TODO: Implement transition to next player traitRollState)");
             }
         }
         else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
         {
             Debug.Log($"attacking for {roll} damage (TODO: deal damage & transition to the next state)");
+
+            // This should not be handled in this function
             //GameManager.GateChangeHealth(?, Globals.chosenGate, roll);
-            //stateMachine.TransitionTo(the next state);
+            
+
+            // Testing NextTurn
+            gameManager.NextTurn(); // TODO: Remove this from DiceRoll.cs
         }
         else 
         {

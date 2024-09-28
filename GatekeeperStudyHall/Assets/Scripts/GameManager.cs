@@ -8,6 +8,10 @@ using UnityEngine;
 // TODO: if this is the "Game Manager" then why isn't it at the top of the call hierarchy?
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] StateMachine stateMachine;
+
+    [SerializeField] PlayerListSO playerListSO;
+    [SerializeField] CardQueue cardQueue;
     // we can make any of these methods non-static if needed
 
     /// <summary>
@@ -76,17 +80,17 @@ public class GameManager : MonoBehaviour
     /// This makes them the "current player."
     /// Then updates the card queue to visually match the new player list orientation.
     /// </summary>
-    public static void NextTurn(List<PlayerSO> players, CardQueue cq) 
+    public void NextTurn() 
     {
-        do {
-            PlayerSO nextPlayer = players[players.Count - 1];
-            players.RemoveAt(players.Count - 1);
-            players.Insert(0, nextPlayer);
+        List<PlayerSO>players = playerListSO.list;
+        do {      
+            players.Insert(players.Count, players[0]);
+            players.RemoveAt(0);
         } 
-        while (!players[0].isAlive);
+        while (!players[0].isAlive); // TODO: This will loop infinitely if all players are dead
 
-        cq.RepositionCards();
+        cardQueue.RepositionCards();
 
-        // TODO: change the state to trait roll here
+        stateMachine.TransitionTo(stateMachine.traitRollState);
     }
 }

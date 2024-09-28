@@ -45,7 +45,7 @@ public class TraitHandler : MonoBehaviour
     /// <param name="roll">The roll (1-4) that the trait corresponds to.</param>
     public void ActivateCurrentPlayerTrait(int roll) 
     {
-        ActivateTrait(players[0], roll);
+        ActivateTrait(players[0], roll); // TODO: This is throwing an index out of bounds error during the second player's turn
     }
 
 
