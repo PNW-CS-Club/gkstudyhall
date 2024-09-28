@@ -53,8 +53,6 @@ public class DiceRoll : MonoBehaviour
 
     int roll = -1;
     bool userCanRoll = false;
-    public UnityEvent<int> endEvent; // functions to be called after the dice is done rolling
-    // TODO: remove endEvent and put its functionality in FinishRollWithValue
 
 
     void OnEnable() 

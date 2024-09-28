@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb7671422870a146abdd60f89822a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateMachine: {fileID: 0}
   sprites:
   - {fileID: 21300000, guid: 1dcc1b7c113db5441a722833636e41b2, type: 3}
   - {fileID: 21300000, guid: 4bbe84f8e7488ca418c89524c392787f, type: 3}
@@ -66,19 +67,7 @@ MonoBehaviour:
   barrier: {fileID: 0}
   endEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 1f0b0bb7746e7b7468212b593603fc26, type: 2}
-        m_TargetAssemblyTypeName: TraitHandlerSO, Assembly-CSharp
-        m_MethodName: ActivateCurrentPlayerTrait
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &5034943975444139374
 GameObject:
   m_ObjectHideFlags: 0
