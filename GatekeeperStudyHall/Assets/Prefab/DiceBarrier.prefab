@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7124843082933140690}
   - component: {fileID: 1914635938409409765}
   m_Layer: 0
-  m_Name: Dice Barrier
+  m_Name: DiceBarrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

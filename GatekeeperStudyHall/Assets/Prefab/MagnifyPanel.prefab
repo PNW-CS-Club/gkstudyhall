@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8806913356000425242}
   - component: {fileID: 1381547855847683820}
   m_Layer: 5
-  m_Name: Magnify Panel
+  m_Name: MagnifyPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
