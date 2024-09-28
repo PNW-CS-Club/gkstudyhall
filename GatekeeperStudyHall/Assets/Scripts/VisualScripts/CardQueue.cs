@@ -57,41 +57,7 @@ public class CardQueue : MonoBehaviour
         RepositionCards();
     }
 
-    /*
-    public void Add(PlayerSO player) 
-    { 
-        playerList.Add(player);
-        GameObject newCard = Instantiate(cardPrefab, transform);
-        cards.Add(newCard);
-
-        RepositionCards();
-    }
-
-
-    public void Remove(PlayerSO player)
-    {
-        int index = playerList.FindIndex(x => x == player);
-
-        if (index == -1) { return; } // player is not in playerList
-
-        // we have to be careful about the order we do these in
-        playerList.RemoveAt(index);
-        GameObject cardToDestroy = cards[index];
-        cards.RemoveAt(index);
-        Destroy(cardToDestroy);
-
-        if (playerList.Count == 0) { return; } // no more cards left to display
-
-        // fix expandedIndex after removal
-        if (expandedIndex > index) 
-        {
-            expandedIndex--;
-        }
-        expandedIndex %= playerList.Count;
-
-        RepositionCards();
-    }
-    */
+    
 
 
     public void RepositionCards() 
@@ -147,7 +113,7 @@ public class CardQueueEditor : Editor
 {
     // these are for keeping track of state in the immediate mode gui
     // (i.e. our custom editor fields don't store variables so we have to do it ourselves)
-    //PlayerSO playerInfo = null;
+    
     int index = 0;
 
     public override void OnInspectorGUI() {
@@ -156,31 +122,13 @@ public class CardQueueEditor : Editor
         this.serializedObject.ApplyModifiedProperties();
         base.OnInspectorGUI();
 
-
         CardQueue cq = (CardQueue) this.target;
 
         // some helpful controls that let us call CardQueue's methods in the editor while in play mode
         if (Application.isPlaying) 
         {
             EditorGUILayout.LabelField("(Do not manually change playerList in play mode)");
-            /*
-            // this section lets the user call Add and Remove
-            EditorGUILayout.BeginHorizontal();
-
-            playerInfo = (PlayerSO)EditorGUILayout.ObjectField(playerInfo, typeof(PlayerSO), false);
             
-            if (GUILayout.Button("Add")) 
-            {
-                cq.Add(playerInfo);
-            }
-
-            if (GUILayout.Button("Remove")) 
-            {
-                cq.Remove(playerInfo);
-            }
-
-            EditorGUILayout.EndHorizontal();
-            */
             // this section lets the user call ChangeExpandedPlayer
             EditorGUILayout.BeginHorizontal();
 

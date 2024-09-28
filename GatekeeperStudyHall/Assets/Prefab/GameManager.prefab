@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5598449455276713471}
   - component: {fileID: 3649130508021954605}
+  - component: {fileID: 1430531344522203847}
   - component: {fileID: 7554759352034851568}
   m_Layer: 0
   m_Name: GameManager
@@ -45,6 +46,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910de3e51ec911a4993768b8dfa05d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1430531344522203847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9141685807667293640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3b295ef571cf940b16e7feb2de4ce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerListSO: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
+  traitRollState:
+    traitHandler: {fileID: 11400000, guid: 1f0b0bb7746e7b7468212b593603fc26, type: 2}
 --- !u!114 &7554759352034851568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,3 +73,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7b3b53bc36d9f4c8b4a5d89420ad83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateMachine: {fileID: 1430531344522203847}

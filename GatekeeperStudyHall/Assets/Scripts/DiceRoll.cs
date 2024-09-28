@@ -16,9 +16,9 @@ public class DiceRoll : MonoBehaviour
     bool isHeld = false;
     bool isSliding = false;
 
-    [SerializeField] StateTester stateTester;
+    [SerializeField] StateMachine stateMachine;
     [SerializeField] Sprite[] sprites; // the 6 dice faces
-    [SerializeField] TraitHandlerSO traitHandler;
+    [SerializeField] TraitHandler traitHandler;
 
 
     [Header("Shaking")]
@@ -53,18 +53,16 @@ public class DiceRoll : MonoBehaviour
 
     int roll = -1;
     bool userCanRoll = false;
-    public UnityEvent<int> endEvent; // functions to be called after the dice is done rolling
-    // TODO: remove endEvent and put its functionality in FinishRollWithValue
 
 
     void OnEnable() 
     {
-        stateTester.stateMachine.stateChangedEvent += OnStateChanged;
+        stateMachine.StateChangedEvent += OnStateChanged;
     }
 
     void OnDestroy() 
     {
-        stateTester.stateMachine.stateChangedEvent -= OnStateChanged;
+        stateMachine.StateChangedEvent -= OnStateChanged;
     }
 
 
@@ -233,8 +231,6 @@ public class DiceRoll : MonoBehaviour
     /// <param name="roll">The rolled value of the dice.</param>
     private void FinishRollWithValue(int roll) 
     {
-        var stateMachine = stateTester.stateMachine;
-
         if (stateMachine.CurrentState == stateMachine.traitRollState) 
         {
             if(roll <= 4){

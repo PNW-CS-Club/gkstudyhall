@@ -12,8 +12,8 @@ using UnityEditor;
 /// When the button is clicked, it activates the specified trait of the specified player.
 /// </summary>
 public class TraitDebugger : MonoBehaviour {
-    public TraitHandlerSO traitHandler = null;
-    public PlayerSO player = null;
+    public TraitHandler traitHandler;
+    public PlayerSO player;
     public int roll = 1;
 }
 

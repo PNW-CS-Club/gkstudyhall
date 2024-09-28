@@ -5,7 +5,8 @@ using UnityEngine;
 /// <summary>
 /// Provides methods for actions related to health, damage, and turn flow.
 /// </summary>
-public class GameManager : MonoBehaviour  // if this is the "Game Manager" then why isn't it at the top of the call hierarchy?
+// TODO: if this is the "Game Manager" then why isn't it at the top of the call hierarchy?
+public class GameManager : MonoBehaviour
 {
     // we can make any of these methods non-static if needed
 
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour  // if this is the "Game Manager" then 
     /// </summary>
     /// <param name="player">The player who caused the change.</param>
     /// <param name="amount">The amount to change by (positive to heal, negative to deal damage)</param>
-    public static void GateChangeHealth(PlayerSO player, Gate gate, int amount) 
+    public static void GateChangeHealth(PlayerSO player, GateSO gate, int amount) 
     {
         gate.health += amount;
 
@@ -61,11 +62,11 @@ public class GameManager : MonoBehaviour  // if this is the "Game Manager" then 
             int roll = Random.Range(1, 7);
             Debug.Log($"TEMP: Random number for gate effect: {roll}");
             gate.DoBreakEffect(player, roll);
-            gate.health = Gate.STARTING_HEALTH;
+            gate.health = GateSO.STARTING_HEALTH;
         }
-        else if (gate.health > Gate.MAX_HEALTH) 
+        else if (gate.health > GateSO.MAX_HEALTH) 
         {
-            gate.health = Gate.MAX_HEALTH;
+            gate.health = GateSO.MAX_HEALTH;
         }
     }
 
