@@ -17,8 +17,7 @@ public class StateMachine : MonoBehaviour
     public AttackingGateState attackingGateState;
 
     /// <summary>
-    /// This event is triggered whenever the state changes. 
-    /// You can subscribe and unsubscribe to it freely, but avoid invoking it directly.
+    /// This C# event is triggered whenever the state changes.
     /// </summary>
     [HideInInspector] public event EventHandler<IState> StateChangedEvent; 
 
@@ -35,6 +34,7 @@ public class StateMachine : MonoBehaviour
         traitRollState.Initialize(playerListSO.list);
         choosingGateState.Initialize(playerListSO.list);
 
+        // the initial state that the program will be in is traitRollState
         currentState = traitRollState;
         StateChangedEvent?.Invoke(this, currentState);
         currentState.Enter();
@@ -48,7 +48,7 @@ public class StateMachine : MonoBehaviour
 
     /// <summary>
     /// Transitions from the previous state to the given next state.
-    /// Triggers the <c>stateChangedEvent</c>.
+    /// Triggers the <c>StateChangedEvent</c>.
     /// </summary>
     public void TransitionTo(IState state) 
     {

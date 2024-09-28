@@ -5,7 +5,8 @@ using UnityEngine;
 /// <summary>
 /// Provides methods for actions related to health, damage, and turn flow.
 /// </summary>
-public class GameManager : MonoBehaviour  // if this is the "Game Manager" then why isn't it at the top of the call hierarchy?
+// TODO: if this is the "Game Manager" then why isn't it at the top of the call hierarchy?
+public class GameManager : MonoBehaviour
 {
     // we can make any of these methods non-static if needed
 
