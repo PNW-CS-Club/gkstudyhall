@@ -12,5 +12,5 @@ public static class Globals
     /// The gate that the current player has chosen to attack. 
     /// Holds <c>null</c> if the player has not yet chosen a gate or has already attacked a gate.
     /// </summary>
-    public static Gate chosenGate = null;
+    public static GateSO chosenGate = null;
 }

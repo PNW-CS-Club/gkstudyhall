@@ -145,7 +145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -157,15 +157,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChooseGreenGate
+      value: ChooseGate
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GateButtonActions, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
+      propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a4cae344093a314196b496206f66a2b, type: 2}
+    - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: GateSO, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9078679714420956902, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: m_Pivot.x
@@ -279,7 +283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -291,15 +295,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChooseBlackGate
+      value: ChooseGate
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GateButtonActions, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
+      propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 392ac465f7634784fb4a8949abf8b36c, type: 2}
+    - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: GateSO, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9078679714420956902, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: m_Pivot.x
@@ -1168,11 +1176,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1085388488}
         m_TargetAssemblyTypeName: GateButtonActions, Assembly-CSharp
-        m_MethodName: ChooseBlackGate
-        m_Mode: 1
+        m_MethodName: ChooseGate
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 11400000, guid: 392ac465f7634784fb4a8949abf8b36c, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GateSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1300,11 +1308,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1085388488}
         m_TargetAssemblyTypeName: GateButtonActions, Assembly-CSharp
-        m_MethodName: ChooseGreenGate
-        m_Mode: 1
+        m_MethodName: ChooseGate
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 11400000, guid: 2a4cae344093a314196b496206f66a2b, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GateSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1370,7 +1378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1382,15 +1390,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChooseBlueGate
+      value: ChooseGate
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GateButtonActions, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
+      propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: c34ceb3b11676f344931a8e7886e7a1a, type: 2}
+    - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: GateSO, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9078679714420956902, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: m_Pivot.x
@@ -1638,11 +1650,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1085388488}
         m_TargetAssemblyTypeName: GateButtonActions, Assembly-CSharp
-        m_MethodName: ChooseBlueGate
-        m_Mode: 1
+        m_MethodName: ChooseGate
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 11400000, guid: c34ceb3b11676f344931a8e7886e7a1a, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GateSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1947,11 +1959,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1085388488}
         m_TargetAssemblyTypeName: GateButtonActions, Assembly-CSharp
-        m_MethodName: ChooseRedGate
-        m_Mode: 1
+        m_MethodName: ChooseGate
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 11400000, guid: 39a1afa8f22991a4bb80a5a7616ed6da, type: 2}
+          m_ObjectArgumentAssemblyTypeName: GateSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2012,33 +2024,13 @@ PrefabInstance:
       value: CircleButton
       objectReference: {fileID: 0}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
-      propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
-      propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1085388488}
     - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
-      propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
-      propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChooseRedGate
-      objectReference: {fileID: 0}
-    - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
-      propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GateButtonActions, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7558599525984238674, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
-      propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
+      propertyPath: onClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 39a1afa8f22991a4bb80a5a7616ed6da, type: 2}
     - target: {fileID: 9078679714420956902, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

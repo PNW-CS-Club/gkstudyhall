@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum GateColor 
 {
@@ -10,19 +11,26 @@ public enum GateColor
 /// <summary>
 /// Represents a gate with its color and health.
 /// </summary>
-[Serializable]
-public class Gate  // TODO: consider making this a MonoBehavior, SO, or even just a hashmap of health values
+[CreateAssetMenu(fileName = "New_GateSO", menuName = "Scriptable Objects/GateSO")]
+public class GateSO : ScriptableObject
 {
-    public static readonly int STARTING_HEALTH = 6;
-    public static readonly int MAX_HEALTH = 6;
+    public const int STARTING_HEALTH = 6;
+    public const int MAX_HEALTH = 6;
 
-    public readonly GateColor color;
+    public GateColor Color { get => color; }
+    [SerializeField] GateColor color;
+
     public int health = STARTING_HEALTH;
 
 
-    public Gate(GateColor color) 
+    private void OnEnable() 
     {
-        this.color = color;
+        health = STARTING_HEALTH;
+    }
+
+
+    public override string ToString() {
+        return $"GateSO[health=\"{health}\", color=\"{color}\"]";
     }
 
 
