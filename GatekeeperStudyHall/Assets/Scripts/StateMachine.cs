@@ -15,6 +15,7 @@ public class StateMachine : MonoBehaviour
     public TraitRollState traitRollState;
     public ChoosingGateState choosingGateState;
     public AttackingGateState attackingGateState;
+    public BreakingGateState breakingGateState;
 
     /// <summary>
     /// This C# event is triggered whenever the state changes.

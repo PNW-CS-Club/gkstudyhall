@@ -56,21 +56,14 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="player">The player who caused the change.</param>
     /// <param name="amount">The amount to change by (positive to heal, negative to deal damage)</param>
-    public static void GateChangeHealth(PlayerSO player, GateSO gate, int amount) 
+    public void GateChangeHealth(PlayerSO player, GateSO gate, int amount) 
     {
         gate.health += amount;
+        gate.health = Mathf.Clamp(gate.health, 0, GateSO.MAX_HEALTH);
 
-        if (gate.health <= 0) 
+        if (gate.health == 0) 
         {
-            // TODO: wait for player to roll again, then break gate (do this with a new state!)
-            int roll = Random.Range(1, 7);
-            Debug.Log($"TEMP: Random number for gate effect: {roll}");
-            gate.DoBreakEffect(player, roll);
-            gate.health = GateSO.STARTING_HEALTH;
-        }
-        else if (gate.health > GateSO.MAX_HEALTH) 
-        {
-            gate.health = GateSO.MAX_HEALTH;
+            stateMachine.TransitionTo(stateMachine.breakingGateState);
         }
     }
 

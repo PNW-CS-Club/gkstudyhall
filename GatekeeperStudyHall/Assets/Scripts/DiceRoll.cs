@@ -81,7 +81,7 @@ public class DiceRoll : MonoBehaviour
             // only let the user interact with the dice during these states:
             TraitRollState => true,
             AttackingGateState => true,
-            //BreakingGateState => true,
+            BreakingGateState => true,
 
             _ => false,
         };
@@ -257,11 +257,15 @@ public class DiceRoll : MonoBehaviour
             Debug.Log($"attacking for {roll} damage (TODO: deal damage & transition to the next state)");
 
             // This should not be handled in this function
-            //GameManager.GateChangeHealth(?, Globals.chosenGate, roll);
+            // GameManager.GateChangeHealth(players[0], Globals.chosenGate, roll);
             
 
             // Testing NextTurn
             gameManager.NextTurn(); // TODO: Remove this from DiceRoll.cs
+        }
+        else if (stateMachine.CurrentState == stateMachine.breakingGateState) 
+        {
+            Debug.Log("hi welcome to chilis");
         }
         else 
         {
