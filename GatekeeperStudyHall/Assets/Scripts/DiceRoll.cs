@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -18,9 +17,7 @@ public class DiceRoll : MonoBehaviour
 
     [SerializeField] StateMachine stateMachine;
 
-    [SerializeField] GameManager gameManager;
     [SerializeField] Sprite[] sprites; // the 6 dice faces
-    [SerializeField] TraitHandler traitHandler;
 
 
     [Header("Shaking")]
@@ -53,6 +50,7 @@ public class DiceRoll : MonoBehaviour
     Rigidbody2D rb;
 
 
+    [HideInInspector] public event System.EventHandler<int> DoneRollingEvent;
     int roll = -1;
     bool userCanRoll = false;
 
@@ -75,6 +73,9 @@ public class DiceRoll : MonoBehaviour
     /// <param name="state">The newly active state.</param>
     private void OnStateChanged(object sender, IState state) 
     {
+        // TODO: instead of doing this, we should probably add a property to each state
+        // that indicates whether the user can roll during that state
+
         // magical C# construct that lets us easily check the type of the state
         userCanRoll = state switch 
         {
@@ -107,7 +108,11 @@ public class DiceRoll : MonoBehaviour
         } 
 
         else if (isSliding) {
-            UpdateSlidingDice();
+            bool isDone = UpdateSlidingDice();
+
+            if (isDone) {
+                DoneRollingEvent?.Invoke(this, roll);
+            }
         }
     }
 
@@ -196,81 +201,38 @@ public class DiceRoll : MonoBehaviour
 
     /// <summary>
     /// Continues to slide the dice until <c>slideDuration</c> has passed.
-    /// If it has, cleans up and calls <c>FinishRollWithValue</c>.
+    /// If it has, stops sliding and cleans up.
     /// </summary>
-    private void UpdateSlidingDice() {
+    /// <returns><c>true</c> only if the dice is done sliding.</returns>
+    private bool UpdateSlidingDice() {
         // apply friction
         rb.angularVelocity *= Mathf.Pow(frictionFactor, Time.deltaTime);
         rb.velocity *= Mathf.Pow(frictionFactor, Time.deltaTime);
 
         ClampDice();
 
-        if (slideTimer >= slideDuration) {
-            // finish sliding
-
-            rb.angularVelocity = 0;
-            rb.velocity = Vector2.zero;
-
-            // shift this transform to be directly under the dice sprite's transform
-            transform.position = rb.transform.position;
-            rb.transform.localPosition = Vector2.zero;
-
-            // clean up
-            barrier.SetActive(false);
-            isSliding = false;
-
-            // the dice is done rolling; transition to whatever is next
-            FinishRollWithValue(roll);
+        if (slideTimer >= slideDuration) 
+        {
+            CleanUpAfterRoll();
+            return true;
         }
 
         slideTimer += Time.deltaTime;
-
-        // TODO: Change this function into public int FinishRollWithValue() and return the roll so that GameManager can use this.
+        return false;
     }
 
 
-    /// <summary>
-    /// Performs the action expected to happen at the end of the dice roll, depending on the state.
-    /// </summary>
-    /// <param name="roll">The rolled value of the dice.</param>
-    private void FinishRollWithValue(int roll) 
+    private void CleanUpAfterRoll() 
     {
-        // This should all be handled in our Game Manager
-        if (stateMachine.CurrentState == stateMachine.traitRollState) 
-        {
-            if(roll <= 4){
-                traitHandler.ActivateCurrentPlayerTrait(roll);
-                stateMachine.TransitionTo(stateMachine.choosingGateState);
-            }
-            else if(roll == 5){
-                // Player rolls a 5, initiate battle with another player
-                Debug.Log("(TODO: Implement battling with another player)");
-                
-            }
-            else{
-                // Skip turn
-                Debug.Log("(TODO: Implement transition to next player traitRollState)");
-            }
-        }
-        else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
-        {
-            Debug.Log($"attacking for {roll} damage (TODO: deal damage & transition to the next state)");
+        rb.angularVelocity = 0;
+        rb.velocity = Vector2.zero;
 
-            // This should not be handled in this function
-            // GameManager.GateChangeHealth(players[0], Globals.chosenGate, roll);
-            
+        // shift this transform to be directly under the dice sprite's transform
+        transform.position = rb.transform.position;
+        rb.transform.localPosition = Vector2.zero;
 
-            // Testing NextTurn
-            gameManager.NextTurn(); // TODO: Remove this from DiceRoll.cs
-        }
-        else if (stateMachine.CurrentState == stateMachine.breakingGateState) 
-        {
-            Debug.Log("hi welcome to chilis");
-        }
-        else 
-        {
-            Debug.LogError("The player should not be able to roll the dice now!");
-        }
+        barrier.SetActive(false);
+        isSliding = false;
     }
 
 

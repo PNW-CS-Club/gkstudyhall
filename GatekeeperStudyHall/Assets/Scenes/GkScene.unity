@@ -261,6 +261,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9078679714420956902, guid: b92892c676de6d74fbce30b07aae5167, type: 3}
   m_PrefabInstance: {fileID: 12616884}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &53786888 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+  m_PrefabInstance: {fileID: 156278715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb7671422870a146abdd60f89822a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &133111263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -591,6 +602,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3649130508021954605, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+      propertyPath: diceRoll
+      value: 
+      objectReference: {fileID: 53786888}
+    - target: {fileID: 3649130508021954605, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
       propertyPath: cardQueue
       value: 
       objectReference: {fileID: 718441246}
@@ -602,6 +617,10 @@ PrefabInstance:
       propertyPath: stateMachine
       value: 
       objectReference: {fileID: 1085388489}
+    - target: {fileID: 3649130508021954605, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+      propertyPath: traitHandler
+      value: 
+      objectReference: {fileID: 1085388492}
     - target: {fileID: 5598449455276713471, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

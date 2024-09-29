@@ -5,14 +5,21 @@ using UnityEngine;
 /// <summary>
 /// Provides methods for actions related to health, damage, and turn flow.
 /// </summary>
-// TODO: if this is the "Game Manager" then why isn't it at the top of the call hierarchy?
 public class GameManager : MonoBehaviour
 {
     [SerializeField] StateMachine stateMachine;
+    [SerializeField] TraitHandler traitHandler;
+    [SerializeField] DiceRoll diceRoll;
 
     [SerializeField] PlayerListSO playerListSO;
     [SerializeField] CardQueue cardQueue;
     // we can make any of these methods non-static if needed
+
+
+    void RollEventHandler(object sender, int roll) => UseRollResult(roll);
+    void OnEnable() => diceRoll.DoneRollingEvent += RollEventHandler;
+    void OnDestroy() => diceRoll.DoneRollingEvent -= RollEventHandler;
+
 
     /// <summary>
     /// Plays out the effects of one player attacking another player.
@@ -64,6 +71,52 @@ public class GameManager : MonoBehaviour
         if (gate.health == 0) 
         {
             stateMachine.TransitionTo(stateMachine.breakingGateState);
+        }
+    }
+
+
+    /// <summary>
+    /// Performs the action expected to happen after the dice is done rolling, depending on the state.
+    /// </summary>
+    /// <param name="roll">The rolled value of the dice.</param>
+    private void UseRollResult(int roll) {
+        if (stateMachine.CurrentState == stateMachine.traitRollState) 
+        {
+            if (roll <= 4) 
+            {
+                traitHandler.ActivateCurrentPlayerTrait(roll);
+                stateMachine.TransitionTo(stateMachine.choosingGateState);
+            }
+            else if (roll == 5) 
+            {
+                // Player rolls a 5, initiate battle with another player
+                Debug.Log("(TODO: Implement battling with another player)");
+            }
+            else 
+            {
+                // Skip turn
+                Debug.Log("(TODO: Implement transition to next player traitRollState)");
+            }
+        }
+        else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
+        {
+            Debug.Log($"attacking for {roll} damage (TODO: deal damage & transition to the next state)");
+
+            // This should not be handled in this function
+            GateChangeHealth(playerListSO.list[0], Globals.chosenGate, roll);
+
+            // TODO: fix weird state stuff happening here
+
+            // Testing NextTurn
+            NextTurn();
+        }
+        else if (stateMachine.CurrentState == stateMachine.breakingGateState) 
+        {
+            Debug.Log("hi welcome to chilis");
+        }
+        else 
+        {
+            Debug.LogError("The player should not be able to roll the dice now!");
         }
     }
 
