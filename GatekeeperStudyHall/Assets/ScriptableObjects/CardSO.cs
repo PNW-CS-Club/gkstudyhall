@@ -31,4 +31,13 @@ public class CardSO : ScriptableObject
     public override string ToString() {
         return $"CardSO[name=\"{name}\", origin=\"{origin}\", title=\"{title}\", element=\"{element}\", flavorText=\"{flavorText}\"]";
     }
+
+
+    void OnEnable() 
+    {
+        if (traits.Length != 4) 
+        {
+            Debug.LogWarning($"{characterName} has {traits.Length} traits instead of 4");
+        }
+    }
 }

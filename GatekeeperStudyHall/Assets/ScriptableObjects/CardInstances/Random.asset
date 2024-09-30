@@ -17,16 +17,16 @@ MonoBehaviour:
   title: 
   element: 
   traitNames:
-  - 
-  - 
-  - 
-  - 
+  - ???
+  - ???
+  - ???
+  - ???
   traitDescriptions:
   - 
   - 
   - 
   - 
-  traits: 
+  traits: 02000000020000000200000002000000
   flavorText: 
   flavorTextColor: {r: 0, g: 0, b: 0, a: 1}
   outerColor: {r: 0.91764706, g: 0.91764706, b: 0.91764706, a: 1}

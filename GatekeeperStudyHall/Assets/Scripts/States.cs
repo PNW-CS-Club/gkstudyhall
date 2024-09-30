@@ -74,3 +74,11 @@ public class ChoosingGateState : IState
 /// </summary>
 [Serializable]
 public class AttackingGateState : IState { }
+
+
+/// <summary>
+/// The state after a player gets a gate to 0 health where they roll the dice to see what effect happens. 
+/// The current player should be able to interact with the dice, but not the gate buttons.
+/// </summary>
+[Serializable]
+public class BreakingGateState : IState { }

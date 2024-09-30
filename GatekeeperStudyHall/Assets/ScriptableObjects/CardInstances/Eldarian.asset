@@ -26,7 +26,7 @@ MonoBehaviour:
   - Lose shield
   - +1 to gate attack roll
   - Target player loses turn
-  traits: 
+  traits: 02000000020000000200000002000000
   flavorText: 
   flavorTextColor: {r: 1, g: 1, b: 1, a: 1}
   outerColor: {r: 0.13725491, g: 0.38431376, b: 0.3529412, a: 1}

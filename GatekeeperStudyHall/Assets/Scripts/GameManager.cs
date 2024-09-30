@@ -5,10 +5,21 @@ using UnityEngine;
 /// <summary>
 /// Provides methods for actions related to health, damage, and turn flow.
 /// </summary>
-// TODO: if this is the "Game Manager" then why isn't it at the top of the call hierarchy?
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] StateMachine stateMachine;
+    [SerializeField] TraitHandler traitHandler;
+    [SerializeField] DiceRoll diceRoll;
+
+    [SerializeField] PlayerListSO playerListSO;
+    [SerializeField] CardQueue cardQueue;
     // we can make any of these methods non-static if needed
+
+
+    void RollEventHandler(object sender, int roll) => UseRollResult(roll);
+    void OnEnable() => diceRoll.DoneRollingEvent += RollEventHandler;
+    void OnDestroy() => diceRoll.DoneRollingEvent -= RollEventHandler;
+
 
     /// <summary>
     /// Plays out the effects of one player attacking another player.
@@ -52,21 +63,65 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="player">The player who caused the change.</param>
     /// <param name="amount">The amount to change by (positive to heal, negative to deal damage)</param>
-    public static void GateChangeHealth(PlayerSO player, GateSO gate, int amount) 
+    /// <returns><c>true</c> only if the gate's health has reached zero.</returns>
+    public bool GateChangeHealth(PlayerSO player, GateSO gate, int amount) 
     {
         gate.health += amount;
+        gate.health = Mathf.Clamp(gate.health, 0, GateSO.MAX_HEALTH);
 
-        if (gate.health <= 0) 
+        return gate.health == 0;
+    }
+
+
+    /// <summary>
+    /// Performs the action expected to happen after the dice is done rolling, depending on the state.
+    /// </summary>
+    /// <param name="roll">The rolled value of the dice.</param>
+    private void UseRollResult(int roll) {
+        if (stateMachine.CurrentState == stateMachine.traitRollState) 
         {
-            // TODO: wait for player to roll again, then break gate (do this with a new state!)
-            int roll = Random.Range(1, 7);
-            Debug.Log($"TEMP: Random number for gate effect: {roll}");
-            gate.DoBreakEffect(player, roll);
-            gate.health = GateSO.STARTING_HEALTH;
+            if (roll <= 4) 
+            {
+                traitHandler.ActivateCurrentPlayerTrait(roll);
+                stateMachine.TransitionTo(stateMachine.choosingGateState);
+            }
+            else if (roll == 5) 
+            {
+                // Player rolls a 5, initiate battle with another player
+                Debug.Log("(TODO: Implement battling with another player)");
+            }
+            else 
+            {
+                // Skip turn
+                Debug.Log("(TODO: Implement transition to next player traitRollState)");
+            }
         }
-        else if (gate.health > GateSO.MAX_HEALTH) 
+        else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
         {
-            gate.health = GateSO.MAX_HEALTH;
+            Debug.Log($"attacking for {roll} damage");
+
+            bool gateIsBreaking = GateChangeHealth(playerListSO.list[0], Globals.chosenGate, -roll);
+
+            if (gateIsBreaking) {
+                Debug.Log("You broke the gate!");
+                stateMachine.TransitionTo(stateMachine.breakingGateState);
+            }
+            else {
+                NextTurn();
+            }
+        }
+        else if (stateMachine.CurrentState == stateMachine.breakingGateState) 
+        {
+            // Hi welcome to Chili's
+            Debug.Log("hi welcome to chilis");
+
+            Globals.chosenGate.DoBreakEffect(playerListSO.list[0], roll);
+            Globals.chosenGate.health = GateSO.STARTING_HEALTH;
+            NextTurn();
+        }
+        else 
+        {
+            Debug.LogError("The player should not be able to roll the dice now!");
         }
     }
 
@@ -76,17 +131,19 @@ public class GameManager : MonoBehaviour
     /// This makes them the "current player."
     /// Then updates the card queue to visually match the new player list orientation.
     /// </summary>
-    public static void NextTurn(List<PlayerSO> players, CardQueue cq) 
+    public void NextTurn() 
     {
-        do {
-            PlayerSO nextPlayer = players[players.Count - 1];
-            players.RemoveAt(players.Count - 1);
-            players.Insert(0, nextPlayer);
+        Globals.chosenGate = null;
+
+        List<PlayerSO>players = playerListSO.list;
+        do {      
+            players.Insert(players.Count, players[0]);
+            players.RemoveAt(0);
         } 
-        while (!players[0].isAlive);
+        while (!players[0].isAlive); // TODO: This will loop infinitely if all players are dead
 
-        cq.RepositionCards();
+        cardQueue.RepositionCards();
 
-        // TODO: change the state to trait roll here
+        stateMachine.TransitionTo(stateMachine.traitRollState);
     }
 }
