@@ -100,12 +100,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log($"attacking for {roll} damage");
 
-            // This should not be handled in this function
-            // ^^^ idk if you just mean it shouldn't be in DiceRoll?
             bool gateIsBreaking = GateChangeHealth(playerListSO.list[0], Globals.chosenGate, -roll);
 
             if (gateIsBreaking) {
-                Debug.Log("You broke/are breaking/will break the gate!"); // what tense even makes sense here??
+                Debug.Log("You broke the gate!");
                 stateMachine.TransitionTo(stateMachine.breakingGateState);
             }
             else {
