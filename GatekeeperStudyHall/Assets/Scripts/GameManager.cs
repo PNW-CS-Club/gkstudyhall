@@ -63,15 +63,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="player">The player who caused the change.</param>
     /// <param name="amount">The amount to change by (positive to heal, negative to deal damage)</param>
-    public void GateChangeHealth(PlayerSO player, GateSO gate, int amount) 
+    /// <returns><c>true</c> only if the gate's health has reached zero.</returns>
+    public bool GateChangeHealth(PlayerSO player, GateSO gate, int amount) 
     {
         gate.health += amount;
         gate.health = Mathf.Clamp(gate.health, 0, GateSO.MAX_HEALTH);
 
-        if (gate.health == 0) 
-        {
-            stateMachine.TransitionTo(stateMachine.breakingGateState);
-        }
+        return gate.health == 0;
     }
 
 
@@ -100,15 +98,18 @@ public class GameManager : MonoBehaviour
         }
         else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
         {
-            Debug.Log($"attacking for {roll} damage (TODO: deal damage & transition to the next state)");
+            Debug.Log($"attacking for {roll} damage");
 
             // This should not be handled in this function
-            GateChangeHealth(playerListSO.list[0], Globals.chosenGate, roll);
+            bool gateIsBreaking = GateChangeHealth(playerListSO.list[0], Globals.chosenGate, -roll);
 
-            // TODO: fix weird state stuff happening here
-
-            // Testing NextTurn
-            NextTurn();
+            if (gateIsBreaking) {
+                Debug.Log("You broke/are breaking/will break the gate!");
+                stateMachine.TransitionTo(stateMachine.breakingGateState);
+            }
+            else {
+                NextTurn();
+            }
         }
         else if (stateMachine.CurrentState == stateMachine.breakingGateState) 
         {
