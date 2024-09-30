@@ -101,10 +101,11 @@ public class GameManager : MonoBehaviour
             Debug.Log($"attacking for {roll} damage");
 
             // This should not be handled in this function
+            // ^^^ idk if you just mean it shouldn't be in DiceRoll?
             bool gateIsBreaking = GateChangeHealth(playerListSO.list[0], Globals.chosenGate, -roll);
 
             if (gateIsBreaking) {
-                Debug.Log("You broke/are breaking/will break the gate!");
+                Debug.Log("You broke/are breaking/will break the gate!"); // what tense even makes sense here??
                 stateMachine.TransitionTo(stateMachine.breakingGateState);
             }
             else {
@@ -113,7 +114,12 @@ public class GameManager : MonoBehaviour
         }
         else if (stateMachine.CurrentState == stateMachine.breakingGateState) 
         {
+            // Hi welcome to Chili's
             Debug.Log("hi welcome to chilis");
+
+            Globals.chosenGate.DoBreakEffect(playerListSO.list[0], roll);
+            Globals.chosenGate.health = GateSO.STARTING_HEALTH;
+            NextTurn();
         }
         else 
         {
@@ -129,6 +135,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void NextTurn() 
     {
+        Globals.chosenGate = null;
+
         List<PlayerSO>players = playerListSO.list;
         do {      
             players.Insert(players.Count, players[0]);
