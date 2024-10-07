@@ -13,7 +13,7 @@ public class HealthDisplay : MonoBehaviour
 
     void Start() 
     {
-        slider = transform.GetChild(0).GetComponent<RectTransform>();
+        slider = transform.GetChild(1).GetComponent<RectTransform>();
         initialWidth = slider.sizeDelta.x;
         healthCounter = transform.GetComponentInChildren<TMPro.TMP_Text>();
     }
