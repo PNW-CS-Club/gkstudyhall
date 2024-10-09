@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HealthDisplay : MonoBehaviour
 {
-    [SerializeField] PlayerSO player;
+    public PlayerSO player;
     [SerializeField] Color shieldColor;
 
     Color defaultColor;
