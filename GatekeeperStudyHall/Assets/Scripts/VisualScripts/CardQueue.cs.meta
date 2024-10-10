@@ -3,7 +3,10 @@ guid: 843fdb2a75fb117469a9f2ca390f08aa
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - cardPrefab: {fileID: 5016061653640422755, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+  - playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
+  - healthBarPrefab: {fileID: 6058550801844570826, guid: c91e2902bc7242a45a1e566c47f00073, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
