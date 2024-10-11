@@ -19,7 +19,6 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
 
 
-
     // enter and exit functions turn the highlight on and off
     public void OnPointerEnter(PointerEventData eventData) {
         if (canMagnify && cardData != null) {

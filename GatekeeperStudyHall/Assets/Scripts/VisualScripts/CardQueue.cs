@@ -10,10 +10,12 @@ public class CardQueue : MonoBehaviour
 {
     [SerializeField] GameObject cardPrefab;
     [SerializeField, Min(0)] float margin = 20f;
+    [SerializeField] Vector2 healthOffset;
 
     [SerializeField] PlayerListSO playerListObject;
     List<PlayerSO> playerList; // refers to list in playerListObject
-    List<GameObject> cards; // instances of cardPrefab
+    List<GameObject> cardObjectList; // instances of cardPrefab
+    List<GameObject> healthBarList;
 
     float expandedHeight; // the height of an expanded card
     float collapsedHeight; // the height of a collapsed card
@@ -21,10 +23,14 @@ public class CardQueue : MonoBehaviour
 
     int expandedIndex = 0; // determines which card is expanded (RepositionCards relies on this value)
 
+    public GameObject healthBarPrefab;
+
+
     void Start()
     {
         playerList = playerListObject.list;
-        cards = new();
+        cardObjectList = new();
+        healthBarList = new();
 
         Vector2 expandedSize = cardPrefab.GetComponent<RectTransform>().sizeDelta;
 
@@ -33,14 +39,29 @@ public class CardQueue : MonoBehaviour
         collapsedHeight = expandedHeight - CardDisplay.COLLAPSE_HEIGHT_DIFF;
         startingOffset = new Vector3(expandedSize.x / 2f, -expandedSize.y / 2f, 0f);
 
-        // create all of the cards we will start with
+        // create all of the cards and health bars we will start with
         for (int i = 0; i < playerList.Count; i++) 
         {
             GameObject newCard = Instantiate(cardPrefab, transform);
-            cards.Add(newCard);
+            cardObjectList.Add(newCard);
+
+            GameObject newHealthBar = Instantiate(healthBarPrefab, newCard.transform);
+            healthBarList.Add(newHealthBar);
         }
 
         RepositionCards();
+    }
+
+    void Update() 
+    {
+        // i didn't put this in RepositionCards because it seems like
+        // getting the card height isn't accurate right after you set it
+        for (int i = 0; i < playerList.Count; i++) 
+        {
+            RectTransform healthBarRect = healthBarList[i].GetComponent<RectTransform>();
+            RectTransform cardRect = cardObjectList[i].GetComponent<RectTransform>();
+            healthBarRect.anchoredPosition = healthOffset + new Vector2(0, cardRect.sizeDelta.y / 2.0f);
+        }
     }
 
 
@@ -57,8 +78,6 @@ public class CardQueue : MonoBehaviour
         RepositionCards();
     }
 
-    
-
 
     public void RepositionCards() 
     {
@@ -69,24 +88,27 @@ public class CardQueue : MonoBehaviour
 
         for (int i = 0; i < playerList.Count; i++) 
         {
-            Transform card = cards[i].transform;
-            CardDisplay display = card.GetComponent<CardDisplay>();
-            card.localPosition = offset;
+            Transform cardTransform = cardObjectList[i].transform;
+            CardDisplay cardDisplay = cardTransform.GetComponent<CardDisplay>();
+            cardTransform.localPosition = offset;
 
-            if (playerList[i].card != display.cardData) 
+            HealthDisplay healthDisplay = healthBarList[i].GetComponent<HealthDisplay>();
+
+            if (playerList[i].card != cardDisplay.cardData) 
             {
-                display.ChangeCardData(playerList[i].card);
+                cardDisplay.ChangeCardData(playerList[i].card);
+                healthDisplay.player = playerList[i];
             }
 
             if (i == expandedIndex) 
             {
-                display.collapsed = false;
+                cardDisplay.collapsed = false;
                 offset.y -= margin + expandedHeight;
             }
             else 
             {
-                display.collapsed = true;
-                card.localPosition += CardDisplay.COLLAPSE_HEIGHT_DIFF / 2f * Vector3.up;
+                cardDisplay.collapsed = true;
+                cardTransform.localPosition += CardDisplay.COLLAPSE_HEIGHT_DIFF / 2f * Vector3.up;
                 offset.y -= margin + collapsedHeight;
             }
         }
