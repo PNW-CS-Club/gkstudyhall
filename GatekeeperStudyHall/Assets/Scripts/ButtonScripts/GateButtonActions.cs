@@ -16,7 +16,7 @@ public class GateButtonActions : MonoBehaviour
     /// </summary>
     public void ChooseGate(GateSO gate) 
     {
-        if (stateMachine.CurrentState.CanChooseGate) 
+        if (!stateMachine.CurrentState.CanChooseGate) 
             return;
 
         Debug.Log($"Chose gate: {gate.Color}");
