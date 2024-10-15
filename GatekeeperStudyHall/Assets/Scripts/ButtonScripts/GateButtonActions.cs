@@ -12,11 +12,11 @@ public class GateButtonActions : MonoBehaviour
 
     /// <summary>
     /// Stores the chosen gate and transitions to the next state.
-    /// The game must be in <c>ChoosingGateState</c>; otherwise this does nothing.  
+    /// The game must be in a state where <c>CanChooseGate</c> is true; otherwise this does nothing.  
     /// </summary>
     public void ChooseGate(GateSO gate) 
     {
-        if (stateMachine.CurrentState != stateMachine.choosingGateState) 
+        if (stateMachine.CurrentState.CanChooseGate) 
             return;
 
         Debug.Log($"Chose gate: {gate.Color}");

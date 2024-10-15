@@ -24,6 +24,16 @@ public interface IState
     /// Called when the state machine changes from this state to another one.
     /// </summary>
     public void Exit() { }
+
+    /// <summary>
+    /// Whether the user can roll the dice while this state is active.
+    /// </summary>
+    public bool CanRoll { get; }
+
+    /// <summary>
+    /// Whether the user can choose a gate while this state is active.
+    /// </summary>
+    public bool CanChooseGate { get; }
 }
 
 /// <summary>
@@ -31,7 +41,11 @@ public interface IState
 /// The current player should be able to interact with the dice, but not the gate buttons.
 /// </summary>
 [Serializable]
-public class TraitRollState : IState { }
+public class TraitRollState : IState
+{
+    public bool CanRoll => true;
+    public bool CanChooseGate => false;
+}
 
 
 /// <summary>
@@ -39,7 +53,11 @@ public class TraitRollState : IState { }
 /// The current player should be able to interact with the gate buttons, but not the dice.
 /// </summary>
 [Serializable]
-public class ChoosingGateState : IState { }
+public class ChoosingGateState : IState
+{
+    public bool CanRoll => false;
+    public bool CanChooseGate => true;
+}
 
 
 /// <summary>
@@ -47,7 +65,11 @@ public class ChoosingGateState : IState { }
 /// The current player should be able to interact with the dice, but not the gate buttons.
 /// </summary>
 [Serializable]
-public class AttackingGateState : IState { }
+public class AttackingGateState : IState
+{
+    public bool CanRoll => true;
+    public bool CanChooseGate => false;
+}
 
 
 /// <summary>
@@ -55,4 +77,8 @@ public class AttackingGateState : IState { }
 /// The current player should be able to interact with the dice, but not the gate buttons.
 /// </summary>
 [Serializable]
-public class BreakingGateState : IState { }
+public class BreakingGateState : IState
+{
+    public bool CanRoll => true;
+    public bool CanChooseGate => false;
+}
