@@ -31,20 +31,7 @@ public interface IState
 /// The current player should be able to interact with the dice, but not the gate buttons.
 /// </summary>
 [Serializable]
-public class TraitRollState : IState
-{
-    List<PlayerSO> players;
-
-    public void Initialize(List<PlayerSO> players) 
-    {
-        this.players = players;
-    }
-
-    public void Enter() 
-    {
-        Debug.Log($"It's {players[0].name}'s turn to roll their trait.");
-    }
-}
+public class TraitRollState : IState { }
 
 
 /// <summary>
@@ -52,20 +39,7 @@ public class TraitRollState : IState
 /// The current player should be able to interact with the gate buttons, but not the dice.
 /// </summary>
 [Serializable]
-public class ChoosingGateState : IState
-{
-    List<PlayerSO> players;
-    
-    public void Initialize(List<PlayerSO> players) 
-    {
-        this.players = players;
-    }
-
-    public void Enter() 
-    {
-        Debug.Log("Time to choose a gate to attack.");
-    }
-}
+public class ChoosingGateState : IState { }
 
 
 /// <summary>
