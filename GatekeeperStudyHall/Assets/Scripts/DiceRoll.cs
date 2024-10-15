@@ -52,43 +52,6 @@ public class DiceRoll : MonoBehaviour
 
     [HideInInspector] public event System.EventHandler<int> DoneRollingEvent;
     int roll = -1;
-    bool userCanRoll = false;
-
-
-    void OnEnable() 
-    {
-        stateMachine.StateChangedEvent += OnStateChanged;
-    }
-
-    void OnDestroy() 
-    {
-        stateMachine.StateChangedEvent -= OnStateChanged;
-    }
-
-
-    /// <summary>
-    /// Adjusts whether the user is allowed to roll the dice based on the new state. 
-    /// This method is called anytime the state changes. 
-    /// </summary>
-    /// <param name="state">The newly active state.</param>
-    private void OnStateChanged(object sender, IState state) 
-    {
-        // TODO: instead of doing this, we should probably add a property to each state
-        // that indicates whether the user can roll during that state
-
-        // magical C# construct that lets us easily check the type of the state
-        userCanRoll = state switch 
-        {
-            // only let the user interact with the dice during these states:
-            TraitRollState => true,
-            AttackingGateState => true,
-            BreakingGateState => true,
-
-            _ => false,
-        };
-
-        Debug.Log($"New state: {state.GetType()},  userCanRoll: {userCanRoll}");
-    }
 
 
     void Start() {
@@ -123,7 +86,7 @@ public class DiceRoll : MonoBehaviour
     /// </summary>
     public void MouseDownFunc() 
     {
-        if (userCanRoll && !isSliding) 
+        if (stateMachine.CurrentState.CanRoll && !isSliding) 
         {
             isHeld = true;
             shakeTimer = shakeInterval;

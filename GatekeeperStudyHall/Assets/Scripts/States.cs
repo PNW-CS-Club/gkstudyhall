@@ -24,6 +24,16 @@ public interface IState
     /// Called when the state machine changes from this state to another one.
     /// </summary>
     public void Exit() { }
+
+    /// <summary>
+    /// Whether the user can roll the dice while this state is active.
+    /// </summary>
+    public bool CanRoll { get; }
+
+    /// <summary>
+    /// Whether the user can choose a gate while this state is active.
+    /// </summary>
+    public bool CanChooseGate { get; }
 }
 
 /// <summary>
@@ -33,17 +43,8 @@ public interface IState
 [Serializable]
 public class TraitRollState : IState
 {
-    List<PlayerSO> players;
-
-    public void Initialize(List<PlayerSO> players) 
-    {
-        this.players = players;
-    }
-
-    public void Enter() 
-    {
-        Debug.Log($"It's {players[0].name}'s turn to roll their trait.");
-    }
+    public bool CanRoll => true;
+    public bool CanChooseGate => false;
 }
 
 
@@ -54,17 +55,8 @@ public class TraitRollState : IState
 [Serializable]
 public class ChoosingGateState : IState
 {
-    List<PlayerSO> players;
-    
-    public void Initialize(List<PlayerSO> players) 
-    {
-        this.players = players;
-    }
-
-    public void Enter() 
-    {
-        Debug.Log("Time to choose a gate to attack.");
-    }
+    public bool CanRoll => false;
+    public bool CanChooseGate => true;
 }
 
 
@@ -73,7 +65,11 @@ public class ChoosingGateState : IState
 /// The current player should be able to interact with the dice, but not the gate buttons.
 /// </summary>
 [Serializable]
-public class AttackingGateState : IState { }
+public class AttackingGateState : IState
+{
+    public bool CanRoll => true;
+    public bool CanChooseGate => false;
+}
 
 
 /// <summary>
@@ -81,4 +77,8 @@ public class AttackingGateState : IState { }
 /// The current player should be able to interact with the dice, but not the gate buttons.
 /// </summary>
 [Serializable]
-public class BreakingGateState : IState { }
+public class BreakingGateState : IState
+{
+    public bool CanRoll => true;
+    public bool CanChooseGate => false;
+}

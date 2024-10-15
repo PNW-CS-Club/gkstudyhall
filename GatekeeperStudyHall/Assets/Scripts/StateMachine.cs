@@ -6,7 +6,7 @@ using UnityEngine;
 
 /// <summary>
 /// The <c>StateMachine</c> class holds an <c>IState</c> object that represents the state that the program is in.
-/// It also stores and initializes all of the instances of the states.
+/// It also stores all of the instances of the states.
 /// </summary>
 public class StateMachine : MonoBehaviour
 {
@@ -27,14 +27,8 @@ public class StateMachine : MonoBehaviour
     private IState currentState;
 
 
-    /// <summary>
-    /// Initializes the states that live in the <c>StateMachine</c>, and then enters the initial state.
-    /// </summary>
     void Start() 
     {
-        traitRollState.Initialize(playerListSO.list);
-        choosingGateState.Initialize(playerListSO.list);
-
         // the initial state that the program will be in is traitRollState
         currentState = traitRollState;
         StateChangedEvent?.Invoke(this, currentState);
