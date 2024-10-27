@@ -26,6 +26,11 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
+    public void SelectCard(CardSO selectedCardData) {
+    // Imposta il cardData con la carta selezionata e aggiorna la visualizzazione
+        ChangeCardData(selectedCardData);
+    }
+
     public void OnPointerExit(PointerEventData eventData) {
         if (cardData != null) {
             transform.GetComponent<Image>().color = cardData.innerColor;
