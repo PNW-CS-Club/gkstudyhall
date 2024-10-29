@@ -59,14 +59,20 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     // on click, magnify this card and save the name
     public void OnPointerClick(PointerEventData eventData) { //need to separate left click with right click 
-        if(isPlayerSlot && selectedCardSO != null) {
+
+        if(eventData.button == PointerEventData.InputButton.Left) {
+            if(isPlayerSlot && selectedCardSO != null) {
             cardData = selectedCardSO;
             AssignCardSOToPlayerSlot();
         }
-        else if (canMagnify && cardData != null) {
+        else if (!isPlayerSlot && cardData != null) {
             selectedCardSO = cardData; 
-            cardMagnifier.Show(cardData);
             Debug.Log("Card selected: " + cardData.characterName);
+        }
+        }
+        else if(eventData.button == PointerEventData.InputButton.Right)
+        if (canMagnify && cardData != null) {
+            cardMagnifier.Show(cardData);
         }
     }
 
