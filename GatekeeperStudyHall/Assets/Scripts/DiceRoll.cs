@@ -166,8 +166,13 @@ public class DiceRoll : MonoBehaviour
         spriteRenderer.sprite = sprites[roll - 1];
 
         // gives the dice a boost
-        //rb.velocity *= releaseMultiplier;
-        rb.velocity = this.mouseDelta * releaseMultiplier;
+        if ( this.mouseDelta.magnitude <= 0.1f ) {
+            Debug.Log( this.mouseDelta );
+            // if you're lazy and aren't shaking the die, throw it in a random direction anyway
+            rb.velocity *= releaseMultiplier;
+        } else {
+            rb.velocity = this.mouseDelta * releaseMultiplier;
+        }
         Debug.Log( rb.velocity );
 
         // restrict the dice's position to inside the screen bounds
