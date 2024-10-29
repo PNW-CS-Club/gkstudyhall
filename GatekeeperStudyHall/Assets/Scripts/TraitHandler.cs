@@ -67,7 +67,7 @@ public class TraitHandler : MonoBehaviour
         switch (trait)
         {
             case Trait.deal3Dam:
-                //Selected players health -3
+                //Deal 3 damage to target player
 
                 /*
                  * Idk how we wanna go with the selection process.
@@ -80,9 +80,10 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             case Trait.minus2gate:
-                //Selcted gates health -2
-                //changeGateHealth(player, selectedGate, -2);
-                Debug.LogWarning("Trait doubleGateAbil not implemented");
+                //Selected gate health - 2
+                //GameManager.GateChangeHealth(player, selectedGate,-2);
+                
+                Debug.LogWarning("Trait minus2gate not implemented");
                 break;
 
             case Trait.plus1Health:
@@ -94,7 +95,7 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             case Trait.deal2Dam:
-                //changeHealth(gate,2);//Need parameter.
+                //Deal 2 damage to target player
                 Debug.LogWarning("Trait deal2Dam not implemented");
                 break;
 
@@ -115,6 +116,7 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             case Trait.gateLoses1HP:
+                // Select a gate to lose 1 HP
                 Debug.LogWarning("Trait gateLoses1HP not implemented");
                 break;
 
