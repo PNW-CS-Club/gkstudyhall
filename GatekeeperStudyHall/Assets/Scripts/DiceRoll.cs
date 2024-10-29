@@ -34,7 +34,9 @@ public class DiceRoll : MonoBehaviour
 
 
     [Header("Sliding")]
-    [SerializeField] float releaseMultiplier = 480f;
+    [SerializeField] float releaseMultiplier = 12f;
+    [SerializeField] float throwMultiplier = 36f;
+    [SerializeField] float lowSpeedThreshold = 0.1f;
     [SerializeField, Range(0, 0.1f)] float frictionFactor = 0.002f;
 
     float slideTimer = 0f;
@@ -166,14 +168,14 @@ public class DiceRoll : MonoBehaviour
         spriteRenderer.sprite = sprites[roll - 1];
 
         // gives the dice a boost
-        if ( this.mouseDelta.magnitude <= 0.1f ) {
-            Debug.Log( this.mouseDelta );
+        if ( this.mouseDelta.magnitude <= lowSpeedThreshold ) {
+            Debug.Log( this.mouseDelta.magnitude ); // removeme when this feels good enough
             // if you're lazy and aren't shaking the die, throw it in a random direction anyway
             rb.velocity *= releaseMultiplier;
         } else {
-            rb.velocity = this.mouseDelta * releaseMultiplier;
+            rb.velocity = this.mouseDelta * throwMultiplier;
         }
-        Debug.Log( rb.velocity );
+        Debug.Log( rb.velocity ); // removeme when this feels good enough
 
         // restrict the dice's position to inside the screen bounds
         ClampDice();
