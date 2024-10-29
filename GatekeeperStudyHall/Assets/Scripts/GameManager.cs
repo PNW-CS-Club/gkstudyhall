@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
             else 
             {
                 // Skip turn
-                Debug.Log("(TODO: Implement transition to next player traitRollState)");
+                NextTurn();
             }
         }
         else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
