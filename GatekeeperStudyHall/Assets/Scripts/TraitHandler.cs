@@ -104,6 +104,7 @@ public class TraitHandler : MonoBehaviour
                 //For this we are gonna have to keep track of
                 //what number they rolled and then just do minus 2 to it;
                 //Also have to check for the abilities of that gate.
+                player.reduceGateDamage = true; // This will be used in GameManager to carry out Trait ability
                 Debug.LogWarning("Trait reduceGateDamage not implemented");
                 break;
 

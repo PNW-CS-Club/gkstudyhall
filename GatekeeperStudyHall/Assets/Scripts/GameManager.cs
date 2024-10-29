@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="roll">The rolled value of the dice.</param>
     private void UseRollResult(int roll) {
+        PlayerSO currentPlayer = playerListSO.list[0];
         if (stateMachine.CurrentState == stateMachine.traitRollState) 
         {
             if (roll <= 4) 
@@ -98,10 +99,18 @@ public class GameManager : MonoBehaviour
         }
         else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
         {
-            Debug.Log($"attacking for {roll} damage");
-
-            bool gateIsBreaking = GateChangeHealth(playerListSO.list[0], Globals.chosenGate, -roll);
-
+            bool gateIsBreaking;
+            if(currentPlayer.reduceGateDamage == true) {
+                int reducedRoll = roll - 2 > 0 ? roll - 2 : 0;
+                Debug.Log($"attacking for {reducedRoll} damage");
+                gateIsBreaking = GateChangeHealth(currentPlayer, Globals.chosenGate, -reducedRoll);
+                currentPlayer.reduceGateDamage = false;
+            }
+            else {
+                Debug.Log($"attacking for {roll} damage");
+                gateIsBreaking = GateChangeHealth(currentPlayer, Globals.chosenGate, -roll);
+            }
+         
             if (gateIsBreaking) {
                 Debug.Log("You broke the gate!");
                 stateMachine.TransitionTo(stateMachine.breakingGateState);
@@ -115,7 +124,7 @@ public class GameManager : MonoBehaviour
             // Hi welcome to Chili's
             Debug.Log("hi welcome to chilis");
 
-            Globals.chosenGate.DoBreakEffect(playerListSO.list[0], roll);
+            Globals.chosenGate.DoBreakEffect(currentPlayer, roll);
             Globals.chosenGate.health = GateSO.STARTING_HEALTH;
             NextTurn();
         }
