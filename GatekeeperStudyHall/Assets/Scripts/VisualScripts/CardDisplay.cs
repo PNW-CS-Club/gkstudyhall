@@ -7,9 +7,11 @@ using UnityEngine.EventSystems;
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public CardSO cardData;
-    public bool canMagnify = true;
 
     public CardMagnifier cardMagnifier;
+    public bool canMagnify = true;
+
+    public bool isPlayerSlot = false; //if the card selected is a slot
 
     // if these are different, it means that the checkbox was toggled last frame
     public bool collapsed;
@@ -17,6 +19,8 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public const float COLLAPSE_HEIGHT_DIFF = 172f;
     const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
+
+    public static CardSO selectedCardSO; 
 
 
     // enter and exit functions turn the highlight on and off
@@ -26,8 +30,8 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
+    // update the visualization of the card
     public void SelectCard(CardSO selectedCardData) {
-    // Imposta il cardData con la carta selezionata e aggiorna la visualizzazione
         ChangeCardData(selectedCardData);
     }
 
@@ -37,12 +41,37 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    // on click, magnify this card
-    public void OnPointerClick(PointerEventData eventData) {
-        if (canMagnify && cardData != null) {
-            cardMagnifier.Show(cardData);
+    //if is select a card the player change card
+     private void AssignCardSOToPlayerSlot()
+    {
+        if (selectedCardSO != null)
+        {
+            cardData = selectedCardSO;
+            Debug.Log("Card assign to " + gameObject.name + ": " + cardData.characterName);
+            selectedCardSO = null;
+            SelectCard(cardData);
+        }
+        else
+        {
+            Debug.LogError("No card assign");
         }
     }
+
+    // on click, magnify this card and save the name
+    public void OnPointerClick(PointerEventData eventData) {
+        if (canMagnify && cardData != null) {
+            selectedCardSO = cardData; 
+            cardMagnifier.Show(cardData);
+            Debug.Log("Carta selezionata: " + cardData.characterName);
+        }
+    }
+
+    // on click, magnify this card
+    //public void OnPointerClick(PointerEventData eventData) {
+    //    if (canMagnify && cardData != null) {
+    //        cardMagnifier.Show(cardData);
+    //    }
+    //}
 
 
 
