@@ -1,15 +1,16 @@
 # gkstudyhall
-Gatekeeper Study Hall Edition
+**Gatekeeper Study Hall Edition**
 
-Recreating the simplified version of Gatekeeper found on https://gatekeeperonline.net/play
+A Unity game development project recreating the simplified version of Gatekeeper found on https://www.gatekeeperonline.net/play
 
-4 player board game 
+For more information on how to play the game, see the **[game rules](GameRules.md)**
 
-
-
-- Project Details:
+Project Details: <br>
 - Unity Version: 2022.3.19f1
-- 2D Top-Down
+- 2D Top-Down Perspective
+- Built-In Shader Pipeline
+- For 2-4 players
+- Local or Online Sessions
 
 # How to Contribute
 
@@ -31,5 +32,3 @@ View the feature board in Projects at https://github.com/orgs/PNW-CS-Club/projec
 When finished with a branch/issue
 - Create a pull request
 When 2 people have approved the request, pull the changes to main. Ensure that there are no merge conflicts before pulling
-
-# Game Rules
