@@ -26,7 +26,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void PlayerAttacksPlayer(PlayerSO attacker, PlayerSO defender, int damage)
     {
+        if(defender.hasStockade){
+            damage = 0;
+            defender.hasStockade = false;
+            Debug.Log("Stockade blocked the attack!");
+        }
         defender.health -= damage;
+        Debug.Log($"{attacker.name} attacked {defender.name} for {damage} damage!");
 
         if (defender.health <= 0) {
             defender.isAlive = false;
@@ -43,6 +49,11 @@ public class GameManager : MonoBehaviour
     /// <param name="amount">The amount of health to change by (positive to heal, negative to take damage).</param>
     public static void PlayerChangeHealth(PlayerSO player, int amount)
     {
+        if(amount < 0 && player.hasStockade){
+            player.hasStockade = false;
+            amount = 0;
+            Debug.Log("Stockade blocked the damage!");
+        }
         player.health += amount;
 
         if (player.health <= 0) 

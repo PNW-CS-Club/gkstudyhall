@@ -121,26 +121,14 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             case Trait.minus2HP:
-                if(player.hasStockade) {
-                    player.hasStockade = false;
-                    Debug.Log("Player used stockade to prevent damage");
-                }else{
-                    GameManager.PlayerChangeHealth(player, -2);
-                    Debug.Log("Player took 2 damage");
-                }
+                GameManager.PlayerChangeHealth(player, -2);
                 break;
 
             case Trait.allMinus1HP:
                 // WARNING: This may be implemented incorrectly
                 // Note: the index of the current player is always 0
                 for (int i = 1; i < players.Count; i++) {
-                    if(players[i].hasStockade) {
-                        players[i].hasStockade = false;
-                        Debug.Log("Player used stockade to prevent damage");
-                    }else{
-                        GameManager.PlayerAttacksPlayer(players[0], players[i], -1);
-                        Debug.Log("Player took 1 damage");
-                    }
+                    GameManager.PlayerAttacksPlayer(players[0], players[i], -1);
                 }
                 break;
 
