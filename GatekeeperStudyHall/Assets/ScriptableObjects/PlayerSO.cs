@@ -19,7 +19,7 @@ public class PlayerSO : ScriptableObject
     // not final
     public bool doubleDamageToCenter;
     public bool doubleDamageToSelf;
-
+    public bool reduceGateDamage;
 
     // when this SO is loaded into a scene, reset values that may have been changed
     private void OnEnable() {

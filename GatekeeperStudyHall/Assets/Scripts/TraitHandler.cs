@@ -10,11 +10,11 @@ public enum Trait
 {
     // warning: changing enum int values here does not update them in the editor
     [InspectorName("Deal 3 Damage")]                deal3Dam = 0,
-    [InspectorName("-2 to Gate Roll")]              minus2gate = 1,
+    [InspectorName("Deal 2 Damage to Gate")]        minus2gate = 1,
     [InspectorName("+1 Health")]                    plus1Health = 2,
     [InspectorName("x2 Gate Ability")]              doubleGateAbil = 3,
     [InspectorName("Deal 2 Damage")]                deal2Dam = 4,
-    [InspectorName("reduceGateDamage (??)")]        reduceGateDamage = 5,
+    [InspectorName("-2 Gate Attack Damage")]        reduceGateDamage = 5,
     [InspectorName("Take No Damage This Turn")]     noDamageTurn = 6,
     [InspectorName("Swap Gate HP")]                 swapGateHP = 7,
     [InspectorName("Gate Loses 1 HP")]              gateLoses1HP = 8,
@@ -104,7 +104,7 @@ public class TraitHandler : MonoBehaviour
                 //For this we are gonna have to keep track of
                 //what number they rolled and then just do minus 2 to it;
                 //Also have to check for the abilities of that gate.
-                Debug.LogWarning("Trait reduceGateDamage not implemented");
+                player.reduceGateDamage = true; // This will be used in GameManager to carry out Trait ability
                 break;
 
             case Trait.noDamageTurn:
