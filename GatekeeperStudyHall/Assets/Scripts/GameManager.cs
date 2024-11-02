@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
     {
         if(defender.noDamageTurn){
             damage = 0;
-            player.noDamageTurn = false;
             Debug.Log($"{defender.name} takes no damage this turn!");
         }
         else if(defender.hasStockade){
@@ -56,7 +55,6 @@ public class GameManager : MonoBehaviour
     {
         if(player.noDamageTurn){
             amount = 0;
-            player.noDamageTurn = false;
             Debug.Log($"{player.name} takes no damage this turn!");
         }
         else if(amount < 0 && player.hasStockade){
@@ -162,8 +160,9 @@ public class GameManager : MonoBehaviour
     public void NextTurn() 
     {
         Globals.chosenGate = null;
-
         List<PlayerSO>players = playerListSO.list;
+
+        players[0].resetEffects(); //reset all temporary effects the current player may have
         do {      
             players.Insert(players.Count, players[0]);
             players.RemoveAt(0);

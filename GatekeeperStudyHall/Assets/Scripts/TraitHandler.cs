@@ -100,10 +100,7 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             case Trait.reduceGateDamage:
-                // changeGateHealth(gate,-2); 
-                //For this we are gonna have to keep track of
-                //what number they rolled and then just do minus 2 to it;
-                //Also have to check for the abilities of that gate.
+                // Player deals 2 less damage to gates this turn
                 player.reduceGateDamage = true; // This will be used in GameManager to carry out Trait ability
                 break;
 
@@ -113,6 +110,7 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             case Trait.swapGateHP:
+                // Swap the HP of two chosen gates
                 Debug.LogWarning("Trait swapGateHP not implemented");
                 break;
 
@@ -123,7 +121,7 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             case Trait.minus2HP:
-                GameManager.PlayerChangeHealth(player, -2); // deal 2 damage to the player
+                GameManager.PlayerChangeHealth(player, -2); // Player loses 2 health
                 break;
 
             case Trait.allMinus1HP:
@@ -134,6 +132,8 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             case Trait.chooseGateForOp:
+                // Choose a gate for another player to attack
+                // that player will only be able to attack that gate during their next turn
                 Debug.LogWarning("Trait chooseGateForOp not implemented");
                 break;
 

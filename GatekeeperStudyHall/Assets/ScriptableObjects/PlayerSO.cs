@@ -21,6 +21,7 @@ public class PlayerSO : ScriptableObject
     public bool doubleDamageToSelf; // Player deals double damage to self this turn
     public bool reduceGateDamage; // Player deals less damage to gate this turn
     public bool noDamageTurn; // Player takes no damage this turn
+    public bool doubleGateAbil; // Gate abilities double this turn
 
     // when this SO is loaded into a scene, reset values that may have been changed
     private void OnEnable() {
@@ -33,5 +34,18 @@ public class PlayerSO : ScriptableObject
         doubleDamageToSelf = false;
         reduceGateDamage = false;
         noDamageTurn = false;
+        doubleGateAbil = false;
+        
+    }
+
+    /// <summary>
+    /// Resets all effects that the player has.
+    /// </summary>
+    public void resetEffects(){
+        doubleDamageToCenter = false;
+        doubleDamageToSelf = false;
+        reduceGateDamage = false;
+        noDamageTurn = false;
+        doubleGateAbil = false;
     }
 }
