@@ -383,6 +383,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 768347978}
     m_Modifications:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 11400000, guid: b50d6f6fe5f8fd345bae2e06ea9e783e, type: 2}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
       objectReference: {fileID: 11400000, guid: b1148e97bcd5d4a4dac0725497919a04, type: 2}
@@ -1724,6 +1728,10 @@ PrefabInstance:
       value: 49.373
       objectReference: {fileID: 0}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
       objectReference: {fileID: 11400000, guid: 8d206240aaf07a64c83811e8091fd269, type: 2}
@@ -2588,6 +2596,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1793134940}
     m_Modifications:
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
@@ -3892,6 +3904,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 240308201}
     m_Modifications:
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 11400000, guid: b5a7460747c7bab41906f3d7a94bc689, type: 2}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 

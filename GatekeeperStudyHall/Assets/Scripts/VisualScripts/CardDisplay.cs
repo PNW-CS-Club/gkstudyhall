@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    [SerializeField] PlayerSO player; // the player that this card display belongs to
     public CardSO cardData;
 
     public CardMagnifier cardMagnifier;
@@ -50,6 +51,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             cardData = selectedCardSO;
             Debug.Log("Card assign to " + gameObject.name + ": " + cardData.characterName);
             selectedCardSO = null;
+            player.card = cardData; // assign the card to the playerSO
             SelectCard(cardData);
         }
         else
