@@ -49,7 +49,13 @@ public class GateSO : ScriptableObject
                     /* TODO: damage center gate by 4 */ break;
 
                 case GateColor.GREEN:
-                    GameManager.PlayerChangeHealth(player, 3); break;
+                    if(player.doubleGateAbil) {
+                        GameManager.PlayerChangeHealth(player, 6);
+                    }
+                    else {
+                        GameManager.PlayerChangeHealth(player, 3);
+                    }
+                    break;
 
                 case GateColor.RED:
                     player.doubleDamageToCenter = true; break;
@@ -64,7 +70,16 @@ public class GateSO : ScriptableObject
             switch (color) 
             {
                 case GateColor.BLACK:
-                    GameManager.PlayerChangeHealth(player, -4); break;
+                    if(player.doubleDamageToSelf && player.doubleGateAbil) {
+                        GameManager.PlayerChangeHealth(player, -16);
+                    }
+                    else if(player.doubleDamageToSelf || player.doubleGateAbil) {
+                        GameManager.PlayerChangeHealth(player, -8);
+                    }
+                    else {
+                        GameManager.PlayerChangeHealth(player, -4);
+                    }
+                    break;
 
                 case GateColor.GREEN:
                     /* TODO: center gate gains 3 hp */ break;

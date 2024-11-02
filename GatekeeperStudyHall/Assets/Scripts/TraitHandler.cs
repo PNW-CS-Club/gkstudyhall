@@ -91,7 +91,8 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             case Trait.doubleGateAbil:
-                Debug.LogWarning("Trait doubleGateAbil not implemented");
+                //Double the gate abilities this turn
+                player.doubleGateAbil = true; // This will be used in GameManager to carry out Trait ability
                 break;
 
             case Trait.deal2Dam:
