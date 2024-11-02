@@ -10,14 +10,14 @@ public enum Trait
 {
     // warning: changing enum int values here does not update them in the editor
     [InspectorName("Deal 3 Damage")]                deal3Dam = 0,
-    [InspectorName("Deal 2 Damage to Gate")]        minus2gate = 1,
+    [InspectorName("Deal 2 Damage to GateKeeper")]  minus2GateKeeper = 1,
     [InspectorName("+1 Health")]                    plus1Health = 2,
     [InspectorName("x2 Gate Ability")]              doubleGateAbil = 3,
     [InspectorName("Deal 2 Damage")]                deal2Dam = 4,
     [InspectorName("-2 Gate Attack Damage")]        reduceGateDamage = 5,
     [InspectorName("Take No Damage This Turn")]     noDamageTurn = 6,
     [InspectorName("Swap Gate HP")]                 swapGateHP = 7,
-    [InspectorName("Gate Loses 1 HP")]              gateLoses1HP = 8,
+    [InspectorName("+1 Gate Attack Damage")]        increaseGateDamage = 8,
     [InspectorName("Lose 2 Health")]                minus2HP = 9,
     [InspectorName("Deal 1 Damage to Everyone")]    allMinus1HP = 10,
     [InspectorName("Choose Gate for Other Player")] chooseGateForOp = 11,
@@ -79,11 +79,11 @@ public class TraitHandler : MonoBehaviour
                 Debug.LogWarning("Trait deal3Dam not implemented");
                 break;
 
-            case Trait.minus2gate:
+            case Trait.minus2GateKeeper:
                 //Selected gate health - 2
                 //GameManager.GateChangeHealth(player, selectedGate,-2);
                 
-                Debug.LogWarning("Trait minus2gate not implemented");
+                Debug.LogWarning("Trait minus2GateKeeper not implemented");
                 break;
 
             case Trait.plus1Health:
@@ -115,9 +115,9 @@ public class TraitHandler : MonoBehaviour
                 Debug.LogWarning("Trait swapGateHP not implemented");
                 break;
 
-            case Trait.gateLoses1HP:
-                // Select a gate to lose 1 HP
-                Debug.LogWarning("Trait gateLoses1HP not implemented");
+            case Trait.increaseGateDamage:
+                // Player deals 1 more damage to gates this turn
+                player.increaseGateDamage = true; // This will be used in GameManager to carry out Trait ability
                 break;
 
             case Trait.minus2HP:

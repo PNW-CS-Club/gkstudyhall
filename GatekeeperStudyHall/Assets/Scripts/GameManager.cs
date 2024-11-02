@@ -127,7 +127,11 @@ public class GameManager : MonoBehaviour
                 int reducedRoll = Mathf.Max(0, roll - 2);
                 Debug.Log($"attacking for {reducedRoll} damage");
                 gateIsBreaking = GateChangeHealth(currentPlayer, Globals.chosenGate, -reducedRoll);
-                currentPlayer.reduceGateDamage = false;
+            }
+            else if(currentPlayer.increaseGateDamage == true) {
+                int increasedRoll = roll + 1;
+                Debug.Log($"attacking for {increasedRoll} damage");
+                gateIsBreaking = GateChangeHealth(currentPlayer, Globals.chosenGate, -increasedRoll);
             }
             else {
                 Debug.Log($"attacking for {roll} damage");

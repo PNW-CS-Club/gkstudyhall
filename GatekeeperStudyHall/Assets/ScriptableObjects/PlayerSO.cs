@@ -20,6 +20,7 @@ public class PlayerSO : ScriptableObject
     public bool doubleDamageToCenter; // Player deals double damage to center this turn
     public bool doubleDamageToSelf; // Player deals double damage to self this turn
     public bool reduceGateDamage; // Player deals less damage to gate this turn
+    public bool increaseGateDamage; // Player deals more damage to gate this turn
     public bool noDamageTurn; // Player takes no damage this turn
     public bool doubleGateAbil; // Gate abilities double this turn
 
@@ -33,6 +34,7 @@ public class PlayerSO : ScriptableObject
         doubleDamageToCenter = false;
         doubleDamageToSelf = false;
         reduceGateDamage = false;
+        increaseGateDamage = false;
         noDamageTurn = false;
         doubleGateAbil = false;
         
@@ -45,6 +47,7 @@ public class PlayerSO : ScriptableObject
         doubleDamageToCenter = false;
         doubleDamageToSelf = false;
         reduceGateDamage = false;
+        increaseGateDamage = false;
         noDamageTurn = false;
         doubleGateAbil = false;
     }
