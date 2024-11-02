@@ -116,7 +116,6 @@ public class TraitHandler : MonoBehaviour
 
             case Trait.gateLoses1HP:
                 // Select a gate to lose 1 HP
-                GateManager.stateMachine.TransitionTo(GateManager.stateMachine.choosingGateState);
                 Debug.LogWarning("Trait gateLoses1HP not implemented");
                 break;
 
