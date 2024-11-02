@@ -26,7 +26,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void PlayerAttacksPlayer(PlayerSO attacker, PlayerSO defender, int damage)
     {
-        if(defender.hasStockade){
+        if(defender.noDamageTurn){
+            damage = 0;
+            player.noDamageTurn = false;
+            Debug.Log($"{defender.name} takes no damage this turn!");
+        }
+        else if(defender.hasStockade){
             damage = 0;
             defender.hasStockade = false;
             Debug.Log("Stockade blocked the attack!");
@@ -49,7 +54,12 @@ public class GameManager : MonoBehaviour
     /// <param name="amount">The amount of health to change by (positive to heal, negative to take damage).</param>
     public static void PlayerChangeHealth(PlayerSO player, int amount)
     {
-        if(amount < 0 && player.hasStockade){
+        if(player.noDamageTurn){
+            amount = 0;
+            player.noDamageTurn = false;
+            Debug.Log($"{player.name} takes no damage this turn!");
+        }
+        else if(amount < 0 && player.hasStockade){
             player.hasStockade = false;
             amount = 0;
             Debug.Log("Stockade blocked the damage!");
@@ -112,7 +122,7 @@ public class GameManager : MonoBehaviour
         {
             bool gateIsBreaking;
             if(currentPlayer.reduceGateDamage == true) {
-                int reducedRoll = roll - 2 > 0 ? roll - 2 : 0;
+                int reducedRoll = Mathf.Max(0, roll - 2);
                 Debug.Log($"attacking for {reducedRoll} damage");
                 gateIsBreaking = GateChangeHealth(currentPlayer, Globals.chosenGate, -reducedRoll);
                 currentPlayer.reduceGateDamage = false;
@@ -132,8 +142,6 @@ public class GameManager : MonoBehaviour
         }
         else if (stateMachine.CurrentState == stateMachine.breakingGateState) 
         {
-            // Hi welcome to Chili's
-            Debug.Log("hi welcome to chilis");
 
             Globals.chosenGate.DoBreakEffect(currentPlayer, roll);
             Globals.chosenGate.health = GateSO.STARTING_HEALTH;

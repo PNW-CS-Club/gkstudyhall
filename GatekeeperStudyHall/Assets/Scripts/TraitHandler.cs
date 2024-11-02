@@ -108,7 +108,8 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             case Trait.noDamageTurn:
-                Debug.LogWarning("Trait noDamageTurn not implemented");
+                // Player will not take damage this turn
+                player.noDamageTurn = true; // This will be used in GameManager to carry out Trait ability
                 break;
 
             case Trait.swapGateHP:
@@ -117,18 +118,18 @@ public class TraitHandler : MonoBehaviour
 
             case Trait.gateLoses1HP:
                 // Select a gate to lose 1 HP
+                GateManager.stateMachine.TransitionTo(GateManager.stateMachine.choosingGateState);
                 Debug.LogWarning("Trait gateLoses1HP not implemented");
                 break;
 
             case Trait.minus2HP:
-                GameManager.PlayerChangeHealth(player, -2);
+                GameManager.PlayerChangeHealth(player, -2); // deal 2 damage to the player
                 break;
 
             case Trait.allMinus1HP:
-                // WARNING: This may be implemented incorrectly
                 // Note: the index of the current player is always 0
                 for (int i = 1; i < players.Count; i++) {
-                    GameManager.PlayerAttacksPlayer(players[0], players[i], -1);
+                    GameManager.PlayerAttacksPlayer(players[0], players[i], 1); // deal 1 damage to all other players
                 }
                 break;
 
