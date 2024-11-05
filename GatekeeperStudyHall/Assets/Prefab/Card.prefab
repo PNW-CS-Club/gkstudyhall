@@ -1066,6 +1066,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardData: {fileID: 0}
+  canMagnify: 1
+  cardMagnifier: {fileID: 0}
   collapsed: 0
 --- !u!1 &5626725871422286626
 GameObject:
