@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    [SerializeField] PlayerSO player; // the player that this card display belongs to
     public CardSO cardData;
 
     public CardMagnifier cardMagnifier;
@@ -30,25 +31,27 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    // update the visualization of the card
-    public void SelectCard(CardSO selectedCardData) {
-        ChangeCardData(selectedCardData);
-    }
-
     public void OnPointerExit(PointerEventData eventData) {
         if (cardData != null) {
             transform.GetComponent<Image>().color = cardData.innerColor;
         }
     }
 
+    // update the visualization of the card
+    public void SelectCard(CardSO selectedCardData)
+    {
+        ChangeCardData(selectedCardData);
+    }
+
     //if is select a card the player change card
-     private void AssignCardSOToPlayerSlot()
+    private void AssignCardSOToPlayerSlot()
     {
         if (selectedCardSO != null)
         {
             cardData = selectedCardSO;
             Debug.Log("Card assign to " + gameObject.name + ": " + cardData.characterName);
             selectedCardSO = null;
+            player.card = cardData; // assign the card to the playerSO
             SelectCard(cardData);
         }
         else
@@ -57,13 +60,13 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    // on click, magnify this card and save the name
-    public void OnPointerClick(PointerEventData eventData) { //need to separate left click with right click 
 
-        if(eventData.button == PointerEventData.InputButton.Left) {
+    public void OnPointerClick(PointerEventData eventData) {
+        if (eventData.button == PointerEventData.InputButton.Left) {
+            // select on left click
             if(isPlayerSlot && selectedCardSO != null) {
-            cardData = selectedCardSO;
-            AssignCardSOToPlayerSlot();
+                cardData = selectedCardSO;
+                AssignCardSOToPlayerSlot();
             }
             else if (!isPlayerSlot && cardData != null) {
                 selectedCardSO = cardData; 
@@ -71,18 +74,21 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             }
         }
         else if(eventData.button == PointerEventData.InputButton.Right) {
+                cardData = selectedCardSO;
+                AssignCardSOToPlayerSlot();
+            }
+            else if (!isPlayerSlot && cardData != null) {
+                selectedCardSO = cardData;
+                Debug.Log("Card selected: " + cardData.characterName);
+                //SelectCard();
+            }
+        else if(eventData.button == PointerEventData.InputButton.Right) {
+            // magnify on right click
             if (canMagnify && cardData != null) {
                 cardMagnifier.Show(cardData);
             }
         }
     }
-
-    // on click, magnify this card
-    //public void OnPointerClick(PointerEventData eventData) {
-    //    if (canMagnify && cardData != null) {
-    //        cardMagnifier.Show(cardData);
-    //    }
-    //}
 
 
 
