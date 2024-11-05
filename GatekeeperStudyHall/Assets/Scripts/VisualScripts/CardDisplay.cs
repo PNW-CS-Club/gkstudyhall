@@ -64,15 +64,16 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             if(isPlayerSlot && selectedCardSO != null) {
             cardData = selectedCardSO;
             AssignCardSOToPlayerSlot();
+            }
+            else if (!isPlayerSlot && cardData != null) {
+                selectedCardSO = cardData; 
+                Debug.Log("Card selected: " + cardData.characterName);
+            }
         }
-        else if (!isPlayerSlot && cardData != null) {
-            selectedCardSO = cardData; 
-            Debug.Log("Card selected: " + cardData.characterName);
-        }
-        }
-        else if(eventData.button == PointerEventData.InputButton.Right)
-        if (canMagnify && cardData != null) {
-            cardMagnifier.Show(cardData);
+        else if(eventData.button == PointerEventData.InputButton.Right) {
+            if (canMagnify && cardData != null) {
+                cardMagnifier.Show(cardData);
+            }
         }
     }
 
