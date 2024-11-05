@@ -169,13 +169,11 @@ public class DiceRoll : MonoBehaviour
 
         // gives the dice a boost
         if ( this.mouseDelta.magnitude <= lowSpeedThreshold ) {
-            Debug.Log( this.mouseDelta.magnitude ); // removeme when this feels good enough
             // if you're lazy and aren't shaking the die, throw it in a random direction anyway
             rb.velocity *= releaseMultiplier;
         } else {
             rb.velocity = this.mouseDelta * throwMultiplier;
         }
-        Debug.Log( rb.velocity ); // removeme when this feels good enough
 
         // restrict the dice's position to inside the screen bounds
         ClampDice();
