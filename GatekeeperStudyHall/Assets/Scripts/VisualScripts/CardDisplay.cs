@@ -6,10 +6,13 @@ using UnityEngine.EventSystems;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    [SerializeField] PlayerSO player; // the player that this card display belongs to
     public CardSO cardData;
-    public bool canMagnify = true;
 
     public CardMagnifier cardMagnifier;
+    public bool canMagnify = true;
+
+    public bool isPlayerSlot = false; //if the card selected is a slot
 
     // if these are different, it means that the checkbox was toggled last frame
     public bool collapsed;
@@ -17,6 +20,8 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public const float COLLAPSE_HEIGHT_DIFF = 172f;
     const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
+
+    public static CardSO selectedCardSO; 
 
 
     // enter and exit functions turn the highlight on and off
@@ -32,10 +37,56 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    // on click, magnify this card
+    // update the visualization of the card
+    public void SelectCard(CardSO selectedCardData)
+    {
+        ChangeCardData(selectedCardData);
+    }
+
+    //if is select a card the player change card
+    private void AssignCardSOToPlayerSlot()
+    {
+        if (selectedCardSO != null)
+        {
+            cardData = selectedCardSO;
+            Debug.Log("Card assign to " + gameObject.name + ": " + cardData.characterName);
+            selectedCardSO = null;
+            player.card = cardData; // assign the card to the playerSO
+            SelectCard(cardData);
+        }
+        else
+        {
+            Debug.LogError("No card assign");
+        }
+    }
+
+
     public void OnPointerClick(PointerEventData eventData) {
-        if (canMagnify && cardData != null) {
-            cardMagnifier.Show(cardData);
+        if (eventData.button == PointerEventData.InputButton.Left) {
+            // select on left click
+            if(isPlayerSlot && selectedCardSO != null) {
+                cardData = selectedCardSO;
+                AssignCardSOToPlayerSlot();
+            }
+            else if (!isPlayerSlot && cardData != null) {
+                selectedCardSO = cardData; 
+                Debug.Log("Card selected: " + cardData.characterName);
+            }
+        }
+        else if(eventData.button == PointerEventData.InputButton.Right) {
+                cardData = selectedCardSO;
+                AssignCardSOToPlayerSlot();
+            }
+            else if (!isPlayerSlot && cardData != null) {
+                selectedCardSO = cardData;
+                Debug.Log("Card selected: " + cardData.characterName);
+                //SelectCard();
+            }
+        else if(eventData.button == PointerEventData.InputButton.Right) {
+            // magnify on right click
+            if (canMagnify && cardData != null) {
+                cardMagnifier.Show(cardData);
+            }
         }
     }
 
