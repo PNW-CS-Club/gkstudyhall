@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -34,6 +35,8 @@ public class DiceRoll : MonoBehaviour
 
     [Header("Sliding")]
     [SerializeField] float releaseMultiplier = 12f;
+    [SerializeField] float throwMultiplier = 36f;
+    [SerializeField] float lowSpeedThreshold = 0.1f;
     [SerializeField, Range(0, 0.1f)] float frictionFactor = 0.002f;
 
     float slideTimer = 0f;
@@ -53,6 +56,9 @@ public class DiceRoll : MonoBehaviour
     [HideInInspector] public event System.EventHandler<int> DoneRollingEvent;
     int roll = -1;
 
+
+    Vector2 mouseDelta;
+    Vector2 lastMousePos;
 
     void Start() {
         if (sprites.Length != 6) {
@@ -90,6 +96,9 @@ public class DiceRoll : MonoBehaviour
         {
             isHeld = true;
             shakeTimer = shakeInterval;
+            
+            // init the delta so we can actually do stuff to it
+            this.mouseDelta = new( 0f, 0f );
         }
     }
 
@@ -104,6 +113,11 @@ public class DiceRoll : MonoBehaviour
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         mousePosition.z = transform.position.z;
         transform.position = mousePosition;
+
+        // update the delta
+        this.mouseDelta = ( Vector2 )mousePosition - this.lastMousePos;
+    
+        this.lastMousePos = mousePosition;
 
         // shake the dice once every `shakeInterval` seconds
         if (shakeTimer >= shakeInterval) {
@@ -154,7 +168,12 @@ public class DiceRoll : MonoBehaviour
         spriteRenderer.sprite = sprites[roll - 1];
 
         // gives the dice a boost
-        rb.velocity *= releaseMultiplier;
+        if ( this.mouseDelta.magnitude <= lowSpeedThreshold ) {
+            // if you're lazy and aren't shaking the die, throw it in a random direction anyway
+            rb.velocity *= releaseMultiplier;
+        } else {
+            rb.velocity = this.mouseDelta * throwMultiplier;
+        }
 
         // restrict the dice's position to inside the screen bounds
         ClampDice();
