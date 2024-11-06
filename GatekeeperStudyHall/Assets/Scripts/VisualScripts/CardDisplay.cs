@@ -14,10 +14,11 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public bool isPlayerSlot = false; //if the card selected is a slot
 
-    public const float COLLAPSE_HEIGHT_DIFF = 172f;
+    [SerializeField] bool startExpanded = true;
     Vector2 expandedSize;
     Vector2 collapsedSize;
 
+    public const float COLLAPSE_HEIGHT_DIFF = 172f;
     const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
 
     public static CardSO selectedCardSO; 
@@ -90,10 +91,20 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void SetExpanded(bool isExpanded)
     {
+        Debug.Log("Set isExpanded: " + isExpanded);
         transform.GetChild(2).gameObject.SetActive(isExpanded);
         GetComponent<RectTransform>().sizeDelta = (isExpanded ? expandedSize : collapsedSize);
     }
 
+
+
+    void Awake()
+    {
+        expandedSize = GetComponent<RectTransform>().rect.size;
+        collapsedSize = expandedSize - new Vector2(0, COLLAPSE_HEIGHT_DIFF);
+
+        SetExpanded(startExpanded);
+    }
 
 
     void Start()
@@ -103,10 +114,6 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             Debug.LogError("Could not find a CardMagnifier in scene");
         }
 
-        expandedSize = GetComponent<RectTransform>().rect.size;
-        collapsedSize = expandedSize - new Vector2(0, COLLAPSE_HEIGHT_DIFF);
-
-        SetExpanded(true);
         UpdateDisplay();
     }
 

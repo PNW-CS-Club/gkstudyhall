@@ -1065,8 +1065,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ac3b01b5436c94d844a721fe017868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   cardData: {fileID: 0}
-  collapsed: 0
+  cardMagnifier: {fileID: 0}
+  canMagnify: 1
+  isPlayerSlot: 0
+  startExpanded: 1
 --- !u!1 &5626725871422286626
 GameObject:
   m_ObjectHideFlags: 0
