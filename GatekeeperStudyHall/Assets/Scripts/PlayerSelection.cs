@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerSelection : MonoBehaviour, IPointerClickHandler
+public class PlayerSelection : MonoBehaviour
 {
     [SerializeField] PlayerListSO playerListSO;
     [SerializeField] GameObject cardDisplayPrefab;
@@ -73,12 +73,6 @@ public class PlayerSelection : MonoBehaviour, IPointerClickHandler
         }
 
         Reposition(playerList.Count);
-    }
-
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        gameObject.SetActive(false);
     }
 
 

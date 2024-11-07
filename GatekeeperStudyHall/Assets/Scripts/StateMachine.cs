@@ -16,6 +16,7 @@ public class StateMachine : MonoBehaviour
     public ChoosingGateState choosingGateState;
     public AttackingGateState attackingGateState;
     public BreakingGateState breakingGateState;
+    public ChoosingCardState choosingCardState;
 
     /// <summary>
     /// This C# event is triggered whenever the state changes.
