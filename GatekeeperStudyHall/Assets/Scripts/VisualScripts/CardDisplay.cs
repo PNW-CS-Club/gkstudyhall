@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Assertions;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -13,6 +14,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public bool canMagnify = true;
 
     public bool isPlayerSlot = false; //if the card selected is a slot
+    public bool isSelectable = false;
 
     [SerializeField] bool startExpanded = true;
     Vector2 expandedSize;
@@ -21,20 +23,18 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public const float COLLAPSE_HEIGHT_DIFF = 172f;
     const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
 
-    public static CardSO selectedCardSO; 
-
 
     // enter and exit functions turn the highlight on and off
     public void OnPointerEnter(PointerEventData eventData) {
-        if (canMagnify && cardData != null) {
+        Assert.IsNotNull(cardData);
+        if (canMagnify) {
             transform.GetComponent<Image>().color = Color.Lerp(cardData.innerColor, Color.white, HIGHLIGHT_STRENGTH);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        if (cardData != null) {
-            transform.GetComponent<Image>().color = cardData.innerColor;
-        }
+        Assert.IsNotNull(cardData);
+        transform.GetComponent<Image>().color = cardData.innerColor;
     }
 
     // update the visualization of the card
@@ -46,11 +46,11 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     //if is select a card the player change card
     private void AssignCardSOToPlayerSlot()
     {
-        if (selectedCardSO != null)
+        if (Globals.selectedCard != null)
         {
-            cardData = selectedCardSO;
+            cardData = Globals.selectedCard;
             Debug.Log("Card assign to " + gameObject.name + ": " + cardData.characterName);
-            selectedCardSO = null;
+            Globals.selectedCard = null;
             player.card = cardData; // assign the card to the playerSO
             SelectCard(cardData);
         }
@@ -62,19 +62,22 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
 
     public void OnPointerClick(PointerEventData eventData) {
+        Assert.IsNotNull(cardData);
         if (eventData.button == PointerEventData.InputButton.Left) {
             // select on left click
-            if(isPlayerSlot && selectedCardSO != null) {
-                cardData = selectedCardSO;
-                AssignCardSOToPlayerSlot();
+            if (isPlayerSlot) {
+                if (Globals.selectedCard != null) {
+                    cardData = Globals.selectedCard;
+                    AssignCardSOToPlayerSlot();
+                }
             }
-            else if (!isPlayerSlot && cardData != null) {
-                selectedCardSO = cardData; 
+            else if (isSelectable) {
+                Globals.selectedCard = cardData;
                 Debug.Log("Card selected: " + cardData.characterName);
             }
         }
-        else if(eventData.button == PointerEventData.InputButton.Right) {
-            if (canMagnify && cardData != null) {
+        else if (eventData.button == PointerEventData.InputButton.Right) {
+            if (canMagnify) {
                 cardMagnifier.Show(cardData);
             }
         }
@@ -91,7 +94,6 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void SetExpanded(bool isExpanded)
     {
-        Debug.Log("Set isExpanded: " + isExpanded);
         transform.GetChild(2).gameObject.SetActive(isExpanded);
         GetComponent<RectTransform>().sizeDelta = (isExpanded ? expandedSize : collapsedSize);
     }

@@ -28,7 +28,9 @@ public class PlayerSelection : MonoBehaviour, IPointerClickHandler
 
             for (int i = 0; i < playerList.Count; i++)
             {
-                displayObjects.Add(Instantiate(cardDisplayPrefab, panel));
+                GameObject cardDisplay = Instantiate(cardDisplayPrefab, panel);
+                cardDisplay.GetComponent<CardDisplay>().isSelectable = true;
+                displayObjects.Add(cardDisplay);
             }
 
             cardSize = cardDisplayPrefab.GetComponent<RectTransform>().sizeDelta;

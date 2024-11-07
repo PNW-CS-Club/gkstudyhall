@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log($"attacking for {roll} damage");
 
-            bool gateIsBreaking = GateChangeHealth(playerListSO.list[0], Globals.chosenGate, -roll);
+            bool gateIsBreaking = GateChangeHealth(playerListSO.list[0], Globals.selectedGate, -roll);
 
             if (gateIsBreaking) {
                 Debug.Log("You broke the gate!");
@@ -115,8 +115,8 @@ public class GameManager : MonoBehaviour
             // Hi welcome to Chili's
             Debug.Log("hi welcome to chilis");
 
-            Globals.chosenGate.DoBreakEffect(playerListSO.list[0], roll);
-            Globals.chosenGate.health = GateSO.STARTING_HEALTH;
+            Globals.selectedGate.DoBreakEffect(playerListSO.list[0], roll);
+            Globals.selectedGate.health = GateSO.STARTING_HEALTH;
             NextTurn();
         }
         else 
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void NextTurn() 
     {
-        Globals.chosenGate = null;
+        Globals.selectedGate = null;
 
         List<PlayerSO>players = playerListSO.list;
         do {      

@@ -12,5 +12,11 @@ public static class Globals
     /// The gate that the current player has chosen to attack. 
     /// Holds <c>null</c> if the player has not yet chosen a gate or has already attacked a gate.
     /// </summary>
-    public static GateSO chosenGate = null;
+    public static GateSO selectedGate = null;
+
+    /// <summary>
+    /// The character card that the current player has selected.
+    /// Holds <c>null</c> if no card has been selected or if we no longer need a reference to the selected card.
+    /// </summary>
+    public static CardSO selectedCard = null;
 }
