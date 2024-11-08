@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 
 /// <summary>
@@ -46,6 +47,8 @@ public class StateMachine : MonoBehaviour
     /// </summary>
     public void TransitionTo(IState state) 
     {
+        Assert.IsNotNull(state, "Assertion that state is not null failed.");
+
         CurrentState.Exit();
         CurrentState = state;
         StateChangedEvent?.Invoke(this, CurrentState);

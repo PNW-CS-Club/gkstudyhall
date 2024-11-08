@@ -8,6 +8,7 @@ public class PlayerSelection : MonoBehaviour
 {
     [SerializeField] PlayerListSO playerListSO;
     [SerializeField] GameObject cardDisplayPrefab;
+    [SerializeField] StateMachine stateMachine;
     [SerializeField, Min(0)] float margin;
     [SerializeField] Vector2 padding;
 
@@ -28,9 +29,13 @@ public class PlayerSelection : MonoBehaviour
 
             for (int i = 0; i < playerList.Count; i++)
             {
-                GameObject cardDisplay = Instantiate(cardDisplayPrefab, panel);
-                cardDisplay.GetComponent<CardDisplay>().isSelectable = true;
-                displayObjects.Add(cardDisplay);
+                GameObject cardObject = Instantiate(cardDisplayPrefab, panel);
+                CardDisplay display = cardObject.GetComponent<CardDisplay>();
+
+                display.isSelectable = true;
+                display.OnSelect.AddListener(() => stateMachine.TransitionTo(Globals.scheduledState));
+
+                displayObjects.Add(cardObject);
             }
 
             cardSize = cardDisplayPrefab.GetComponent<RectTransform>().sizeDelta;
