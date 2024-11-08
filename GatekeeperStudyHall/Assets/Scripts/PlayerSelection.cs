@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 public class PlayerSelection : MonoBehaviour
 {
@@ -28,15 +27,8 @@ public class PlayerSelection : MonoBehaviour
             panel = transform.GetChild(0).GetComponent<RectTransform>();
             displayObjects = new();
 
-            for (int i = 1; i < playerList.Count; i++)
-            {
-                GameObject cardObject = Instantiate(cardDisplayPrefab, panel);
-                CardDisplay display = cardObject.GetComponent<CardDisplay>();
-
-                display.isSelectable = true;
-                display.OnSelect.AddListener(TransitionToScheduled);
-
-                displayObjects.Add(cardObject);
+            for (int i = 1; i < playerList.Count; i++) {
+                CreateDisplayObject();
             }
 
             cardSize = cardDisplayPrefab.GetComponent<RectTransform>().sizeDelta;
@@ -46,19 +38,19 @@ public class PlayerSelection : MonoBehaviour
     }
 
 
-    void TransitionToScheduled()
-    {
-        Assert.IsNotNull(Globals.scheduledState, "The scheduled state must have a non-null value at this point.");
-
-        IState state = Globals.scheduledState;
-        Globals.scheduledState = null;
-        stateMachine.TransitionTo(state);
-    }
-
-
+    /// <summary> 
+    /// Use this method to enable the player selection panel 
+    /// and update its displays with the correct cards. 
+    /// </summary>
     public void Show()
     {
         gameObject.SetActive(true);
+
+        // add or remove displays until we have the right amount
+        while (displayObjects.Count < playerList.Count - 1)
+            CreateDisplayObject();
+        while (displayObjects.Count > playerList.Count - 1)
+            DestroyDisplayObject();
 
         for (int i = 0; i < displayObjects.Count; i++)
         {
@@ -69,6 +61,47 @@ public class PlayerSelection : MonoBehaviour
     }
 
 
+
+    void CreateDisplayObject()
+    {
+        GameObject cardObject = Instantiate(cardDisplayPrefab, panel);
+        CardDisplay display = cardObject.GetComponent<CardDisplay>();
+
+        // all these cards are selectable, and when they are selected,
+        // they should exit the "select card" state and enter the next one
+        display.isSelectable = true;
+        display.OnSelect.AddListener(TransitionToScheduled);
+
+        displayObjects.Add(cardObject);
+    }
+
+
+    void DestroyDisplayObject()
+    {
+        GameObject obj = displayObjects[displayObjects.Count - 1];
+        displayObjects.RemoveAt(displayObjects.Count - 1);
+        Destroy(obj);
+    }
+
+
+    /// <summary>
+    /// Transitions to the <see cref="Globals.scheduledState">scheduled state</see>
+    /// stored statically in Globals, and resets its value to null. 
+    /// </summary>
+    void TransitionToScheduled()
+    {
+        Assert.IsNotNull(Globals.scheduledState, "The scheduled state must have a non-null value at this point.");
+
+        IState state = Globals.scheduledState;
+        Globals.scheduledState = null;
+        stateMachine.TransitionTo(state);
+    }
+
+
+    /// <summary>
+    /// Corrects the positions of the cards in the selection panel. 
+    /// Helpful for when the number of cards to choose from changes.
+    /// </summary>
     void Reposition()
     {
         float xOffset = padding.x;
