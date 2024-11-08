@@ -47,7 +47,7 @@ public class StateMachine : MonoBehaviour
     /// </summary>
     public void TransitionTo(IState state) 
     {
-        Assert.IsNotNull(state, "Assertion that state is not null failed.");
+        Assert.IsNotNull(state, "The state the machine is entering must have a value.");
 
         CurrentState.Exit();
         CurrentState = state;

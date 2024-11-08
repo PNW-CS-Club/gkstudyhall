@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 public class PlayerSelection : MonoBehaviour
@@ -27,13 +28,13 @@ public class PlayerSelection : MonoBehaviour
             panel = transform.GetChild(0).GetComponent<RectTransform>();
             displayObjects = new();
 
-            for (int i = 0; i < playerList.Count; i++)
+            for (int i = 1; i < playerList.Count; i++)
             {
                 GameObject cardObject = Instantiate(cardDisplayPrefab, panel);
                 CardDisplay display = cardObject.GetComponent<CardDisplay>();
 
                 display.isSelectable = true;
-                display.OnSelect.AddListener(() => stateMachine.TransitionTo(Globals.scheduledState));
+                display.OnSelect.AddListener(TransitionToScheduled);
 
                 displayObjects.Add(cardObject);
             }
@@ -45,48 +46,35 @@ public class PlayerSelection : MonoBehaviour
     }
 
 
-    public void ShowExcluding(int excludedCardIndex)
+    void TransitionToScheduled()
     {
-        gameObject.SetActive(true);
-        displayObjects[playerList.Count - 1].gameObject.SetActive(false);
+        Assert.IsNotNull(Globals.scheduledState, "The scheduled state must have a non-null value at this point.");
 
-        int playerIndex = 0;
-        int displayIndex = 0;
-
-        while (playerIndex < playerList.Count)
-        {
-            if (playerIndex != excludedCardIndex)
-            {
-                displayObjects[displayIndex].GetComponent<CardDisplay>().ChangeCardData(playerList[playerIndex].card);
-                displayIndex++;
-            }
-            playerIndex++;
-        }
-
-        Reposition(playerList.Count - 1);
+        IState state = Globals.scheduledState;
+        Globals.scheduledState = null;
+        stateMachine.TransitionTo(state);
     }
 
 
-    public void ShowAll()
+    public void Show()
     {
         gameObject.SetActive(true);
-        displayObjects[playerList.Count - 1].SetActive(true);
 
-        for (int i = 0; i < playerList.Count; i++)
+        for (int i = 0; i < displayObjects.Count; i++)
         {
-            displayObjects[i].GetComponent<CardDisplay>().ChangeCardData(playerList[i].card);
+            displayObjects[i].GetComponent<CardDisplay>().ChangeCardData(playerList[i+1].card);
         }
 
-        Reposition(playerList.Count);
+        Reposition();
     }
 
 
-    void Reposition(int numDisplays)
+    void Reposition()
     {
         float xOffset = padding.x;
-        for (int i = 0; i < numDisplays; i++)
+        foreach (GameObject obj in displayObjects)
         {
-            var rect = displayObjects[i].GetComponent<RectTransform>();
+            var rect = obj.GetComponent<RectTransform>();
             rect.anchorMin = new Vector2(0f, 0.5f);
             rect.anchorMax = new Vector2(0f, 0.5f);
             rect.pivot = new Vector2(0f, 0.5f);

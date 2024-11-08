@@ -97,7 +97,7 @@ public class ChoosingCardState : IState
 
     public void Enter()
     {
-        playerSelect.ShowExcluding(0);
+        playerSelect.Show();
     }
 
     public void Exit()
