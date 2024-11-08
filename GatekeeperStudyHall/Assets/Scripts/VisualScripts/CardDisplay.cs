@@ -27,6 +27,8 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public const float COLLAPSE_HEIGHT_DIFF = 172f;
     const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
 
+    public static CardSO selectedCardSO; 
+
 
     // enter and exit functions turn the highlight on and off
     public void OnPointerEnter(PointerEventData eventData) {
