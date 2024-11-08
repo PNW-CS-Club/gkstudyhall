@@ -4,21 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] PlayerSO player; // the player that this card display belongs to
     public CardSO cardData;
 
-    public CardMagnifier cardMagnifier;
-    public bool canMagnify = true;
-
-    public bool isPlayerSlot = false; //if the card selected is a slot
-    public bool isSelectable = false;
-
     [SerializeField] bool startExpanded = true;
     Vector2 expandedSize;
     Vector2 collapsedSize;
+
+    [Header("Magnifying")]
+    public CardMagnifier cardMagnifier;
+    public bool canMagnify = true;
+
+    [Header("Card Selection")]
+    public bool isPlayerSlot = false; // if the card selected is a slot
+    public bool isSelectable = false; // if the card can be selected for other purposes
+    public UnityEvent OnSelect; // event that is invoked when the card is selected
 
     public const float COLLAPSE_HEIGHT_DIFF = 172f;
     const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
@@ -37,12 +41,6 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         transform.GetComponent<Image>().color = cardData.innerColor;
     }
 
-    // update the visualization of the card
-    public void SelectCard(CardSO selectedCardData)
-    {
-        ChangeCardData(selectedCardData);
-    }
-
     //if is select a card the player change card
     private void AssignCardSOToPlayerSlot()
     {
@@ -52,7 +50,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             Debug.Log("Card assign to " + gameObject.name + ": " + cardData.characterName);
             Globals.selectedCard = null;
             player.card = cardData; // assign the card to the playerSO
-            SelectCard(cardData);
+            UpdateDisplay();
         }
         else
         {
@@ -74,6 +72,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             else if (isSelectable) {
                 Globals.selectedCard = cardData;
                 Debug.Log("Card selected: " + cardData.characterName);
+                OnSelect?.Invoke();
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right) {
