@@ -3,20 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] PlayerSO player; // the player that this card display belongs to
     public CardSO cardData;
 
+    [SerializeField] bool startExpanded = true;
+    Vector2 expandedSize;
+    Vector2 collapsedSize;
+
+    [Header("Magnifying")]
     public CardMagnifier cardMagnifier;
     public bool canMagnify = true;
 
-    public bool isPlayerSlot = false; //if the card selected is a slot
-
-    // if these are different, it means that the checkbox was toggled last frame
-    public bool collapsed;
-    bool wasCollapsed;
+    [Header("Card Selection")]
+    public bool isPlayerSlot = false; // if the card selected is a slot
+    public bool isSelectable = false; // if the card can be selected for other purposes
+    public UnityEvent OnSelect; // event that is invoked when the card is selected
 
     public const float COLLAPSE_HEIGHT_DIFF = 172f;
     const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
@@ -26,33 +32,27 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     // enter and exit functions turn the highlight on and off
     public void OnPointerEnter(PointerEventData eventData) {
-        if (canMagnify && cardData != null) {
+        Assert.IsNotNull(cardData);
+        if (canMagnify) {
             transform.GetComponent<Image>().color = Color.Lerp(cardData.innerColor, Color.white, HIGHLIGHT_STRENGTH);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        if (cardData != null) {
-            transform.GetComponent<Image>().color = cardData.innerColor;
-        }
-    }
-
-    // update the visualization of the card
-    public void SelectCard(CardSO selectedCardData)
-    {
-        ChangeCardData(selectedCardData);
+        Assert.IsNotNull(cardData);
+        transform.GetComponent<Image>().color = cardData.innerColor;
     }
 
     //if is select a card the player change card
     private void AssignCardSOToPlayerSlot()
     {
-        if (selectedCardSO != null)
+        if (Globals.selectedCard != null)
         {
-            cardData = selectedCardSO;
+            cardData = Globals.selectedCard;
             Debug.Log("Card assign to " + gameObject.name + ": " + cardData.characterName);
-            selectedCardSO = null;
+            Globals.selectedCard = null;
             player.card = cardData; // assign the card to the playerSO
-            SelectCard(cardData);
+            UpdateDisplay();
         }
         else
         {
@@ -62,19 +62,23 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
 
     public void OnPointerClick(PointerEventData eventData) {
+        Assert.IsNotNull(cardData);
         if (eventData.button == PointerEventData.InputButton.Left) {
             // select on left click
-            if(isPlayerSlot && selectedCardSO != null) {
-                cardData = selectedCardSO;
-                AssignCardSOToPlayerSlot();
+            if (isPlayerSlot) {
+                if (Globals.selectedCard != null) {
+                    cardData = Globals.selectedCard;
+                    AssignCardSOToPlayerSlot();
+                }
             }
-            else if (!isPlayerSlot && cardData != null) {
-                selectedCardSO = cardData; 
+            else if (isSelectable) {
+                Globals.selectedCard = cardData;
                 Debug.Log("Card selected: " + cardData.characterName);
+                OnSelect?.Invoke();
             }
         }
-        else if(eventData.button == PointerEventData.InputButton.Right) {
-            if (canMagnify && cardData != null) {
+        else if (eventData.button == PointerEventData.InputButton.Right) {
+            if (canMagnify) {
                 cardMagnifier.Show(cardData);
             }
         }
@@ -89,6 +93,22 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
 
 
+    public void SetExpanded(bool isExpanded)
+    {
+        transform.GetChild(2).gameObject.SetActive(isExpanded);
+        GetComponent<RectTransform>().sizeDelta = (isExpanded ? expandedSize : collapsedSize);
+    }
+
+
+
+    void Awake()
+    {
+        expandedSize = GetComponent<RectTransform>().rect.size;
+        collapsedSize = expandedSize - new Vector2(0, COLLAPSE_HEIGHT_DIFF);
+
+        SetExpanded(startExpanded);
+    }
+
 
     void Start()
     {
@@ -97,25 +117,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             Debug.LogError("Could not find a CardMagnifier in scene");
         }
 
-        // start expanded by default
-        wasCollapsed = collapsed;
-        if (collapsed) {
-            Collapse();
-        }
-
         UpdateDisplay();
-    }
-
-
-    void Update() {
-        if (wasCollapsed != collapsed) {
-            wasCollapsed = collapsed;
-            if (collapsed) {
-                Collapse();
-            } else {
-                Expand();
-            }
-        }
     }
 
 
@@ -135,23 +137,5 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
             transform.GetComponent<Image>().color = cardData.innerColor;
         }
-    }
-
-
-
-    private void Collapse() {
-        transform.GetChild(2).gameObject.SetActive(false);
-
-        RectTransform rectTransform = transform.GetComponent<RectTransform>();
-        Rect rect = rectTransform.rect;
-        rectTransform.sizeDelta = new Vector2(rect.width, rect.height - COLLAPSE_HEIGHT_DIFF);
-    }
-
-    private void Expand() {
-        RectTransform rectTransform = transform.GetComponent<RectTransform>();
-        Rect rect = rectTransform.rect;
-        rectTransform.sizeDelta = new Vector2(rect.width, rect.height + COLLAPSE_HEIGHT_DIFF);
-
-        transform.GetChild(2).gameObject.SetActive(true);
     }
 }
