@@ -18,6 +18,6 @@ public class StateDebug : MonoBehaviour
     {
         textbox.text = 
             $"Current State: {stateMachine.CurrentState.GetType()}\nCan Roll: {stateMachine.CurrentState.CanRoll}\n" 
-            + $"Can Choose Gate: {stateMachine.CurrentState.CanChooseGate}\nChosen Gate: {Globals.chosenGate}";
+            + $"Can Choose Gate: {stateMachine.CurrentState.CanChooseGate}\nChosen Gate: {Globals.selectedGate}";
     }
 }

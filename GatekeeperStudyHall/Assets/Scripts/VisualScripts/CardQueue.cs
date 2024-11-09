@@ -102,12 +102,12 @@ public class CardQueue : MonoBehaviour
 
             if (i == expandedIndex) 
             {
-                cardDisplay.collapsed = false;
+                cardDisplay.SetExpanded(true);
                 offset.y -= margin + expandedHeight;
             }
             else 
             {
-                cardDisplay.collapsed = true;
+                cardDisplay.SetExpanded(false);
                 cardTransform.localPosition += CardDisplay.COLLAPSE_HEIGHT_DIFF / 2f * Vector3.up;
                 offset.y -= margin + collapsedHeight;
             }

@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
             }
             else {
                 Debug.Log($"attacking for {roll} damage");
-                gateIsBreaking = GateChangeHealth(currentPlayer, Globals.chosenGate, -roll);
+                gateIsBreaking = GateChangeHealth(currentPlayer, Globals.selectedGate, -roll);
             }
          
             if (gateIsBreaking) {
@@ -149,8 +149,8 @@ public class GameManager : MonoBehaviour
         else if (stateMachine.CurrentState == stateMachine.breakingGateState) 
         {
 
-            Globals.chosenGate.DoBreakEffect(currentPlayer, roll);
-            Globals.chosenGate.health = GateSO.STARTING_HEALTH;
+            Globals.selectedGate.DoBreakEffect(playerListSO.list[0], roll);
+            Globals.selectedGate.health = GateSO.STARTING_HEALTH;
             NextTurn();
         }
         else 
@@ -167,7 +167,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void NextTurn() 
     {
-        Globals.chosenGate = null;
+        Globals.selectedGate = null;
+
         List<PlayerSO>players = playerListSO.list;
 
         players[0].resetEffects(); //reset all temporary effects the current player may have

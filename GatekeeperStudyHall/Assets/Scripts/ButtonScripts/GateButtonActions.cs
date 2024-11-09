@@ -20,7 +20,7 @@ public class GateButtonActions : MonoBehaviour
             return;
 
         Debug.Log($"Chose gate: {gate.Color}");
-        Globals.chosenGate = gate;
+        Globals.selectedGate = gate;
         stateMachine.TransitionTo(stateMachine.attackingGateState);
     }
 }
