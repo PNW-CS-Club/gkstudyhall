@@ -1007,6 +1007,10 @@ PrefabInstance:
       propertyPath: choosingCardState.playerSelect
       value: 
       objectReference: {fileID: 391084954}
+    - target: {fileID: 1430531344522203847, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+      propertyPath: choosingPlayerState.playerSelect
+      value: 
+      objectReference: {fileID: 391084954}
     - target: {fileID: 3649130508021954605, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
       propertyPath: diceRoll
       value: 
