@@ -102,11 +102,11 @@ public class GameManager : MonoBehaviour
         {
             if (roll <= 4) 
             {
-                traitHandler.ActivateCurrentPlayerTrait(roll);
-                if(!playerListSO.list[0].isAlive){
+                IState nextState = traitHandler.ActivateCurrentPlayerTrait(roll);
+                if (!playerListSO.list[0].isAlive){
                     NextTurn(); // If the player dies from their trait, end their turn
-                } else{
-                    stateMachine.TransitionTo(stateMachine.choosingGateState);
+                } else {
+                    stateMachine.TransitionTo(nextState); // TODO: what if the player dies after choosing another player?
                 }
             }
             else if (roll == 5) 

@@ -39,20 +39,22 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     // enter and exit functions turn the highlight on and off
     public void OnPointerEnter(PointerEventData eventData) {
-        Assert.IsNotNull(cardData);
-        if (canMagnify) {
+        if (cardData != null && canMagnify) {
             transform.GetComponent<Image>().color = Color.Lerp(cardData.innerColor, Color.white, HIGHLIGHT_STRENGTH);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        Assert.IsNotNull(cardData);
-        transform.GetComponent<Image>().color = cardData.innerColor;
+        if (cardData != null) {
+            transform.GetComponent<Image>().color = cardData.innerColor;
+        }
     }
 
 
     public void OnPointerClick(PointerEventData eventData) {
-        Assert.IsNotNull(cardData);
+        if (cardData == null) 
+            return;
+
         if (eventData.button == PointerEventData.InputButton.Left) {
             // select or assign card data on left click
             switch (type)

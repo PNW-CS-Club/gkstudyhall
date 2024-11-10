@@ -23,22 +23,17 @@ public class PlayerSelection : MonoBehaviour
     Vector2 cardSize;
 
 
-    void OnEnable()
+    void Initialize()
     {
-        if (!isInitialized)
-        {
-            playerList = playerListSO.list;
-            panel = transform.GetChild(0).GetComponent<RectTransform>();
-            displayObjects = new();
+        playerList = playerListSO.list;
+        panel = transform.GetChild(0).GetComponent<RectTransform>();
+        displayObjects = new();
 
-            for (int i = 1; i < playerList.Count; i++) {
-                CreateDisplayObject();
-            }
-
-            cardSize = cardDisplayPrefab.GetComponent<RectTransform>().sizeDelta;
-
-            isInitialized = true;
+        for (int i = 1; i < playerList.Count; i++) {
+            CreateDisplayObject();
         }
+
+        cardSize = cardDisplayPrefab.GetComponent<RectTransform>().sizeDelta;
     }
 
 
@@ -49,6 +44,11 @@ public class PlayerSelection : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
+
+        if (!isInitialized) {
+            Initialize(); 
+            isInitialized = true;
+        }
 
         // add or remove displays until we have the right amount
         while (displayObjects.Count < playerList.Count - 1)
@@ -64,6 +64,13 @@ public class PlayerSelection : MonoBehaviour
         }
 
         Reposition();
+    }
+
+
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 
 

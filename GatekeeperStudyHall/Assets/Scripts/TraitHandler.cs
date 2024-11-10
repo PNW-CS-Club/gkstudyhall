@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 
 /// <summary>
@@ -46,9 +47,10 @@ public class TraitHandler : MonoBehaviour
     /// Then performs the actions that that trait describes.
     /// </summary>
     /// <param name="roll">The roll (1-4) that the trait corresponds to.</param>
-    public void ActivateCurrentPlayerTrait(int roll) 
+    /// <returns>The state the game should enter after the trait roll is activated.</returns>
+    public IState ActivateCurrentPlayerTrait(int roll) 
     {
-        ActivateTrait(players[0], roll); // TODO: This is throwing an index out of bounds error during the second player's turn
+        return ActivateTrait(players[0], roll); 
     }
 
 
@@ -58,15 +60,15 @@ public class TraitHandler : MonoBehaviour
     /// </summary>
     /// <param name="player">The player whose trait is being activated.</param>
     /// <param name="roll">The roll (1-4) that the trait corresponds to.</param>
-    public void ActivateTrait(PlayerSO player, int roll)
+    /// <returns>The state the game should enter after the trait roll is activated.</returns>
+    public IState ActivateTrait(PlayerSO player, int roll)
     {
-        if (roll > 4) {
-            Debug.LogError("Cannot activate trait with roll more than 4");
-            return;
-        }
+        Assert.IsTrue(1 <= roll && roll <= 4, "Trait value must be between 1 and 4");
 
         Trait trait = player.card.traits[roll - 1];
 
+        // some branches return early with a special state
+        // all others will just return choosing gate state
         switch (trait)
         {
             case Trait.deal3Dam:
@@ -76,9 +78,8 @@ public class TraitHandler : MonoBehaviour
                     GameManager.PlayerAttacksPlayer(player, selectedPlayer, 3);
                     stateMachine.TransitionTo(stateMachine.choosingGateState);
                 };
-                
-                
-                break;
+
+                return stateMachine.choosingPlayerState;
 
             case Trait.minus2GateKeeper:
                 //Selected gate health - 2
@@ -147,5 +148,7 @@ public class TraitHandler : MonoBehaviour
                 Debug.LogError($"Trait not handled: {trait}");
                 break;
         }
+
+        return stateMachine.choosingGateState;
     }
 }

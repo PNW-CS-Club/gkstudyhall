@@ -9,17 +9,18 @@ public class CardMagnifier : MonoBehaviour, IPointerClickHandler
 
     bool isInitialized = false;
 
-    void OnEnable() {
-        if (!isInitialized) {
-            magnifiedDisplay = transform.GetChild(0).GetComponent<CardDisplay>();
-            magnifiedDisplay.transform.localScale = Vector3.one * 2.0f;
-            
-            isInitialized = true;
-        }
+    void Initialize() {
+        magnifiedDisplay = transform.GetChild(0).GetComponent<CardDisplay>();
+        magnifiedDisplay.transform.localScale = Vector3.one * 2.0f;
     }
 
     public void Show(CardSO cardData) {
         gameObject.SetActive(true);
+        if (!isInitialized) {
+            Initialize();
+            isInitialized = true;
+        }
+
         magnifiedDisplay.ChangeCardData(cardData);
     }
 
