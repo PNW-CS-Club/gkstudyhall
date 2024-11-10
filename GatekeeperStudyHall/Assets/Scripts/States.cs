@@ -88,7 +88,7 @@ public class BreakingGateState : IState
 /// The state where the game waits for the current player to choose a card for a trait, a battle, or a gate effect.
 /// </summary>
 [Serializable]
-public class ChoosingCardState : IState
+public class ChoosingPlayerState : IState
 {
     [SerializeField] PlayerSelection playerSelect;
 
