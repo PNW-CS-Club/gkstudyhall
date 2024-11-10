@@ -73,7 +73,10 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
                 case CardDisplayType.PLAYER_SELECT_OPTION:
                     Debug.Log("Card selected: " + cardData.characterName);
+                    Assert.IsNotNull(playerSelection.OnSelect, "The OnSelect callback must have a value at this point");
+
                     playerSelection.OnSelect(player);
+                    playerSelection.OnSelect = null;
                     break;
             }
         }
