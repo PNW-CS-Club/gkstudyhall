@@ -30,7 +30,10 @@ public enum Trait
 /// </summary>
 public class TraitHandler : MonoBehaviour
 {
+    [SerializeField] StateMachine stateMachine;
+    [SerializeField] PlayerSelection playerSelection;
     [SerializeField] PlayerListSO playerListObject;
+    
     List<PlayerSO> players; // refers to list in playerListObject
 
 
@@ -68,15 +71,13 @@ public class TraitHandler : MonoBehaviour
         {
             case Trait.deal3Dam:
                 //Deal 3 damage to target player
-
-                /*
-                 * Idk how we wanna go with the selection process.
-                 * Maybe pulling up a list of the other players and their health 
-                 * or we can just make it so you can click the card of the player that
-                 * wants to be dealt the damage. I dont know how hard that would be to code
-                 */
-                //changeHealth(player,3);//Need the array of players to access it.
-                Debug.LogWarning("Trait deal3Dam not implemented");
+                Debug.Log("Select a player to deal 3 damage to");
+                playerSelection.OnSelect = (selectedPlayer) => {
+                    GameManager.PlayerAttacksPlayer(player, selectedPlayer, 3);
+                    stateMachine.TransitionTo(stateMachine.choosingGateState);
+                };
+                
+                
                 break;
 
             case Trait.minus2GateKeeper:
