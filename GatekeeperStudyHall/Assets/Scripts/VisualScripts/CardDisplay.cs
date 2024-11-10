@@ -4,30 +4,37 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Assertions;
-using UnityEngine.Events;
+
+
+public enum CardDisplayType
+{
+    [InspectorName("None")]                     NONE = 0,
+    [InspectorName("Player Slot")]              PLAYER_SLOT = 1,
+    [InspectorName("Character Select Option")]  CHAR_SELECT_OPTION = 2,
+    [InspectorName("Player Select Option")]     PLAYER_SELECT_OPTION = 3,
+}
+
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    [SerializeField] PlayerSO player; // the player that this card display belongs to
+    public PlayerSO player; // the player that this card display belongs to
     public CardSO cardData;
 
     [SerializeField] bool startExpanded = true;
     Vector2 expandedSize;
     Vector2 collapsedSize;
 
+    public CardDisplayType type = CardDisplayType.NONE;
+
     [Header("Magnifying")]
     public CardMagnifier cardMagnifier;
     public bool canMagnify = true;
 
-    [Header("Card Selection")]
-    public bool isPlayerSlot = false; // if the card selected is a slot
-    public bool isSelectable = false; // if the card can be selected for other purposes
-    public UnityEvent OnSelect; // event that is invoked when the card is selected
-
     public const float COLLAPSE_HEIGHT_DIFF = 172f;
     const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
 
-    public static CardSO selectedCardSO; 
+    CharSelectManager charSelectManager;
+    PlayerSelection playerSelection;
 
 
     // enter and exit functions turn the highlight on and off
@@ -43,41 +50,35 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         transform.GetComponent<Image>().color = cardData.innerColor;
     }
 
-    //if is select a card the player change card
-    private void AssignCardSOToPlayerSlot()
-    {
-        if (Globals.selectedCard != null)
-        {
-            cardData = Globals.selectedCard;
-            Debug.Log("Card assign to " + gameObject.name + ": " + cardData.characterName);
-            Globals.selectedCard = null;
-            player.card = cardData; // assign the card to the playerSO
-            UpdateDisplay();
-        }
-        else
-        {
-            Debug.LogError("No card assign");
-        }
-    }
-
 
     public void OnPointerClick(PointerEventData eventData) {
         Assert.IsNotNull(cardData);
         if (eventData.button == PointerEventData.InputButton.Left) {
-            // select on left click
-            if (isPlayerSlot) {
-                if (Globals.selectedCard != null) {
-                    cardData = Globals.selectedCard;
-                    AssignCardSOToPlayerSlot();
-                }
-            }
-            else if (isSelectable) {
-                Globals.selectedCard = cardData;
-                Debug.Log("Card selected: " + cardData.characterName);
-                OnSelect?.Invoke();
+            // select or assign card data on left click
+            switch (type)
+            {
+                case CardDisplayType.PLAYER_SLOT:
+                    if (charSelectManager.selectedCard != null)
+                    {
+                        cardData = charSelectManager.selectedCard;
+                        charSelectManager.selectedCard = null;
+                        player.card = cardData;
+                        UpdateDisplay();
+                    }
+                    break;
+
+                case CardDisplayType.CHAR_SELECT_OPTION:
+                    charSelectManager.selectedCard = cardData;
+                    break;
+
+                case CardDisplayType.PLAYER_SELECT_OPTION:
+                    Debug.Log("Card selected: " + cardData.characterName);
+                    playerSelection.OnSelect(player);
+                    break;
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right) {
+            // magnify on right click
             if (canMagnify) {
                 cardMagnifier.Show(cardData);
             }
@@ -112,9 +113,24 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     void Start()
     {
-        cardMagnifier = (CardMagnifier) FindAnyObjectByType(typeof(CardMagnifier), FindObjectsInactive.Include);
+        cardMagnifier = FindAnyObjectByType<CardMagnifier>(FindObjectsInactive.Include);
         if (cardMagnifier == null) {
             Debug.LogError("Could not find a CardMagnifier in scene");
+        }
+
+        charSelectManager = FindAnyObjectByType<CharSelectManager>(); 
+        playerSelection = FindAnyObjectByType<PlayerSelection>();
+
+        // make sure these are not null when it is necessary
+        switch (type)
+        {
+            case CardDisplayType.PLAYER_SLOT:
+            case CardDisplayType.CHAR_SELECT_OPTION:
+                Assert.IsNotNull(charSelectManager, $"There must be a CharSelectManager in the scene if the card type is {type}");
+                break;
+            case CardDisplayType.PLAYER_SELECT_OPTION:
+                Assert.IsNotNull(playerSelection, $"There must be a PlayerSelection in the scene if the card type is {type}");
+                break;
         }
 
         UpdateDisplay();
