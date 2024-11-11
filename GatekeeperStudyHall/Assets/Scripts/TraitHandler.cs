@@ -94,7 +94,7 @@ public class TraitHandler : MonoBehaviour
 
             case Trait.doubleGateAbil:
                 //Double the gate abilities this turn
-                player.doubleGateAbil = true; // This will be used in GameManager to carry out Trait ability
+                player.doubleGateAbil = 2; // doubleGateAbil is a multiplier
                 break;
 
             case Trait.deal2Dam:
@@ -104,7 +104,7 @@ public class TraitHandler : MonoBehaviour
 
             case Trait.reduceGateDamage:
                 // Player deals 2 less damage to gates this turn
-                player.reduceGateDamage = true; // This will be used in GameManager to carry out Trait ability
+                player.reduceGateDamage = 2; // Subtracted from player's gate attack for the turn
                 break;
 
             case Trait.noDamageTurn:
@@ -119,7 +119,7 @@ public class TraitHandler : MonoBehaviour
 
             case Trait.increaseGateDamage:
                 // Player deals 1 more damage to gates this turn
-                player.increaseGateDamage = true; // This will be used in GameManager to carry out Trait ability
+                player.increaseGateDamage = 1; // Added to player's gate attack for the turn
                 break;
 
             case Trait.minus2HP:
