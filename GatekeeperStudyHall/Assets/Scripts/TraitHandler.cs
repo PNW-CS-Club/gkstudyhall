@@ -99,8 +99,13 @@ public class TraitHandler : MonoBehaviour
 
             case Trait.deal2Dam:
                 //Deal 2 damage to target player
-                Debug.LogWarning("Trait deal2Dam not implemented");
-                break;
+                Debug.Log("Select a player to deal 2 damage to");
+                playerSelection.OnSelect = (selectedPlayer) => {
+                    GameManager.PlayerAttacksPlayer(player, selectedPlayer, 2);
+                    stateMachine.TransitionTo(stateMachine.choosingGateState);
+                };
+
+                return stateMachine.choosingPlayerState;
 
             case Trait.reduceGateDamage:
                 // Player deals 2 less damage to gates this turn
