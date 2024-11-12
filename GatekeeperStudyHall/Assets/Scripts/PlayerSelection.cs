@@ -30,7 +30,10 @@ public class PlayerSelection : MonoBehaviour
         displayObjects = new();
 
         for (int i = 1; i < playerList.Count; i++) {
-            CreateDisplayObject();
+            if (playerList[i].isAlive) {
+                CreateDisplayObject();
+            }
+            
         }
 
         cardSize = cardDisplayPrefab.GetComponent<RectTransform>().sizeDelta;
@@ -51,17 +54,27 @@ public class PlayerSelection : MonoBehaviour
         }
 
         // add or remove displays until we have the right amount
-        while (displayObjects.Count < playerList.Count - 1)
+        while (displayObjects.Count < Globals.playersAlive - 1)
             CreateDisplayObject();
-        while (displayObjects.Count > playerList.Count - 1)
+        while (displayObjects.Count > Globals.playersAlive - 1)
             DestroyDisplayObject();
 
-        for (int i = 0; i < displayObjects.Count; i++)
+        int objectsToDisplay = 0;
+        int playeri = 1;
+        while (objectsToDisplay < displayObjects.Count)
         {
-            CardDisplay cardDisplay = displayObjects[i].GetComponent<CardDisplay>();
-            cardDisplay.player = playerList[i + 1];
-            cardDisplay.ChangeCardData(playerList[i + 1].card);
+            if (playerList[playeri].isAlive)
+            {
+                CardDisplay cardDisplay = displayObjects[objectsToDisplay].GetComponent<CardDisplay>();
+                cardDisplay.player = playerList[playeri];
+                cardDisplay.ChangeCardData(playerList[playeri].card);
+                objectsToDisplay++;
+            }
+            playeri++;
+
         }
+        
+       
 
         Reposition();
     }

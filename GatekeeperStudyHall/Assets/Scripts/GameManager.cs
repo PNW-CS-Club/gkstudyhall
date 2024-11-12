@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
         if (defender.health <= 0) {
             defender.isAlive = false;
+            Globals.playersAlive--;
         }
     }
 
@@ -68,6 +69,7 @@ public class GameManager : MonoBehaviour
         {
             player.health = 0;
             player.isAlive = false;
+            Globals.playersAlive--;
         }
         else if (player.health > PlayerSO.MAX_HEALTH) 
         {
