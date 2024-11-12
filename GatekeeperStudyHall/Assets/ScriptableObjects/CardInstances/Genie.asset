@@ -26,7 +26,7 @@ MonoBehaviour:
   - -2 to gate attack roll
   - Take no damage this turn
   - Swap the HP of two gates
-  traits: 05000000050000000a0000000a000000
+  traits: 04000000050000000600000007000000
   flavorText: 
   flavorTextColor: {r: 1, g: 1, b: 1, a: 1}
   outerColor: {r: 0.26666668, g: 0.31764707, b: 0.5137255, a: 1}
