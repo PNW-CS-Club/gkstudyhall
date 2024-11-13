@@ -25,8 +25,8 @@ MonoBehaviour:
   - +1 to gate attack roll
   - -2 to gate attack roll
   - Take no damage this turn
-  - Deal 4 damage to Gatekeeper
-  traits: 02000000020000000200000002000000
+  - Deal 2 damage to Gatekeeper
+  traits: 08000000050000000600000001000000
   flavorText: 
   flavorTextColor: {r: 0, g: 0, b: 0, a: 1}
   outerColor: {r: 0.49411765, g: 0.4862745, b: 0.4862745, a: 1}

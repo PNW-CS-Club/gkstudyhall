@@ -46,13 +46,16 @@ public class GateSO : ScriptableObject
             switch (color) 
             {
                 case GateColor.BLACK:
-                    /* TODO: damage center gate by 4 */ break;
+                    /* TODO: damage another player by 4 health*/ break;
 
                 case GateColor.GREEN:
-                    GameManager.PlayerChangeHealth(player, 3); break;
+                    GameManager.PlayerChangeHealth(player, 3 * player.doubleGateAbil);
+                    break;
 
                 case GateColor.RED:
-                    player.doubleDamageToCenter = true; break;
+                    player.doubleDamageToCenter = 2; 
+                    // TODO: damage center for double the roll
+                    break;
 
                 case GateColor.BLUE:
                     player.hasStockade = true; break;
@@ -64,13 +67,16 @@ public class GateSO : ScriptableObject
             switch (color) 
             {
                 case GateColor.BLACK:
-                    GameManager.PlayerChangeHealth(player, -4); break;
+                    GameManager.PlayerChangeHealth(player, -4 * player.doubleDamageToSelf * player.doubleGateAbil );
+                    break;
 
                 case GateColor.GREEN:
                     /* TODO: center gate gains 3 hp */ break;
 
                 case GateColor.RED:
-                    player.doubleDamageToSelf = true; break;
+                    player.doubleDamageToSelf = 2;
+                    GameManager.PlayerChangeHealth(player, -roll * player.doubleDamageToSelf);
+                    break;
 
                 case GateColor.BLUE:
                     /* TODO: center gate gets sheild */ break;
