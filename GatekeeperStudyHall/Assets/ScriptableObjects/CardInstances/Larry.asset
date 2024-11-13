@@ -26,7 +26,7 @@ MonoBehaviour:
   - Gain 1 health
   - Gain stockade
   - Take 2 damage
-  traits: 09000000020000000c00000009000000
+  traits: 00000000000000000000000000000000
   flavorText: 
   flavorTextColor: {r: 0, g: 0, b: 0, a: 1}
   outerColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
