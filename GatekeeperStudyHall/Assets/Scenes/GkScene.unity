@@ -1007,6 +1007,10 @@ PrefabInstance:
       propertyPath: choosingCardState.playerSelect
       value: 
       objectReference: {fileID: 391084954}
+    - target: {fileID: 1430531344522203847, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+      propertyPath: choosingPlayerState.playerSelect
+      value: 
+      objectReference: {fileID: 391084954}
     - target: {fileID: 3649130508021954605, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
       propertyPath: diceRoll
       value: 
@@ -1458,18 +1462,6 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 2a4cae344093a314196b496206f66a2b, type: 2}
           m_ObjectArgumentAssemblyTypeName: GateSO, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 391084954}
-        m_TargetAssemblyTypeName: PlayerSelection, Assembly-CSharp
-        m_MethodName: Show
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2146,6 +2138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3346e94a9ee221f4a8c66b42f0783a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateMachine: {fileID: 1085388489}
+  playerSelection: {fileID: 391084954}
   playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
 --- !u!224 &1138411792
 RectTransform:
@@ -3111,7 +3105,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 720, y: 360}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1589063804
 MonoBehaviour:

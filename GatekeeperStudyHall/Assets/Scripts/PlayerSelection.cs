@@ -2,10 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 public class PlayerSelection : MonoBehaviour
 {
+    /// <summary>
+    /// When a player is selected, this function is called with the chosen player as the argument.
+    /// </summary>
+    public Action<PlayerSO> OnSelect;
+
     [SerializeField] PlayerListSO playerListSO;
     [SerializeField] GameObject cardDisplayPrefab;
     [SerializeField] StateMachine stateMachine;
@@ -19,22 +23,20 @@ public class PlayerSelection : MonoBehaviour
     Vector2 cardSize;
 
 
-    void OnEnable()
+    void Initialize()
     {
-        if (!isInitialized)
-        {
-            playerList = playerListSO.list;
-            panel = transform.GetChild(0).GetComponent<RectTransform>();
-            displayObjects = new();
+        playerList = playerListSO.list;
+        panel = transform.GetChild(0).GetComponent<RectTransform>();
+        displayObjects = new();
 
-            for (int i = 1; i < playerList.Count; i++) {
+        for (int i = 1; i < playerList.Count; i++) {
+            if (playerList[i].isAlive) {
                 CreateDisplayObject();
             }
-
-            cardSize = cardDisplayPrefab.GetComponent<RectTransform>().sizeDelta;
-
-            isInitialized = true;
+            
         }
+
+        cardSize = cardDisplayPrefab.GetComponent<RectTransform>().sizeDelta;
     }
 
 
@@ -46,18 +48,42 @@ public class PlayerSelection : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        // add or remove displays until we have the right amount
-        while (displayObjects.Count < playerList.Count - 1)
-            CreateDisplayObject();
-        while (displayObjects.Count > playerList.Count - 1)
-            DestroyDisplayObject();
-
-        for (int i = 0; i < displayObjects.Count; i++)
-        {
-            displayObjects[i].GetComponent<CardDisplay>().ChangeCardData(playerList[i+1].card);
+        if (!isInitialized) {
+            Initialize(); 
+            isInitialized = true;
         }
 
+        // add or remove displays until we have the right amount
+        while (displayObjects.Count < Globals.playersAlive - 1)
+            CreateDisplayObject();
+        while (displayObjects.Count > Globals.playersAlive - 1)
+            DestroyDisplayObject();
+
+        int objectsToDisplay = 0;
+        int playeri = 1;
+        while (objectsToDisplay < displayObjects.Count)
+        {
+            if (playerList[playeri].isAlive)
+            {
+                CardDisplay cardDisplay = displayObjects[objectsToDisplay].GetComponent<CardDisplay>();
+                cardDisplay.player = playerList[playeri];
+                cardDisplay.ChangeCardData(playerList[playeri].card);
+                objectsToDisplay++;
+            }
+            playeri++;
+
+        }
+        
+       
+
         Reposition();
+    }
+
+
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 
 
@@ -65,14 +91,9 @@ public class PlayerSelection : MonoBehaviour
     void CreateDisplayObject()
     {
         GameObject cardObject = Instantiate(cardDisplayPrefab, panel);
-        CardDisplay display = cardObject.GetComponent<CardDisplay>();
-
-        // all these cards are selectable, and when they are selected,
-        // they should exit the "select card" state and enter the next one
-        display.isSelectable = true;
-        display.OnSelect.AddListener(TransitionToScheduled);
-
         displayObjects.Add(cardObject);
+
+        cardObject.GetComponent<CardDisplay>().type = CardDisplayType.PLAYER_SELECT_OPTION;
     }
 
 
@@ -81,20 +102,6 @@ public class PlayerSelection : MonoBehaviour
         GameObject obj = displayObjects[displayObjects.Count - 1];
         displayObjects.RemoveAt(displayObjects.Count - 1);
         Destroy(obj);
-    }
-
-
-    /// <summary>
-    /// Transitions to the <see cref="Globals.scheduledState">scheduled state</see>
-    /// stored statically in Globals, and resets its value to null. 
-    /// </summary>
-    void TransitionToScheduled()
-    {
-        Assert.IsNotNull(Globals.scheduledState, "The scheduled state must have a non-null value at this point.");
-
-        IState state = Globals.scheduledState;
-        Globals.scheduledState = null;
-        stateMachine.TransitionTo(state);
     }
 
 

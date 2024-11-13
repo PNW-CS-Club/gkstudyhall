@@ -17,7 +17,8 @@ public class StateMachine : MonoBehaviour
     public ChoosingGateState choosingGateState;
     public AttackingGateState attackingGateState;
     public BreakingGateState breakingGateState;
-    public ChoosingCardState choosingCardState;
+    public ChoosingPlayerState choosingPlayerState;
+    public BattlingState battlingState;
 
     /// <summary>
     /// This C# event is triggered whenever the state changes.
@@ -29,6 +30,8 @@ public class StateMachine : MonoBehaviour
 
     void Start() 
     {
+        // set the amount of players alive to the initial size of the player list
+        Globals.playersAlive = playerListSO.list.Count;
         // the initial state that the program will be in is traitRollState
         CurrentState = traitRollState;
         StateChangedEvent?.Invoke(this, CurrentState);

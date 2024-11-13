@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,15 +15,13 @@ public static class Globals
     /// </summary>
     public static GateSO selectedGate = null;
 
-    /// <summary>
-    /// The character card that the current player has selected.
-    /// Holds <c>null</c> if no card has been selected or if we no longer need a reference to the selected card.
-    /// </summary>
-    public static CardSO selectedCard = null;
+    // public static ( PlayerSO ply, int roll )[] battleData = new[]{ ( null, 0 ), ( null, 0 ) };
+    public static List< ( PlayerSO ply, int roll ) > battleData = new();
+    public static bool battleAttackerAttacking;
+    public static int bDmgTurns;
 
     /// <summary>
-    ///   <para>The state that we want to enter after we exit the current state. </para>
-    ///   <para>This field is useful when it would otherwise not be clear what state the <see cref="StateMachine" /> should transition to.  </para>
+    /// The number of players still alive 
     /// </summary>
-    public static IState scheduledState = null;
+    public static int playersAlive = -1; 
 }
