@@ -28,10 +28,21 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void PlayerAttacksPlayer(PlayerSO attacker, PlayerSO defender, int damage)
     {
+        if(defender.noDamageTurn){
+            damage = 0;
+            Debug.Log($"{defender.name} takes no damage this turn!");
+        }
+        else if(defender.hasStockade){
+            damage = 0;
+            defender.hasStockade = false;
+            Debug.Log("Stockade blocked the attack!");
+        }
         defender.health -= damage;
+        Debug.Log($"{attacker.name} attacked {defender.name} for {damage} damage!");
 
         if (defender.health <= 0) {
             defender.isAlive = false;
+            Globals.playersAlive--;
         }
     }
 
@@ -45,12 +56,22 @@ public class GameManager : MonoBehaviour
     /// <param name="amount">The amount of health to change by (positive to heal, negative to take damage).</param>
     public static void PlayerChangeHealth(PlayerSO player, int amount)
     {
+        if(player.noDamageTurn){
+            amount = 0;
+            Debug.Log($"{player.name} takes no damage this turn!");
+        }
+        else if(amount < 0 && player.hasStockade){
+            player.hasStockade = false;
+            amount = 0;
+            Debug.Log("Stockade blocked the damage!");
+        }
         player.health += amount;
 
         if (player.health <= 0) 
         {
             player.health = 0;
             player.isAlive = false;
+            Globals.playersAlive--;
         }
         else if (player.health > PlayerSO.MAX_HEALTH) 
         {
@@ -80,12 +101,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="roll">The rolled value of the dice.</param>
     private void UseRollResult(int roll) {
+        PlayerSO currentPlayer = playerListSO.list[0];
         if (stateMachine.CurrentState == stateMachine.traitRollState) 
         {
             if (roll <= 4) 
             {
-                traitHandler.ActivateCurrentPlayerTrait(roll);
-                stateMachine.TransitionTo(stateMachine.choosingGateState);
+                IState nextState = traitHandler.ActivateCurrentPlayerTrait(roll);
+                if (!playerListSO.list[0].isAlive){
+                    NextTurn(); // If the player dies from their trait, end their turn
+                } else {
+                    stateMachine.TransitionTo(nextState); // TODO: what if the player dies after choosing another player?
+                }
             }
             else if (roll == 5) 
             {
@@ -105,10 +131,12 @@ public class GameManager : MonoBehaviour
         }
         else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
         {
-            Debug.Log($"attacking for {roll} damage");
-
-            bool gateIsBreaking = GateChangeHealth(playerListSO.list[0], Globals.selectedGate, -roll);
-
+            bool gateIsBreaking;
+            int attack = roll + currentPlayer.increaseGateDamage - currentPlayer.reduceGateDamage;
+            attack = Mathf.Max(0, attack); // set to 0 if attack comes out negative
+            Debug.Log($"attacking for {attack} damage");
+            gateIsBreaking = GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
+         
             if (gateIsBreaking) {
                 Debug.Log("You broke the gate!");
                 stateMachine.TransitionTo(stateMachine.breakingGateState);
@@ -119,8 +147,6 @@ public class GameManager : MonoBehaviour
         }
         else if (stateMachine.CurrentState == stateMachine.breakingGateState) 
         {
-            // Hi welcome to Chili's
-            Debug.Log("hi welcome to chilis");
 
             Globals.selectedGate.DoBreakEffect(playerListSO.list[0], roll);
             Globals.selectedGate.health = GateSO.STARTING_HEALTH;
@@ -174,6 +200,8 @@ public class GameManager : MonoBehaviour
         Globals.selectedGate = null;
 
         List<PlayerSO>players = playerListSO.list;
+
+        players[0].resetEffects(); //reset all temporary effects the current player may have
         do {      
             players.Insert(players.Count, players[0]);
             players.RemoveAt(0);

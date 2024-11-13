@@ -19,4 +19,8 @@ public static class Globals
     public static List< ( PlayerSO ply, int roll ) > battleData = new();
     public static bool battleAttackerAttacking;
     public static int bDmgTurns;
+    /// <summary>
+    /// The number of players still alive 
+    /// </summary>
+    public static int playersAlive = -1; 
 }

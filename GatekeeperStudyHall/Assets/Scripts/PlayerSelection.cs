@@ -23,22 +23,20 @@ public class PlayerSelection : MonoBehaviour
     Vector2 cardSize;
 
 
-    void OnEnable()
+    void Initialize()
     {
-        if (!isInitialized)
-        {
-            playerList = playerListSO.list;
-            panel = transform.GetChild(0).GetComponent<RectTransform>();
-            displayObjects = new();
+        playerList = playerListSO.list;
+        panel = transform.GetChild(0).GetComponent<RectTransform>();
+        displayObjects = new();
 
-            for (int i = 1; i < playerList.Count; i++) {
+        for (int i = 1; i < playerList.Count; i++) {
+            if (playerList[i].isAlive) {
                 CreateDisplayObject();
             }
-
-            cardSize = cardDisplayPrefab.GetComponent<RectTransform>().sizeDelta;
-
-            isInitialized = true;
+            
         }
+
+        cardSize = cardDisplayPrefab.GetComponent<RectTransform>().sizeDelta;
     }
 
 
@@ -50,20 +48,42 @@ public class PlayerSelection : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        // add or remove displays until we have the right amount
-        while (displayObjects.Count < playerList.Count - 1)
-            CreateDisplayObject();
-        while (displayObjects.Count > playerList.Count - 1)
-            DestroyDisplayObject();
-
-        for (int i = 0; i < displayObjects.Count; i++)
-        {
-            CardDisplay cardDisplay = displayObjects[i].GetComponent<CardDisplay>();
-            cardDisplay.player = playerList[i + 1];
-            cardDisplay.ChangeCardData(playerList[i + 1].card);
+        if (!isInitialized) {
+            Initialize(); 
+            isInitialized = true;
         }
 
+        // add or remove displays until we have the right amount
+        while (displayObjects.Count < Globals.playersAlive - 1)
+            CreateDisplayObject();
+        while (displayObjects.Count > Globals.playersAlive - 1)
+            DestroyDisplayObject();
+
+        int objectsToDisplay = 0;
+        int playeri = 1;
+        while (objectsToDisplay < displayObjects.Count)
+        {
+            if (playerList[playeri].isAlive)
+            {
+                CardDisplay cardDisplay = displayObjects[objectsToDisplay].GetComponent<CardDisplay>();
+                cardDisplay.player = playerList[playeri];
+                cardDisplay.ChangeCardData(playerList[playeri].card);
+                objectsToDisplay++;
+            }
+            playeri++;
+
+        }
+        
+       
+
         Reposition();
+    }
+
+
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 
 

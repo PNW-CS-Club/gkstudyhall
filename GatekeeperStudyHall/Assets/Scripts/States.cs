@@ -102,7 +102,7 @@ public class ChoosingPlayerState : IState
 
     public void Exit()
     {
-        playerSelect.gameObject.SetActive(false);
+        playerSelect.Hide();
     }
 }
 
