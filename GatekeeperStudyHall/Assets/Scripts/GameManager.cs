@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] PlayerListSO playerListSO;
     [SerializeField] CardQueue cardQueue;
+    [SerializeField] PlayerSelection playerSelect;
     // we can make any of these methods non-static if needed
 
 
@@ -114,7 +116,12 @@ public class GameManager : MonoBehaviour
             else if (roll == 5) 
             {
                 // Player rolls a 5, initiate battle with another player
-                Debug.Log("(TODO: Implement battling with another player)");
+                stateMachine.TransitionTo( stateMachine.choosingPlayerState );
+                stateMachine.choosingPlayerState.playerSelect.OnSelect = ( defender ) => {
+                    Debug.Log( playerListSO.list[ 0 ] );
+                    Debug.Log( defender ); 
+                    DoBattle( playerListSO.list[ 0 ], defender );
+                };
             }
             else 
             {
@@ -145,6 +152,37 @@ public class GameManager : MonoBehaviour
             Globals.selectedGate.health = GateSO.STARTING_HEALTH;
             NextTurn();
         }
+        else if ( stateMachine.CurrentState == stateMachine.battlingState ) {
+            if ( Globals.battleAttackerAttacking ) {
+                Globals.battleData[ 0 ] = new( Globals.battleData[ 0 ].ply, roll );
+                Globals.battleAttackerAttacking = false;
+                Debug.Log( "ATTACKER rolled a " + roll + ", it is now the DEFENDER's turn" );
+            } else {
+                Globals.battleData[ 1 ] = new( Globals.battleData[ 1 ].ply, roll );
+                Debug.Log( "DEFENDER rolled a " + roll );
+
+                if ( Globals.battleData[ 0 ].roll == Globals.battleData[ 1 ].roll ) {
+                    Globals.bDmgTurns++;
+                    Globals.battleAttackerAttacking = true;
+                    Debug.Log( "These rolls were equal...the stakes rise!  Damage is now " + Globals.bDmgTurns + "x!" );
+                } else {
+                    PlayerSO damageDealer = Globals.battleData[ 0 ].roll > Globals.battleData[ 1 ].roll ? Globals.battleData[ 0 ].ply : Globals.battleData[ 1 ].ply;
+                    PlayerSO damageTaker = Globals.battleData[ 0 ].roll > Globals.battleData[ 1 ].roll ? Globals.battleData[ 1 ].ply : Globals.battleData[ 0 ].ply;
+
+                    int damageDealt = Math.Abs( Globals.battleData[ 0 ].roll - Globals.battleData[ 1 ].roll ) * Globals.bDmgTurns;
+
+                    PlayerAttacksPlayer( damageDealer, damageTaker, damageDealt );
+                    
+                    Debug.Log( "Battle concluded, a player should have taken " + damageDealt + ", next!" );
+
+                    Globals.battleData = new();
+                    Globals.bDmgTurns = 1;
+                    Globals.battleAttackerAttacking = false;
+                    stateMachine.TransitionTo( stateMachine.traitRollState );
+                    NextTurn();
+                }
+            }
+        }
         else 
         {
             Debug.LogError("The player should not be able to roll the dice now!");
@@ -173,5 +211,21 @@ public class GameManager : MonoBehaviour
         cardQueue.RepositionCards();
 
         stateMachine.TransitionTo(stateMachine.traitRollState);
+    }
+
+    /// <summary>
+    /// Start battling with another player
+    /// </summary>
+    public void DoBattle( PlayerSO attacker, PlayerSO defender ) {
+        Globals.battleData.Add( new( attacker, 0 ) );
+        Globals.battleData.Add( new( defender, 0 ) );
+
+        Globals.bDmgTurns = 1;
+
+        stateMachine.TransitionTo( stateMachine.battlingState );
+
+        Debug.Log( "Battle begun with ATTACKER = " + attacker.card.characterName + " vs  DEFENDER = " + defender.card.characterName );
+
+        Globals.battleAttackerAttacking = true;
     }
 }

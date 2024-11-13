@@ -90,7 +90,7 @@ public class BreakingGateState : IState
 [Serializable]
 public class ChoosingPlayerState : IState
 {
-    [SerializeField] PlayerSelection playerSelect;
+    [SerializeField] public PlayerSelection playerSelect;
 
     public bool CanRoll => false;
     public bool CanChooseGate => false;
@@ -104,4 +104,13 @@ public class ChoosingPlayerState : IState
     {
         playerSelect.Hide();
     }
+}
+
+/// <summary>
+/// The state where the game waits for the current player to roll to attack another player
+/// </summary>
+[Serializable]
+public class BattlingState : IState {
+    public bool CanRoll => true;
+    public bool CanChooseGate => false;
 }
