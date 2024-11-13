@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IntDisplay : MonoBehaviour
+public class CenterGateDisplay : MonoBehaviour
 {
     [SerializeField] TMPro.TMP_Text textbox;
-    [SerializeField] IntReference intReference;
+    [SerializeField] CenterGateSO centerGate;
 
     void Update()
     {
-        textbox.text = intReference.value.ToString();
+        textbox.text = centerGate.health.ToString();
     }
 }

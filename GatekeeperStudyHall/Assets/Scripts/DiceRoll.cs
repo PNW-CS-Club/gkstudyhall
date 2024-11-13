@@ -90,16 +90,15 @@ public class DiceRoll : MonoBehaviour
     /// Method called whenever the user mouses down on the dice.
     /// If the user is allowed to pick up the dice now, it begins shaking.
     /// </summary>
-    public void MouseDownFunc() 
+    public void MouseDownFunc()
     {
-        if (stateMachine.CurrentState.CanRoll && !isSliding) 
-        {
-            isHeld = true;
-            shakeTimer = shakeInterval;
+        if (!stateMachine.CurrentState.CanRoll || isSliding) return;
+        
+        isHeld = true;
+        shakeTimer = shakeInterval;
             
-            // init the delta so we can actually do stuff to it
-            this.mouseDelta = new( 0f, 0f );
-        }
+        // init the delta so we can actually do stuff to it
+        this.mouseDelta = new( 0f, 0f );
     }
 
 

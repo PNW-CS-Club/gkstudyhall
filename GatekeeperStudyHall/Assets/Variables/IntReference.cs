@@ -27,9 +27,7 @@ public class IntReference
     }
 
     public int value {
-        get {
-            return useConstant ? constantValue : variable.value;
-        }
+        get => useConstant ? constantValue : variable.value;
         set {
             if (useConstant) {
                 constantValue = value;

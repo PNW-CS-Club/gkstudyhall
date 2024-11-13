@@ -14,6 +14,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] bool startExpanded = true;
     Vector2 expandedSize;
     Vector2 collapsedSize;
+    RectTransform rectTransform;
 
     [Header("Magnifying")]
     public CardMagnifier cardMagnifier;
@@ -27,8 +28,8 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public const float COLLAPSE_HEIGHT_DIFF = 172f;
     const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
 
-    public static CardSO selectedCardSO; 
-
+    public static CardSO selectedCardSO;
+    
 
     // enter and exit functions turn the highlight on and off
     public void OnPointerEnter(PointerEventData eventData) {
@@ -96,14 +97,15 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void SetExpanded(bool isExpanded)
     {
         transform.GetChild(2).gameObject.SetActive(isExpanded);
-        GetComponent<RectTransform>().sizeDelta = (isExpanded ? expandedSize : collapsedSize);
+        rectTransform.sizeDelta = (isExpanded ? expandedSize : collapsedSize);
     }
 
 
 
     void Awake()
     {
-        expandedSize = GetComponent<RectTransform>().rect.size;
+        rectTransform = GetComponent<RectTransform>();
+        expandedSize = rectTransform.rect.size;
         collapsedSize = expandedSize - new Vector2(0, COLLAPSE_HEIGHT_DIFF);
 
         SetExpanded(startExpanded);
@@ -122,20 +124,21 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
 
 
-    // set the display's colors, text, and art to the values in the current CardSO
-    private void UpdateDisplay() {
-        if (cardData != null) {
-            transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = cardData.characterName;
+    /// set the display's colors, text, and art to the values in the current CardSO
+    private void UpdateDisplay()
+    {
+        if (!cardData) return;
+        
+        transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = cardData.characterName;
 
-            transform.GetChild(1).GetComponent<Image>().color = cardData.outerColor;
-            transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = cardData.art;
+        transform.GetChild(1).GetComponent<Image>().color = cardData.outerColor;
+        transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = cardData.art;
 
-            for (int i = 0; i < 4; i++) {
-                transform.GetChild(2).GetChild(i + 4).GetComponent<TMPro.TMP_Text>().text = cardData.traitNames[i];
-                transform.GetChild(2).GetChild(i + 8).GetComponent<TMPro.TMP_Text>().text = cardData.traitDescriptions[i];
-            }
-
-            transform.GetComponent<Image>().color = cardData.innerColor;
+        for (int i = 0; i < 4; i++) {
+            transform.GetChild(2).GetChild(i + 4).GetComponent<TMPro.TMP_Text>().text = cardData.traitNames[i];
+            transform.GetChild(2).GetChild(i + 8).GetComponent<TMPro.TMP_Text>().text = cardData.traitDescriptions[i];
         }
+
+        transform.GetComponent<Image>().color = cardData.innerColor;
     }
 }
