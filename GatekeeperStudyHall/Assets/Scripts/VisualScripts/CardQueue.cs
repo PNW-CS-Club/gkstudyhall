@@ -92,22 +92,20 @@ public class CardQueue : MonoBehaviour
             CardDisplay cardDisplay = cardTransform.GetComponent<CardDisplay>();
             cardTransform.localPosition = offset;
 
-            HealthDisplay healthDisplay = healthBarList[i].GetComponent<HealthDisplay>();
+            cardDisplay.ChangeCardData(playerList[i].card);
+            cardDisplay.player = playerList[i];
 
-            if (playerList[i].card != cardDisplay.cardData) 
-            {
-                cardDisplay.ChangeCardData(playerList[i].card);
-                healthDisplay.player = playerList[i];
-            }
+            HealthDisplay healthDisplay = healthBarList[i].GetComponent<HealthDisplay>();
+            healthDisplay.player = playerList[i];
 
             if (i == expandedIndex) 
             {
-                cardDisplay.collapsed = false;
+                cardDisplay.SetExpanded(true);
                 offset.y -= margin + expandedHeight;
             }
             else 
             {
-                cardDisplay.collapsed = true;
+                cardDisplay.SetExpanded(false);
                 cardTransform.localPosition += CardDisplay.COLLAPSE_HEIGHT_DIFF / 2f * Vector3.up;
                 offset.y -= margin + collapsedHeight;
             }

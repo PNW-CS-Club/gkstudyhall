@@ -24,9 +24,9 @@ MonoBehaviour:
   traitDescriptions:
   - Deal 2 damage to Gatekeeper
   - Take 2 damage
-  - Target player loses a shield
+  - Deal 2 damage to target player
   - Attack two gates this turn
-  traits: 02000000020000000200000002000000
+  traits: 0100000009000000040000000c000000
   flavorText: 
   flavorTextColor: {r: 0, g: 0, b: 0, a: 1}
   outerColor: {r: 0.83921576, g: 0.121568635, b: 0.21960786, a: 1}
