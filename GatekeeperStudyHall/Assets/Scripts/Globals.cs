@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,4 +14,9 @@ public static class Globals
     /// Holds <c>null</c> if the player has not yet chosen a gate or has already attacked a gate.
     /// </summary>
     public static GateSO selectedGate = null;
+
+    // public static ( PlayerSO ply, int roll )[] battleData = new[]{ ( null, 0 ), ( null, 0 ) };
+    public static List< ( PlayerSO ply, int roll ) > battleData = new();
+    public static bool battleAttackerAttacking;
+    public static int bDmgTurns;
 }
