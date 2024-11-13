@@ -14,7 +14,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] PlayerListSO playerListSO;
     [SerializeField] CardQueue cardQueue;
+
     [SerializeField] PlayerSelection playerSelect;
+    
+    [SerializeField] CenterGateSO centerGate;
     // we can make any of these methods non-static if needed
 
 
@@ -43,6 +46,22 @@ public class GameManager : MonoBehaviour
         if (defender.health <= 0) {
             defender.isAlive = false;
             Globals.playersAlive--;
+        }
+    }
+
+
+    /// <summary>
+    /// <para>Reduces the health of the center gate.</para>
+    /// <para>If the center gate's health is reduced to zero, the game ends.</para>
+    /// </summary>
+    /// <param name="attacker">The player attacking the center gate</param>
+    /// <param name="damage"></param>
+    public void PlayerAttacksCenterGate(PlayerSO attacker, int damage)
+    {
+        centerGate.health = Mathf.Clamp(centerGate.health - damage, 0, CenterGateSO.MAX_HEALTH);
+        if (centerGate.health == 0)
+        {
+            Debug.Log($"{attacker.card.characterName} wins! End the game here");
         }
     }
 
