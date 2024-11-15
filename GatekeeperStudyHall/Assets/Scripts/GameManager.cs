@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] StateMachine stateMachine;
     [SerializeField] TraitHandler traitHandler;
     [SerializeField] DiceRoll diceRoll;
+    [SerializeField] GateBreak gateBreak;
 
     [SerializeField] PlayerListSO playerListSO;
     [SerializeField] CardQueue cardQueue;
@@ -164,12 +165,15 @@ public class GameManager : MonoBehaviour
                 NextTurn();
             }
         }
-        else if (stateMachine.CurrentState == stateMachine.breakingGateState) 
+        else if (stateMachine.CurrentState == stateMachine.breakingGateState)
         {
-
-            Globals.selectedGate.DoBreakEffect(playerListSO.list[0], roll);
+            IState nextState = gateBreak.DoBreakEffect(playerListSO.list[0], Globals.selectedGate, roll);
             Globals.selectedGate.health = GateSO.STARTING_HEALTH;
-            NextTurn();
+            
+            if (nextState == null)
+                NextTurn();
+            else 
+                stateMachine.TransitionTo(nextState);
         }
         else if ( stateMachine.CurrentState == stateMachine.battlingState ) {
             if ( Globals.battleAttackerAttacking ) {
@@ -196,9 +200,8 @@ public class GameManager : MonoBehaviour
 
                     Globals.battleData = new();
                     Globals.bDmgTurns = 1;
-                    Globals.battleAttackerAttacking = false;
-                    stateMachine.TransitionTo( stateMachine.traitRollState );
-                    NextTurn();
+                    Globals.battleAttackerAttacking = false; 
+                    stateMachine.TransitionTo( stateMachine.choosingGateState ); 
                 }
             }
         }
