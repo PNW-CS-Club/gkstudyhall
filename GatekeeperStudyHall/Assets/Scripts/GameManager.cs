@@ -67,6 +67,12 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void HealCenterGate(int amount)
+    {
+        centerGate.health = Mathf.Min(centerGate.health + amount, CenterGateSO.MAX_HEALTH);
+    }
+
+
     /// <summary>
     /// Changes the health of a player by the specified amount. 
     /// A player's health is clamped between <c>0</c> and <c>PlayerSO.MAX_HEALTH</c>.

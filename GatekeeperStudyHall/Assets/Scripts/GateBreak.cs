@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GateBreak : MonoBehaviour
 {
+    [SerializeField] PlayerListSO playerListSO;
     GameManager gameManager;
     StateMachine stateMachine;
     
@@ -31,8 +32,11 @@ public class GateBreak : MonoBehaviour
         switch (gate.Color) 
         {
             case GateColor.BLACK:
-                /* TODO: damage another player by 4 health*/ 
-                return stateMachine.choosingGateState;
+                stateMachine.choosingPlayerState.playerSelect.OnSelect = (selectedPlayer) => {
+                    GameManager.PlayerAttacksPlayer(player, selectedPlayer, 4 * player.doubleGateAbil);
+                    gameManager.NextTurn();
+                };
+                return stateMachine.choosingPlayerState;
 
             case GateColor.GREEN:
                 GameManager.PlayerChangeHealth(player, 3 * player.doubleGateAbil);
@@ -40,7 +44,7 @@ public class GateBreak : MonoBehaviour
 
             case GateColor.RED:
                 player.doubleDamageToCenter = 2; 
-                // TODO: damage center for double the roll
+                gameManager.PlayerAttacksCenterGate(player, roll * player.doubleDamageToCenter * player.doubleGateAbil);
                 break;
 
             case GateColor.BLUE:
@@ -60,16 +64,27 @@ public class GateBreak : MonoBehaviour
                 break;
 
             case GateColor.GREEN:
-                /* TODO: center gate gains 3 hp */
+                gameManager.HealCenterGate(3 * player.doubleGateAbil);
                 break;
 
             case GateColor.RED:
                 player.doubleDamageToSelf = 2;
-                GameManager.PlayerChangeHealth(player, -roll * player.doubleDamageToSelf);
+                GameManager.PlayerChangeHealth(player, -roll * player.doubleDamageToSelf * player.doubleGateAbil);
                 break;
 
             case GateColor.BLUE:
-                /* TODO: center gate gets sheild */ 
+                // random opponent (without a shield) gets shield
+                List<PlayerSO> candidates = new();
+                foreach (PlayerSO p in playerListSO.list)
+                {
+                    if (p.isAlive && p != player && !p.hasStockade)
+                        candidates.Add(p);
+                }
+
+                if (candidates.Count == 0) break;
+                
+                int randIndex = Random.Range(0, candidates.Count);
+                candidates[randIndex].hasStockade = true;
                 break;
         }
 
