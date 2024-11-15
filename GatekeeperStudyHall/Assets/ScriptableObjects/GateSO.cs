@@ -21,67 +21,14 @@ public class GateSO : ScriptableObject
     [SerializeField] GateColor color;
 
     public int health = STARTING_HEALTH;
-
-
-    private void OnEnable() 
+    
+    
+    void OnEnable() 
     {
         health = STARTING_HEALTH;
     }
 
-
     public override string ToString() {
         return $"GateSO[health=\"{health}\", color=\"{color}\"]";
     }
-
-
-    /// <summary>
-    /// This should be called after this gate has been broken
-    /// and a player has rolled even or odd.
-    /// </summary>
-    public void DoBreakEffect(PlayerSO player, int roll) 
-    {
-        if (roll % 2 != 0) 
-        {
-            // odd roll, positive effect
-            switch (color) 
-            {
-                case GateColor.BLACK:
-                    /* TODO: damage another player by 4 health*/ break;
-
-                case GateColor.GREEN:
-                    GameManager.PlayerChangeHealth(player, 3 * player.doubleGateAbil);
-                    break;
-
-                case GateColor.RED:
-                    player.doubleDamageToCenter = 2; 
-                    // TODO: damage center for double the roll
-                    break;
-
-                case GateColor.BLUE:
-                    player.hasStockade = true; break;
-            }
-        }
-        else 
-        {
-            // even roll, negative effect
-            switch (color) 
-            {
-                case GateColor.BLACK:
-                    GameManager.PlayerChangeHealth(player, -4 * player.doubleDamageToSelf * player.doubleGateAbil );
-                    break;
-
-                case GateColor.GREEN:
-                    /* TODO: center gate gains 3 hp */ break;
-
-                case GateColor.RED:
-                    player.doubleDamageToSelf = 2;
-                    GameManager.PlayerChangeHealth(player, -roll * player.doubleDamageToSelf);
-                    break;
-
-                case GateColor.BLUE:
-                    /* TODO: center gate gets sheild */ break;
-            }
-        }
-    }
-
 }
