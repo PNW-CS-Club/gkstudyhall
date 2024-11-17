@@ -15,7 +15,8 @@ public class DiceRoll : MonoBehaviour
 {
     bool isHeld = false;
     bool isSliding = false;
-
+    public bool canCheatRolls = false;
+    
     [SerializeField] StateMachine stateMachine;
 
     [SerializeField] Sprite[] sprites; // the 6 dice faces
@@ -72,6 +73,9 @@ public class DiceRoll : MonoBehaviour
 
 
     void Update() {
+        if (canCheatRolls)
+            TryCheating();
+        
         if (isHeld) {
             UpdateHeldDice();
         } 
@@ -151,21 +155,45 @@ public class DiceRoll : MonoBehaviour
 
     /// <summary>
     /// Method called whenever the user mouses up on the dice.
-    /// Stops shaking the dice, determines its final value, and begins to slide it.
     /// </summary>
     public void MouseUpFunc() {
-        if (!isHeld) {
-            return;
-        }
+        if (isHeld)
+            ReleaseDice(Random.Range(1, 7));
+    }
 
+    
+    void TryCheating()
+    {
+        if (!stateMachine.CurrentState.CanRoll || isSliding) return;
+        
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            ReleaseDice(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+            ReleaseDice(2);
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            ReleaseDice(3);
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+            ReleaseDice(4);
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+            ReleaseDice(5);
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+            ReleaseDice(6);
+    }
+
+
+    /// <summary>
+    /// Stops shaking the dice, displays the determined roll, and begins to slide the dice.
+    /// </summary>
+    /// <param name="finalRoll">The value this dice roll will produce</param>
+    private void ReleaseDice(int finalRoll)
+    {
         isHeld = false;
         isSliding = true;
         slideTimer = 0;
 
-        // determines the roll that this dice will get
-        roll = Random.Range(1, 7);
-        spriteRenderer.sprite = sprites[roll - 1];
-
+        roll = finalRoll;
+        spriteRenderer.sprite = sprites[finalRoll - 1];
+        
         // gives the dice a boost
         if ( this.mouseDelta.magnitude <= lowSpeedThreshold ) {
             // if you're lazy and aren't shaking the die, throw it in a random direction anyway

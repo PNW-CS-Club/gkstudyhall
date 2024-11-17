@@ -367,6 +367,10 @@ PrefabInstance:
       propertyPath: traitHandler
       value: 
       objectReference: {fileID: 1085388492}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: canCheatRolls
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3541283527795119838, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
       propertyPath: m_Name
       value: Dice Base
