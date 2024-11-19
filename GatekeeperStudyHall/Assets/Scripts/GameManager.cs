@@ -148,32 +148,30 @@ public class GameManager : MonoBehaviour
                 stateMachine.TransitionTo(nextState);
         }
         else if ( stateMachine.CurrentState is BattlingState ) {
-            if ( Globals.battleAttackerAttacking ) {
-                Globals.battleData[ 0 ] = new( Globals.battleData[ 0 ].ply, roll );
-                Globals.battleAttackerAttacking = false;
+            if ( Globals.BattleData.turn ) {
+                Globals.BattleData.data[ 0 ] = new( Globals.BattleData.data[ 0 ].ply, roll );
+                Globals.BattleData.turn = false;
                 Debug.Log( "ATTACKER rolled a " + roll + ", it is now the DEFENDER's turn" );
             } else {
-                Globals.battleData[ 1 ] = new( Globals.battleData[ 1 ].ply, roll );
+                Globals.BattleData.data[ 1 ] = new( Globals.BattleData.data[ 1 ].ply, roll );
                 Debug.Log( "DEFENDER rolled a " + roll );
 
-                if ( Globals.battleData[ 0 ].roll == Globals.battleData[ 1 ].roll ) {
-                    Globals.bDmgTurns++;
-                    Globals.battleAttackerAttacking = true;
-                    Debug.Log( "These rolls were equal...the stakes rise!  Damage is now " + Globals.bDmgTurns + "x!" );
+                if ( Globals.BattleData.data[ 0 ].roll == Globals.BattleData.data[ 1 ].roll ) {
+                    Globals.BattleData.mult++;
+                    Globals.BattleData.turn = true;
+                    Debug.Log( "These rolls were equal...the stakes rise!  Damage is now " + Globals.BattleData.mult + "x!" );
                 } else {
-                    PlayerSO damageDealer = Globals.battleData[ 0 ].roll > Globals.battleData[ 1 ].roll ? Globals.battleData[ 0 ].ply : Globals.battleData[ 1 ].ply;
-                    PlayerSO damageTaker = Globals.battleData[ 0 ].roll > Globals.battleData[ 1 ].roll ? Globals.battleData[ 1 ].ply : Globals.battleData[ 0 ].ply;
+                    PlayerSO damageDealer = Globals.BattleData.data[ 0 ].roll > Globals.BattleData.data[ 1 ].roll ? Globals.BattleData.data[ 0 ].ply : Globals.BattleData.data[ 1 ].ply;
+                    PlayerSO damageTaker = Globals.BattleData.data[ 0 ].roll > Globals.BattleData.data[ 1 ].roll ? Globals.BattleData.data[ 1 ].ply : Globals.BattleData.data[ 0 ].ply;
 
-                    int damageDealt = Mathf.Abs( Globals.battleData[ 0 ].roll - Globals.battleData[ 1 ].roll ) * Globals.bDmgTurns;
+                    int damageDealt = Mathf.Abs( Globals.BattleData.data[ 0 ].roll - Globals.BattleData.data[ 1 ].roll ) * Globals.BattleData.mult;
 
                     PlayerAttacksPlayer( damageDealer, damageTaker, damageDealt );
                     
-                    Debug.Log($"Battle concluded, {damageTaker} should have taken {damageDealt} damage. Continue with turn...");
+                    Debug.Log( $"Battle concluded, {damageTaker} should have taken {damageDealt} damage. Continue with turn..." );
 
-                    Globals.battleData = new();
-                    Globals.bDmgTurns = 1;
-                    Globals.battleAttackerAttacking = false; 
-                    stateMachine.TransitionTo( stateMachine.choosingGateState ); 
+                    Globals.BattleData.Reset();
+                    stateMachine.TransitionTo( stateMachine.choosingGateState );
                 }
             }
         }
@@ -211,15 +209,15 @@ public class GameManager : MonoBehaviour
     /// Start battling with another player
     /// </summary>
     public void DoBattle( PlayerSO attacker, PlayerSO defender ) {
-        Globals.battleData.Add( new( attacker, 0 ) );
-        Globals.battleData.Add( new( defender, 0 ) );
+        Globals.BattleData.data.Add( new( attacker, 0 ) );
+        Globals.BattleData.data.Add( new( defender, 0 ) );
 
-        Globals.bDmgTurns = 1;
+        Globals.BattleData.mult = 1;
 
         stateMachine.TransitionTo( stateMachine.battlingState );
 
         Debug.Log( "Battle begun with ATTACKER = " + attacker.card.characterName + " vs  DEFENDER = " + defender.card.characterName );
 
-        Globals.battleAttackerAttacking = true;
+        Globals.BattleData.turn = true;
     }
 }

@@ -15,10 +15,17 @@ public static class Globals
     /// </summary>
     public static GateSO selectedGate = null;
 
-    // public static ( PlayerSO ply, int roll )[] battleData = new[]{ ( null, 0 ), ( null, 0 ) };
-    public static List< ( PlayerSO ply, int roll ) > battleData = new();
-    public static bool battleAttackerAttacking;
-    public static int bDmgTurns;
+    public struct BattleData {
+        public static void Reset() {
+            data = new();
+            turn = false;
+            mult = 1;
+        }
+
+        public static List< ( PlayerSO ply, int roll ) > data = new();
+        public static bool turn;
+        public static int mult;
+    }
 
     /// <summary>
     /// The number of players still alive 
