@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     /// <param name="roll">The rolled value of the dice.</param>
     private void UseRollResult(int roll) {
         PlayerSO currentPlayer = playerListSO.list[0];
-        if (stateMachine.CurrentState == stateMachine.traitRollState) 
+        if (stateMachine.CurrentState is TraitRollState) 
         {
             if (roll <= 4) 
             {
@@ -124,13 +124,12 @@ public class GameManager : MonoBehaviour
                 NextTurn();
             }
         }
-        else if (stateMachine.CurrentState == stateMachine.attackingGateState) 
+        else if (stateMachine.CurrentState is AttackingGateState) 
         {
-            bool gateIsBreaking;
             int attack = roll + currentPlayer.increaseGateDamage - currentPlayer.reduceGateDamage;
             attack = Mathf.Max(0, attack); // set to 0 if attack comes out negative
             Debug.Log($"attacking for {attack} damage");
-            gateIsBreaking = GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
+            bool gateIsBreaking = GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
          
             if (gateIsBreaking) {
                 Debug.Log("You broke the gate!");
@@ -140,7 +139,7 @@ public class GameManager : MonoBehaviour
                 NextTurn();
             }
         }
-        else if (stateMachine.CurrentState == stateMachine.breakingGateState)
+        else if (stateMachine.CurrentState is BreakingGateState)
         {
             IState nextState = gateBreak.DoBreakEffect(playerListSO.list[0], Globals.selectedGate, roll);
             Globals.selectedGate.health = GateSO.STARTING_HEALTH;
@@ -150,7 +149,7 @@ public class GameManager : MonoBehaviour
             else 
                 stateMachine.TransitionTo(nextState);
         }
-        else if ( stateMachine.CurrentState == stateMachine.battlingState ) {
+        else if ( stateMachine.CurrentState is BattlingState ) {
             if ( Globals.battleAttackerAttacking ) {
                 Globals.battleData[ 0 ] = new( Globals.battleData[ 0 ].ply, roll );
                 Globals.battleAttackerAttacking = false;
@@ -171,7 +170,7 @@ public class GameManager : MonoBehaviour
 
                     PlayerAttacksPlayer( damageDealer, damageTaker, damageDealt );
                     
-                    Debug.Log( "Battle concluded, a player should have taken " + damageDealt + ", next!" );
+                    Debug.Log($"Battle concluded, {damageTaker} should have taken {damageDealt} damage. Continue with turn...");
 
                     Globals.battleData = new();
                     Globals.bDmgTurns = 1;
@@ -198,7 +197,7 @@ public class GameManager : MonoBehaviour
 
         List<PlayerSO>players = playerListSO.list;
 
-        players[0].resetEffects(); //reset all temporary effects the current player may have
+        players[0].ResetEffects(); //reset all temporary effects the current player may have
         do {      
             players.Insert(players.Count, players[0]);
             players.RemoveAt(0);

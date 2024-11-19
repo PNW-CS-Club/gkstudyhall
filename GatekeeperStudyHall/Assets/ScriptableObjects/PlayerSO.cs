@@ -44,7 +44,7 @@ public class PlayerSO : ScriptableObject
     /// <summary>
     /// Resets all effects that the player has.
     /// </summary>
-    public void resetEffects(){
+    public void ResetEffects(){
         doubleDamageToCenter = 1;
         noDamageTurn = false;
         increaseGateDamage = 0;
