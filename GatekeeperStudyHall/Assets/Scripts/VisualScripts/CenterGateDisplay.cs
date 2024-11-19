@@ -9,6 +9,6 @@ public class CenterGateDisplay : MonoBehaviour
 
     void Update()
     {
-        textbox.text = centerGate.health.ToString();
+        textbox.text = centerGate.Health.ToString();
     }
 }
