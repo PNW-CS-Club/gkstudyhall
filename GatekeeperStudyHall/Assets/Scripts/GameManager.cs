@@ -80,14 +80,15 @@ public class GameManager : MonoBehaviour
     /// Use this method whenever a player causes a gate to change health.
     /// </summary>
     /// <param name="player">The player who caused the change.</param>
+    /// <param name="gate">The gate that is changing health.</param>
     /// <param name="amount">The amount to change by (positive to heal, negative to deal damage)</param>
     /// <returns><c>true</c> only if the gate's health has reached zero.</returns>
-    public bool GateChangeHealth(PlayerSO player, GateSO gate, int amount) 
+    public void GateChangeHealth(PlayerSO player, GateSO gate, int amount) 
     {
-        gate.health += amount;
-        gate.health = Mathf.Clamp(gate.health, 0, GateSO.MAX_HEALTH);
-
-        return gate.health == 0;
+        if (amount < 0)
+            gate.TakeDamage(-amount);
+        else 
+            gate.Heal(amount);
     }
 
 
@@ -129,9 +130,9 @@ public class GameManager : MonoBehaviour
             int attack = roll + currentPlayer.increaseGateDamage - currentPlayer.reduceGateDamage;
             attack = Mathf.Max(0, attack); // set to 0 if attack comes out negative
             Debug.Log($"attacking for {attack} damage");
-            bool gateIsBreaking = GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
+            GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
          
-            if (gateIsBreaking) {
+            if (Globals.selectedGate.Health == 0) {
                 Debug.Log("You broke the gate!");
                 stateMachine.TransitionTo(stateMachine.breakingGateState);
             }
@@ -142,7 +143,7 @@ public class GameManager : MonoBehaviour
         else if (stateMachine.CurrentState is BreakingGateState)
         {
             IState nextState = gateBreak.DoBreakEffect(playerListSO.list[0], Globals.selectedGate, roll);
-            Globals.selectedGate.health = GateSO.STARTING_HEALTH;
+            Globals.selectedGate.Reset();
             
             if (nextState == null)
                 NextTurn();
