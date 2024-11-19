@@ -32,22 +32,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void PlayerAttacksPlayer(PlayerSO attacker, PlayerSO defender, int damage)
     {
-        if(defender.noDamageTurn){
-            damage = 0;
-            Debug.Log($"{defender.name} takes no damage this turn!");
-        }
-        else if(defender.hasStockade){
-            damage = 0;
-            defender.hasStockade = false;
-            Debug.Log("Stockade blocked the attack!");
-        }
-        defender.health -= damage;
+        defender.TakeDamage(damage);
         Debug.Log($"{attacker.name} attacked {defender.name} for {damage} damage!");
-
-        if (defender.health <= 0) {
-            defender.isAlive = false;
-            Globals.playersAlive--;
-        }
     }
 
 
@@ -82,27 +68,10 @@ public class GameManager : MonoBehaviour
     /// <param name="amount">The amount of health to change by (positive to heal, negative to take damage).</param>
     public static void PlayerChangeHealth(PlayerSO player, int amount)
     {
-        if(player.noDamageTurn){
-            amount = 0;
-            Debug.Log($"{player.name} takes no damage this turn!");
-        }
-        else if(amount < 0 && player.hasStockade){
-            player.hasStockade = false;
-            amount = 0;
-            Debug.Log("Stockade blocked the damage!");
-        }
-        player.health += amount;
-
-        if (player.health <= 0) 
-        {
-            player.health = 0;
-            player.isAlive = false;
-            Globals.playersAlive--;
-        }
-        else if (player.health > PlayerSO.MAX_HEALTH) 
-        {
-            player.health = PlayerSO.MAX_HEALTH;
-        }
+        if (amount < 0)
+            player.TakeDamage(-amount);
+        else
+            player.Heal(amount);
     }
 
 

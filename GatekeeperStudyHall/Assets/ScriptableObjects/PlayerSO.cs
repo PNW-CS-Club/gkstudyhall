@@ -11,9 +11,11 @@ public class PlayerSO : ScriptableObject
     // These are regular fields so that we can inspect them in the editor.
     // Using a boolean for the stockade because it doesn't seem like we'll use the multiple stockade rule.
     public CardSO card;
-    public int health;
     public bool hasStockade;
-
+    
+    public int Health => health; // makes Health readonly in other scripts
+    [SerializeField] int health; // makes health visible from inspector
+    
     public bool isAlive; 
 
     // not final
@@ -49,5 +51,35 @@ public class PlayerSO : ScriptableObject
         reduceGateDamage = 0;
         doubleGateAbil = 1;
         doubleDamageToSelf = 1;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (damage <= 0) return;
+        if (noDamageTurn) {
+            Debug.Log($"{name} takes no damage this turn!");
+            return;
+        }
+        if (hasStockade) {
+            hasStockade = false;
+            Debug.Log("Stockade blocked the attack!");
+            return;
+        }
+        
+        health -= damage;
+        
+        if (health <= 0)
+        {
+            health = 0;
+            isAlive = false;
+            Globals.playersAlive--;
+        }
+    }
+
+    public void Heal(int amount)
+    {
+        if (amount <= 0) return;
+        
+        health = Mathf.Min(health + amount, MAX_HEALTH);
     }
 }
