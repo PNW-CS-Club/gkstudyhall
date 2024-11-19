@@ -15,6 +15,10 @@ public static class Globals
     /// </summary>
     public static GateSO selectedGate = null;
 
+    /// <summary>
+    ///  A structure of data relevant to battles.
+    ///  <c>data</c> needs to be init'd so that it's technically a valid object.
+    /// </summary>
     public struct BattleData {
         public static void Reset() {
             data = new();
