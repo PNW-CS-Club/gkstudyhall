@@ -45,18 +45,16 @@ public class GameManager : MonoBehaviour
     /// <param name="damage"></param>
     public void PlayerAttacksCenterGate(PlayerSO attacker, int damage)
     {
-        centerGate.health = Mathf.Clamp(centerGate.health - damage, 0, CenterGateSO.MAX_HEALTH);
-        if (centerGate.health == 0)
+        centerGate.TakeDamage(damage);
+        
+        if (centerGate.Health == 0)
         {
             Debug.Log($"{attacker.card.characterName} wins! End the game here");
         }
     }
 
 
-    public void HealCenterGate(int amount)
-    {
-        centerGate.health = Mathf.Min(centerGate.health + amount, CenterGateSO.MAX_HEALTH);
-    }
+    public void HealCenterGate(int amount) => centerGate.Heal(amount);
 
 
     /// <summary>
