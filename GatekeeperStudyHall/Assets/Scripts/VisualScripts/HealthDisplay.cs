@@ -29,9 +29,9 @@ public class HealthDisplay : MonoBehaviour
 
     void Update()
     {
-        float healthRatio = Mathf.Clamp(player.health, 0, PlayerSO.MAX_HEALTH) / (float)PlayerSO.MAX_HEALTH;
+        float healthRatio = Mathf.Clamp(player.Health, 0, PlayerSO.MAX_HEALTH) / (float)PlayerSO.MAX_HEALTH;
         slider.sizeDelta = new Vector2(initialWidth * healthRatio, slider.sizeDelta.y);
-        healthCounter.text = player.health.ToString();
+        healthCounter.text = player.Health.ToString();
 
         if (player.hasStockade != hadStockadeLastUpdate) 
         {

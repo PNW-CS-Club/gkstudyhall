@@ -9,6 +9,6 @@ public class GateDisplay : MonoBehaviour
 
     void Update()
     {
-        textbox.text = gate.health.ToString();
+        textbox.text = gate.Health.ToString();
     }
 }
