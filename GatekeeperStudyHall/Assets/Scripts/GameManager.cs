@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -165,7 +164,7 @@ public class GameManager : MonoBehaviour
                     PlayerSO damageDealer = Globals.battleData[ 0 ].roll > Globals.battleData[ 1 ].roll ? Globals.battleData[ 0 ].ply : Globals.battleData[ 1 ].ply;
                     PlayerSO damageTaker = Globals.battleData[ 0 ].roll > Globals.battleData[ 1 ].roll ? Globals.battleData[ 1 ].ply : Globals.battleData[ 0 ].ply;
 
-                    int damageDealt = Math.Abs( Globals.battleData[ 0 ].roll - Globals.battleData[ 1 ].roll ) * Globals.bDmgTurns;
+                    int damageDealt = Mathf.Abs( Globals.battleData[ 0 ].roll - Globals.battleData[ 1 ].roll ) * Globals.bDmgTurns;
 
                     PlayerAttacksPlayer( damageDealer, damageTaker, damageDealt );
                     
