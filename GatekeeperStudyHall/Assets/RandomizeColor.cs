@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class RandomizeColor : MonoBehaviour
+public class RandomizeColor : NetworkBehaviour
 {
     void Update()
     {
+        if (!IsOwner) return;
+
+        var rot = transform.rotation.eulerAngles;
+        rot.z += Time.deltaTime * 10f;
+        transform.rotation = Quaternion.Euler(rot);
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             GetComponent<SpriteRenderer>().color = Random.ColorHSV(0, 1, 0.5f, 1, 0.5f, 1);
