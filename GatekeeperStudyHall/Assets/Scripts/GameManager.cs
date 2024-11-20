@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Provides methods for actions related to health, damage, and turn flow.
@@ -25,14 +26,36 @@ public class GameManager : MonoBehaviour
     void OnEnable() => diceRoll.DoneRollingEvent += RollEventHandler;
     void OnDestroy() => diceRoll.DoneRollingEvent -= RollEventHandler;
 
+    /// <summary>
+    /// Determine whether there is a single player alive.
+    /// The last player standing wins the game. 
+    /// </summary>
+    public void CheckWinBySurvival()
+    {
+        if (Globals.playersAlive == 1) {
+            // Determine the last player alive
+            List<PlayerSO> playerList = playerListSO.list;
+            foreach(PlayerSO player in playerList){
+                if (player.isAlive) {
+                    Globals.winningPlayer = player;  
+                    break;
+                }
+            }
+            
+            // Transition to End Scene
+            AsyncOperation _ = SceneManager.LoadSceneAsync("EndScene");
+
+        }
+    }
 
     /// <summary>
     /// Plays out the effects of one player attacking another player.
     /// </summary>
-    public static void PlayerAttacksPlayer(PlayerSO attacker, PlayerSO defender, int damage)
+    public void PlayerAttacksPlayer(PlayerSO attacker, PlayerSO defender, int damage)
     {
         defender.TakeDamage(damage);
         Debug.Log($"{attacker.name} attacked {defender.name} for {damage} damage!");
+        CheckWinBySurvival();
     }
 
 
@@ -63,10 +86,14 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="player">The player whose health changes.</param>
     /// <param name="amount">The amount of health to change by (positive to heal, negative to take damage).</param>
-    public static void PlayerChangeHealth(PlayerSO player, int amount)
+    public void PlayerChangeHealth(PlayerSO player, int amount)
     {
         if (amount < 0)
+        {
             player.TakeDamage(-amount);
+            CheckWinBySurvival();
+        }
+            
         else
             player.Heal(amount);
     }

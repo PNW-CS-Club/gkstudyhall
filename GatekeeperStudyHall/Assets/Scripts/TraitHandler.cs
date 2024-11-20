@@ -31,6 +31,7 @@ public enum Trait
 /// </summary>
 public class TraitHandler : MonoBehaviour
 {
+    [SerializeField] GameManager gameManager;
     [SerializeField] StateMachine stateMachine;
     [SerializeField] PlayerSelection playerSelection;
     [SerializeField] PlayerListSO playerListObject;
@@ -75,7 +76,7 @@ public class TraitHandler : MonoBehaviour
                 //Deal 3 damage to target player
                 Debug.Log("Select a player to deal 3 damage to");
                 playerSelection.OnSelect = (selectedPlayer) => {
-                    GameManager.PlayerAttacksPlayer(player, selectedPlayer, 3);
+                    gameManager.PlayerAttacksPlayer(player, selectedPlayer, 3);
                     stateMachine.TransitionTo(stateMachine.choosingGateState);
                 };
 
@@ -89,7 +90,7 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             case Trait.plus1Health:
-                GameManager.PlayerChangeHealth(player, 1);
+                gameManager.PlayerChangeHealth(player, 1);
                 break;
 
             case Trait.doubleGateAbil:
@@ -101,7 +102,7 @@ public class TraitHandler : MonoBehaviour
                 //Deal 2 damage to target player
                 Debug.Log("Select a player to deal 2 damage to");
                 playerSelection.OnSelect = (selectedPlayer) => {
-                    GameManager.PlayerAttacksPlayer(player, selectedPlayer, 2);
+                    gameManager.PlayerAttacksPlayer(player, selectedPlayer, 2);
                     stateMachine.TransitionTo(stateMachine.choosingGateState);
                 };
 
@@ -128,13 +129,13 @@ public class TraitHandler : MonoBehaviour
                 break;
 
             case Trait.minus2HP:
-                GameManager.PlayerChangeHealth(player, -2); // Player loses 2 health
+                gameManager.PlayerChangeHealth(player, -2); // Player loses 2 health
                 break;
 
             case Trait.allMinus1HP:
                 // Note: the index of the current player is always 0
                 for (int i = 1; i < players.Count; i++) {
-                    GameManager.PlayerAttacksPlayer(players[0], players[i], 1); // deal 1 damage to all other players
+                    gameManager.PlayerAttacksPlayer(players[0], players[i], 1); // deal 1 damage to all other players
                 }
                 break;
 

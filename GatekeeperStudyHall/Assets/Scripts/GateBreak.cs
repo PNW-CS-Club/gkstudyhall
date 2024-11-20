@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GateBreak : MonoBehaviour
 {
+    
     [SerializeField] PlayerListSO playerListSO;
     GameManager gameManager;
     StateMachine stateMachine;
@@ -33,13 +34,13 @@ public class GateBreak : MonoBehaviour
         {
             case GateColor.BLACK:
                 stateMachine.choosingPlayerState.playerSelect.OnSelect = (selectedPlayer) => {
-                    GameManager.PlayerAttacksPlayer(player, selectedPlayer, 4 * player.doubleGateAbil);
+                    gameManager.PlayerAttacksPlayer(player, selectedPlayer, 4 * player.doubleGateAbil);
                     gameManager.NextTurn();
                 };
                 return stateMachine.choosingPlayerState;
 
             case GateColor.GREEN:
-                GameManager.PlayerChangeHealth(player, 3 * player.doubleGateAbil);
+                gameManager.PlayerChangeHealth(player, 3 * player.doubleGateAbil);
                 break;
 
             case GateColor.RED:
@@ -60,7 +61,7 @@ public class GateBreak : MonoBehaviour
         switch (gate.Color) 
         {
             case GateColor.BLACK:
-                GameManager.PlayerChangeHealth(player, -4 * player.doubleDamageToSelf * player.doubleGateAbil);
+                gameManager.PlayerChangeHealth(player, -4 * player.doubleDamageToSelf * player.doubleGateAbil);
                 break;
 
             case GateColor.GREEN:
@@ -69,7 +70,7 @@ public class GateBreak : MonoBehaviour
 
             case GateColor.RED:
                 player.doubleDamageToSelf = 2;
-                GameManager.PlayerChangeHealth(player, -roll * player.doubleDamageToSelf * player.doubleGateAbil);
+                gameManager.PlayerChangeHealth(player, -roll * player.doubleDamageToSelf * player.doubleGateAbil);
                 break;
 
             case GateColor.BLUE:

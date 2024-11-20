@@ -18,7 +18,7 @@ public class PlayerSO : ScriptableObject
     
     public bool isAlive; 
 
-    // not final
+    // Trait variables
     public int doubleDamageToCenter; // Player deals double damage to center this turn  (Multiplier)
     public int doubleDamageToSelf; // Player deals double damage to self this turn      (Multiplier)
     public int reduceGateDamage; // Player deals less damage to gate this turn
@@ -53,6 +53,10 @@ public class PlayerSO : ScriptableObject
         doubleDamageToSelf = 1;
     }
 
+    /// <summary>
+    /// Player's health is subtracted by damage parameter. 
+    /// </summary>
+    /// <param name="damage"></param>
     public void TakeDamage(int damage)
     {
         if (damage <= 0) return;
@@ -74,8 +78,12 @@ public class PlayerSO : ScriptableObject
             isAlive = false;
             Globals.playersAlive--;
         }
+        
     }
-
+    /// <summary>
+    /// Player's health is increased by the given amount.
+    /// </summary>
+    /// <param name="amount"></param>
     public void Heal(int amount)
     {
         if (amount <= 0) return;

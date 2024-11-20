@@ -23,5 +23,7 @@ public static class Globals
     /// <summary>
     /// The number of players still alive 
     /// </summary>
-    public static int playersAlive = -1; 
+    public static int playersAlive = -1;
+
+    public static PlayerSO winningPlayer;
 }
