@@ -71,7 +71,9 @@ public class GameManager : MonoBehaviour
         
         if (centerGate.Health == 0)
         {
-            Debug.Log($"{attacker.card.characterName} wins! End the game here");
+            //Debug.Log($"{attacker.card.characterName} wins! End the game here");
+            Globals.winningPlayer = attacker;
+            SceneManager.LoadScene("EndScene");
         }
     }
 
