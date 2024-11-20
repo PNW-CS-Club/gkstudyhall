@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7406565460393452837}
   - component: {fileID: -7146045762290586313}
   - component: {fileID: 923406969377094564}
-  - component: {fileID: 4917991916507523174}
+  - component: {fileID: -3799503756766498489}
   m_Layer: 0
   m_Name: Dorito
   m_TagString: Untagged
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 2279546641
+  InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -119,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03cd607986327843bb8f37f1f9dd5cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4917991916507523174
+--- !u!114 &-3799503756766498489
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,9 +129,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1489069004058577884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: d89cd70e4a444e089f2d9ede299ef8e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
   SyncPositionZ: 0
