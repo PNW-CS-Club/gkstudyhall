@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class RandomizeColor : NetworkBehaviour
+public class DoritoBehaviour : NetworkBehaviour
 {
+    [SerializeField] NetworkVariable<Color> color = new(
+        Color.green, 
+        NetworkVariableReadPermission.Everyone, 
+        NetworkVariableWritePermission.Owner);
+    
+    SpriteRenderer rend;
+    
     void Start()
     {
-        GetComponent<SpriteRenderer>().color = RandomColor();
+        rend = GetComponent<SpriteRenderer>();
     }
     
     void Update()
     {
+        rend.color = color.Value;
         if (!IsOwner) return;
 
         var rot = transform.rotation.eulerAngles;
@@ -20,7 +28,7 @@ public class RandomizeColor : NetworkBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GetComponent<SpriteRenderer>().color = RandomColor();
+            RandomizeColor();
         }
         
         float dy = 0f;
@@ -36,8 +44,8 @@ public class RandomizeColor : NetworkBehaviour
         transform.position += new Vector3(0, dy * Time.deltaTime, 0);
     }
 
-    private Color RandomColor()
+    private void RandomizeColor()
     {
-        return Random.ColorHSV(0.04f, 0.1f, 0.7f, 1, 0.7f, 1);
+        color.Value = Random.ColorHSV(0.04f, 0.1f, 0.7f, 1, 0.7f, 1);
     }
 }

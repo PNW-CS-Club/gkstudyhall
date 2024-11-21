@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 2279546641
-  InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -120,6 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03cd607986327843bb8f37f1f9dd5cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color:
+    m_InternalValue: {r: 0.51708794, g: 0.5474699, b: 0.6603774, a: 1}
 --- !u!114 &-3799503756766498489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89cd70e4a444e089f2d9ede299ef8e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
   SyncPositionZ: 0
