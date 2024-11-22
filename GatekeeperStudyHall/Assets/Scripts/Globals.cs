@@ -22,12 +22,12 @@ public static class Globals
     public struct BattleData {
         public static void Reset() {
             data = new();
-            turn = false;
+            isAttackerRolling = false;
             mult = 1;
         }
 
         public static List< ( PlayerSO ply, int roll ) > data = new();
-        public static bool turn;
+        public static bool isAttackerRolling;
         public static int mult;
     }
 

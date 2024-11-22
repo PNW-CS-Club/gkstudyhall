@@ -148,9 +148,9 @@ public class GameManager : MonoBehaviour
                 stateMachine.TransitionTo(nextState);
         }
         else if ( stateMachine.CurrentState is BattlingState ) {
-            if ( Globals.BattleData.turn ) {
+            if ( Globals.BattleData.isAttackerRolling ) {
                 Globals.BattleData.data[ 0 ] = new( Globals.BattleData.data[ 0 ].ply, roll );
-                Globals.BattleData.turn = false;
+                Globals.BattleData.isAttackerRolling = false;
                 Debug.Log( "ATTACKER rolled a " + roll + ", it is now the DEFENDER's turn" );
             } else {
                 Globals.BattleData.data[ 1 ] = new( Globals.BattleData.data[ 1 ].ply, roll );
@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
 
                 if ( Globals.BattleData.data[ 0 ].roll == Globals.BattleData.data[ 1 ].roll ) {
                     Globals.BattleData.mult++;
-                    Globals.BattleData.turn = true;
+                    Globals.BattleData.isAttackerRolling = true;
                     Debug.Log( "These rolls were equal...the stakes rise!  Damage is now " + Globals.BattleData.mult + "x!" );
                 } else {
                     PlayerSO damageDealer = Globals.BattleData.data[ 0 ].roll > Globals.BattleData.data[ 1 ].roll ? Globals.BattleData.data[ 0 ].ply : Globals.BattleData.data[ 1 ].ply;
@@ -218,6 +218,6 @@ public class GameManager : MonoBehaviour
 
         Debug.Log( "Battle begun with ATTACKER = " + attacker.card.characterName + " vs  DEFENDER = " + defender.card.characterName );
 
-        Globals.BattleData.turn = true;
+        Globals.BattleData.isAttackerRolling = true;
     }
 }
