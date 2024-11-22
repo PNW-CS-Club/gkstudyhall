@@ -149,20 +149,25 @@ public class GameManager : MonoBehaviour
         }
         else if ( stateMachine.CurrentState is BattlingState ) {
             if ( Globals.BattleData.isAttackerRolling ) {
-                Globals.BattleData.data[ 0 ] = new( Globals.BattleData.data[ 0 ].ply, roll );
+                // attacker has rolled
+                Globals.BattleData.data[ 0 ] = new( Globals.BattleData.data[ 0 ].player, roll );
                 Globals.BattleData.isAttackerRolling = false;
                 Debug.Log( "ATTACKER rolled a " + roll + ", it is now the DEFENDER's turn" );
             } else {
-                Globals.BattleData.data[ 1 ] = new( Globals.BattleData.data[ 1 ].ply, roll );
+                // defender has rolled
+                Globals.BattleData.data[ 1 ] = new( Globals.BattleData.data[ 1 ].player, roll );
                 Debug.Log( "DEFENDER rolled a " + roll );
 
                 if ( Globals.BattleData.data[ 0 ].roll == Globals.BattleData.data[ 1 ].roll ) {
+                    // rolls were equal
                     Globals.BattleData.mult++;
                     Globals.BattleData.isAttackerRolling = true;
                     Debug.Log( "These rolls were equal...the stakes rise!  Damage is now " + Globals.BattleData.mult + "x!" );
                 } else {
-                    PlayerSO damageDealer = Globals.BattleData.data[ 0 ].roll > Globals.BattleData.data[ 1 ].roll ? Globals.BattleData.data[ 0 ].ply : Globals.BattleData.data[ 1 ].ply;
-                    PlayerSO damageTaker = Globals.BattleData.data[ 0 ].roll > Globals.BattleData.data[ 1 ].roll ? Globals.BattleData.data[ 1 ].ply : Globals.BattleData.data[ 0 ].ply;
+                    // a player takes damage
+                    bool attackerDealsDamage = Globals.BattleData.data[ 0 ].roll > Globals.BattleData.data[ 1 ].roll;
+                    PlayerSO damageDealer = attackerDealsDamage ? Globals.BattleData.data[ 0 ].player : Globals.BattleData.data[ 1 ].player;
+                    PlayerSO damageTaker = attackerDealsDamage ? Globals.BattleData.data[ 1 ].player : Globals.BattleData.data[ 0 ].player;
 
                     int damageDealt = Mathf.Abs( Globals.BattleData.data[ 0 ].roll - Globals.BattleData.data[ 1 ].roll ) * Globals.BattleData.mult;
 

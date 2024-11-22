@@ -26,7 +26,7 @@ public static class Globals
             mult = 1;
         }
 
-        public static List< ( PlayerSO ply, int roll ) > data = new();
+        public static List<(PlayerSO player, int roll)> data = new();
         public static bool isAttackerRolling;
         public static int mult;
     }
