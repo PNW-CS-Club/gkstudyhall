@@ -26,6 +26,13 @@ public class PlayerSO : ScriptableObject
     public bool noDamageTurn; // Player takes no damage this turn
     public int doubleGateAbil; // Gate abilities double this turn                       (Multiplier)
 
+    // Statistic variables
+    public int totalDamageToOtherPlayers; // Total damage dealt to other players
+    public int totalDamageToGates;
+    public int totalDamageToGatekeeper;
+    public int totalAmountHealed; // Total health healed during the game
+    public int totalStockade; // Total amount of stockade collected during the game
+
     // when this SO is loaded into a scene, reset values that may have been changed
     private void OnEnable() {
         health = STARTING_HEALTH;
