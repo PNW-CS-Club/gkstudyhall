@@ -15,10 +15,21 @@ public static class Globals
     /// </summary>
     public static GateSO selectedGate = null;
 
-    // public static ( PlayerSO ply, int roll )[] battleData = new[]{ ( null, 0 ), ( null, 0 ) };
-    public static List< ( PlayerSO ply, int roll ) > battleData = new();
-    public static bool battleAttackerAttacking;
-    public static int bDmgTurns;
+    /// <summary>
+    ///  A structure of data relevant to battles.
+    ///  <c>data</c> needs to be init'd so that it's technically a valid object.
+    /// </summary>
+    public struct BattleData {
+        public static void Reset() {
+            data = new();
+            isAttackerRolling = false;
+            mult = 1;
+        }
+
+        public static List<(PlayerSO player, int roll)> data = new();
+        public static bool isAttackerRolling;
+        public static int mult;
+    }
 
     /// <summary>
     /// The number of players still alive 
