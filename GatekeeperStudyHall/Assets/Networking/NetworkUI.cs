@@ -18,40 +18,61 @@ public class NetworkUI : MonoBehaviour
 {
     [SerializeField] TMP_InputField ipInput;
     [SerializeField] TMP_Text ipDisplay;
+    [SerializeField] TMP_Text debugDisplay;
 
     string ip;
     UnityTransport transport;
     NetworkRole role = NetworkRole.None;
     ulong clientID = 0;
+
+    void SetNetworkRole(NetworkRole newRole)
+    {
+        role = newRole;
+        AddDebugLine($"new role value: {newRole}");
+    }
     
     void Start()
     {
         transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
         NetworkManager.Singleton.OnClientConnectedCallback += SetClientID;
+        debugDisplay.text = "";
     }
     
     public void BecomeHost()
     {
         ip = GetLocalIPAddress();
+        if (ip == null) return;
+        
         ipDisplay.text = ip;
+        transport.ConnectionData.Address = ip;
+        
         bool wasSuccessful = NetworkManager.Singleton.StartHost();
-        role = NetworkRole.Host;
+        AddDebugLine($"Successfully became host? {wasSuccessful}");
+        if (!wasSuccessful) return;
+
+        SetNetworkRole(NetworkRole.Host);
     }
     
     public void BecomeClient()
     {
         ip = ipInput.text;
         transport.ConnectionData.Address = ip;
+        
         bool wasSuccessful = NetworkManager.Singleton.StartClient();
-        role = NetworkRole.Client;
+        AddDebugLine($"Successfully became client? {wasSuccessful}");
+        if (!wasSuccessful) return;
+
+        SetNetworkRole(NetworkRole.Client);
     }
 
     public void DisconnectClient()
     {
+        // only server can disconnect clients, please use shutdown()
+        
         if (role == NetworkRole.Host) return;
         
         NetworkManager.Singleton.DisconnectClient(clientID);
-        role = NetworkRole.None;
+        SetNetworkRole(NetworkRole.None);
     }
     
     private string GetLocalIPAddress() 
@@ -61,7 +82,8 @@ public class NetworkUI : MonoBehaviour
             if (ipAddress.AddressFamily == AddressFamily.InterNetwork) 
                 return ipAddress.ToString();
         
-        throw new System.Exception("No network adapters with an IPv4 address in the system!");
+        AddDebugLine("No network adapters with an IPv4 address in the system!");
+        return null;
     }
 
     private void SetClientID(ulong id)
@@ -71,6 +93,8 @@ public class NetworkUI : MonoBehaviour
             clientID = id;
         }
         
-        Debug.Log($"Call to SetClientID with ID: {id}");
+        AddDebugLine($"Call to SetClientID with ID: {id}");
     }
+
+    private void AddDebugLine(string line) => debugDisplay.text += line + "\n";
 }
