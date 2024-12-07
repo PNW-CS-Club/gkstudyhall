@@ -1,100 +1,76 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
 using TMPro;
-using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
 
-public enum NetworkRole
+public enum NetworkUIState
 {
-    None, Client, Host
+    HostOrJoin, Hosting, Joining
 }
 
 
 public class NetworkUI : MonoBehaviour
 {
+    [SerializeField] NetworkLogic netLogic;
+    [SerializeField] TMP_Text menuTitle;
     [SerializeField] TMP_InputField ipInput;
     [SerializeField] TMP_Text ipDisplay;
     [SerializeField] TMP_Text debugDisplay;
 
-    string ip;
-    UnityTransport transport;
-    NetworkRole role = NetworkRole.None;
-    ulong clientID = 0;
+    [Space] 
+    [SerializeField] List<GameObject> hostOrJoinElements;
+    [SerializeField] List<GameObject> hostingElements;
+    [SerializeField] List<GameObject> joiningElements;
 
-    void SetNetworkRole(NetworkRole newRole)
-    {
-        role = newRole;
-        AddDebugLine($"new role value: {newRole}");
-    }
+    NetworkUIState uiState = NetworkUIState.HostOrJoin;
     
     void Start()
     {
-        transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        NetworkManager.Singleton.OnClientConnectedCallback += SetClientID;
         debugDisplay.text = "";
-    }
-    
-    public void BecomeHost()
-    {
-        ip = GetLocalIPAddress();
-        if (ip == null) return;
+        netLogic.OnLog += AddDebugLine;
         
-        ipDisplay.text = ip;
-        transport.ConnectionData.Address = ip;
-        
-        bool wasSuccessful = NetworkManager.Singleton.StartHost();
-        AddDebugLine($"Successfully became host? {wasSuccessful}");
-        if (!wasSuccessful) return;
-
-        SetNetworkRole(NetworkRole.Host);
-    }
-    
-    public void BecomeClient()
-    {
-        ip = ipInput.text;
-        transport.ConnectionData.Address = ip;
-        
-        bool wasSuccessful = NetworkManager.Singleton.StartClient();
-        AddDebugLine($"Successfully became client? {wasSuccessful}");
-        if (!wasSuccessful) return;
-
-        SetNetworkRole(NetworkRole.Client);
+        foreach (GameObject element in GetUIStateElements(uiState)) 
+            element.SetActive(true);
     }
 
-    public void DisconnectClient()
+    void Update()
     {
-        // only server can disconnect clients, please use shutdown()
-        
-        if (role == NetworkRole.Host) return;
-        
-        NetworkManager.Singleton.DisconnectClient(clientID);
-        SetNetworkRole(NetworkRole.None);
-    }
-    
-    private string GetLocalIPAddress() 
-    {
-        var host = Dns.GetHostEntry(Dns.GetHostName());
-        foreach (var ipAddress in host.AddressList)
-            if (ipAddress.AddressFamily == AddressFamily.InterNetwork) 
-                return ipAddress.ToString();
-        
-        AddDebugLine("No network adapters with an IPv4 address in the system!");
-        return null;
-    }
-
-    private void SetClientID(ulong id)
-    {
-        if (role != NetworkRole.Host)
-        {
-            clientID = id;
-        }
-        
-        AddDebugLine($"Call to SetClientID with ID: {id}");
+        ipDisplay.text = netLogic.Ip ?? "XXX.XXX.XXX.XXX";
+        menuTitle.text = GetUIStateTitle(uiState);
     }
 
     private void AddDebugLine(string line) => debugDisplay.text += line + "\n";
+
+    private List<GameObject> GetUIStateElements(NetworkUIState state) => state switch
+    {
+        NetworkUIState.HostOrJoin => hostOrJoinElements,
+        NetworkUIState.Hosting => hostingElements,
+        NetworkUIState.Joining => joiningElements,
+        _ => throw new System.NotImplementedException()
+    };
+    
+    private string GetUIStateTitle(NetworkUIState state) => state switch
+    {
+        NetworkUIState.HostOrJoin => "LAN Game",
+        NetworkUIState.Hosting => "Host LAN Game",
+        NetworkUIState.Joining => "Join LAN Game",
+        _ => throw new System.NotImplementedException()
+    };
+
+    private void ChangeUIState(NetworkUIState newState)
+    {
+        foreach (GameObject element in GetUIStateElements(uiState)) 
+            element.SetActive(false);
+        
+        foreach (GameObject element in GetUIStateElements(newState)) 
+            element.SetActive(true);
+        
+        uiState = newState;
+        AddDebugLine($"Changed UI State to {newState}");
+    }
+    
+    public void ToHostOrJoin() => ChangeUIState(NetworkUIState.HostOrJoin);
+    public void ToHosting() => ChangeUIState(NetworkUIState.Hosting);
+    public void ToJoining() => ChangeUIState(NetworkUIState.Joining);
 }
