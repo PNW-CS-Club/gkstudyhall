@@ -35,41 +35,41 @@ public class NetworkLogic : MonoBehaviour
         NetworkManager.Singleton.OnClientConnectedCallback += SetClientID;
     }
     
-    public void BecomeHost()
+    public bool BecomeHost()
     {
         Ip = GetLocalIPAddress();
-        if (Ip == null) return;
+        if (Ip == null) return false;
         
         transport.ConnectionData.Address = Ip;
         
         bool wasSuccessful = NetworkManager.Singleton.StartHost();
         OnLog?.Invoke($"Successfully became host? {wasSuccessful}");
-        if (!wasSuccessful) return;
+        if (!wasSuccessful) return false;
 
         SetNetworkRole(NetworkRole.Host);
+        return true;
     }
     
-    public void BecomeClient(string inputIp)
+    public bool BecomeClient(string inputIp)
     {
         Ip = inputIp;
         transport.ConnectionData.Address = Ip;
         
         bool wasSuccessful = NetworkManager.Singleton.StartClient();
         OnLog?.Invoke($"Successfully became client? {wasSuccessful}");
-        if (!wasSuccessful) return;
+        if (!wasSuccessful) return false;
 
         SetNetworkRole(NetworkRole.Client);
+        return true;
     }
 
-    public void DisconnectClient()
+    public void Shutdown()
     {
-        // only server can disconnect clients, please use shutdown()
-        
-        if (role == NetworkRole.Host) return;
-        
-        NetworkManager.Singleton.DisconnectClient(clientID);
+        NetworkManager.Singleton.Shutdown();
+        OnLog?.Invoke("Shut down connection");
         SetNetworkRole(NetworkRole.None);
     }
+    
     
     private string GetLocalIPAddress() 
     {

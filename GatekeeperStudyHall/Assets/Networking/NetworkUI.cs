@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public enum NetworkUIState
@@ -13,17 +14,20 @@ public enum NetworkUIState
 public class NetworkUI : MonoBehaviour
 {
     [SerializeField] NetworkLogic netLogic;
+    
+    [Header("UI Elements")]
     [SerializeField] TMP_Text menuTitle;
     [SerializeField] TMP_InputField ipInput;
     [SerializeField] TMP_Text ipDisplay;
     [SerializeField] TMP_Text debugDisplay;
 
-    [Space] 
+    [Header("UI State Groups")] 
     [SerializeField] List<GameObject> hostOrJoinElements;
     [SerializeField] List<GameObject> hostingElements;
     [SerializeField] List<GameObject> joiningElements;
 
     NetworkUIState uiState = NetworkUIState.HostOrJoin;
+    bool showIp = false;
     
     void Start()
     {
@@ -36,12 +40,44 @@ public class NetworkUI : MonoBehaviour
 
     void Update()
     {
-        ipDisplay.text = netLogic.Ip ?? "XXX.XXX.XXX.XXX";
+        ipDisplay.text = showIp ? netLogic.Ip : "XXX.XXX.XXX.XXX";
         menuTitle.text = GetUIStateTitle(uiState);
     }
+    
+    
+    public void ReturnToMainMenu() => _ = SceneManager.LoadSceneAsync("StartScene");
 
+    public void TryHosting()
+    {
+        if (netLogic.BecomeHost())
+            ChangeUIState(NetworkUIState.Hosting);
+    }
+
+    public void TryJoining()
+    {
+        if (netLogic.BecomeClient(ipInput.text.Trim()))
+            ChangeUIState(NetworkUIState.Joining);
+    }
+
+    public void ShowIp(bool show) => showIp = show;
+
+    public void CopyIpToClipboard()
+    {
+        GUIUtility.systemCopyBuffer = netLogic.Ip;
+        AddDebugLine("Copied IP to clipboard.");
+    }
+
+    public void Shutdown()
+    {
+        netLogic.Shutdown();
+        ChangeUIState(NetworkUIState.HostOrJoin);
+    }
+    
+    public void StartGame() => _ = SceneManager.LoadSceneAsync("CharSelectScene");
+    
+    
     private void AddDebugLine(string line) => debugDisplay.text += line + "\n";
-
+    
     private List<GameObject> GetUIStateElements(NetworkUIState state) => state switch
     {
         NetworkUIState.HostOrJoin => hostOrJoinElements,
@@ -57,7 +93,7 @@ public class NetworkUI : MonoBehaviour
         NetworkUIState.Joining => "Join LAN Game",
         _ => throw new System.NotImplementedException()
     };
-
+    
     private void ChangeUIState(NetworkUIState newState)
     {
         foreach (GameObject element in GetUIStateElements(uiState)) 
@@ -69,8 +105,4 @@ public class NetworkUI : MonoBehaviour
         uiState = newState;
         AddDebugLine($"Changed UI State to {newState}");
     }
-    
-    public void ToHostOrJoin() => ChangeUIState(NetworkUIState.HostOrJoin);
-    public void ToHosting() => ChangeUIState(NetworkUIState.Hosting);
-    public void ToJoining() => ChangeUIState(NetworkUIState.Joining);
 }

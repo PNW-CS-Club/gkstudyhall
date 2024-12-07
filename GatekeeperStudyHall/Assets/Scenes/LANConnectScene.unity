@@ -208,7 +208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1679673450}
         m_TargetAssemblyTypeName: NetworkUI, Assembly-CSharp
-        m_MethodName: ToJoining
+        m_MethodName: TryJoining
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -341,7 +341,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1679673450}
         m_TargetAssemblyTypeName: NetworkUI, Assembly-CSharp
-        m_MethodName: ToHostOrJoin
+        m_MethodName: Shutdown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -605,7 +605,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 181354896}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1679673450}
+        m_TargetAssemblyTypeName: NetworkUI, Assembly-CSharp
+        m_MethodName: CopyIpToClipboard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &181354896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1297,7 +1309,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1679673450}
+        m_TargetAssemblyTypeName: NetworkUI, Assembly-CSharp
+        m_MethodName: ShowIp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &625780417
 GameObject:
@@ -1588,7 +1612,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 762962884}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1679673450}
+        m_TargetAssemblyTypeName: NetworkUI, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &762962884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3882,7 +3918,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1679673450}
         m_TargetAssemblyTypeName: NetworkUI, Assembly-CSharp
-        m_MethodName: ToHostOrJoin
+        m_MethodName: Shutdown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4118,7 +4154,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1679673450}
         m_TargetAssemblyTypeName: NetworkUI, Assembly-CSharp
-        m_MethodName: ToHosting
+        m_MethodName: TryHosting
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5137,7 +5173,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2145081154}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1679673450}
+        m_TargetAssemblyTypeName: NetworkUI, Assembly-CSharp
+        m_MethodName: ReturnToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2145081154
 MonoBehaviour:
   m_ObjectHideFlags: 0
