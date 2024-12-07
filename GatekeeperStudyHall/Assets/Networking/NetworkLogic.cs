@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using Unity.Netcode;
@@ -8,66 +9,61 @@ using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
 
-public enum NetworkRole
-{
-    None, Client, Host
-}
-
-
 public class NetworkLogic : MonoBehaviour
 {
     public event Action<string> OnLog;
+    public event Action OnClientDisconnect;
+    public event Action<bool> OnClientConnect;
 
     public string Ip { get; private set; }
+    
     UnityTransport transport;
-    NetworkRole role = NetworkRole.None;
-    ulong clientID = 0;
-
-    void SetNetworkRole(NetworkRole newRole)
-    {
-        role = newRole;
-        OnLog?.Invoke($"new role value: {newRole}");
-    }
+    
     
     void Start()
     {
         transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        NetworkManager.Singleton.OnClientConnectedCallback += SetClientID;
+        
+        NetworkManager.Singleton.OnClientStopped += _ => OnClientDisconnect?.Invoke();
+        NetworkManager.Singleton.OnClientConnectedCallback += _ => OnClientConnect?.Invoke(NetworkManager.Singleton.IsHost);
+        
+        OnClientDisconnect += LogClientDisconnect;
     }
     
-    public bool BecomeHost()
+    
+    public void BecomeHost()
     {
         Ip = GetLocalIPAddress();
-        if (Ip == null) return false;
+        if (Ip == null) return;
         
         transport.ConnectionData.Address = Ip;
         
         bool wasSuccessful = NetworkManager.Singleton.StartHost();
-        OnLog?.Invoke($"Successfully became host? {wasSuccessful}");
-        if (!wasSuccessful) return false;
-
-        SetNetworkRole(NetworkRole.Host);
-        return true;
+        OnLog?.Invoke(wasSuccessful ? "Successfully became host" : "Could not become host");
     }
     
-    public bool BecomeClient(string inputIp)
+    public void BecomeClient(string inputIp)
     {
         Ip = inputIp;
         transport.ConnectionData.Address = Ip;
         
         bool wasSuccessful = NetworkManager.Singleton.StartClient();
-        OnLog?.Invoke($"Successfully became client? {wasSuccessful}");
-        if (!wasSuccessful) return false;
-
-        SetNetworkRole(NetworkRole.Client);
-        return true;
+        OnLog?.Invoke(wasSuccessful ? "Successfully became client" : "Could not become client");
     }
 
     public void Shutdown()
     {
+        if (NetworkManager.Singleton.IsHost)
+        {
+            List<ulong> clientIds = NetworkManager.Singleton.ConnectedClients
+                .Select(x => x.Key)
+                .ToList();
+            foreach (var id in clientIds)
+                NetworkManager.Singleton.DisconnectClient(id, "Manual server shutdown");
+        }
+        
         NetworkManager.Singleton.Shutdown();
         OnLog?.Invoke("Shut down connection");
-        SetNetworkRole(NetworkRole.None);
     }
     
     
@@ -82,13 +78,10 @@ public class NetworkLogic : MonoBehaviour
         return null;
     }
 
-    private void SetClientID(ulong id)
+    private void LogClientDisconnect()
     {
-        if (role != NetworkRole.Host)
-        {
-            clientID = id;
-        }
-        
-        OnLog?.Invoke($"Call to SetClientID with ID: {id}");
+        var reason = NetworkManager.Singleton.DisconnectReason;
+        if (!string.IsNullOrEmpty(reason)) 
+            OnLog?.Invoke($"Disconnect reason: {reason}");
     }
 }

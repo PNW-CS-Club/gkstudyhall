@@ -33,6 +33,8 @@ public class NetworkUI : MonoBehaviour
     {
         debugDisplay.text = "";
         netLogic.OnLog += AddDebugLine;
+        netLogic.OnClientDisconnect += () => ChangeUIState(NetworkUIState.HostOrJoin);
+        netLogic.OnClientConnect += isHost => ChangeUIState(isHost ? NetworkUIState.Hosting : NetworkUIState.Joining);
         
         foreach (GameObject element in GetUIStateElements(uiState)) 
             element.SetActive(true);
@@ -47,17 +49,8 @@ public class NetworkUI : MonoBehaviour
     
     public void ReturnToMainMenu() => _ = SceneManager.LoadSceneAsync("StartScene");
 
-    public void TryHosting()
-    {
-        if (netLogic.BecomeHost())
-            ChangeUIState(NetworkUIState.Hosting);
-    }
-
-    public void TryJoining()
-    {
-        if (netLogic.BecomeClient(ipInput.text.Trim()))
-            ChangeUIState(NetworkUIState.Joining);
-    }
+    public void TryHosting() => netLogic.BecomeHost();
+    public void TryJoining() => netLogic.BecomeClient(ipInput.text.Trim());
 
     public void ShowIp(bool show) => showIp = show;
 
@@ -67,12 +60,8 @@ public class NetworkUI : MonoBehaviour
         AddDebugLine("Copied IP to clipboard.");
     }
 
-    public void Shutdown()
-    {
-        netLogic.Shutdown();
-        ChangeUIState(NetworkUIState.HostOrJoin);
-    }
-    
+    public void Shutdown() => netLogic.Shutdown();
+
     public void StartGame() => _ = SceneManager.LoadSceneAsync("CharSelectScene");
     
     
