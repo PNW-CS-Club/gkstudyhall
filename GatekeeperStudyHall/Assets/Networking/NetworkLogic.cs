@@ -63,18 +63,18 @@ public class NetworkLogic : MonoBehaviour
     {
         if (NetworkManager.Singleton.IsHost)
         {
+            var hostId = NetworkManager.Singleton.LocalClientId;
             List<ulong> clientIds = NetworkManager.Singleton.ConnectedClientsIds.ToList();
             foreach (var id in clientIds)
-                NetworkManager.Singleton.DisconnectClient(id, "Manual server shutdown");
+            {
+                if (id != hostId)
+                    NetworkManager.Singleton.DisconnectClient(id, "Manual server shutdown");
+            }
         }
         
         NetworkManager.Singleton.Shutdown();
         OnLog?.Invoke("Shut down connection");
     }
-
-
-    
-
     
     public void UpdateUsernames()
     {
