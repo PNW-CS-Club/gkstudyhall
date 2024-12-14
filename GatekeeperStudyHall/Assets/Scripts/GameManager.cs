@@ -54,11 +54,12 @@ public class GameManager : MonoBehaviour
     public void PlayerAttacksPlayer(PlayerSO attacker, PlayerSO defender, int damage)
     {
         defender.TakeDamage(damage);
+        attacker.totalDamageToOtherPlayers +=  damage;
         Debug.Log($"{attacker.name} attacked {defender.name} for {damage} damage!");
         CheckWinBySurvival();
     }
 
-
+   
     /// <summary>
     /// <para>Reduces the health of the center gate.</para>
     /// <para>If the center gate's health is reduced to zero, the game ends.</para>
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviour
     public void PlayerAttacksCenterGate(PlayerSO attacker, int damage)
     {
         centerGate.TakeDamage(damage);
-        attacker.totalDamageToGates += damage;
+        attacker.totalDamageToGatekeeper += damage;
         if (centerGate.Health == 0)
         {
             //Debug.Log($"{attacker.card.characterName} wins! End the game here");
