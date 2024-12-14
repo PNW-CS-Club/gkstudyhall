@@ -32,6 +32,7 @@ public class PlayerSO : ScriptableObject
     public int totalDamageToGatekeeper;
     public int totalAmountHealed; // Total health healed during the game
     public int totalStockade; // Total amount of stockade collected during the game
+    public int battlesStarted; // Total number of battles started
 
     // when this SO is loaded into a scene, reset values that may have been changed
     private void OnEnable() {
@@ -40,14 +41,28 @@ public class PlayerSO : ScriptableObject
 
         isAlive = true;
   
+        // Initialize Trait Variables
         doubleDamageToCenter = 1;
         noDamageTurn = false;
         reduceGateDamage = 0;
         increaseGateDamage = 0;
         doubleGateAbil = 1;
         doubleDamageToSelf = 1;
+
+        // Initialize Statistic Variables
+        totalDamageToOtherPlayers = 0;
+        totalDamageToGates = 0;
+        totalDamageToGatekeeper = 0;
+        totalAmountHealed = 0;
+        totalStockade = 0;
+        battlesStarted = 0;
     }
 
+    /// <summary>
+    /// This function should only be used to reset a player at the start of a new game.
+    /// It resets the player's health, stockade status and all statistics variables.
+    /// Make sure it is called for each player in the player list.
+    /// </summary>
     public void GameReset() {
 
         health = STARTING_HEALTH;
@@ -61,6 +76,8 @@ public class PlayerSO : ScriptableObject
         totalDamageToGatekeeper = 0;
         totalAmountHealed = 0;
         totalStockade = 0;
+        battlesStarted = 0;
+        
     }
 
     /// <summary>
