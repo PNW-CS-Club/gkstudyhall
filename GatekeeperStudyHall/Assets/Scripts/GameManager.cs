@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour
                     // a player takes damage
                     bool attackerDealsDamage = Globals.BattleData.data[ 0 ].roll > Globals.BattleData.data[ 1 ].roll;
                     PlayerSO damageDealer = attackerDealsDamage ? Globals.BattleData.data[ 0 ].player : Globals.BattleData.data[ 1 ].player;
-                    PlayerSO damageTaker = attackerDealsDamage ? Globals.BattleData.data[ 1 ].player : Globals.BattleData.data[ 0 ].player;
+                    PlayerSO damageTaker  = attackerDealsDamage ? Globals.BattleData.data[ 1 ].player : Globals.BattleData.data[ 0 ].player;
 
                     int damageDealt = Mathf.Abs( Globals.BattleData.data[ 0 ].roll - Globals.BattleData.data[ 1 ].roll ) * Globals.BattleData.mult;
 
@@ -205,6 +205,10 @@ public class GameManager : MonoBehaviour
                     Debug.Log( $"Battle concluded, {damageTaker} should have taken {damageDealt} damage. Continue with turn..." );
 
                     Globals.BattleData.Reset();
+                    // If the current player died, transition to the next player
+                    if (!playerListSO.list[0].isAlive){
+                        NextTurn();
+                    }
                     stateMachine.TransitionTo( stateMachine.choosingGateState );
                 }
             }
