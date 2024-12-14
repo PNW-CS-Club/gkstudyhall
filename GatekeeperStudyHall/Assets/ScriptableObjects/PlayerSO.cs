@@ -48,6 +48,21 @@ public class PlayerSO : ScriptableObject
         doubleDamageToSelf = 1;
     }
 
+    public void GameReset() {
+
+        health = STARTING_HEALTH;
+        hasStockade = false;
+
+        isAlive = true;
+
+        // Reset all statistics
+        totalDamageToOtherPlayers = 0;
+        totalDamageToGates = 0;
+        totalDamageToGatekeeper = 0;
+        totalAmountHealed = 0;
+        totalStockade = 0;
+    }
+
     /// <summary>
     /// Resets all effects that the player has.
     /// </summary>
