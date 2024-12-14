@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
     public void PlayerAttacksCenterGate(PlayerSO attacker, int damage)
     {
         centerGate.TakeDamage(damage);
-        
+        attacker.totalDamageToGates += damage;
         if (centerGate.Health == 0)
         {
             //Debug.Log($"{attacker.card.characterName} wins! End the game here");
@@ -96,8 +96,10 @@ public class GameManager : MonoBehaviour
             CheckWinBySurvival();
         }
             
-        else
+        else{
             player.Heal(amount);
+        }
+            
     }
 
 
@@ -138,6 +140,7 @@ public class GameManager : MonoBehaviour
             else if (roll == 5) 
             {
                 // Player rolls a 5, initiate battle with another player
+                currentPlayer.battlesStarted++;
                 stateMachine.TransitionTo( stateMachine.choosingPlayerState );
                 stateMachine.choosingPlayerState.playerSelect.OnSelect = ( defender ) => {
                     Debug.Log( playerListSO.list[ 0 ] );
@@ -157,7 +160,7 @@ public class GameManager : MonoBehaviour
             attack = Mathf.Max(0, attack); // set to 0 if attack comes out negative
             Debug.Log($"attacking for {attack} damage");
             GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
-         
+            currentPlayer.totalDamageToGates += attack;
             if (Globals.selectedGate.Health == 0) {
                 Debug.Log("You broke the gate!");
                 stateMachine.TransitionTo(stateMachine.breakingGateState);

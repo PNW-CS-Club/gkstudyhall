@@ -31,6 +31,7 @@ public class PlayerSO : ScriptableObject
     public int totalDamageToGates;
     public int totalDamageToGatekeeper;
     public int totalAmountHealed; // Total health healed during the game
+    public int totalDamageTaken; // Total damage taken during the game
     public int totalStockade; // Total amount of stockade collected during the game
     public int battlesStarted; // Total number of battles started
 
@@ -50,10 +51,11 @@ public class PlayerSO : ScriptableObject
         doubleDamageToSelf = 1;
 
         // Initialize Statistic Variables
-        totalDamageToOtherPlayers = 0;
+        totalDamageToOtherPlayers = 0; 
         totalDamageToGates = 0;
         totalDamageToGatekeeper = 0;
         totalAmountHealed = 0;
+        totalDamageTaken = 0;
         totalStockade = 0;
         battlesStarted = 0;
     }
@@ -75,6 +77,7 @@ public class PlayerSO : ScriptableObject
         totalDamageToGates = 0;
         totalDamageToGatekeeper = 0;
         totalAmountHealed = 0;
+        totalDamageTaken = 0;
         totalStockade = 0;
         battlesStarted = 0;
         
@@ -110,6 +113,7 @@ public class PlayerSO : ScriptableObject
         }
         
         health -= damage;
+        totalDamageTaken += damage;
         
         if (health <= 0)
         {
@@ -128,5 +132,6 @@ public class PlayerSO : ScriptableObject
         if (amount <= 0) return;
         
         health = Mathf.Min(health + amount, MAX_HEALTH);
+        totalAmountHealed += amount;
     }
 }

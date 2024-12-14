@@ -147,6 +147,7 @@ public class TraitHandler : MonoBehaviour
 
             case Trait.plusStockade:
                 player.hasStockade = true;
+                player.totalStockade++;
                 break;
 
             default:
