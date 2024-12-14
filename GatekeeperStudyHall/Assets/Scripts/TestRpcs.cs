@@ -8,9 +8,8 @@ public class TestRpcs : NetworkBehaviour
     [Rpc(SendTo.Server, RequireOwnership = false)]
     public void Ping_Rpc(int pingCount)
     {
-        // Server -> Clients because PongRpc sends to NotServer
-        // Note: This will send to all clients.
-        // Sending to the specific client that requested the pong will be discussed in the next section.
+        // Receive ping from client
+        // Send pong to ALL clients from the server
         Pong_Rpc(pingCount, "PONG!");
     }
 
@@ -18,6 +17,7 @@ public class TestRpcs : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     void Pong_Rpc(int pingCount, string message)
     {
+        // Receive pong from server
         Debug.Log($"Received pong from server for ping {pingCount} and message {message}");
     }
     
@@ -25,7 +25,7 @@ public class TestRpcs : NetworkBehaviour
     {
         if (IsClient && Input.GetKeyDown(KeyCode.P))
         {
-            // Client -> Server because PingRpc sends to Server
+            // Send ping to server from a client
             Ping_Rpc(pingCounter);
             pingCounter++;
         }

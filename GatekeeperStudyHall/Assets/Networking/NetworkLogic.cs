@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using Unity.Collections;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
@@ -15,16 +14,11 @@ public class NetworkLogic : MonoBehaviour
     public event Action<string> OnLog;
     public event Action OnClientDisconnect;
     public event Action<bool> OnClientConnect;
-    
-    public NetworkVariable<FixedString64Bytes> username1 = new("username1");
-    public NetworkVariable<FixedString64Bytes> username2 = new("username2");
-    public NetworkVariable<FixedString64Bytes> username3 = new("username3");
-    public NetworkVariable<FixedString64Bytes> username4 = new("username4");
 
     public string Ip { get; private set; }
     
     UnityTransport transport;
-    
+    public List<String> usernames = new(); 
     
     void Start()
     {
@@ -81,18 +75,12 @@ public class NetworkLogic : MonoBehaviour
 
     
 
-    public List<string> GetUsernames()
+    
+    public void UpdateUsernames()
     {
-        if (NetworkManager.Singleton.IsHost)
-            UpdateUsernames();
-
-        return new List<string>
-        {
-            username1.Value.ToString(),
-            username2.Value.ToString(),
-            username3.Value.ToString(),
-            username4.Value.ToString(),
-        };
+        usernames = GameObject.FindGameObjectsWithTag("NetPlayer")
+            .Select(go => go.GetComponent<NetworkPlayer>().username.Value.ToString())
+            .ToList();
     }
     
     
@@ -112,17 +100,5 @@ public class NetworkLogic : MonoBehaviour
         var reason = NetworkManager.Singleton.DisconnectReason;
         if (!string.IsNullOrEmpty(reason)) 
             OnLog?.Invoke($"Disconnect reason: {reason}");
-    }
-    
-    private void UpdateUsernames()
-    {
-        var list = NetworkManager.Singleton.ConnectedClientsList
-            .Select(x => x.PlayerObject.GetComponent<NetworkPlayer>().username.Value.ToString())
-            .ToList();
-
-        username1.Value = list.Count >= 1 ? list[0] : "username1";
-        username2.Value = list.Count >= 2 ? list[1] : "username2";
-        username3.Value = list.Count >= 3 ? list[2] : "username3";
-        username4.Value = list.Count >= 4 ? list[3] : "username4";
     }
 }

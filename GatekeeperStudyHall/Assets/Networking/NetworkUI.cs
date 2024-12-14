@@ -125,7 +125,8 @@ public class NetworkUI : MonoBehaviour
     
     void UpdatePlayerList()
     {
-        playerListDisplay.text = netLogic.GetUsernames()
-            .Aggregate((a, b) => $"{a}\n{b}");
+        netLogic.UpdateUsernames(); // TODO: only update when some "user joined" or "user disconnected" RPC is called
+        playerListDisplay.text = netLogic.usernames
+            .Aggregate("", (a, b) => a + '\n' + b, s => s.TrimStart());
     }
 }
