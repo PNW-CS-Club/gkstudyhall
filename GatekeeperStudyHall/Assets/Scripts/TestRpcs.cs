@@ -15,7 +15,7 @@ public class TestRpcs : NetworkBehaviour
     }
 
     
-    [Rpc(SendTo.Everyone)]
+    [Rpc(SendTo.ClientsAndHost)]
     void Pong_Rpc(int pingCount, string message)
     {
         Debug.Log($"Received pong from server for ping {pingCount} and message {message}");
