@@ -14,7 +14,7 @@ public class TestRpcs : NetworkBehaviour
         Pong_Rpc(pingCount, "PONG!");
     }
 
-    [Rpc(SendTo.Server)]
+    [Rpc(SendTo.Server, RequireOwnership = false)]
     void Pong_Rpc(int pingCount, string message)
     {
         Debug.Log($"Received pong from server for ping {pingCount} and message {message}");
@@ -22,7 +22,7 @@ public class TestRpcs : NetworkBehaviour
     
     void Update()
     {
-        if (IsClient && IsOwner && Input.GetKeyDown(KeyCode.P))
+        if (IsClient && Input.GetKeyDown(KeyCode.P))
         {
             // Client -> Server because PingRpc sends to Server
             Ping_Rpc(pingCounter);
