@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Provides methods for actions related to health, damage, and turn flow.
@@ -25,17 +26,40 @@ public class GameManager : MonoBehaviour
     void OnEnable() => diceRoll.DoneRollingEvent += RollEventHandler;
     void OnDestroy() => diceRoll.DoneRollingEvent -= RollEventHandler;
 
+    /// <summary>
+    /// Determine whether there is a single player alive.
+    /// The last player standing wins the game. 
+    /// </summary>
+    public void CheckWinBySurvival()
+    {
+        if (Globals.playersAlive == 1) {
+            // Determine the last player alive
+            List<PlayerSO> playerList = playerListSO.list;
+            foreach(PlayerSO player in playerList){
+                if (player.isAlive) {
+                    Globals.winningPlayer = player;  
+                    break;
+                }
+            }
+            
+            // Transition to End Scene
+            AsyncOperation _ = SceneManager.LoadSceneAsync("EndScene");
+
+        }
+    }
 
     /// <summary>
     /// Plays out the effects of one player attacking another player.
     /// </summary>
-    public static void PlayerAttacksPlayer(PlayerSO attacker, PlayerSO defender, int damage)
+    public void PlayerAttacksPlayer(PlayerSO attacker, PlayerSO defender, int damage)
     {
         defender.TakeDamage(damage);
+        attacker.totalDamageToOtherPlayers +=  damage;
         Debug.Log($"{attacker.name} attacked {defender.name} for {damage} damage!");
+        CheckWinBySurvival();
     }
 
-
+   
     /// <summary>
     /// <para>Reduces the health of the center gate.</para>
     /// <para>If the center gate's health is reduced to zero, the game ends.</para>
@@ -45,10 +69,12 @@ public class GameManager : MonoBehaviour
     public void PlayerAttacksCenterGate(PlayerSO attacker, int damage)
     {
         centerGate.TakeDamage(damage);
-        
+        attacker.totalDamageToGatekeeper += damage;
         if (centerGate.Health == 0)
         {
-            Debug.Log($"{attacker.card.characterName} wins! End the game here");
+            //Debug.Log($"{attacker.card.characterName} wins! End the game here");
+            Globals.winningPlayer = attacker;
+            SceneManager.LoadScene("EndScene");
         }
     }
 
@@ -63,12 +89,18 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="player">The player whose health changes.</param>
     /// <param name="amount">The amount of health to change by (positive to heal, negative to take damage).</param>
-    public static void PlayerChangeHealth(PlayerSO player, int amount)
+    public void PlayerChangeHealth(PlayerSO player, int amount)
     {
         if (amount < 0)
+        {
             player.TakeDamage(-amount);
-        else
+            CheckWinBySurvival();
+        }
+            
+        else{
             player.Heal(amount);
+        }
+            
     }
 
 
@@ -83,7 +115,10 @@ public class GameManager : MonoBehaviour
     public void GateChangeHealth(PlayerSO player, GateSO gate, int amount) 
     {
         if (amount < 0)
+        {
             gate.TakeDamage(-amount);
+            player.totalDamageToGates += -amount;
+        }
         else 
             gate.Heal(amount);
     }
@@ -109,6 +144,7 @@ public class GameManager : MonoBehaviour
             else if (roll == 5) 
             {
                 // Player rolls a 5, initiate battle with another player
+                currentPlayer.battlesStarted++;
                 stateMachine.TransitionTo( stateMachine.choosingPlayerState );
                 stateMachine.choosingPlayerState.playerSelect.OnSelect = ( defender ) => {
                     Debug.Log( playerListSO.list[ 0 ] );
@@ -128,7 +164,6 @@ public class GameManager : MonoBehaviour
             attack = Mathf.Max(0, attack); // set to 0 if attack comes out negative
             Debug.Log($"attacking for {attack} damage");
             GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
-         
             if (Globals.selectedGate.Health == 0) {
                 Debug.Log("You broke the gate!");
                 stateMachine.TransitionTo(stateMachine.breakingGateState);
@@ -167,7 +202,7 @@ public class GameManager : MonoBehaviour
                     // a player takes damage
                     bool attackerDealsDamage = Globals.BattleData.data[ 0 ].roll > Globals.BattleData.data[ 1 ].roll;
                     PlayerSO damageDealer = attackerDealsDamage ? Globals.BattleData.data[ 0 ].player : Globals.BattleData.data[ 1 ].player;
-                    PlayerSO damageTaker = attackerDealsDamage ? Globals.BattleData.data[ 1 ].player : Globals.BattleData.data[ 0 ].player;
+                    PlayerSO damageTaker  = attackerDealsDamage ? Globals.BattleData.data[ 1 ].player : Globals.BattleData.data[ 0 ].player;
 
                     int damageDealt = Mathf.Abs( Globals.BattleData.data[ 0 ].roll - Globals.BattleData.data[ 1 ].roll ) * Globals.BattleData.mult;
 
@@ -176,6 +211,10 @@ public class GameManager : MonoBehaviour
                     Debug.Log( $"Battle concluded, {damageTaker} should have taken {damageDealt} damage. Continue with turn..." );
 
                     Globals.BattleData.Reset();
+                    // If the current player died, transition to the next player
+                    if (!playerListSO.list[0].isAlive){
+                        NextTurn();
+                    }
                     stateMachine.TransitionTo( stateMachine.choosingGateState );
                 }
             }
