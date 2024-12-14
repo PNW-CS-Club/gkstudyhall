@@ -5,7 +5,7 @@ public class TestRpcs : NetworkBehaviour
 {
     int pingCounter = 0;
     
-    [Rpc(SendTo.Everyone)]
+    [Rpc(SendTo.Server, RequireOwnership = false)]
     public void Ping_Rpc(int pingCount)
     {
         // Server -> Clients because PongRpc sends to NotServer
@@ -14,7 +14,8 @@ public class TestRpcs : NetworkBehaviour
         Pong_Rpc(pingCount, "PONG!");
     }
 
-    [Rpc(SendTo.Server, RequireOwnership = false)]
+    
+    [Rpc(SendTo.Everyone)]
     void Pong_Rpc(int pingCount, string message)
     {
         Debug.Log($"Received pong from server for ping {pingCount} and message {message}");
