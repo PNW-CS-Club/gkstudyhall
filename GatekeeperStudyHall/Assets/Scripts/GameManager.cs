@@ -115,7 +115,10 @@ public class GameManager : MonoBehaviour
     public void GateChangeHealth(PlayerSO player, GateSO gate, int amount) 
     {
         if (amount < 0)
+        {
             gate.TakeDamage(-amount);
+            player.totalDamageToGates += -amount;
+        }
         else 
             gate.Heal(amount);
     }
@@ -161,7 +164,6 @@ public class GameManager : MonoBehaviour
             attack = Mathf.Max(0, attack); // set to 0 if attack comes out negative
             Debug.Log($"attacking for {attack} damage");
             GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
-            currentPlayer.totalDamageToGates += attack;
             if (Globals.selectedGate.Health == 0) {
                 Debug.Log("You broke the gate!");
                 stateMachine.TransitionTo(stateMachine.breakingGateState);

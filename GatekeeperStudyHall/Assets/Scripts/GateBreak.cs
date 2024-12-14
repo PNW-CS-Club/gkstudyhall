@@ -50,6 +50,7 @@ public class GateBreak : MonoBehaviour
 
             case GateColor.BLUE:
                 player.hasStockade = true;
+                player.totalStockade++;
                 break;
         }
 
@@ -86,6 +87,7 @@ public class GateBreak : MonoBehaviour
                 
                 int randIndex = Random.Range(0, candidates.Count);
                 candidates[randIndex].hasStockade = true;
+                candidates[randIndex].totalStockade++;
                 break;
         }
 
