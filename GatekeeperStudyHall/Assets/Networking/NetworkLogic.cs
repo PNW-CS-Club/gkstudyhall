@@ -9,11 +9,10 @@ using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
 
-public class NetworkLogic : MonoBehaviour
+public class NetworkLogic : NetworkBehaviour
 {
     public event Action<string> OnLog;
-    public event Action OnClientDisconnect;
-    public event Action<bool> OnClientConnect;
+    public event Action<NetworkManager, ConnectionEventData> OnConnectionEvent;
 
     public string Ip { get; private set; }
     
@@ -25,12 +24,7 @@ public class NetworkLogic : MonoBehaviour
         transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
         transport.OnTransportEvent += LogTransportEvent;
         
-        NetworkManager.Singleton.OnClientConnectedCallback 
-            += _ => OnClientConnect?.Invoke(NetworkManager.Singleton.IsHost);
-        NetworkManager.Singleton.OnClientStopped 
-            += _ => OnClientDisconnect?.Invoke();
-        
-        OnClientDisconnect += LogClientDisconnect;
+        NetworkManager.Singleton.OnConnectionEvent += RespondToConnectionEvent;
     }
 
     void LogTransportEvent(NetworkEvent eventType, ulong clientId, ArraySegment<byte> payload, float receiveTime)
@@ -76,7 +70,7 @@ public class NetworkLogic : MonoBehaviour
         OnLog?.Invoke("Shut down connection");
     }
     
-    public void UpdateUsernames()
+    private void UpdateUsernames()
     {
         usernames = GameObject.FindGameObjectsWithTag("NetPlayer")
             .Select(go => go.GetComponent<NetworkPlayer>().username.Value.ToString())
@@ -100,5 +94,27 @@ public class NetworkLogic : MonoBehaviour
         var reason = NetworkManager.Singleton.DisconnectReason;
         if (!string.IsNullOrEmpty(reason)) 
             OnLog?.Invoke($"Disconnect reason: {reason}");
+    }
+
+    private void RespondToConnectionEvent(NetworkManager nwm, ConnectionEventData data)
+    {
+        if (!IsClient) return;
+        
+        switch (data.EventType)
+        {
+            case ConnectionEvent.ClientDisconnected:
+                LogClientDisconnect();
+                break;
+            
+            case ConnectionEvent.PeerConnected:
+            case ConnectionEvent.PeerDisconnected:
+                UpdateUsernames();
+                break;
+            
+            case ConnectionEvent.ClientConnected:
+                break;
+        }
+
+        OnConnectionEvent?.Invoke(nwm, data);
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 
@@ -39,12 +38,32 @@ public class NetworkUI : MonoBehaviour
     {
         debugDisplay.text = "";
         netLogic.OnLog += AddDebugLine;
-        
-        netLogic.OnClientConnect += RespondToClientConnect;
-        netLogic.OnClientDisconnect += () => ChangeUIState(NetworkUIState.HostOrJoin);
+
+        netLogic.OnConnectionEvent += RespondToClientConnectionEvent;
         
         foreach (GameObject element in GetUIStateElements(NetworkUIState.HostOrJoin)) 
             element.SetActive(true);
+    }
+
+    void RespondToClientConnectionEvent(NetworkManager nwm, ConnectionEventData data)
+    {
+        switch (data.EventType)
+        {
+            case ConnectionEvent.ClientConnected:
+                if (nwm.IsHost && uiState != NetworkUIState.Hosting)
+                    ChangeUIState(NetworkUIState.Hosting);
+                else if (!nwm.IsHost)
+                    ChangeUIState(NetworkUIState.Joining);
+                break;
+            
+            case ConnectionEvent.ClientDisconnected:
+                ChangeUIState(NetworkUIState.HostOrJoin);
+                break;
+            
+            case ConnectionEvent.PeerConnected:
+            case ConnectionEvent.PeerDisconnected:
+                break;
+        }
     }
 
     void Update()
@@ -84,13 +103,6 @@ public class NetworkUI : MonoBehaviour
     public void StartGame() => _ = SceneManager.LoadSceneAsync("CharSelectScene");
     
     
-    void RespondToClientConnect(bool isHost)
-    {
-        if (!isHost || uiState != NetworkUIState.Hosting)
-            ChangeUIState(NetworkUIState.Joining);
-    }
-    
-    
     void AddDebugLine(string line) => debugDisplay.text += line + "\n";
     
     List<GameObject> GetUIStateElements(NetworkUIState state) => state switch
@@ -120,12 +132,11 @@ public class NetworkUI : MonoBehaviour
             element.SetActive(true);
         
         uiState = newState;
-        AddDebugLine($"Changed UI State to {newState}");
+        //AddDebugLine($"Changed UI State to {newState}");
     }
     
     void UpdatePlayerList()
     {
-        netLogic.UpdateUsernames(); // TODO: only update when some "user joined" or "user disconnected" RPC is called
         playerListDisplay.text = netLogic.usernames
             .Aggregate("", (a, b) => a + '\n' + b, s => s.TrimStart());
     }

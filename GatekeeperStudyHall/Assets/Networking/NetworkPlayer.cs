@@ -1,10 +1,12 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class NetworkPlayer : NetworkBehaviour
 {
