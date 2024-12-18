@@ -100,9 +100,9 @@ public class NetworkUI : MonoBehaviour
 
     public void Shutdown() => netLogic.Shutdown();
 
-    public void StartGame() => _ = SceneManager.LoadSceneAsync("CharSelectScene");
-    
-    
+    public void StartGame() => netLogic.StartGame_Rpc();
+
+
     void AddDebugLine(string line) => debugDisplay.text += line + "\n";
     
     List<GameObject> GetUIStateElements(NetworkUIState state) => state switch

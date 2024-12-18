@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class NetworkLogic : NetworkBehaviour
@@ -30,6 +31,14 @@ public class NetworkLogic : NetworkBehaviour
     void LogTransportEvent(NetworkEvent eventType, ulong clientId, ArraySegment<byte> payload, float receiveTime)
     {
         OnLog?.Invoke($"OnTransportEvent: \n  eventType: {eventType}\n  clientId: {clientId}\n  payload: {payload}\n  receiveTime: {receiveTime}");
+    }
+    
+    
+    [Rpc(SendTo.ClientsAndHost)]
+    public void StartGame_Rpc()
+    {
+        OnLog?.Invoke("Trying to start the game!");
+        _ = SceneManager.LoadSceneAsync("CharSelectScene");
     }
 
 
