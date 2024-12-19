@@ -132,12 +132,15 @@ public class NetworkUI : MonoBehaviour
             element.SetActive(true);
         
         uiState = newState;
-        //AddDebugLine($"Changed UI State to {newState}");
     }
     
     void UpdatePlayerList()
     {
+        netLogic.usernames = GameObject.FindGameObjectsWithTag("NetPlayer")
+            .Select(go => go.GetComponent<NetworkPlayer>().username.Value.ToString())
+            .ToList();
+        
         playerListDisplay.text = netLogic.usernames
-            .Aggregate("", (a, b) => a + '\n' + b, s => s.TrimStart());
+            .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd());
     }
 }

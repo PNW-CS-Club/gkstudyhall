@@ -23,14 +23,8 @@ public class NetworkLogic : NetworkBehaviour
     void Start()
     {
         transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        transport.OnTransportEvent += LogTransportEvent;
         
         NetworkManager.Singleton.OnConnectionEvent += RespondToConnectionEvent;
-    }
-
-    void LogTransportEvent(NetworkEvent eventType, ulong clientId, ArraySegment<byte> payload, float receiveTime)
-    {
-        OnLog?.Invoke($"OnTransportEvent: \n  eventType: {eventType}\n  clientId: {clientId}\n  payload: {payload}\n  receiveTime: {receiveTime}");
     }
     
     
@@ -64,7 +58,7 @@ public class NetworkLogic : NetworkBehaviour
 
     public void Shutdown()
     {
-        if (NetworkManager.Singleton.IsHost)
+        if (IsHost)
         {
             var hostId = NetworkManager.Singleton.LocalClientId;
             List<ulong> clientIds = NetworkManager.Singleton.ConnectedClientsIds.ToList();
@@ -74,16 +68,9 @@ public class NetworkLogic : NetworkBehaviour
                     NetworkManager.Singleton.DisconnectClient(id, "Manual server shutdown");
             }
         }
-        
+
         NetworkManager.Singleton.Shutdown();
         OnLog?.Invoke("Shut down connection");
-    }
-    
-    private void UpdateUsernames()
-    {
-        usernames = GameObject.FindGameObjectsWithTag("NetPlayer")
-            .Select(go => go.GetComponent<NetworkPlayer>().username.Value.ToString())
-            .ToList();
     }
     
     
@@ -98,29 +85,26 @@ public class NetworkLogic : NetworkBehaviour
         return null;
     }
 
-    private void LogClientDisconnect()
-    {
-        var reason = NetworkManager.Singleton.DisconnectReason;
-        if (!string.IsNullOrEmpty(reason)) 
-            OnLog?.Invoke($"Disconnect reason: {reason}");
-    }
-
     private void RespondToConnectionEvent(NetworkManager nwm, ConnectionEventData data)
     {
-        if (!IsClient) return;
+        print($"Received connection event: {data.EventType}");
         
         switch (data.EventType)
         {
             case ConnectionEvent.ClientDisconnected:
-                LogClientDisconnect();
+            {
+                if (!IsHost)
+                {
+                    var reason = NetworkManager.Singleton.DisconnectReason;
+                    if (!string.IsNullOrEmpty(reason)) 
+                        OnLog?.Invoke($"Disconnect reason: {reason}");
+                }
                 break;
+            }
             
             case ConnectionEvent.PeerConnected:
             case ConnectionEvent.PeerDisconnected:
-                UpdateUsernames();
-                break;
-            
-            case ConnectionEvent.ClientConnected:
+            case ConnectionEvent.ClientConnected: 
                 break;
         }
 
