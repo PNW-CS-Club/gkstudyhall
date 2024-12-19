@@ -26,8 +26,14 @@ public class NetworkLogic : NetworkBehaviour
         
         NetworkManager.Singleton.OnConnectionEvent += RespondToConnectionEvent;
     }
-    
-    
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        NetworkManager.Singleton.OnConnectionEvent -= RespondToConnectionEvent;
+    }
+
+
     [Rpc(SendTo.ClientsAndHost)]
     public void StartGame_Rpc()
     {
@@ -47,13 +53,14 @@ public class NetworkLogic : NetworkBehaviour
         OnLog?.Invoke(wasSuccessful ? "Successfully started host" : "Could not start host");
     }
     
-    public void StartClient(string inputIp)
+    public bool StartClient(string inputIp)
     {
         Ip = inputIp;
         transport.ConnectionData.Address = Ip;
         
         bool wasSuccessful = NetworkManager.Singleton.StartClient();
         OnLog?.Invoke(wasSuccessful ? "Started client, trying to connect..." : "Could not start client");
+        return wasSuccessful;
     }
 
     public void Shutdown()
@@ -87,7 +94,7 @@ public class NetworkLogic : NetworkBehaviour
 
     private void RespondToConnectionEvent(NetworkManager nwm, ConnectionEventData data)
     {
-        print($"Received connection event: {data.EventType}");
+        OnLog?.Invoke($"Received connection event: {data.EventType}");
         
         switch (data.EventType)
         {

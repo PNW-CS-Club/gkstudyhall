@@ -27,6 +27,8 @@ public class NetworkPlayer : NetworkBehaviour
             Debug.Log($"set NetworkPlayer name to {username.Value.ToString()}");
         }
 
+        DontDestroyOnLoad(this);
+
         isInitialized = true;
         Debug.Log("initialized NetworkPlayer");
     }

@@ -41,47 +41,40 @@ public class NetworkUI : MonoBehaviour
 
         netLogic.OnConnectionEvent += RespondToClientConnectionEvent;
         
+        // show HostOrJoin UI elements
         foreach (GameObject element in GetUIStateElements(NetworkUIState.HostOrJoin)) 
             element.SetActive(true);
     }
 
-    void RespondToClientConnectionEvent(NetworkManager nwm, ConnectionEventData data)
-    {
-        switch (data.EventType)
-        {
-            case ConnectionEvent.ClientConnected:
-                if (nwm.IsHost && uiState != NetworkUIState.Hosting)
-                    ChangeUIState(NetworkUIState.Hosting);
-                else if (!nwm.IsHost)
-                    ChangeUIState(NetworkUIState.Joining);
-                break;
-            
-            case ConnectionEvent.ClientDisconnected:
-                ChangeUIState(NetworkUIState.HostOrJoin);
-                break;
-            
-            case ConnectionEvent.PeerConnected:
-            case ConnectionEvent.PeerDisconnected:
-                break;
-        }
-    }
-
     void Update()
     {
+        // update all the text displays
         attemptIpDisplay.text = netLogic.Ip;
         ipDisplay.text = showIp ? netLogic.Ip : "XXX.XXX.XXX.XXX";
         menuTitle.text = GetUIStateTitle(uiState);
-        UpdatePlayerList();
+        
+        netLogic.usernames = GameObject.FindGameObjectsWithTag("NetPlayer")
+            .Select(go => go.GetComponent<NetworkPlayer>().username.Value.ToString())
+            .ToList();
+        
+        playerListDisplay.text = netLogic.usernames
+            .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd());
     }
-    
-    
+
+    void OnDestroy()
+    {
+        netLogic.OnLog -= AddDebugLine;
+        netLogic.OnConnectionEvent -= RespondToClientConnectionEvent;
+    }
+
+
     public void ReturnToMainMenu() => _ = SceneManager.LoadSceneAsync("StartScene");
 
     public void TryHosting() => netLogic.StartHost();
     public void TryJoining()
     {
-        netLogic.StartClient(ipInput.text.Trim());
-        ChangeUIState(NetworkUIState.AttemptingJoin);
+        var wasSuccessful = netLogic.StartClient(ipInput.text.Trim());
+        if (wasSuccessful) ChangeUIState(NetworkUIState.AttemptingJoin);
     }
 
     public void CancelJoinAttempt()
@@ -104,6 +97,27 @@ public class NetworkUI : MonoBehaviour
 
 
     void AddDebugLine(string line) => debugDisplay.text += line + "\n";
+
+    void RespondToClientConnectionEvent(NetworkManager nwm, ConnectionEventData data)
+    {
+        switch (data.EventType)
+        {
+            case ConnectionEvent.ClientConnected:
+                if (nwm.IsHost && uiState != NetworkUIState.Hosting)
+                    ChangeUIState(NetworkUIState.Hosting);
+                else if (!nwm.IsHost)
+                    ChangeUIState(NetworkUIState.Joining);
+                break;
+            
+            case ConnectionEvent.ClientDisconnected:
+                ChangeUIState(NetworkUIState.HostOrJoin);
+                break;
+            
+            case ConnectionEvent.PeerConnected:
+            case ConnectionEvent.PeerDisconnected:
+                break;
+        }
+    }
     
     List<GameObject> GetUIStateElements(NetworkUIState state) => state switch
     {
@@ -132,15 +146,5 @@ public class NetworkUI : MonoBehaviour
             element.SetActive(true);
         
         uiState = newState;
-    }
-    
-    void UpdatePlayerList()
-    {
-        netLogic.usernames = GameObject.FindGameObjectsWithTag("NetPlayer")
-            .Select(go => go.GetComponent<NetworkPlayer>().username.Value.ToString())
-            .ToList();
-        
-        playerListDisplay.text = netLogic.usernames
-            .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd());
     }
 }
