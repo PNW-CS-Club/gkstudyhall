@@ -12,13 +12,17 @@ using UnityEngine.SceneManagement;
 
 public class NetworkLogic : NetworkBehaviour
 {
+    /// An event this class invokes with a message whenever it has something it wants to say
     public event Action<string> OnLog;
-    public event Action<NetworkManager, ConnectionEventData> OnConnectionEvent;
-
+    
+    /// An event this class invokes after it handles any <see cref="NetworkManager.OnConnectionEvent"/>.
+    /// Invoked with all the parameters from OnConnectionEvent.
+    public event Action<NetworkManager, ConnectionEventData> AfterConnectionEvent;
+    
+    /// The last IP the NetworkManager has attempted to host from or connect to
     public string Ip { get; private set; }
     
     UnityTransport transport;
-    public List<String> usernames = new(); 
     
     void Start()
     {
@@ -30,10 +34,13 @@ public class NetworkLogic : NetworkBehaviour
     public override void OnDestroy()
     {
         base.OnDestroy();
+        
+        // unsubscribe from the event because the event will continue to trigger in the next scene
         NetworkManager.Singleton.OnConnectionEvent -= RespondToConnectionEvent;
     }
 
 
+    /// Runs on all clients when called. Cleans up and loads the next scene in order to start the game.
     [Rpc(SendTo.ClientsAndHost)]
     public void StartGame_Rpc()
     {
@@ -42,10 +49,15 @@ public class NetworkLogic : NetworkBehaviour
     }
 
 
+    /// Sets the IP to this computer's local IP and tells the NetworkManager to try to start the host.
     public void StartHost()
     {
         Ip = GetLocalIPAddress();
-        if (Ip == null) return;
+        if (Ip == null)
+        {
+            OnLog?.Invoke("Could not find local IP address.");
+            return;
+        }
         
         transport.ConnectionData.Address = Ip;
         
@@ -53,6 +65,8 @@ public class NetworkLogic : NetworkBehaviour
         OnLog?.Invoke(wasSuccessful ? "Successfully started host" : "Could not start host");
     }
     
+    /// Sets the IP to the given IP and tells the NetworkManager to try to start a client.
+    /// <returns>whether the client started successfully</returns>
     public bool StartClient(string inputIp)
     {
         Ip = inputIp;
@@ -63,6 +77,7 @@ public class NetworkLogic : NetworkBehaviour
         return wasSuccessful;
     }
 
+    /// Stops the host or client. If this is the host, it first disconnects all other connected clients.
     public void Shutdown()
     {
         if (IsHost)
@@ -81,6 +96,8 @@ public class NetworkLogic : NetworkBehaviour
     }
     
     
+    /// Finds the local IPv4 address of this computer. 
+    /// <returns>The local IPv4 address, or null if no network adapters could be found on this computer.</returns>
     private string GetLocalIPAddress() 
     {
         var host = Dns.GetHostEntry(Dns.GetHostName());
@@ -92,6 +109,9 @@ public class NetworkLogic : NetworkBehaviour
         return null;
     }
 
+    /// A method meant to receive the information from <see cref="NetworkManager.OnConnectionEvent"/>.
+    /// <param name="nwm">this computer's NetworkManager</param>
+    /// <param name="data">a struct that holds all the data pertaining to the event</param>
     private void RespondToConnectionEvent(NetworkManager nwm, ConnectionEventData data)
     {
         OnLog?.Invoke($"Received connection event: {data.EventType}");
@@ -102,6 +122,7 @@ public class NetworkLogic : NetworkBehaviour
             {
                 if (!IsHost)
                 {
+                    // happens if this computer disconnects as a non-host client
                     var reason = NetworkManager.Singleton.DisconnectReason;
                     if (!string.IsNullOrEmpty(reason)) 
                         OnLog?.Invoke($"Disconnect reason: {reason}");
@@ -115,6 +136,8 @@ public class NetworkLogic : NetworkBehaviour
                 break;
         }
 
-        OnConnectionEvent?.Invoke(nwm, data);
+        // allows any objects with a reference to this object to respond to the connection event
+        // AFTER this object has responded to it
+        AfterConnectionEvent?.Invoke(nwm, data);
     }
 }

@@ -39,7 +39,7 @@ public class NetworkUI : MonoBehaviour
         debugDisplay.text = "";
         netLogic.OnLog += AddDebugLine;
 
-        netLogic.OnConnectionEvent += RespondToClientConnectionEvent;
+        netLogic.AfterConnectionEvent += RespondToClientConnectionEvent;
         
         // show HostOrJoin UI elements
         foreach (GameObject element in GetUIStateElements(NetworkUIState.HostOrJoin)) 
@@ -53,18 +53,16 @@ public class NetworkUI : MonoBehaviour
         ipDisplay.text = showIp ? netLogic.Ip : "XXX.XXX.XXX.XXX";
         menuTitle.text = GetUIStateTitle(uiState);
         
-        netLogic.usernames = GameObject.FindGameObjectsWithTag("NetPlayer")
-            .Select(go => go.GetComponent<NetworkPlayer>().username.Value.ToString())
-            .ToList();
-        
-        playerListDisplay.text = netLogic.usernames
-            .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd());
+        playerListDisplay.text = GameObject.FindGameObjectsWithTag("NetPlayer") // get all the NetPlayers
+            .Select(go => go.GetComponent<NetworkPlayer>().username.Value.ToString()) // get their usernames
+            .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd()); // concatenate them
     }
 
     void OnDestroy()
     {
+        // technically not necessary if networkUI and netLogic are always destroyed at the same time
         netLogic.OnLog -= AddDebugLine;
-        netLogic.OnConnectionEvent -= RespondToClientConnectionEvent;
+        netLogic.AfterConnectionEvent -= RespondToClientConnectionEvent;
     }
 
 
