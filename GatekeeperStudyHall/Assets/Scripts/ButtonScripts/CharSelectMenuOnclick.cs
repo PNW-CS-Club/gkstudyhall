@@ -11,16 +11,17 @@ public class CharSelectMenuOnClick : MonoBehaviour
     void Start() 
     {
         players = playerListObject.list;
+        
+    }
+
+    public void StartGame()
+    {
         //reset players
         for(int i = 0; i < players.Count; i++)
         {
             players[i].GameReset();
             players[i].ResetEffects();
         }
-    }
-
-    public void StartGame()
-    {
         AsyncOperation _ = SceneManager.LoadSceneAsync("GkScene");
     }
     public void StartMenu()
