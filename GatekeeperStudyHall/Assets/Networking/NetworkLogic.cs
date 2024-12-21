@@ -21,22 +21,25 @@ public class NetworkLogic : NetworkBehaviour
     
     /// The last IP the NetworkManager has attempted to host from or connect to
     public string Ip { get; private set; }
-    
+
+    NetworkManager nwm;
     UnityTransport transport;
     
     void Start()
     {
-        transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+        // NetworkManager.Singleton is null sometimes (idk why ??) so we keep a reference to it in nwm 
+        nwm = NetworkManager.Singleton;
+        nwm.OnConnectionEvent += RespondToConnectionEvent;
         
-        NetworkManager.Singleton.OnConnectionEvent += RespondToConnectionEvent;
+        transport = nwm.GetComponent<UnityTransport>();
     }
 
     public override void OnDestroy()
     {
-        base.OnDestroy();
-        
         // unsubscribe from the event because the event will continue to trigger in the next scene
-        NetworkManager.Singleton.OnConnectionEvent -= RespondToConnectionEvent;
+        nwm.OnConnectionEvent -= RespondToConnectionEvent;
+        
+        base.OnDestroy();
     }
 
 
@@ -61,7 +64,7 @@ public class NetworkLogic : NetworkBehaviour
         
         transport.ConnectionData.Address = Ip;
         
-        bool wasSuccessful = NetworkManager.Singleton.StartHost();
+        bool wasSuccessful = nwm.StartHost();
         OnLog?.Invoke(wasSuccessful ? "Successfully started host" : "Could not start host");
     }
     
@@ -72,7 +75,7 @@ public class NetworkLogic : NetworkBehaviour
         Ip = inputIp;
         transport.ConnectionData.Address = Ip;
         
-        bool wasSuccessful = NetworkManager.Singleton.StartClient();
+        bool wasSuccessful = nwm.StartClient();
         OnLog?.Invoke(wasSuccessful ? "Started client, trying to connect..." : "Could not start client");
         return wasSuccessful;
     }
@@ -82,16 +85,16 @@ public class NetworkLogic : NetworkBehaviour
     {
         if (IsHost)
         {
-            var hostId = NetworkManager.Singleton.LocalClientId;
-            List<ulong> clientIds = NetworkManager.Singleton.ConnectedClientsIds.ToList();
+            var hostId = nwm.LocalClientId;
+            List<ulong> clientIds = nwm.ConnectedClientsIds.ToList();
             foreach (var id in clientIds)
             {
                 if (id != hostId)
-                    NetworkManager.Singleton.DisconnectClient(id, "Manual server shutdown");
+                    nwm.DisconnectClient(id, "Manual server shutdown");
             }
         }
 
-        NetworkManager.Singleton.Shutdown();
+        nwm.Shutdown();
         OnLog?.Invoke("Shut down connection");
     }
     
@@ -123,7 +126,7 @@ public class NetworkLogic : NetworkBehaviour
                 if (!IsHost)
                 {
                     // happens if this computer disconnects as a non-host client
-                    var reason = NetworkManager.Singleton.DisconnectReason;
+                    var reason = nwm.DisconnectReason;
                     if (!string.IsNullOrEmpty(reason)) 
                         OnLog?.Invoke($"Disconnect reason: {reason}");
                 }
