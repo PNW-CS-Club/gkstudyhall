@@ -123,9 +123,9 @@ public class NetworkLogic : NetworkBehaviour
         {
             case ConnectionEvent.ClientDisconnected:
             {
-                if (!IsHost)
+                if (data.ClientId == nwm.LocalClientId)
                 {
-                    // happens if this computer disconnects as a non-host client
+                    // happens if this computer is the one that disconnected
                     var reason = nwm.DisconnectReason;
                     if (!string.IsNullOrEmpty(reason)) 
                         OnLog?.Invoke($"Disconnect reason: {reason}");

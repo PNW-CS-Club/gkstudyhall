@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +34,7 @@ public class NetworkUI : MonoBehaviour
 
     NetworkUIState uiState = NetworkUIState.HostOrJoin;
     bool showIp = false;
-    Action<int> UpdateNumPlayers;
+    System.Action<int> UpdateNumPlayers;
 
     void Start()
     {
@@ -114,14 +113,13 @@ public class NetworkUI : MonoBehaviour
         switch (data.EventType)
         {
             case ConnectionEvent.ClientConnected:
-                if (nwm.IsHost && uiState != NetworkUIState.Hosting)
-                    ChangeUIState(NetworkUIState.Hosting);
-                else if (!nwm.IsHost)
-                    ChangeUIState(NetworkUIState.Joining);
+                if (data.ClientId == nwm.LocalClientId)
+                    ChangeUIState(nwm.IsHost ? NetworkUIState.Hosting : NetworkUIState.Joining);
                 break;
             
             case ConnectionEvent.ClientDisconnected:
-                ChangeUIState(NetworkUIState.HostOrJoin);
+                if (data.ClientId == nwm.LocalClientId)
+                    ChangeUIState(NetworkUIState.HostOrJoin);
                 break;
             
             case ConnectionEvent.PeerConnected:
