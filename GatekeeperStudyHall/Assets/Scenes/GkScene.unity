@@ -2157,6 +2157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3346e94a9ee221f4a8c66b42f0783a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 413017099}
   stateMachine: {fileID: 1085388489}
   playerSelection: {fileID: 391084954}
   playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
