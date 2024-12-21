@@ -82,3 +82,35 @@ public class BreakingGateState : IState
     public bool CanRoll => true;
     public bool CanChooseGate => false;
 }
+
+
+/// <summary>
+/// The state where the game waits for the current player to choose a card for a trait, a battle, or a gate effect.
+/// </summary>
+[Serializable]
+public class ChoosingPlayerState : IState
+{
+    [SerializeField] public PlayerSelection playerSelect;
+
+    public bool CanRoll => false;
+    public bool CanChooseGate => false;
+
+    public void Enter()
+    {
+        playerSelect.Show();
+    }
+
+    public void Exit()
+    {
+        playerSelect.Hide();
+    }
+}
+
+/// <summary>
+/// The state where the game waits for the current player to roll to attack another player
+/// </summary>
+[Serializable]
+public class BattlingState : IState {
+    public bool CanRoll => true;
+    public bool CanChooseGate => false;
+}

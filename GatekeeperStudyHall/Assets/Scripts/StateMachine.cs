@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 
 /// <summary>
@@ -16,28 +17,30 @@ public class StateMachine : MonoBehaviour
     public ChoosingGateState choosingGateState;
     public AttackingGateState attackingGateState;
     public BreakingGateState breakingGateState;
+    public ChoosingPlayerState choosingPlayerState;
+    public BattlingState battlingState;
 
     /// <summary>
     /// This C# event is triggered whenever the state changes.
     /// </summary>
     [HideInInspector] public event EventHandler<IState> StateChangedEvent; 
 
-    // This setup allows code outside this class to read the current state but not write to it.
-    public IState CurrentState { get => currentState; }
-    private IState currentState;
+    public IState CurrentState { get; private set; }
 
 
     void Start() 
     {
+        // set the amount of players alive to the initial size of the player list
+        Globals.playersAlive = playerListSO.list.Count;
         // the initial state that the program will be in is traitRollState
-        currentState = traitRollState;
-        StateChangedEvent?.Invoke(this, currentState);
-        currentState.Enter();
+        CurrentState = traitRollState;
+        StateChangedEvent?.Invoke(this, CurrentState);
+        CurrentState.Enter();
     }
 
     void Update() 
     {
-        currentState.Update();
+        CurrentState.Update();
     }
 
 
@@ -47,10 +50,12 @@ public class StateMachine : MonoBehaviour
     /// </summary>
     public void TransitionTo(IState state) 
     {
-        currentState.Exit();
-        currentState = state;
-        StateChangedEvent?.Invoke(this, currentState);
-        currentState.Enter();
+        Assert.IsNotNull(state, "The state the machine is entering must have a value.");
+
+        CurrentState.Exit();
+        CurrentState = state;
+        StateChangedEvent?.Invoke(this, CurrentState);
+        CurrentState.Enter();
     }
 }
 

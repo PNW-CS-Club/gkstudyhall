@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,5 +13,28 @@ public static class Globals
     /// The gate that the current player has chosen to attack. 
     /// Holds <c>null</c> if the player has not yet chosen a gate or has already attacked a gate.
     /// </summary>
-    public static GateSO chosenGate = null;
+    public static GateSO selectedGate = null;
+
+    /// <summary>
+    ///  A structure of data relevant to battles.
+    ///  <c>data</c> needs to be init'd so that it's technically a valid object.
+    /// </summary>
+    public struct BattleData {
+        public static void Reset() {
+            data = new();
+            isAttackerRolling = false;
+            mult = 1;
+        }
+
+        public static List<(PlayerSO player, int roll)> data = new();
+        public static bool isAttackerRolling;
+        public static int mult;
+    }
+
+    /// <summary>
+    /// The number of players still alive 
+    /// </summary>
+    public static int playersAlive = -1;
+
+    public static PlayerSO winningPlayer;
 }

@@ -132,6 +132,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 164533148}
     m_Modifications:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
       objectReference: {fileID: 11400000, guid: b1148e97bcd5d4a4dac0725497919a04, type: 2}
@@ -144,9 +148,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isSelectable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardMagnifier
       value: 
       objectReference: {fileID: 1656571057}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: startExpanded
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -383,12 +395,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 768347978}
     m_Modifications:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 11400000, guid: b50d6f6fe5f8fd345bae2e06ea9e783e, type: 2}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
       objectReference: {fileID: 11400000, guid: b1148e97bcd5d4a4dac0725497919a04, type: 2}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: canMagnify
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isPlayerSlot
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_Pivot.x
@@ -456,7 +480,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1184,6 +1208,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 164533148}
     m_Modifications:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
       objectReference: {fileID: 11400000, guid: 97a8a00ea8b7f804fbde4b2c248af807, type: 2}
@@ -1196,9 +1224,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isPlayerSlot
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isSelectable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardMagnifier
       value: 
       objectReference: {fileID: 1656571057}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: startExpanded
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1703,13 +1743,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2004043720}
     m_Modifications:
+    - target: {fileID: 2764408686508434578, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764408686508434578, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 12.838
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764408686508434578, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 49.373
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
       objectReference: {fileID: 11400000, guid: 8d206240aaf07a64c83811e8091fd269, type: 2}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: collapsed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: canMagnify
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isPlayerSlot
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardMagnifier
@@ -1813,6 +1881,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 164533148}
     m_Modifications:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
       objectReference: {fileID: 11400000, guid: be14ec4658680d641a7748feea97e494, type: 2}
@@ -1822,6 +1894,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: canMagnify
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isSelectable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: startExpanded
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
@@ -2261,6 +2341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
   player1: {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
+  selectedCard: {fileID: 0}
 --- !u!1001 &735981607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2269,6 +2350,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 164533148}
     m_Modifications:
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
@@ -2282,9 +2367,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isPlayerSlot
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isSelectable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardMagnifier
       value: 
       objectReference: {fileID: 1656571057}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: startExpanded
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2557,12 +2654,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 1793134940}
     m_Modifications:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
       objectReference: {fileID: 11400000, guid: 97a8a00ea8b7f804fbde4b2c248af807, type: 2}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: canMagnify
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isPlayerSlot
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: cardMagnifier
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_Pivot.x
@@ -2630,7 +2743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2667,6 +2780,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 164533148}
     m_Modifications:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
       objectReference: {fileID: 11400000, guid: c7b50c4b34a1aff4f8fb5e0ec0802c42, type: 2}
@@ -2679,9 +2796,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isSelectable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardMagnifier
       value: 
       objectReference: {fileID: 1656571057}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: startExpanded
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3483,6 +3608,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 164533148}
     m_Modifications:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
       objectReference: {fileID: 11400000, guid: 72169a04f50915744b8c612bc8b2ab17, type: 2}
@@ -3495,9 +3624,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isSelectable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardMagnifier
       value: 
       objectReference: {fileID: 1656571057}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: startExpanded
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3735,6 +3872,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 164533148}
     m_Modifications:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
       objectReference: {fileID: 11400000, guid: 4892601165fcc284ba39f75bfef40d1d, type: 2}
@@ -3747,9 +3888,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isSelectable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardMagnifier
       value: 
       objectReference: {fileID: 1656571057}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: startExpanded
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3853,12 +4002,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 240308201}
     m_Modifications:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 11400000, guid: b5a7460747c7bab41906f3d7a94bc689, type: 2}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
       objectReference: {fileID: 11400000, guid: b1148e97bcd5d4a4dac0725497919a04, type: 2}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: canMagnify
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: isPlayerSlot
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_Pivot.x
@@ -3922,11 +4083,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4048,7 +4209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3408421001039088534, guid: f6d12e4a660ca7047859e966f5a4c4d1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

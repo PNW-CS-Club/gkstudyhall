@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 
 /// <summary>
@@ -10,14 +11,14 @@ public enum Trait
 {
     // warning: changing enum int values here does not update them in the editor
     [InspectorName("Deal 3 Damage")]                deal3Dam = 0,
-    [InspectorName("-2 to Gate Roll")]              minus2gate = 1,
+    [InspectorName("Deal 2 Damage to GateKeeper")]  minus2GateKeeper = 1,
     [InspectorName("+1 Health")]                    plus1Health = 2,
     [InspectorName("x2 Gate Ability")]              doubleGateAbil = 3,
     [InspectorName("Deal 2 Damage")]                deal2Dam = 4,
-    [InspectorName("reduceGateDamage (??)")]        reduceGateDamage = 5,
+    [InspectorName("-2 Gate Attack Damage")]        reduceGateDamage = 5,
     [InspectorName("Take No Damage This Turn")]     noDamageTurn = 6,
     [InspectorName("Swap Gate HP")]                 swapGateHP = 7,
-    [InspectorName("Gate Loses 1 HP")]              gateLoses1HP = 8,
+    [InspectorName("+1 Gate Attack Damage")]        increaseGateDamage = 8,
     [InspectorName("Lose 2 Health")]                minus2HP = 9,
     [InspectorName("Deal 1 Damage to Everyone")]    allMinus1HP = 10,
     [InspectorName("Choose Gate for Other Player")] chooseGateForOp = 11,
@@ -30,7 +31,11 @@ public enum Trait
 /// </summary>
 public class TraitHandler : MonoBehaviour
 {
+    [SerializeField] GameManager gameManager;
+    [SerializeField] StateMachine stateMachine;
+    [SerializeField] PlayerSelection playerSelection;
     [SerializeField] PlayerListSO playerListObject;
+    
     List<PlayerSO> players; // refers to list in playerListObject
 
 
@@ -43,9 +48,10 @@ public class TraitHandler : MonoBehaviour
     /// Then performs the actions that that trait describes.
     /// </summary>
     /// <param name="roll">The roll (1-4) that the trait corresponds to.</param>
-    public void ActivateCurrentPlayerTrait(int roll) 
+    /// <returns>The state the game should enter after the trait roll is activated.</returns>
+    public IState ActivateCurrentPlayerTrait(int roll) 
     {
-        ActivateTrait(players[0], roll); // TODO: This is throwing an index out of bounds error during the second player's turn
+        return ActivateTrait(players[0], roll); 
     }
 
 
@@ -55,88 +61,93 @@ public class TraitHandler : MonoBehaviour
     /// </summary>
     /// <param name="player">The player whose trait is being activated.</param>
     /// <param name="roll">The roll (1-4) that the trait corresponds to.</param>
-    public void ActivateTrait(PlayerSO player, int roll)
+    /// <returns>The state the game should enter after the trait roll is activated.</returns>
+    public IState ActivateTrait(PlayerSO player, int roll)
     {
-        if (roll > 4) {
-            Debug.LogError("Cannot activate trait with roll more than 4");
-            return;
-        }
+        Assert.IsTrue(1 <= roll && roll <= 4, "Trait value must be between 1 and 4");
 
         Trait trait = player.card.traits[roll - 1];
 
+        // some branches return early with a special state
+        // all others will just return choosing gate state
         switch (trait)
         {
             case Trait.deal3Dam:
-                //Selected players health -3
+                //Deal 3 damage to target player
+                Debug.Log("Select a player to deal 3 damage to");
+                playerSelection.OnSelect = (selectedPlayer) => {
+                    gameManager.PlayerAttacksPlayer(player, selectedPlayer, 3);
+                    stateMachine.TransitionTo(stateMachine.choosingGateState);
+                };
 
-                /*
-                 * Idk how we wanna go with the selection process.
-                 * Maybe pulling up a list of the other players and their health 
-                 * or we can just make it so you can click the card of the player that
-                 * wants to be dealt the damage. I dont know how hard that would be to code
-                 */
-                //changeHealth(player,3);//Need the array of players to access it.
-                Debug.LogWarning("Trait deal3Dam not implemented");
-                break;
+                return stateMachine.choosingPlayerState;
 
-            case Trait.minus2gate:
-                //Selcted gates health -2
-                //changeGateHealth(player, selectedGate, -2);
-                Debug.LogWarning("Trait doubleGateAbil not implemented");
+            case Trait.minus2GateKeeper:
+                //Selected gate health - 2
+                //GameManager.GateChangeHealth(player, selectedGate,-2);
+                
+                Debug.LogWarning("Trait minus2GateKeeper not implemented");
                 break;
 
             case Trait.plus1Health:
-                GameManager.PlayerChangeHealth(player, 1);
+                gameManager.PlayerChangeHealth(player, 1);
                 break;
 
             case Trait.doubleGateAbil:
-                Debug.LogWarning("Trait doubleGateAbil not implemented");
+                //Double the gate abilities this turn
+                player.doubleGateAbil = 2; // doubleGateAbil is a multiplier
                 break;
 
             case Trait.deal2Dam:
-                //changeHealth(gate,2);//Need parameter.
-                Debug.LogWarning("Trait deal2Dam not implemented");
-                break;
+                //Deal 2 damage to target player
+                Debug.Log("Select a player to deal 2 damage to");
+                playerSelection.OnSelect = (selectedPlayer) => {
+                    gameManager.PlayerAttacksPlayer(player, selectedPlayer, 2);
+                    stateMachine.TransitionTo(stateMachine.choosingGateState);
+                };
+
+                return stateMachine.choosingPlayerState;
 
             case Trait.reduceGateDamage:
-                // changeGateHealth(gate,-2); 
-                //For this we are gonna have to keep track of
-                //what number they rolled and then just do minus 2 to it;
-                //Also have to check for the abilities of that gate.
-                Debug.LogWarning("Trait reduceGateDamage not implemented");
+                // Player deals 2 less damage to gates this turn
+                player.reduceGateDamage = 2; // Subtracted from player's gate attack for the turn
                 break;
 
             case Trait.noDamageTurn:
-                Debug.LogWarning("Trait noDamageTurn not implemented");
+                // Player will not take damage this turn
+                player.noDamageTurn = true; // This will be used in GameManager to carry out Trait ability
                 break;
 
             case Trait.swapGateHP:
+                // Swap the HP of two chosen gates
                 Debug.LogWarning("Trait swapGateHP not implemented");
                 break;
 
-            case Trait.gateLoses1HP:
-                Debug.LogWarning("Trait gateLoses1HP not implemented");
+            case Trait.increaseGateDamage:
+                // Player deals 1 more damage to gates this turn
+                player.increaseGateDamage = 1; // Added to player's gate attack for the turn
                 break;
 
             case Trait.minus2HP:
-                GameManager.PlayerChangeHealth(player, -2);
-                Debug.Log("Player took 2 damage");
+                gameManager.PlayerChangeHealth(player, -2); // Player loses 2 health
                 break;
 
             case Trait.allMinus1HP:
-                // WARNING: This may be implemented incorrectly
                 // Note: the index of the current player is always 0
                 for (int i = 1; i < players.Count; i++) {
-                    GameManager.PlayerAttacksPlayer(players[0], players[i], -1);
+                    gameManager.PlayerAttacksPlayer(players[0], players[i], 1); // deal 1 damage to all other players
                 }
                 break;
 
             case Trait.chooseGateForOp:
+                // Choose a gate for another player to attack
+                // that player will only be able to attack that gate during their next turn
                 Debug.LogWarning("Trait chooseGateForOp not implemented");
                 break;
 
             case Trait.plusStockade:
                 player.hasStockade = true;
+                player.totalStockade++;
                 break;
 
             default:
@@ -144,5 +155,7 @@ public class TraitHandler : MonoBehaviour
                 Debug.LogError($"Trait not handled: {trait}");
                 break;
         }
+
+        return stateMachine.choosingGateState;
     }
 }

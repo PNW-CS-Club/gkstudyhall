@@ -9,73 +9,46 @@ public enum GateColor
 
 
 /// <summary>
-/// Represents a gate with its color and health.
+/// Represents a gate with its color and health. Provides methods to take damage, heal, and reset after breaking.
 /// </summary>
 [CreateAssetMenu(fileName = "New_GateSO", menuName = "Scriptable Objects/GateSO")]
 public class GateSO : ScriptableObject
 {
-    public const int STARTING_HEALTH = 6;
-    public const int MAX_HEALTH = 6;
+    const int STARTING_HEALTH = 6;
+    const int MAX_HEALTH = 6;
 
-    public GateColor Color { get => color; }
+    public GateColor Color => color;
     [SerializeField] GateColor color;
 
-    public int health = STARTING_HEALTH;
-
-
-    private void OnEnable() 
+    public int Health => health;
+    [SerializeField] int health = STARTING_HEALTH;
+    
+    
+    void OnEnable() 
     {
         health = STARTING_HEALTH;
     }
-
 
     public override string ToString() {
         return $"GateSO[health=\"{health}\", color=\"{color}\"]";
     }
 
-
-    /// <summary>
-    /// This should be called after this gate has been broken
-    /// and a player has rolled even or odd.
-    /// </summary>
-    public void DoBreakEffect(PlayerSO player, int roll) 
+    public void TakeDamage(int damage)
     {
-        if (roll % 2 != 0) 
-        {
-            // odd roll, positive effect
-            switch (color) 
-            {
-                case GateColor.BLACK:
-                    /* TODO: damage center gate by 4 */ break;
-
-                case GateColor.GREEN:
-                    GameManager.PlayerChangeHealth(player, 3); break;
-
-                case GateColor.RED:
-                    player.doubleDamageToCenter = true; break;
-
-                case GateColor.BLUE:
-                    player.hasStockade = true; break;
-            }
-        }
-        else 
-        {
-            // even roll, negative effect
-            switch (color) 
-            {
-                case GateColor.BLACK:
-                    GameManager.PlayerChangeHealth(player, -4); break;
-
-                case GateColor.GREEN:
-                    /* TODO: center gate gains 3 hp */ break;
-
-                case GateColor.RED:
-                    player.doubleDamageToSelf = true; break;
-
-                case GateColor.BLUE:
-                    /* TODO: center gate gets sheild */ break;
-            }
-        }
+        if (damage <= 0) return;
+        
+        health = Mathf.Max(0, health - damage);
     }
 
+    public void Heal(int amount)
+    {
+        if (amount <= 0) return;
+        
+        health = Mathf.Min(health + amount, MAX_HEALTH);
+    }
+
+    public void Reset()
+    {
+        health = STARTING_HEALTH;
+    }
 }
