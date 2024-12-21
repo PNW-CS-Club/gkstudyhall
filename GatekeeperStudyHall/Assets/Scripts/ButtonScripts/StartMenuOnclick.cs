@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class StartMenuOnclick : MonoBehaviour
 {
-    public void StartGame() {
-        // loads the main game scene asynchronously to prevent stutter
-        AsyncOperation _ = SceneManager.LoadSceneAsync("CharSelectScene");
+    public void LoadSceneAsync(string sceneName)
+    {
+        // loads the scene asynchronously to prevent stutter
+        AsyncOperation _ = SceneManager.LoadSceneAsync(sceneName);
     }
 
     public void QuitGame() {

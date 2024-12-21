@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndScene.unity
     guid: 78aaa7b5ab23dd24ab085f3ddafcee60
+  - enabled: 1
+    path: Assets/Scenes/LANConnectScene.unity
+    guid: 0493775f30c6f574193e625605029c50
   m_configObjects: {}
