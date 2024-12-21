@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ public class NetworkUI : MonoBehaviour
     [SerializeField] TMP_InputField ipInput;
     [SerializeField] TMP_Text attemptIpDisplay;
     [SerializeField] TMP_Text ipDisplay;
+    [SerializeField] TMP_Text playerListHeader;
     [SerializeField] TMP_Text playerListDisplay;
     [SerializeField] TMP_Text debugDisplay;
 
@@ -33,6 +35,7 @@ public class NetworkUI : MonoBehaviour
 
     NetworkUIState uiState = NetworkUIState.HostOrJoin;
     bool showIp = false;
+    Action<int> UpdateNumPlayers;
 
     void Start()
     {
@@ -44,16 +47,26 @@ public class NetworkUI : MonoBehaviour
         // show HostOrJoin UI elements
         foreach (GameObject element in GetUIStateElements(NetworkUIState.HostOrJoin)) 
             element.SetActive(true);
+        
+        // some logic to make the UpdateNumPlayers function replace the underscore in playerListHeader
+        int splitIndex = playerListHeader.text.IndexOf('_');
+        if (splitIndex == -1) Debug.LogError("playerListHeader.text must contain a '_' character");
+        string startText = playerListHeader.text.Substring(0, splitIndex);
+        string endText = playerListHeader.text.Substring(splitIndex + 1);
+        UpdateNumPlayers = (x => playerListHeader.text = startText + x + endText);
     }
 
     void Update()
     {
-        // update all the text displays
+        // update various text displays
         attemptIpDisplay.text = netLogic.Ip;
         ipDisplay.text = showIp ? netLogic.Ip : "XXX.XXX.XXX.XXX";
         menuTitle.text = GetUIStateTitle(uiState);
-        
-        playerListDisplay.text = GameObject.FindGameObjectsWithTag("NetPlayer") // get all the NetPlayers
+
+        // update the displays that show the network players
+        var netPlayers = GameObject.FindGameObjectsWithTag("NetPlayer");
+        UpdateNumPlayers(netPlayers.Length);
+        playerListDisplay.text = netPlayers
             .Select(go => go.GetComponent<NetworkPlayer>().username.Value.ToString()) // get their usernames
             .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd()); // concatenate them
     }

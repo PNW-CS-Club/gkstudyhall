@@ -1169,7 +1169,7 @@ GameObject:
   - component: {fileID: 465561054}
   - component: {fileID: 465561053}
   m_Layer: 5
-  m_Name: List Header
+  m_Name: Player List Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1214,7 +1214,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Connected Players [4/4]
+  m_text: Connected Players [_/4]
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4866,6 +4866,7 @@ MonoBehaviour:
   ipInput: {fileID: 948047227}
   attemptIpDisplay: {fileID: 932799518}
   ipDisplay: {fileID: 776708558}
+  playerListHeader: {fileID: 465561053}
   playerListDisplay: {fileID: 1650270569}
   debugDisplay: {fileID: 160970196}
   hostOrJoinElements:
@@ -4891,7 +4892,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 351c1f791d30bb9418920c6fb2774877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usernames: []
 --- !u!4 &1679673452
 Transform:
   m_ObjectHideFlags: 0
