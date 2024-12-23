@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GameManager
   - NetPlayer
+  - Network Root
   layers:
   - Default
   - TransparentFX

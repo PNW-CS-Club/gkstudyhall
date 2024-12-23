@@ -26,8 +26,8 @@ public class NetworkPlayer : NetworkBehaviour
             username.Value = SystemInfo.deviceName;
             Debug.Log($"set NetworkPlayer name to {username.Value.ToString()}");
         }
-
-        DontDestroyOnLoad(this);
+        
+        transform.SetParent(GameObject.FindWithTag("Network Root").transform);
 
         isInitialized = true;
         Debug.Log("initialized NetworkPlayer");

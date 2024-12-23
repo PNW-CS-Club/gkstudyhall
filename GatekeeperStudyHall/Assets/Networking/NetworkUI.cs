@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ public enum NetworkUIState
 
 public class NetworkUI : MonoBehaviour
 {
-    [SerializeField] NetworkLogic netLogic;
+    [SerializeField] NetworkSetup netSetup;
     
     [Header("UI Elements")]
     [SerializeField] TMP_Text menuTitle;
@@ -36,12 +37,33 @@ public class NetworkUI : MonoBehaviour
     bool showIp = false;
     System.Action<int> UpdateNumPlayers;
 
+    NetworkLogic netLogic;
+    GameObject netPlayerParent;
+    bool isNetStuffInitialized = false;
+
+    void Awake()
+    {
+        netSetup.OnRootSpawned += InitNetworkStuff;
+    }
+
+    void InitNetworkStuff(NetworkObject netRootObj)
+    {
+        var root = netRootObj.GetComponent<NetworkRoot>();
+        
+        netLogic = root.netLogic;
+        netPlayerParent = root.netPlayerParent;
+        
+        netLogic.OnLog += AddDebugLine;
+        netLogic.AfterConnectionEvent += RespondToClientConnectionEvent;
+
+        // ensures we only do the initialization process one time for this MonoBehaviour instance
+        netSetup.OnRootSpawned -= InitNetworkStuff;
+        isNetStuffInitialized = true;
+    }
+
     void Start()
     {
         debugDisplay.text = "";
-        netLogic.OnLog += AddDebugLine;
-
-        netLogic.AfterConnectionEvent += RespondToClientConnectionEvent;
         
         // show HostOrJoin UI elements
         foreach (GameObject element in GetUIStateElements(NetworkUIState.HostOrJoin)) 
@@ -53,28 +75,41 @@ public class NetworkUI : MonoBehaviour
         string startText = playerListHeader.text.Substring(0, splitIndex);
         string endText = playerListHeader.text.Substring(splitIndex + 1);
         UpdateNumPlayers = (x => playerListHeader.text = startText + x + endText);
+        
+        UpdateNumPlayers(0);
     }
 
     void Update()
     {
-        // update various text displays
-        attemptIpDisplay.text = netLogic.Ip;
-        ipDisplay.text = showIp ? netLogic.Ip : "XXX.XXX.XXX.XXX";
+        // update anything that doesn't directly rely on network init
         menuTitle.text = GetUIStateTitle(uiState);
 
-        // update the displays that show the network players
-        var netPlayers = GameObject.FindGameObjectsWithTag("NetPlayer");
-        UpdateNumPlayers(netPlayers.Length);
-        playerListDisplay.text = netPlayers
-            .Select(go => go.GetComponent<NetworkPlayer>().username.Value.ToString()) // get their usernames
-            .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd()); // concatenate them
+        if (isNetStuffInitialized)
+        {
+            attemptIpDisplay.text = netLogic.Ip;
+            ipDisplay.text = showIp ? netLogic.Ip : "XXX.XXX.XXX.XXX";
+
+            // update the displays that show the network players
+            var netPlayers = netPlayerParent.GetComponentsInChildren<NetworkPlayer>();
+            UpdateNumPlayers(netPlayers.Length);
+            playerListDisplay.text = netPlayers
+                .Select(go => go.username.Value.ToString()) // get their usernames
+                .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd()); // concatenate them
+        }
     }
 
     void OnDestroy()
     {
-        // technically not necessary if networkUI and netLogic are always destroyed at the same time
-        netLogic.OnLog -= AddDebugLine;
-        netLogic.AfterConnectionEvent -= RespondToClientConnectionEvent;
+        // remember to cancel all your subscriptions before you die
+        if (isNetStuffInitialized)
+        {
+            netLogic.OnLog -= AddDebugLine;
+            netLogic.AfterConnectionEvent -= RespondToClientConnectionEvent;
+        }
+        else
+        {
+            netSetup.OnRootSpawned -= InitNetworkStuff;
+        }
     }
 
 
