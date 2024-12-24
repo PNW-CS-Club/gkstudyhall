@@ -18,6 +18,7 @@ public class NetworkPlayer : NetworkBehaviour
     );
 
     bool isInitialized = false;
+    bool wasReparented = false;
 
     void Initialize()
     {
@@ -27,20 +28,41 @@ public class NetworkPlayer : NetworkBehaviour
             Debug.Log($"set NetworkPlayer name to {username.Value.ToString()}");
         }
         
-        transform.SetParent(GameObject.FindWithTag("Network Root").transform);
-
         isInitialized = true;
         Debug.Log("initialized NetworkPlayer");
+    }
+
+    void TryReparent()
+    {
+        var root = GameObject.FindWithTag("Network Root");
+
+        if (root == null)
+        {
+            Debug.LogWarning("Network Root not found this call...");
+            return;
+        }
+        
+        root.GetComponent<NetworkRoot>().AddPlayer(this);
+        
+        wasReparented = true;
+        Debug.Log("Re-Parented NetworkPlayer");
     }
 
     public override void OnNetworkSpawn()
     {
         if (!isInitialized) Initialize();
+        if (!wasReparented) TryReparent();
     }
 
     void Start()
     {
         if (!isInitialized) Initialize();
+        if (!wasReparented) TryReparent();
+    }
+
+    void Update()
+    {
+        if (!wasReparented) TryReparent();
     }
 }
 

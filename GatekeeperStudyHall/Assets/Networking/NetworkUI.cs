@@ -35,23 +35,22 @@ public class NetworkUI : MonoBehaviour
 
     NetworkUIState uiState = NetworkUIState.HostOrJoin;
     bool showIp = false;
-    System.Action<int> UpdateNumPlayers;
+    Action<int> UpdateNumPlayers;
 
     NetworkLogic netLogic;
-    GameObject netPlayerParent;
+    NetworkRoot netRoot;
     bool isNetStuffInitialized = false;
 
     void Awake()
     {
         netSetup.OnRootSpawned += InitNetworkStuff;
+        netSetup.OnLog += AddDebugLine;
     }
 
     void InitNetworkStuff(NetworkObject netRootObj)
     {
-        var root = netRootObj.GetComponent<NetworkRoot>();
-        
-        netLogic = root.netLogic;
-        netPlayerParent = root.netPlayerParent;
+        netRoot = netRootObj.GetComponent<NetworkRoot>();
+        netLogic = netRoot.netLogic;
         
         netLogic.OnLog += AddDebugLine;
         netLogic.AfterConnectionEvent += RespondToClientConnectionEvent;
@@ -86,13 +85,12 @@ public class NetworkUI : MonoBehaviour
 
         if (isNetStuffInitialized)
         {
-            attemptIpDisplay.text = netLogic.Ip;
-            ipDisplay.text = showIp ? netLogic.Ip : "XXX.XXX.XXX.XXX";
+            attemptIpDisplay.text = netSetup.HostIp;
+            ipDisplay.text = showIp ? netSetup.HostIp : "XXX.XXX.XXX.XXX";
 
             // update the displays that show the network players
-            var netPlayers = netPlayerParent.GetComponentsInChildren<NetworkPlayer>();
-            UpdateNumPlayers(netPlayers.Length);
-            playerListDisplay.text = netPlayers
+            UpdateNumPlayers(netRoot.netPlayers.Count);
+            playerListDisplay.text = netRoot.netPlayers
                 .Select(go => go.username.Value.ToString()) // get their usernames
                 .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd()); // concatenate them
         }
@@ -101,6 +99,9 @@ public class NetworkUI : MonoBehaviour
     void OnDestroy()
     {
         // remember to cancel all your subscriptions before you die
+        
+        netSetup.OnLog -= AddDebugLine;
+        
         if (isNetStuffInitialized)
         {
             netLogic.OnLog -= AddDebugLine;
@@ -115,16 +116,16 @@ public class NetworkUI : MonoBehaviour
 
     public void ReturnToMainMenu() => _ = SceneManager.LoadSceneAsync("StartScene");
 
-    public void TryHosting() => netLogic.StartHost();
+    public void TryHosting() => netSetup.StartHost();
     public void TryJoining()
     {
-        var wasSuccessful = netLogic.StartClient(ipInput.text.Trim());
+        var wasSuccessful = netSetup.StartClient(ipInput.text.Trim());
         if (wasSuccessful) ChangeUIState(NetworkUIState.AttemptingJoin);
     }
 
     public void CancelJoinAttempt()
     {
-        netLogic.Shutdown();
+        netSetup.ShutdownClient();
         ChangeUIState(NetworkUIState.HostOrJoin);
     }
 
@@ -132,11 +133,11 @@ public class NetworkUI : MonoBehaviour
 
     public void CopyIpToClipboard()
     {
-        GUIUtility.systemCopyBuffer = netLogic.Ip;
+        GUIUtility.systemCopyBuffer = netSetup.HostIp;
         AddDebugLine("Copied IP to clipboard.");
     }
 
-    public void Shutdown() => netLogic.Shutdown();
+    public void Shutdown() => netLogic.ShutdownHost();
 
     public void StartGame() => netLogic.StartGame_Rpc();
 
