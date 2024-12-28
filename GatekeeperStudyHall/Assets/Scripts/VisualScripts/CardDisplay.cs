@@ -140,6 +140,10 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 break;
         }
 
+        // use the card data from the player if there is one
+        if (player != null) {
+            ChangeCardData(player.card);
+        }
         UpdateDisplay();
     }
 
