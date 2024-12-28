@@ -33,7 +33,8 @@ public class NetworkUI : MonoBehaviour
     [SerializeField] List<GameObject> hostingElements;
     [SerializeField] List<GameObject> joiningElements;
 
-    NetworkUIState uiState = NetworkUIState.HostOrJoin;
+    public static NetworkUIState uiState = NetworkUIState.HostOrJoin;
+    NetworkUIState prevState = uiState;
     bool showIp = false;
     Action<int> UpdateNumPlayers;
 
@@ -80,8 +81,12 @@ public class NetworkUI : MonoBehaviour
 
     void Update()
     {
-        // update anything that doesn't directly rely on network init
-        menuTitle.text = GetUIStateTitle(uiState);
+        if ( prevState != uiState ) {
+            // update anything that doesn't directly rely on network init
+            menuTitle.text = GetUIStateTitle(uiState);
+
+            ChangeUIState( uiState );
+        }
 
         if (isNetStuffInitialized)
         {
@@ -94,6 +99,8 @@ public class NetworkUI : MonoBehaviour
                 .Select(go => go.username.Value.ToString()) // get their usernames
                 .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd()); // concatenate them
         }
+
+        prevState = uiState;
     }
 
     void OnDestroy()
@@ -125,7 +132,9 @@ public class NetworkUI : MonoBehaviour
     public void TryJoining()
     {
         var wasSuccessful = netSetup.StartClient(ipInput.text.Trim());
-        if (wasSuccessful) ChangeUIState(NetworkUIState.AttemptingJoin);
+        if (wasSuccessful) {
+            ChangeUIState(NetworkUIState.AttemptingJoin);
+        }
     }
 
     public void CancelJoinAttempt()
@@ -145,7 +154,6 @@ public class NetworkUI : MonoBehaviour
     public void Shutdown() => netLogic.ShutdownHost();
 
     public void StartGame() => netLogic.StartGame_Rpc();
-
 
     void AddDebugLine(string line) => debugDisplay.text += line + "\n";
 
@@ -187,7 +195,7 @@ public class NetworkUI : MonoBehaviour
         _ => throw new System.NotImplementedException()
     };
     
-    void ChangeUIState(NetworkUIState newState)
+    public void ChangeUIState(NetworkUIState newState)
     {
         foreach (GameObject element in GetUIStateElements(uiState)) 
             element.SetActive(false);

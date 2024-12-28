@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class NetworkLogic : NetworkBehaviour
 {
+    [SerializeField] NetworkSetup netSetup;
     /// An event this class invokes with a message whenever it has something it wants to say
     public event Action<string> OnLog;
     
@@ -42,6 +43,12 @@ public class NetworkLogic : NetworkBehaviour
         _ = SceneManager.LoadSceneAsync("CharSelectScene");
     }
 
+    // Confirm our connection
+    [Rpc(SendTo.SpecifiedInParams)]
+    public void ConfirmConnection_Rpc( RpcParams param = default ) {
+        Debug.Log( "How does this work" );
+        NetworkUI.uiState = NetworkUIState.Joining;
+    }
 
     /// Stops the host after disconnecting all non-host clients.
     public void ShutdownHost()
@@ -81,8 +88,11 @@ public class NetworkLogic : NetworkBehaviour
             }
             
             case ConnectionEvent.PeerConnected:
+                break;
             case ConnectionEvent.PeerDisconnected:
+                break;
             case ConnectionEvent.ClientConnected: 
+                ConfirmConnection_Rpc( RpcTarget.Single( data.ClientId, RpcTargetUse.Temp ) );
                 break;
         }
 
