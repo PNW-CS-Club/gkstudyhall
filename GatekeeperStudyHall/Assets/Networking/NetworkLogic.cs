@@ -47,7 +47,7 @@ public class NetworkLogic : NetworkBehaviour
     [Rpc(SendTo.SpecifiedInParams)]
     public void ConfirmConnection_Rpc( RpcParams param = default ) {
         Debug.Log( "How does this work" );
-        NetworkUI.uiState = NetworkUIState.Joining;
+        NetworkUI.Instance.ChangeUIState(NetworkUIState.Joining);
     }
 
     /// Stops the host after disconnecting all non-host clients.

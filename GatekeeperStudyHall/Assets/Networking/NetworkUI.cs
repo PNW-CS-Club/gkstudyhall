@@ -16,8 +16,6 @@ public enum NetworkUIState
 
 public class NetworkUI : MonoBehaviour
 {
-    [SerializeField] NetworkSetup netSetup;
-    
     [Header("UI Elements")]
     [SerializeField] TMP_Text menuTitle;
     [SerializeField] TMP_InputField ipInput;
@@ -33,88 +31,78 @@ public class NetworkUI : MonoBehaviour
     [SerializeField] List<GameObject> hostingElements;
     [SerializeField] List<GameObject> joiningElements;
 
-    public static NetworkUIState uiState = NetworkUIState.HostOrJoin;
-    NetworkUIState prevState = uiState;
-    bool showIp = false;
-    Action<int> UpdateNumPlayers;
+    public static NetworkUI Instance;
 
-    NetworkLogic netLogic;
-    NetworkRoot netRoot;
-    bool isNetStuffInitialized = false;
+    public NetworkUIState UiState { get; private set; } = NetworkUIState.HostOrJoin;
+    NetworkSetup netSetup;
+    bool showIp = false;
 
     void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("A NetworkUI component already exists! Destroying self...");
+            Destroy(gameObject);
+            return;
+        }
+        
         netSetup.OnRootSpawned += InitNetworkStuff;
         netSetup.OnLog += AddDebugLine;
     }
 
     void InitNetworkStuff(NetworkObject netRootObj)
     {
-        netRoot = netRootObj.GetComponent<NetworkRoot>();
-        netLogic = netRoot.netLogic;
-        
+        var netLogic = NetworkRoot.Instance.netLogic;
         netLogic.OnLog += AddDebugLine;
         netLogic.AfterConnectionEvent += RespondToClientConnectionEvent;
-
-        isNetStuffInitialized = true;
     }
 
     void Start()
     {
+        netSetup = NetworkSetup.Instance;
+        
         debugDisplay.text = "";
         
         // show HostOrJoin UI elements
         foreach (GameObject element in GetUIStateElements(NetworkUIState.HostOrJoin)) 
             element.SetActive(true);
-        
-        // some logic to make the UpdateNumPlayers function replace the underscore in playerListHeader
-        int splitIndex = playerListHeader.text.IndexOf('_');
-        if (splitIndex == -1) Debug.LogError("playerListHeader.text must contain a '_' character");
-        string startText = playerListHeader.text.Substring(0, splitIndex);
-        string endText = playerListHeader.text.Substring(splitIndex + 1);
-        UpdateNumPlayers = (x => playerListHeader.text = startText + x + endText);
-        
-        UpdateNumPlayers(0);
     }
 
     void Update()
     {
-        if ( prevState != uiState ) {
-            // update anything that doesn't directly rely on network init
-            menuTitle.text = GetUIStateTitle(uiState);
+        // update anything that doesn't directly rely on network init
+        menuTitle.text = GetUIStateTitle(UiState);
 
-            ChangeUIState( prevState, uiState );
-        }
-
-        if (isNetStuffInitialized)
+        var netRoot = NetworkRoot.Instance;
+        if (netRoot != null)
         {
             attemptIpDisplay.text = netSetup.HostIp;
             ipDisplay.text = showIp ? netSetup.HostIp : "XXX.XXX.XXX.XXX";
 
             // update the displays that show the network players
-            UpdateNumPlayers(netRoot.netPlayers.Count);
+            playerListHeader.text = $"Connected Players [{netRoot.Count}/4]";
             playerListDisplay.text = netRoot.netPlayers
                 .Select(go => go.username.Value.ToString()) // get their usernames
                 .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd()); // concatenate them
         }
-
-        prevState = uiState;
     }
 
     void OnDestroy()
     {
         // remember to cancel all your subscriptions before you die
-        
+
         netSetup.OnLog -= AddDebugLine;
+        netSetup.OnRootSpawned -= InitNetworkStuff;
         
-        if (isNetStuffInitialized)
+        if (NetworkRoot.Instance != null)
         {
+            var netLogic = NetworkRoot.Instance.netLogic;
             netLogic.OnLog -= AddDebugLine;
             netLogic.AfterConnectionEvent -= RespondToClientConnectionEvent;
-        }
-        else
-        {
-            netSetup.OnRootSpawned -= InitNetworkStuff;
         }
     }
 
@@ -149,9 +137,9 @@ public class NetworkUI : MonoBehaviour
         AddDebugLine("Copied IP to clipboard.");
     }
 
-    public void Shutdown() => netLogic.ShutdownHost();
+    public void Shutdown() => NetworkRoot.Instance.netLogic.ShutdownHost();
 
-    public void StartGame() => netLogic.StartGame_Rpc();
+    public void StartGame() => NetworkRoot.Instance.netLogic.StartGame_Rpc();
 
     void AddDebugLine(string line) => debugDisplay.text += line + "\n";
 
@@ -195,25 +183,12 @@ public class NetworkUI : MonoBehaviour
     
     public void ChangeUIState(NetworkUIState newState)
     {
-        foreach (GameObject element in GetUIStateElements(uiState)) 
+        foreach (GameObject element in GetUIStateElements(UiState)) 
             element.SetActive(false);
         
         foreach (GameObject element in GetUIStateElements(newState)) 
             element.SetActive(true);
 
-        prevState = newState;
-        uiState = newState;
-    }
-    
-    // manually change from-to states for network reasons
-    public void ChangeUIState(NetworkUIState oldState, NetworkUIState newState)
-    {
-        foreach (GameObject element in GetUIStateElements(oldState)) 
-            element.SetActive(false);
-        
-        foreach (GameObject element in GetUIStateElements(newState)) 
-            element.SetActive(true);
-        
-        uiState = newState;
+        UiState = newState;
     }
 }
