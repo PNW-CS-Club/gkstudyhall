@@ -116,7 +116,12 @@ public class NetworkUI : MonoBehaviour
 
     public void ReturnToMainMenu() => _ = SceneManager.LoadSceneAsync("StartScene");
 
-    public void TryHosting() => netSetup.StartHost();
+    public void TryHosting() {
+        bool wasSuccessful = netSetup.StartHost();
+        if ( wasSuccessful ) {
+            ChangeUIState( NetworkUIState.Hosting );
+        }
+    }
     public void TryJoining()
     {
         var wasSuccessful = netSetup.StartClient(ipInput.text.Trim());
@@ -150,7 +155,7 @@ public class NetworkUI : MonoBehaviour
         {
             case ConnectionEvent.ClientConnected:
                 if (data.ClientId == nwm.LocalClientId)
-                    ChangeUIState(nwm.IsHost ? NetworkUIState.Hosting : NetworkUIState.Joining);
+                    ChangeUIState(NetworkUIState.Joining);
                 break;
             
             case ConnectionEvent.ClientDisconnected:

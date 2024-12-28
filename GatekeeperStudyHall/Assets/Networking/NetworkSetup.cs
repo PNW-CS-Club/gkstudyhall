@@ -34,10 +34,10 @@ public class NetworkSetup : MonoBehaviour
     
     
     /// Sets the IP to this computer's local IP and tells the NetworkManager to try to start the host.
-    public void StartHost()
+    public bool StartHost()
     {
         HostIp = GetLocalIPAddress();
-        if (HostIp == null) return;
+        if (HostIp == null) return false;
         
         transport.ConnectionData.Address = HostIp;
         
@@ -47,6 +47,8 @@ public class NetworkSetup : MonoBehaviour
         // only spawn the root on the host (other clients will get it automatically when they connect)
         // TODO: SpawnRoot might be bad to call repeatedly
         if (wasSuccessful) SpawnRoot();
+
+        return wasSuccessful;
     }
 
     /// Sets the IP to the given IP and tells the NetworkManager to try to start a client.
