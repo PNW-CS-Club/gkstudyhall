@@ -25,12 +25,14 @@ public class NetworkRoot : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < netPlayers.Count; /* don't increment */ )
+        // remove outdated netPlayer references
+        for (int i = 0; i < netPlayers.Count; i++)
         {
             if (netPlayers[i] == null)
+            {
                 netPlayers.RemoveAt(i);
-            else
-                i++;
+                i--;
+            }
         }
     }
 }

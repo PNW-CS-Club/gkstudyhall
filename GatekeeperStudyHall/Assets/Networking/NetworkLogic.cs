@@ -43,7 +43,7 @@ public class NetworkLogic : NetworkBehaviour
     }
 
 
-    /// Stops the host or client. If this is the host, it first disconnects all other connected clients.
+    /// Stops the host after disconnecting all non-host clients.
     public void ShutdownHost()
     {
         var hostId = nwm.LocalClientId;

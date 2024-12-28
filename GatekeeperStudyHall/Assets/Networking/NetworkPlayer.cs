@@ -16,53 +16,32 @@ public class NetworkPlayer : NetworkBehaviour
         NetworkVariableReadPermission.Everyone, 
         NetworkVariableWritePermission.Owner
     );
+    
+    
+    // NOTE from: https://docs-multiplayer.unity3d.com/netcode/current/basics/networkbehavior/#spawning
+    // For in-scene placed NetworkObjects, the OnNetworkSpawn method is invoked after the Start method
+    // For NetworkObjects instantiated during runtime, the OnNetworkSpawn method is invoked before the Start method is invoked
 
-    bool isInitialized = false;
-    bool wasReparented = false;
-
-    void Initialize()
+    public override void OnNetworkSpawn()
     {
         if (IsOwner)
         {
             username.Value = SystemInfo.deviceName;
-            Debug.Log($"set NetworkPlayer name to {username.Value.ToString()}");
+            //Debug.Log($"set NetworkPlayer name to {username.Value.ToString()}");
         }
-        
-        isInitialized = true;
-        Debug.Log("initialized NetworkPlayer");
     }
 
-    void TryReparent()
+    void Start()
     {
         var root = GameObject.FindWithTag("Network Root");
 
         if (root == null)
         {
-            Debug.LogWarning("Network Root not found this call...");
+            Debug.LogError("Could not find Network Root to be this object's parent!");
             return;
         }
         
         root.GetComponent<NetworkRoot>().AddPlayer(this);
-        
-        wasReparented = true;
-        Debug.Log("Re-Parented NetworkPlayer");
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        if (!isInitialized) Initialize();
-        if (!wasReparented) TryReparent();
-    }
-
-    void Start()
-    {
-        if (!isInitialized) Initialize();
-        if (!wasReparented) TryReparent();
-    }
-
-    void Update()
-    {
-        if (!wasReparented) TryReparent();
     }
 }
 

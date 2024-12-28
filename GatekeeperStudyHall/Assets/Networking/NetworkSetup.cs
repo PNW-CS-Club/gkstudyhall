@@ -65,6 +65,10 @@ public class NetworkSetup : MonoBehaviour
     }
 
 
+    /// <summary>Simply shuts down the client.
+    /// <para><i>It is important that this is not in a network object spawned by the host.
+    /// The client network manager needs to be able to shut down even if it hasn't found a host to connect to
+    /// (and therefore has not spawned the network object).</i></para></summary>
     public void ShutdownClient()
     {
         NetworkManager.Singleton.Shutdown();
