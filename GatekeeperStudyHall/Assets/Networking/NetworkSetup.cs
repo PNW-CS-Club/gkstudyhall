@@ -91,7 +91,6 @@ public class NetworkSetup : MonoBehaviour
     
     private void SpawnRoot() 
     {
-        print(nwm.SpawnManager);
         // NOTE from: https://www.reddit.com/r/Unity3D/comments/xpig05/comment/j3lrqdx/
         // While NetworkManager.Singleton indeed exists, it has to be running for SpawnManager to exist.
         // You do that by starting server by either NetworkManager.Singleton.StartServer() or by NetworkManager.Singleton.StartHost().

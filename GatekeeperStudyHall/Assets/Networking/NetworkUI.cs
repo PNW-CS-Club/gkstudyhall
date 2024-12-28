@@ -56,8 +56,6 @@ public class NetworkUI : MonoBehaviour
         netLogic.OnLog += AddDebugLine;
         netLogic.AfterConnectionEvent += RespondToClientConnectionEvent;
 
-        // ensures we only do the initialization process one time for this MonoBehaviour instance
-        netSetup.OnRootSpawned -= InitNetworkStuff;
         isNetStuffInitialized = true;
     }
 
@@ -202,7 +200,8 @@ public class NetworkUI : MonoBehaviour
         
         foreach (GameObject element in GetUIStateElements(newState)) 
             element.SetActive(true);
-        
+
+        prevState = newState;
         uiState = newState;
     }
     
