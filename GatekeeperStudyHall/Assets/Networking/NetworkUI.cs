@@ -85,7 +85,7 @@ public class NetworkUI : MonoBehaviour
             // update anything that doesn't directly rely on network init
             menuTitle.text = GetUIStateTitle(uiState);
 
-            ChangeUIState( uiState );
+            ChangeUIState( prevState, uiState );
         }
 
         if (isNetStuffInitialized)
@@ -198,6 +198,18 @@ public class NetworkUI : MonoBehaviour
     public void ChangeUIState(NetworkUIState newState)
     {
         foreach (GameObject element in GetUIStateElements(uiState)) 
+            element.SetActive(false);
+        
+        foreach (GameObject element in GetUIStateElements(newState)) 
+            element.SetActive(true);
+        
+        uiState = newState;
+    }
+    
+    // manually change from-to states for network reasons
+    public void ChangeUIState(NetworkUIState oldState, NetworkUIState newState)
+    {
+        foreach (GameObject element in GetUIStateElements(oldState)) 
             element.SetActive(false);
         
         foreach (GameObject element in GetUIStateElements(newState)) 
