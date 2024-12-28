@@ -48,20 +48,21 @@ public class NetworkUI : MonoBehaviour
         }
         
         Instance = this;
+        
+        Logger.OnLog += AddDebugLine;
     }
 
-    void InitNetworkStuff(NetworkObject netRootObj)
+    void OnDestroy()
     {
-        var netLogic = NetworkRoot.Instance.netLogic;
-        netLogic.OnLog += AddDebugLine;
-        netLogic.AfterConnectionEvent += RespondToClientConnectionEvent;
+        // remember to cancel all your subscriptions before you die
+        Logger.OnLog -= AddDebugLine;
     }
+    
+    void AddDebugLine(string line) => debugDisplay.text += line + "\n";
 
     void Start()
     {
         netSetup = NetworkSetup.Instance;
-        netSetup.OnRootSpawned += InitNetworkStuff;
-        netSetup.OnLog += AddDebugLine;
         
         debugDisplay.text = "";
         
@@ -86,21 +87,6 @@ public class NetworkUI : MonoBehaviour
             playerListDisplay.text = netRoot.netPlayers
                 .Select(go => go.username.Value.ToString()) // get their usernames
                 .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd()); // concatenate them
-        }
-    }
-
-    void OnDestroy()
-    {
-        // remember to cancel all your subscriptions before you die
-
-        netSetup.OnLog -= AddDebugLine;
-        netSetup.OnRootSpawned -= InitNetworkStuff;
-        
-        if (NetworkRoot.Instance != null)
-        {
-            var netLogic = NetworkRoot.Instance.netLogic;
-            netLogic.OnLog -= AddDebugLine;
-            netLogic.AfterConnectionEvent -= RespondToClientConnectionEvent;
         }
     }
 
@@ -132,16 +118,14 @@ public class NetworkUI : MonoBehaviour
     public void CopyIpToClipboard()
     {
         GUIUtility.systemCopyBuffer = netSetup.HostIp;
-        AddDebugLine("Copied IP to clipboard.");
+        Logger.Log("Copied IP to clipboard.");
     }
 
     public void Shutdown() => NetworkRoot.Instance.netLogic.ShutdownHost();
 
     public void StartGame() => NetworkRoot.Instance.netLogic.StartGame_Rpc();
 
-    void AddDebugLine(string line) => debugDisplay.text += line + "\n";
-
-    void RespondToClientConnectionEvent(NetworkManager nwm, ConnectionEventData data)
+    public void RespondToClientConnectionEvent(NetworkManager nwm, ConnectionEventData data)
     {
         switch (data.EventType)
         {
@@ -161,6 +145,17 @@ public class NetworkUI : MonoBehaviour
         }
     }
     
+    public void ChangeUIState(NetworkUIState newState)
+    {
+        foreach (GameObject element in GetUIStateElements(UiState)) 
+            element.SetActive(false);
+        
+        foreach (GameObject element in GetUIStateElements(newState)) 
+            element.SetActive(true);
+
+        UiState = newState;
+    }
+    
     List<GameObject> GetUIStateElements(NetworkUIState state) => state switch
     {
         NetworkUIState.HostOrJoin => hostOrJoinElements,
@@ -178,15 +173,4 @@ public class NetworkUI : MonoBehaviour
         NetworkUIState.Joining => "Join LAN Game",
         _ => throw new System.NotImplementedException()
     };
-    
-    public void ChangeUIState(NetworkUIState newState)
-    {
-        foreach (GameObject element in GetUIStateElements(UiState)) 
-            element.SetActive(false);
-        
-        foreach (GameObject element in GetUIStateElements(newState)) 
-            element.SetActive(true);
-
-        UiState = newState;
-    }
 }

@@ -11,16 +11,9 @@ using UnityEngine;
 public class NetworkSetup : MonoBehaviour
 {
     [SerializeField] NetworkObject networkRootPrefab;
-    [HideInInspector] public NetworkObject networkRootInstance;
 
     /// The canonical instance of this class (more than one cannot exist simultaneously)
     public static NetworkSetup Instance;
-    
-    /// An event this class invokes with a message whenever it has something it wants to say
-    public event Action<string> OnLog;
-    
-    /// An event this class invokes with the root NetworkObject when it is first created
-    public event Action<NetworkObject> OnRootSpawned; 
     
     /// The last IP the NetworkManager has attempted to host from or connect to
     public string HostIp { get; private set; }
@@ -58,11 +51,11 @@ public class NetworkSetup : MonoBehaviour
         transport.ConnectionData.Address = HostIp;
         
         bool wasSuccessful = nwm.StartHost();
-        OnLog?.Invoke(wasSuccessful ? "Successfully started host" : "Could not start host");
+        Logger.Log(wasSuccessful ? "Successfully started host" : "Could not start host");
 
         // only spawn the root on the host (other clients will get it automatically when they connect)
-        // TODO: SpawnRoot might be bad to call repeatedly
-        if (wasSuccessful) SpawnRoot();
+        if (wasSuccessful)
+            nwm.SpawnManager.InstantiateAndSpawn(networkRootPrefab);
 
         return wasSuccessful;
     }
@@ -75,7 +68,7 @@ public class NetworkSetup : MonoBehaviour
         transport.ConnectionData.Address = HostIp;
         
         bool wasSuccessful = nwm.StartClient();
-        OnLog?.Invoke(wasSuccessful ? "Started client, trying to connect..." : "Could not start client");
+        Logger.Log(wasSuccessful ? "Started client, trying to connect..." : "Could not start client");
         
         return wasSuccessful;
     }
@@ -88,7 +81,7 @@ public class NetworkSetup : MonoBehaviour
     public void ShutdownClient()
     {
         NetworkManager.Singleton.Shutdown();
-        OnLog?.Invoke("Shut down connection");
+        Logger.Log("Shut down connection");
     }
     
     
@@ -101,17 +94,7 @@ public class NetworkSetup : MonoBehaviour
             if (ipAddress.AddressFamily == AddressFamily.InterNetwork) 
                 return ipAddress.ToString();
         
-        OnLog?.Invoke("Failed to find local IP address: No network adapters with an IPv4 address could be found on this computer!");
+        Logger.Log("Failed to find local IP address: No network adapters with an IPv4 address could be found on this computer!");
         return null;
-    }
-    
-    private void SpawnRoot() 
-    {
-        // NOTE from: https://www.reddit.com/r/Unity3D/comments/xpig05/comment/j3lrqdx/
-        // While NetworkManager.Singleton indeed exists, it has to be running for SpawnManager to exist.
-        // You do that by starting server by either NetworkManager.Singleton.StartServer() or by NetworkManager.Singleton.StartHost().
-        
-        networkRootInstance = nwm.SpawnManager.InstantiateAndSpawn(networkRootPrefab);
-        OnRootSpawned?.Invoke(networkRootInstance);
     }
 }

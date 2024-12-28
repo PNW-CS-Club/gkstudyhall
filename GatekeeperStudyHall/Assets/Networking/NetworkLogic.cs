@@ -10,12 +10,6 @@ using UnityEngine.SceneManagement;
 public class NetworkLogic : NetworkBehaviour
 {
     [SerializeField] NetworkSetup netSetup;
-    /// An event this class invokes with a message whenever it has something it wants to say
-    public event Action<string> OnLog;
-    
-    /// An event this class invokes after it handles any <see cref="NetworkManager.OnConnectionEvent"/>.
-    /// Invoked with all the parameters from OnConnectionEvent.
-    public event Action<NetworkManager, ConnectionEventData> AfterConnectionEvent;
 
     NetworkManager nwm;
     
@@ -39,7 +33,7 @@ public class NetworkLogic : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     public void StartGame_Rpc()
     {
-        OnLog?.Invoke("Trying to start the game!");
+        Logger.Log("Trying to start the game!");
         _ = SceneManager.LoadSceneAsync("CharSelectScene");
     }
 
@@ -62,7 +56,7 @@ public class NetworkLogic : NetworkBehaviour
         }
 
         nwm.Shutdown();
-        OnLog?.Invoke("Shut down connection");
+        Logger.Log("Shut down connection");
     }
     
     
@@ -71,7 +65,7 @@ public class NetworkLogic : NetworkBehaviour
     /// <param name="data">a struct that holds all the data pertaining to the event</param>
     private void RespondToConnectionEvent(NetworkManager nwm, ConnectionEventData data)
     {
-        OnLog?.Invoke($"Received connection event: {data.EventType}");
+        Logger.Log($"Received connection event: {data.EventType}");
         
         switch (data.EventType)
         {
@@ -82,7 +76,7 @@ public class NetworkLogic : NetworkBehaviour
                     // happens if this computer is the one that disconnected
                     var reason = nwm.DisconnectReason;
                     if (!string.IsNullOrEmpty(reason)) 
-                        OnLog?.Invoke($"Disconnect reason: {reason}");
+                        Logger.Log($"Disconnect reason: {reason}");
                 }
                 break;
             }
@@ -96,8 +90,6 @@ public class NetworkLogic : NetworkBehaviour
                 break;
         }
 
-        // allows any objects with a reference to this object to respond to the connection event
-        // AFTER this object has responded to it
-        AfterConnectionEvent?.Invoke(nwm, data);
+        NetworkUI.Instance.RespondToClientConnectionEvent(nwm, data);
     }
 }
