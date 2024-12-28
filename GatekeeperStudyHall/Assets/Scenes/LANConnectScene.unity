@@ -2963,7 +2963,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10637ad1cafc79d4280180fc9c32a6ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  netSetup: {fileID: 1071082580}
   menuTitle: {fileID: 894015843}
   ipInput: {fileID: 948047227}
   attemptIpDisplay: {fileID: 932799518}

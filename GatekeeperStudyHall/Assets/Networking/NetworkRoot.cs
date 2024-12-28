@@ -4,10 +4,27 @@ using UnityEngine;
 
 public class NetworkRoot : MonoBehaviour
 {
+    /// The canonical instance of this class (more than one cannot exist simultaneously)
+    public static NetworkRoot Instance;
+
+    public int PlayerCount => transform.childCount;
     public List<NetworkPlayer> netPlayers = new();
     public NetworkLogic netLogic;
-
+    
     char playerNameSuffix = 'A';
+    
+    
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogWarning("A NetworkRoot component already exists! Destroying self...");
+            Destroy(gameObject);
+            return;
+        }
+        
+        Instance = this;
+    }
 
     void Start()
     {

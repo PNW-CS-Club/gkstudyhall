@@ -31,6 +31,7 @@ public class NetworkUI : MonoBehaviour
     [SerializeField] List<GameObject> hostingElements;
     [SerializeField] List<GameObject> joiningElements;
 
+    /// The canonical instance of this class (more than one cannot exist simultaneously)
     public static NetworkUI Instance;
 
     public NetworkUIState UiState { get; private set; } = NetworkUIState.HostOrJoin;
@@ -39,19 +40,14 @@ public class NetworkUI : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
+        if (Instance != null)
         {
             Debug.LogWarning("A NetworkUI component already exists! Destroying self...");
             Destroy(gameObject);
             return;
         }
         
-        netSetup.OnRootSpawned += InitNetworkStuff;
-        netSetup.OnLog += AddDebugLine;
+        Instance = this;
     }
 
     void InitNetworkStuff(NetworkObject netRootObj)
@@ -64,6 +60,8 @@ public class NetworkUI : MonoBehaviour
     void Start()
     {
         netSetup = NetworkSetup.Instance;
+        netSetup.OnRootSpawned += InitNetworkStuff;
+        netSetup.OnLog += AddDebugLine;
         
         debugDisplay.text = "";
         
@@ -84,7 +82,7 @@ public class NetworkUI : MonoBehaviour
             ipDisplay.text = showIp ? netSetup.HostIp : "XXX.XXX.XXX.XXX";
 
             // update the displays that show the network players
-            playerListHeader.text = $"Connected Players [{netRoot.Count}/4]";
+            playerListHeader.text = $"Connected Players [{netRoot.PlayerCount}/4]";
             playerListDisplay.text = netRoot.netPlayers
                 .Select(go => go.username.Value.ToString()) // get their usernames
                 .Aggregate("", (a, b) => a + b + '\n', s => s.TrimEnd()); // concatenate them

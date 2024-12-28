@@ -13,6 +13,9 @@ public class NetworkSetup : MonoBehaviour
     [SerializeField] NetworkObject networkRootPrefab;
     [HideInInspector] public NetworkObject networkRootInstance;
 
+    /// The canonical instance of this class (more than one cannot exist simultaneously)
+    public static NetworkSetup Instance;
+    
     /// An event this class invokes with a message whenever it has something it wants to say
     public event Action<string> OnLog;
     
@@ -24,6 +27,19 @@ public class NetworkSetup : MonoBehaviour
 
     NetworkManager nwm;
     UnityTransport transport;
+    
+    
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogWarning("A NetworkSetup component already exists! Destroying self...");
+            Destroy(gameObject);
+            return;
+        }
+        
+        Instance = this;
+    }
 
     void Start()
     {
@@ -85,7 +101,7 @@ public class NetworkSetup : MonoBehaviour
             if (ipAddress.AddressFamily == AddressFamily.InterNetwork) 
                 return ipAddress.ToString();
         
-        OnLog?.Invoke("Failed to find local IP address: No network adapters with an IPv4 address in the system!");
+        OnLog?.Invoke("Failed to find local IP address: No network adapters with an IPv4 address could be found on this computer!");
         return null;
     }
     
