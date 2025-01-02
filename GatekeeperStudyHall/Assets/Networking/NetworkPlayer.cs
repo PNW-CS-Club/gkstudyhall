@@ -10,13 +10,17 @@ using UnityEditor;
 
 public class NetworkPlayer : NetworkBehaviour
 {
+    public PlayerSO player;
+    
     [HideInInspector] 
     public NetworkVariable<FixedString64Bytes> username = new(
         "no name", 
         NetworkVariableReadPermission.Everyone, 
         NetworkVariableWritePermission.Owner
     );
-    
+
+    public static NetworkPlayer ownedInstance;
+
     
     // NOTE from: https://docs-multiplayer.unity3d.com/netcode/current/basics/networkbehavior/#spawning
     // For in-scene placed NetworkObjects, the OnNetworkSpawn method is invoked after the Start method
@@ -26,9 +30,17 @@ public class NetworkPlayer : NetworkBehaviour
     {
         if (IsOwner)
         {
+            ownedInstance = this;
             username.Value = SystemInfo.deviceName;
-            //Debug.Log($"set NetworkPlayer name to {username.Value.ToString()}");
         }
+    }
+
+    public override void OnDestroy()
+    {
+        if (IsOwner) 
+            ownedInstance = null;
+        
+        base.OnDestroy(); // NetworkBehaviour does special things on destroy
     }
 
     void Start()
