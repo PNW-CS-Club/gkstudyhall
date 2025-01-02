@@ -55,6 +55,14 @@ public class NetworkPlayer : NetworkBehaviour
         
         root.GetComponent<NetworkRoot>().AddPlayer(this);
     }
+
+
+    public static bool NotYourTurn()
+    {
+        if (Globals.multiplayerType == MultiplayerType.Offline) return false;
+
+        return (ownedInstance is null || !ownedInstance.itIsMyTurn);
+    }
 }
 
 

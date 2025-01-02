@@ -18,12 +18,16 @@ public class NetworkLogic : NetworkBehaviour
         // NetworkManager.Singleton is null sometimes (idk why ??) so we keep a reference to it in nwm 
         nwm = NetworkManager.Singleton;
         nwm.OnConnectionEvent += RespondToConnectionEvent;
+        
+        Globals.multiplayerType = MultiplayerType.LocalNetwork;
     }
 
     public override void OnDestroy()
     {
         // unsubscribe from the event because the event will continue to trigger in the next scene
         nwm.OnConnectionEvent -= RespondToConnectionEvent;
+        
+        Globals.multiplayerType = MultiplayerType.Offline;
         
         base.OnDestroy();
     }
@@ -34,7 +38,7 @@ public class NetworkLogic : NetworkBehaviour
     public void StartGame_Rpc()
     {
         Logger.Log("Trying to start the game!");
-        _ = SceneManager.LoadSceneAsync("CharSelectScene");
+        _ = SceneManager.LoadSceneAsync("GkScene");
     }
 
     // Confirm our connection

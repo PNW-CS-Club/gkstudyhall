@@ -97,6 +97,7 @@ public class DiceRoll : MonoBehaviour
     public void MouseDownFunc()
     {
         if (!stateMachine.CurrentState.CanRoll || isSliding) return;
+        if (NetworkPlayer.NotYourTurn()) return;
         
         isHeld = true;
         shakeTimer = shakeInterval;
@@ -157,6 +158,8 @@ public class DiceRoll : MonoBehaviour
     /// Method called whenever the user mouses up on the dice.
     /// </summary>
     public void MouseUpFunc() {
+        if (NetworkPlayer.NotYourTurn()) return;
+        
         if (isHeld)
             ReleaseDice(Random.Range(1, 7));
     }

@@ -2,10 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// The different types of multiplayer connections that a game can use.
+public enum MultiplayerType {
+    Offline = 0, LocalNetwork = 1, Remote = 2,
+}
+
+
 /// Holds references to any objects we want easy access to. 
 /// Cannot be instantiated; instead the references are stored in static fields.
 public static class Globals
 {
+    /// The type of multiplayer connection currently being used.
+    public static MultiplayerType multiplayerType = MultiplayerType.Offline;
+    
     /// The gate that the current player has chosen to attack. 
     /// Holds <c>null</c> if the player has not yet chosen a gate or has already attacked a gate.
     public static GateSO selectedGate = null;
