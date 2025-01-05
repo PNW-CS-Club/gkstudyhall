@@ -35,10 +35,16 @@ public class NetworkLogic : NetworkBehaviour
 
     /// Runs on all clients when called. Cleans up and loads the next scene in order to start the game.
     [Rpc(SendTo.ClientsAndHost)]
+    public void ToCharSelect_Rpc()
+    {
+        Logger.Log("Trying to start the game!");
+        _ = SceneManager.LoadSceneAsync("CharSelectScene");
+    }
+    [Rpc(SendTo.ClientsAndHost)]
     public void StartGame_Rpc()
     {
         Logger.Log("Trying to start the game!");
-        _ = SceneManager.LoadSceneAsync("GkScene");
+        _ = SceneManager.LoadSceneAsync("CharSelectScene");
     }
 
     // Confirm our connection

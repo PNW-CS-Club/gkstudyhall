@@ -123,7 +123,7 @@ public class NetworkUI : MonoBehaviour
 
     public void Shutdown() => NetworkRoot.Instance.netLogic.ShutdownHost();
 
-    public void StartGame() => NetworkRoot.Instance.netLogic.StartGame_Rpc();
+    public void StartGame() => NetworkRoot.Instance.netLogic.ToCharSelect_Rpc();
 
     public void RespondToClientConnectionEvent(NetworkManager nwm, ConnectionEventData data)
     {

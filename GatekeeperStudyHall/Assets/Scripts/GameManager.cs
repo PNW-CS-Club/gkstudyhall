@@ -19,9 +19,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerSelection playerSelect;
     
     [SerializeField] CenterGateSO centerGate;
-    // we can make any of these methods non-static if needed
 
 
+    void Start()
+    {
+        playerListSO.list[0].isUp = true;
+    }
+    
     void RollEventHandler(object sender, int roll) => UseRollResult(roll);
     void OnEnable() => diceRoll.DoneRollingEvent += RollEventHandler;
     void OnDestroy() => diceRoll.DoneRollingEvent -= RollEventHandler;
@@ -111,7 +115,6 @@ public class GameManager : MonoBehaviour
     /// <param name="player">The player who caused the change.</param>
     /// <param name="gate">The gate that is changing health.</param>
     /// <param name="amount">The amount to change by (positive to heal, negative to deal damage)</param>
-    /// <returns><c>true</c> only if the gate's health has reached zero.</returns>
     public void GateChangeHealth(PlayerSO player, GateSO gate, int amount) 
     {
         if (amount < 0)
@@ -235,15 +238,19 @@ public class GameManager : MonoBehaviour
     {
         Globals.selectedGate = null;
 
-        List<PlayerSO>players = playerListSO.list;
+        List<PlayerSO> players = playerListSO.list;
 
         players[0].ResetEffects(); //reset all temporary effects the current player may have
+        players[0].isUp = false;
+        
         do {      
             players.Insert(players.Count, players[0]);
             players.RemoveAt(0);
         } 
         while (!players[0].isAlive); // TODO: This will loop infinitely if all players are dead
 
+        players[0].isUp = true;
+        
         cardQueue.RepositionCards();
 
         stateMachine.TransitionTo(stateMachine.traitRollState);

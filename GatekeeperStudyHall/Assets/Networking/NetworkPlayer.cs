@@ -61,7 +61,7 @@ public class NetworkPlayer : NetworkBehaviour
     {
         if (Globals.multiplayerType == MultiplayerType.Offline) return false;
 
-        return (ownedInstance is null || !ownedInstance.itIsMyTurn);
+        return (ownedInstance is null || !ownedInstance.player.isUp);
     }
 }
 

@@ -16,7 +16,8 @@ public class PlayerSO : ScriptableObject
     public int Health => health; // makes Health readonly in other scripts
     [SerializeField] int health; // makes health visible from inspector
     
-    public bool isAlive; 
+    public bool isAlive;
+    public bool isUp;
 
     // Trait variables
     public int doubleDamageToCenter; // Player deals double damage to center this turn  (Multiplier)
@@ -41,6 +42,7 @@ public class PlayerSO : ScriptableObject
         hasStockade = false;
 
         isAlive = true;
+        isUp = false;
   
         // Initialize Trait Variables
         doubleDamageToCenter = 1;

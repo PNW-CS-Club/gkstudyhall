@@ -2305,6 +2305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 691368556}
   - component: {fileID: 691368557}
+  - component: {fileID: 691368558}
   m_Layer: 0
   m_Name: Char Select Manager
   m_TagString: Untagged
@@ -2342,6 +2343,29 @@ MonoBehaviour:
   playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
   player1: {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
   selectedCard: {fileID: 0}
+--- !u!114 &691368558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691368554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceeb12591f8f5cd4880fd49530b694cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerListSO: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
+  playerSOs:
+  - {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
+  - {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
+  - {fileID: 11400000, guid: b5a7460747c7bab41906f3d7a94bc689, type: 2}
+  - {fileID: 11400000, guid: b50d6f6fe5f8fd345bae2e06ea9e783e, type: 2}
+  cardSOs:
+  - {fileID: 11400000, guid: 97a8a00ea8b7f804fbde4b2c248af807, type: 2}
+  - {fileID: 11400000, guid: 72169a04f50915744b8c612bc8b2ab17, type: 2}
+  - {fileID: 11400000, guid: 5a291d5004ac30f43abd8339b154ef6e, type: 2}
+  - {fileID: 11400000, guid: 4892601165fcc284ba39f75bfef40d1d, type: 2}
 --- !u!1001 &735981607
 PrefabInstance:
   m_ObjectHideFlags: 0
