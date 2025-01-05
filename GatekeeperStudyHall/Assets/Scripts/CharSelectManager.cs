@@ -11,8 +11,10 @@ public class CharSelectManager : MonoBehaviour
 
     public CardSO selectedCard;
 
-    private void Start() 
+    private void Start()
     {
+        if (Globals.multiplayerType != MultiplayerType.Offline) return;
+        
         playerList = playerListObject.list;
         playerList.Clear();
         playerList.Add(player1);
