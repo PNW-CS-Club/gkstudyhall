@@ -3009,7 +3009,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkRootPrefab: {fileID: 263410718267174342, guid: e2d6c64adbf67e948ae1d3e4b20aa655, type: 3}
-  networkRootInstance: {fileID: 0}
 --- !u!1 &1073970289
 GameObject:
   m_ObjectHideFlags: 0
@@ -4268,9 +4267,9 @@ Canvas:
   m_GameObject: {fileID: 1555622862}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 1458414060}
+  m_PlaneDistance: 20
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -4280,7 +4279,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &1555622866
 RectTransform:
