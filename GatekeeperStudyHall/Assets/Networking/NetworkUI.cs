@@ -75,13 +75,12 @@ public class NetworkUI : MonoBehaviour
     {
         // update anything that doesn't directly rely on network init
         menuTitle.text = GetUIStateTitle(UiState);
+        attemptIpDisplay.text = netSetup.HostIp;
+        ipDisplay.text = showIp ? netSetup.HostIp : "XXX.XXX.XXX.XXX";
 
         var netRoot = NetworkRoot.Instance;
         if (netRoot != null)
         {
-            attemptIpDisplay.text = netSetup.HostIp;
-            ipDisplay.text = showIp ? netSetup.HostIp : "XXX.XXX.XXX.XXX";
-
             // update the displays that show the network players
             playerListHeader.text = $"Connected Players [{netRoot.PlayerCount}/4]";
             playerListDisplay.text = netRoot.netPlayers
