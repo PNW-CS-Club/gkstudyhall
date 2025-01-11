@@ -17,8 +17,6 @@ public class DiceRoll : MonoBehaviour
     bool isSliding = false;
     public bool canCheatRolls = false;
     
-    [SerializeField] StateMachine stateMachine;
-
     [SerializeField] Sprite[] sprites; // the 6 dice faces
 
 
@@ -49,9 +47,11 @@ public class DiceRoll : MonoBehaviour
     [SerializeField] Vector2 topLeftBound;
     [SerializeField] Vector2 bottomRightBound;
 
-    [SerializeField] GameObject barrier;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
+    
+    [HideInInspector] public StateMachine stateMachine;
+    [HideInInspector] public GameObject barrier;
 
 
     [HideInInspector] public event System.EventHandler<int> DoneRollingEvent;
@@ -61,14 +61,16 @@ public class DiceRoll : MonoBehaviour
     Vector2 mouseDelta;
     Vector2 lastMousePos;
 
-    void Start() {
+    void Awake() {
         if (sprites.Length != 6) {
             Debug.LogError($"There should be 6 sprites in DiceRoll array (actual: {sprites.Length})");
         }
-
+        
+        if (barrier != null)
+            barrier.SetActive(isSliding);
+        
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponentInChildren<Rigidbody2D>();
-        barrier.SetActive(false);
     }
 
 
@@ -88,6 +90,9 @@ public class DiceRoll : MonoBehaviour
             }
         }
     }
+    
+    
+    public virtual void ChangeOwnership() {}
 
 
     /// <summary>

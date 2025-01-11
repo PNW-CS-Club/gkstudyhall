@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 684854875458366825}
   m_Layer: 0
   m_Name: DiceBase
-  m_TagString: Untagged
+  m_TagString: Dice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb7671422870a146abdd60f89822a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canCheatRolls: 0
   stateMachine: {fileID: 0}
   sprites:
   - {fileID: 21300000, guid: 1dcc1b7c113db5441a722833636e41b2, type: 3}
@@ -53,13 +54,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4fc443a48e0f5064bae59de6b4a57903, type: 3}
   - {fileID: 21300000, guid: 7aefc93d93baf3a49a42e7e6d80b449d, type: 3}
   - {fileID: 21300000, guid: 6bb3ee664807ea7438df02d6d85468c8, type: 3}
-  traitHandler: {fileID: 0}
   shakeInterval: 0.1
   maxAngularVel: 1440
   minAngularVel: 900
   shakeSpeed: 3
   shakeRadius: 0.25
   releaseMultiplier: 12
+  throwMultiplier: 36
+  lowSpeedThreshold: 0.1
   frictionFactor: 0.002
   slideDuration: 0.75
   topLeftBound: {x: -11.55556, y: 6.5}

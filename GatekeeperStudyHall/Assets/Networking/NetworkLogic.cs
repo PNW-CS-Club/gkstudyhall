@@ -35,13 +35,13 @@ public class NetworkLogic : NetworkBehaviour
 
     /// Runs on all clients when called. Cleans up and loads the next scene in order to start the game.
     [Rpc(SendTo.ClientsAndHost)]
-    public void ToCharSelect_Rpc()
+    public void ToCharSelect_ClientRpc()
     {
         Logger.Log("Trying to start the game!");
         _ = SceneManager.LoadSceneAsync("CharSelectScene");
     }
     [Rpc(SendTo.ClientsAndHost)]
-    public void StartGame_Rpc()
+    public void StartGame_ClientRpc()
     {
         Logger.Log("Trying to start the game!");
         _ = SceneManager.LoadSceneAsync("CharSelectScene");
@@ -52,6 +52,13 @@ public class NetworkLogic : NetworkBehaviour
     public void ConfirmConnection_Rpc( RpcParams param = default ) {
         Debug.Log( "How does this work" );
         NetworkUI.Instance.ChangeUIState(NetworkUIState.Joining);
+    }
+
+    /// Tells the server to give this player ownership of the Network Dice
+    [Rpc(SendTo.Server, RequireOwnership = false)]
+    public void ChangeDiceOwnership_ServerRpc()
+    {
+        Debug.Log("call to ChangeDiceOwnership_ServerRpc");
     }
 
     /// Stops the host after disconnecting all non-host clients.
@@ -67,6 +74,14 @@ public class NetworkLogic : NetworkBehaviour
 
         nwm.Shutdown();
         Logger.Log("Shut down connection");
+    }
+
+
+    public void CreateNetworkDice(NetworkObject networkDicePrefab, Vector3 diceSpawnLocation)
+    {
+        if (!IsServer) return;
+        
+        nwm.SpawnManager.InstantiateAndSpawn(networkDicePrefab, position: diceSpawnLocation, rotation: Quaternion.identity);
     }
     
     

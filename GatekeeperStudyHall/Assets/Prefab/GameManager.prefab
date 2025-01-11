@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 5598449455276713471}
   - component: {fileID: 3649130508021954605}
   - component: {fileID: 1430531344522203847}
+  - component: {fileID: 1779726504040473575}
   - component: {fileID: 7554759352034851568}
+  - component: {fileID: 752242929238016725}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -46,6 +48,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910de3e51ec911a4993768b8dfa05d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateMachine: {fileID: 1430531344522203847}
+  traitHandler: {fileID: 1779726504040473575}
+  gateBreak: {fileID: 752242929238016725}
+  playerListSO: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
+  cardQueue: {fileID: 0}
+  playerSelect: {fileID: 0}
+  centerGate: {fileID: 11400000, guid: 56ed47d7e4c77d044946ffa47be58f47, type: 2}
+  offlineDicePrefab: {fileID: 3541283527795119838, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+  networkDicePrefab: {fileID: 0}
+  diceSpawnPoint: {x: 6, y: 3, z: 10}
 --- !u!114 &1430531344522203847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,8 +71,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerListSO: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
-  traitRollState:
-    traitHandler: {fileID: 11400000, guid: 1f0b0bb7746e7b7468212b593603fc26, type: 2}
+  choosingPlayerState:
+    playerSelect: {fileID: 0}
+--- !u!114 &1779726504040473575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9141685807667293640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3346e94a9ee221f4a8c66b42f0783a24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 3649130508021954605}
+  stateMachine: {fileID: 1430531344522203847}
+  playerSelection: {fileID: 0}
+  playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
 --- !u!114 &7554759352034851568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,3 +102,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateMachine: {fileID: 1430531344522203847}
+--- !u!114 &752242929238016725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9141685807667293640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44448aef297ca748a202c94589c970a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerListSO: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}

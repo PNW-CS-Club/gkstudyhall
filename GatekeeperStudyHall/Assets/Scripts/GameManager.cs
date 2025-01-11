@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +11,6 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] StateMachine stateMachine;
     [SerializeField] TraitHandler traitHandler;
-    [SerializeField] DiceRoll diceRoll;
     [SerializeField] GateBreak gateBreak;
 
     [SerializeField] PlayerListSO playerListSO;
@@ -20,15 +20,34 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] CenterGateSO centerGate;
 
+    [SerializeField] GameObject offlineDicePrefab;
+    [SerializeField] NetworkObject networkDicePrefab;
+    [SerializeField] Vector3 diceSpawnPoint;
+    [SerializeField] GameObject diceBarrier;
+    DiceRoll diceRoll;
+
+
+    void Awake()
+    {
+        if (Globals.multiplayerType == MultiplayerType.Offline)
+            Instantiate(offlineDicePrefab, diceSpawnPoint, Quaternion.identity);
+        else
+            NetworkRoot.GkAwake(networkDicePrefab, diceSpawnPoint);
+    }
+    
 
     void Start()
     {
+        var dice = GameObject.FindWithTag("Dice");
+        diceRoll = dice.GetComponent<DiceRoll>();
+        diceRoll.stateMachine = stateMachine;
+        diceRoll.barrier = diceBarrier;
+        diceRoll.DoneRollingEvent += RollEventHandler;
+        
         playerListSO.list[0].isUp = true;
     }
     
     void RollEventHandler(object sender, int roll) => UseRollResult(roll);
-    void OnEnable() => diceRoll.DoneRollingEvent += RollEventHandler;
-    void OnDestroy() => diceRoll.DoneRollingEvent -= RollEventHandler;
 
     /// <summary>
     /// Determine whether there is a single player alive.
@@ -250,6 +269,10 @@ public class GameManager : MonoBehaviour
         while (!players[0].isAlive); // TODO: This will loop infinitely if all players are dead
 
         players[0].isUp = true;
+        if (NetworkPlayer.ownedInstance.player.isUp)
+        {
+            // TODO: gain dice ownership somehow
+        }
         
         cardQueue.RepositionCards();
 

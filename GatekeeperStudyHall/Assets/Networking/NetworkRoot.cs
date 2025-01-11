@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class NetworkRoot : MonoBehaviour
@@ -31,6 +32,14 @@ public class NetworkRoot : MonoBehaviour
         gameObject.name = "Network Root Obj";
         DontDestroyOnLoad(gameObject);
     }
+
+    public static void GkAwake(NetworkObject networkDicePrefab, Vector3 diceSpawnLocation)
+    {
+        if (Instance == null) return;
+
+        Instance.netLogic.CreateNetworkDice(networkDicePrefab, diceSpawnLocation);
+    } 
+    
 
     public void AddPlayer(NetworkPlayer player)
     {
