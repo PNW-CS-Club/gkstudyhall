@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
             foreach(PlayerSO player in playerList){
                 if (player.isAlive) {
                     Globals.winningPlayer = player;  
+                    Globals.winningPlayerUsername = player.username;
                     break;
                 }
             }
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
         {
             //Debug.Log($"{attacker.card.characterName} wins! End the game here");
             Globals.winningPlayer = attacker;
+            Globals.winningPlayerUsername = attacker.username;
             SceneManager.LoadScene("EndScene");
         }
     }

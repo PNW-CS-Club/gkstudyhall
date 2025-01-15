@@ -5,16 +5,13 @@ using UnityEngine;
 
 public class EndSceneInfo : MonoBehaviour
 {
+    [SerializeField] GameObject cardPrefab;
     [SerializeField] PlayerListSO playerListSO;
-    [SerializeField] CardDisplay cardDisplay1;
-    [SerializeField] CardDisplay cardDisplay2;
-    [SerializeField] CardDisplay cardDisplay3;
-    [SerializeField] CardDisplay cardDisplay4;
+    List<PlayerSO> playerList; // refers to list in playerListSO
+    List<GameObject> cardObjectList; // instances of cardDisplay
+    List<GameObject> statDisplayList; // instances of statDisplay
 
-    [SerializeField] GameObject statDisplay1;
-    [SerializeField] GameObject statDisplay2;
-    [SerializeField] GameObject statDisplay3;
-    [SerializeField] GameObject statDisplay4;
+    Vector3 offset; // the offset of the bottom three players
 
     // Start is called before the first frame update
     void Start()
@@ -24,17 +21,41 @@ public class EndSceneInfo : MonoBehaviour
     }
 
     void Awake(){
-        List<PlayerSO> playerList = playerListSO.list;
+        playerList = playerListSO.list;
 
-        cardDisplay1.cardData = Globals.winningPlayer.card;
+        // move the winning player to the front of the list
+        playerList.Remove(Globals.winningPlayer);
+        playerList.Insert(0, Globals.winningPlayer);
+           
+        // create a list of card displays for each player
+        cardObjectList = new(playerList.Count); // same length as playerList
+        statDisplayList = new(playerList.Count); 
 
-        // set the rest of the card displays to the other players
+        //set starting offset to top-left of screen
+        offset = new Vector3(100f, 50f, 0f); // TODO
+       
+        // initialize the cards and displays
+        for(int i = 0; i < playerList.Count; i++){
+            GameObject newCard = Instantiate(cardPrefab, transform);
+            cardObjectList.Add(newCard);
+
+            // look at CardQueue.cs for example
+            // TODO: make a statDisplay prefab
+
+        }
+
+        // set the displays
+        for(int i = 0; i < playerList.Count; i++){
+            Transform cardTransform = cardObjectList[i].transform;
+            CardDisplay cardDisplay = cardTransform.GetComponent<CardDisplay>();
+            cardTransform.localPosition = offset;
+            cardDisplay.ChangeCardData(playerList[i].card);
+            cardDisplay.player = playerList[i];
+
+            offset.x += 300;
+        }
         
-        cardDisplay2.cardData = playerList[1].card;
-        cardDisplay3.cardData = playerList[2].card;
-        cardDisplay4.cardData = playerList[3].card;
-        
-
+        /*
         statDisplay1.GetComponent<TMP_Text>().text = 
             $"Total Damage Dealt to Other Players: {Globals.winningPlayer.totalDamageToOtherPlayers}\n" +
             $"Total Damage Dealt to Gates: {Globals.winningPlayer.totalDamageToGates}\n" +
@@ -43,6 +64,7 @@ public class EndSceneInfo : MonoBehaviour
             $"Total Damage Taken: {Globals.winningPlayer.totalDamageTaken}\n" +
             $"Total Stockade Collected: {Globals.winningPlayer.totalStockade}\n" +
             $"Battles Started: {Globals.winningPlayer.battlesStarted}\n";
+        */
     }
 
     // Update is called once per frame
