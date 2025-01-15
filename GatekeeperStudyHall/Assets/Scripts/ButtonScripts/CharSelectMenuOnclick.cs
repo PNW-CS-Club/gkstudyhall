@@ -7,9 +7,13 @@ public class CharSelectMenuOnClick : MonoBehaviour
 {
     [SerializeField] PlayerListSO playerListObject;
     List<PlayerSO> players;
+    public CardSO randomCard;
+    
+    [SerializeField] List<CardSO> cardList;
 
     void Start() 
     {
+        
         players = playerListObject.list;
         
     }
@@ -23,6 +27,14 @@ public class CharSelectMenuOnClick : MonoBehaviour
             players[i].ResetEffects();
         }
         AsyncOperation _ = SceneManager.LoadSceneAsync("GkScene");
+
+        foreach (var c in players)
+        {
+            if( c.card == randomCard ){
+                int r = UnityEngine.Random.Range(0, cardList.Count);
+                c.card = cardList[r];
+            }
+        }
     }
     public void StartMenu()
     {
