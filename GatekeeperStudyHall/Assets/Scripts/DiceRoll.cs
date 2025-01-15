@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 
@@ -92,7 +93,7 @@ public class DiceRoll : MonoBehaviour
     }
     
     
-    public virtual void ChangeOwnership() {}
+    public virtual void TakeOwnership(NetworkObjectReference netDiceRef) {}
 
 
     /// <summary>

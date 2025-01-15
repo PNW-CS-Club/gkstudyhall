@@ -56,9 +56,12 @@ public class NetworkLogic : NetworkBehaviour
 
     /// Tells the server to give this player ownership of the Network Dice
     [Rpc(SendTo.Server, RequireOwnership = false)]
-    public void ChangeDiceOwnership_ServerRpc()
+    public void TakeDiceOwnership_ServerRpc(NetworkObjectReference netDiceRef, RpcParams rpcParams = default)
     {
-        Debug.Log("call to ChangeDiceOwnership_ServerRpc");
+        Debug.Log("call to TakeDiceOwnership_ServerRpc");
+        netDiceRef.TryGet(out NetworkObject netDiceObj);
+        netDiceObj.RemoveOwnership();
+        netDiceObj.ChangeOwnership(rpcParams.Receive.SenderClientId);
     }
 
     /// Stops the host after disconnecting all non-host clients.

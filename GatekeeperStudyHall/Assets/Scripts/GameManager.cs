@@ -271,7 +271,7 @@ public class GameManager : MonoBehaviour
         players[0].isUp = true;
         if (NetworkPlayer.ownedInstance.player.isUp)
         {
-            // TODO: gain dice ownership somehow
+            diceRoll.TakeOwnership(diceRoll.GetComponent<NetworkObject>());
         }
         
         cardQueue.RepositionCards();
