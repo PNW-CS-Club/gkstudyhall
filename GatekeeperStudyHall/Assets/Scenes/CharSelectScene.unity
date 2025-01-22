@@ -790,6 +790,7 @@ GameObject:
   - component: {fileID: 102629912}
   - component: {fileID: 102629911}
   - component: {fileID: 102629915}
+  - component: {fileID: 102629916}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -895,6 +896,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
+  addButton: {fileID: 0}
+--- !u!114 &102629916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102629910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fb1eb2db1953b147941e9c4f22a0003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &164533147
 GameObject:
   m_ObjectHideFlags: 0
@@ -2607,6 +2621,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 102629916}
+        m_TargetAssemblyTypeName: PlayerButtonFunctions, Assembly-CSharp
+        m_MethodName: Show
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PlayerSO, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &796787987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3210,6 +3236,7 @@ GameObject:
   - component: {fileID: 1045365699}
   - component: {fileID: 1045365698}
   - component: {fileID: 1045365697}
+  - component: {fileID: 1045365700}
   m_Layer: 5
   m_Name: AddPlayer2Button
   m_TagString: Untagged
@@ -3293,6 +3320,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 102629916}
+        m_TargetAssemblyTypeName: PlayerButtonFunctions, Assembly-CSharp
+        m_MethodName: Disappear
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PlayerSO, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1045365698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3331,6 +3370,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045365695}
   m_CullTransparentMesh: 1
+--- !u!114 &1045365700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045365695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fb1eb2db1953b147941e9c4f22a0003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1063507703
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CharSelectMenuOnClick : MonoBehaviour
 {
     [SerializeField] PlayerListSO playerListObject;
+    [SerializeField] GameObject addButton;
     List<PlayerSO> players;
 
     void Start() 
@@ -37,6 +39,7 @@ public class CharSelectMenuOnClick : MonoBehaviour
         {
             players.Add(p);
         }
+        
     }
 
     public void AddBot()
