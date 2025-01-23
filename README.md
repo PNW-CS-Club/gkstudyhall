@@ -3,8 +3,6 @@
 
 A Unity game development project recreating the simplified version of Gatekeeper found on https://www.gatekeeperonline.net/play
 
-For more information on how to play the game, see the **[game rules](GameRules.md)**
-
 Project Details: <br>
 - Unity Version: 2022.3.19f1
 - 2D Top-Down Perspective
@@ -12,7 +10,11 @@ Project Details: <br>
 - For 2-4 players
 - Local or Online Sessions
 
-# How to Contribute
+## Game Rules
+
+See this page: [game rules](GameRules.md)
+
+## How to Contribute
 
 View the issues available at https://github.com/PNW-CS-Club/gkstudyhall/issues
 Assign Yourself to an Issue
