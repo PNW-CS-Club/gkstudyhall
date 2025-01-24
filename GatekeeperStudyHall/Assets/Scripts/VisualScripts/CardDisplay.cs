@@ -14,7 +14,7 @@ public enum CardDisplayType
     [InspectorName("Player Select Option")]     PLAYER_SELECT_OPTION = 3,
 }
 
-
+[ExecuteInEditMode]
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public PlayerSO player; // the player that this card display belongs to
