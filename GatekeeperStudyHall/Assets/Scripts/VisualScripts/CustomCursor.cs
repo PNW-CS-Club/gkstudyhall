@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings.Switch;
 
 public class CustomCursor : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class CustomCursor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         Cursor.SetCursor(cursorTextureDefault, clickPosition, CursorMode.Auto);
     }
+
 }
