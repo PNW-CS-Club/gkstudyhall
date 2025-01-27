@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Provides methods for actions related to health, damage, and turn flow.
+/// Manages health, damage, and turn flow.
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
         attacker.totalDamageToGatekeeper += damage;
         if (centerGate.Health == 0)
         {
-            //Debug.Log($"{attacker.card.characterName} wins! End the game here");
             Globals.winningPlayer = attacker;
             SceneManager.LoadScene("EndScene");
         }
@@ -118,11 +117,9 @@ public class GameManager : MonoBehaviour
             player.TakeDamage(-amount);
             CheckWinBySurvival();
         }
-            
-        else{
+        else {
             player.Heal(amount);
         }
-            
     }
 
 
@@ -141,8 +138,10 @@ public class GameManager : MonoBehaviour
             gate.TakeDamage(-amount);
             player.totalDamageToGates += -amount;
         }
-        else 
+        else
+        {
             gate.Heal(amount);
+        }
     }
 
 
@@ -169,11 +168,7 @@ public class GameManager : MonoBehaviour
                 // Player rolls a 5, initiate battle with another player
                 currentPlayer.battlesStarted++;
                 currentState = State.ChoosingPlayer;
-                playerSelect.OnSelect = ( defender ) => {
-                    Debug.Log( playerListSO.list[ 0 ] );
-                    Debug.Log( defender ); 
-                    DoBattle( playerListSO.list[ 0 ], defender );
-                };
+                playerSelect.OnSelect = defender => DoBattle(playerListSO.list[0], defender);
             }
             else 
             {
@@ -206,36 +201,30 @@ public class GameManager : MonoBehaviour
                 NextTurn();
         }
         else if (currentState == State.Battling) {
-            if ( Globals.BattleData.isAttackerRolling ) {
+            if (Globals.battleData.isAttackerRolling) {
                 // attacker has rolled
-                Globals.BattleData.data[ 0 ] = new( Globals.BattleData.data[ 0 ].player, roll );
-                Globals.BattleData.isAttackerRolling = false;
+                Globals.battleData.attackerRoll = roll;
+                Globals.battleData.isAttackerRolling = false;
                 Debug.Log( "ATTACKER rolled a " + roll + ", it is now the DEFENDER's turn" );
             } else {
                 // defender has rolled
-                Globals.BattleData.data[ 1 ] = new( Globals.BattleData.data[ 1 ].player, roll );
+                Globals.battleData.defenderRoll = roll;
                 Debug.Log( "DEFENDER rolled a " + roll );
 
-                if ( Globals.BattleData.data[ 0 ].roll == Globals.BattleData.data[ 1 ].roll ) {
+                if (Globals.battleData.IsTied()) {
                     // rolls were equal
-                    Globals.BattleData.mult++;
-                    Globals.BattleData.isAttackerRolling = true;
-                    Debug.Log( "These rolls were equal...the stakes rise!  Damage is now " + Globals.BattleData.mult + "x!" );
+                    Globals.battleData.mult++;
+                    Globals.battleData.isAttackerRolling = true;
+                    Debug.Log( "These rolls were equal...the stakes rise!  Damage is now " + Globals.battleData.mult + "x!" );
                 } else {
                     // a player takes damage
-                    bool attackerDealsDamage = Globals.BattleData.data[ 0 ].roll > Globals.BattleData.data[ 1 ].roll;
-                    PlayerSO damageDealer = attackerDealsDamage ? Globals.BattleData.data[ 0 ].player : Globals.BattleData.data[ 1 ].player;
-                    PlayerSO damageTaker  = attackerDealsDamage ? Globals.BattleData.data[ 1 ].player : Globals.BattleData.data[ 0 ].player;
+                    int damageDealt = Mathf.Abs(Globals.battleData.attackerRoll - Globals.battleData.defenderRoll) * Globals.battleData.mult;
+                    PlayerAttacksPlayer(Globals.battleData.Winner, Globals.battleData.Loser, damageDealt);
+                    Debug.Log( $"Battle concluded, {Globals.battleData.Loser} should have taken {damageDealt} damage. Continue with turn..." );
 
-                    int damageDealt = Mathf.Abs( Globals.BattleData.data[ 0 ].roll - Globals.BattleData.data[ 1 ].roll ) * Globals.BattleData.mult;
-
-                    PlayerAttacksPlayer( damageDealer, damageTaker, damageDealt );
-                    
-                    Debug.Log( $"Battle concluded, {damageTaker} should have taken {damageDealt} damage. Continue with turn..." );
-
-                    Globals.BattleData.Reset();
+                    Globals.battleData = null;
                     // If the current player died, transition to the next player
-                    if (!playerListSO.list[0].isAlive){
+                    if (!playerListSO.list[0].isAlive) {
                         NextTurn();
                     }
                 }
@@ -274,16 +263,10 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Start battling with another player
     /// </summary>
-    public void DoBattle( PlayerSO attacker, PlayerSO defender ) {
-        Globals.BattleData.data.Add( new( attacker, 0 ) );
-        Globals.BattleData.data.Add( new( defender, 0 ) );
-
-        Globals.BattleData.mult = 1;
-        
+    public void DoBattle(PlayerSO attacker, PlayerSO defender)
+    {
+        Globals.battleData = new Globals.BattleData(attacker, defender);
         currentState = State.Battling;
-
-        Debug.Log( "Battle begun with ATTACKER = " + attacker.card.characterName + " vs  DEFENDER = " + defender.card.characterName );
-
-        Globals.BattleData.isAttackerRolling = true;
+        Debug.Log($"Battle begun between {attacker.card.characterName} and {defender.card.characterName}");
     }
 }
