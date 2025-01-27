@@ -16,9 +16,8 @@ public class DiceRoll : MonoBehaviour
     bool isHeld = false;
     bool isSliding = false;
     public bool canCheatRolls = false;
-    
-    [SerializeField] StateMachine stateMachine;
 
+    [SerializeField] GameManager gameManager;
     [SerializeField] Sprite[] sprites; // the 6 dice faces
 
 
@@ -96,7 +95,7 @@ public class DiceRoll : MonoBehaviour
     /// </summary>
     public void MouseDownFunc()
     {
-        if (!stateMachine.CurrentState.CanRoll || isSliding) return;
+        if (!gameManager.currentState.CanRoll() || isSliding) return;
         
         isHeld = true;
         shakeTimer = shakeInterval;
@@ -164,7 +163,7 @@ public class DiceRoll : MonoBehaviour
     
     void TryCheating()
     {
-        if (!stateMachine.CurrentState.CanRoll || isSliding) return;
+        if (!gameManager.currentState.CanRoll() || isSliding) return;
         
         if (Input.GetKeyDown(KeyCode.Alpha1))
             ReleaseDice(1);

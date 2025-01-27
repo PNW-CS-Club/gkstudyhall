@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,7 +7,8 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] StateMachine stateMachine;
+    public State currentState = State.TraitRoll;
+    
     [SerializeField] TraitHandler traitHandler;
     [SerializeField] DiceRoll diceRoll;
     [SerializeField] GateBreak gateBreak;
@@ -19,12 +19,35 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerSelection playerSelect;
     
     [SerializeField] CenterGateSO centerGate;
-    // we can make any of these methods non-static if needed
 
+    bool wasPlayerSelectShowing = false;
+    
 
     void RollEventHandler(object sender, int roll) => UseRollResult(roll);
     void OnEnable() => diceRoll.DoneRollingEvent += RollEventHandler;
     void OnDestroy() => diceRoll.DoneRollingEvent -= RollEventHandler;
+
+    void Awake() 
+    {
+        // set the amount of players alive to the initial size of the player list
+        Globals.playersAlive = playerListSO.list.Count;
+    }
+    
+    void Update()
+    {
+        // show/hide playerSelect only when current state changes to/from ChoosingPlayerState
+        bool isPlayerSelectShowing = currentState == State.ChoosingPlayer;
+        if (wasPlayerSelectShowing != isPlayerSelectShowing)
+        {
+            if (isPlayerSelectShowing)
+                playerSelect.Show();
+            else 
+                playerSelect.Hide();
+            
+            wasPlayerSelectShowing = isPlayerSelectShowing;
+        }
+    }
+    
 
     /// <summary>
     /// Determine whether there is a single player alive.
@@ -44,7 +67,6 @@ public class GameManager : MonoBehaviour
             
             // Transition to End Scene
             AsyncOperation _ = SceneManager.LoadSceneAsync("EndScene");
-
         }
     }
 
@@ -128,25 +150,26 @@ public class GameManager : MonoBehaviour
     /// Performs the action expected to happen after the dice is done rolling, depending on the state.
     /// </summary>
     /// <param name="roll">The rolled value of the dice.</param>
-    private void UseRollResult(int roll) {
+    private void UseRollResult(int roll) 
+    {
         PlayerSO currentPlayer = playerListSO.list[0];
-        if (stateMachine.CurrentState is TraitRollState) 
+        if (currentState == State.TraitRoll) 
         {
             if (roll <= 4) 
             {
-                IState nextState = traitHandler.ActivateCurrentPlayerTrait(roll);
+                State nextState = traitHandler.ActivateCurrentPlayerTrait(roll);
                 if (!playerListSO.list[0].isAlive){
                     NextTurn(); // If the player dies from their trait, end their turn
                 } else {
-                    stateMachine.TransitionTo(nextState); // TODO: what if the player dies after choosing another player?
+                    currentState = nextState; // TODO: what if the player dies after choosing another player?
                 }
             }
             else if (roll == 5) 
             {
                 // Player rolls a 5, initiate battle with another player
                 currentPlayer.battlesStarted++;
-                stateMachine.TransitionTo( stateMachine.choosingPlayerState );
-                stateMachine.choosingPlayerState.playerSelect.OnSelect = ( defender ) => {
+                currentState = State.ChoosingPlayer;
+                playerSelect.OnSelect = ( defender ) => {
                     Debug.Log( playerListSO.list[ 0 ] );
                     Debug.Log( defender ); 
                     DoBattle( playerListSO.list[ 0 ], defender );
@@ -158,7 +181,7 @@ public class GameManager : MonoBehaviour
                 NextTurn();
             }
         }
-        else if (stateMachine.CurrentState is AttackingGateState) 
+        else if (currentState == State.AttackingGate) 
         {
             int attack = roll + currentPlayer.increaseGateDamage - currentPlayer.reduceGateDamage;
             attack = Mathf.Max(0, attack); // set to 0 if attack comes out negative
@@ -166,23 +189,23 @@ public class GameManager : MonoBehaviour
             GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
             if (Globals.selectedGate.Health == 0) {
                 Debug.Log("You broke the gate!");
-                stateMachine.TransitionTo(stateMachine.breakingGateState);
+                currentState = State.BreakingGate;
             }
             else {
                 NextTurn();
             }
         }
-        else if (stateMachine.CurrentState is BreakingGateState)
+        else if (currentState == State.BreakingGate) 
         {
-            IState nextState = gateBreak.DoBreakEffect(playerListSO.list[0], Globals.selectedGate, roll);
+            State? maybeNextState = gateBreak.DoBreakEffect(playerListSO.list[0], Globals.selectedGate, roll);
             Globals.selectedGate.Reset();
-            
-            if (nextState == null)
+
+            if (maybeNextState is State nextState)
+                currentState = nextState;
+            else
                 NextTurn();
-            else 
-                stateMachine.TransitionTo(nextState);
         }
-        else if ( stateMachine.CurrentState is BattlingState ) {
+        else if (currentState == State.Battling) {
             if ( Globals.BattleData.isAttackerRolling ) {
                 // attacker has rolled
                 Globals.BattleData.data[ 0 ] = new( Globals.BattleData.data[ 0 ].player, roll );
@@ -215,7 +238,6 @@ public class GameManager : MonoBehaviour
                     if (!playerListSO.list[0].isAlive){
                         NextTurn();
                     }
-                    stateMachine.TransitionTo( stateMachine.choosingGateState );
                 }
             }
         }
@@ -237,7 +259,7 @@ public class GameManager : MonoBehaviour
 
         List<PlayerSO>players = playerListSO.list;
 
-        players[0].ResetEffects(); //reset all temporary effects the current player may have
+        players[0].ResetEffects(); // reset all temporary effects the current player may have
         do {      
             players.Insert(players.Count, players[0]);
             players.RemoveAt(0);
@@ -245,8 +267,8 @@ public class GameManager : MonoBehaviour
         while (!players[0].isAlive); // TODO: This will loop infinitely if all players are dead
 
         cardQueue.RepositionCards();
-
-        stateMachine.TransitionTo(stateMachine.traitRollState);
+        
+        currentState = State.TraitRoll;
     }
 
     /// <summary>
@@ -257,8 +279,8 @@ public class GameManager : MonoBehaviour
         Globals.BattleData.data.Add( new( defender, 0 ) );
 
         Globals.BattleData.mult = 1;
-
-        stateMachine.TransitionTo( stateMachine.battlingState );
+        
+        currentState = State.Battling;
 
         Debug.Log( "Battle begun with ATTACKER = " + attacker.card.characterName + " vs  DEFENDER = " + defender.card.characterName );
 

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,20 +6,20 @@ using UnityEngine;
 /// </summary>
 public class GateButtonActions : MonoBehaviour
 {
-    [SerializeField] StateMachine stateMachine;
-
-
+    [SerializeField] GameManager gameManager;
+    
+    
     /// <summary>
     /// Stores the chosen gate and transitions to the next state.
     /// The game must be in a state where <c>CanChooseGate</c> is true; otherwise this does nothing.  
     /// </summary>
     public void ChooseGate(GateSO gate) 
     {
-        if (!stateMachine.CurrentState.CanChooseGate) 
+        if (!gameManager.currentState.CanChooseGate()) 
             return;
 
         Debug.Log($"Chose gate: {gate.Color}");
         Globals.selectedGate = gate;
-        stateMachine.TransitionTo(stateMachine.attackingGateState);
+        gameManager.currentState = State.AttackingGate;
     }
 }

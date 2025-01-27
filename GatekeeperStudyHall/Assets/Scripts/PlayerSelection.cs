@@ -13,7 +13,6 @@ public class PlayerSelection : MonoBehaviour
 
     [SerializeField] PlayerListSO playerListSO;
     [SerializeField] GameObject cardDisplayPrefab;
-    [SerializeField] StateMachine stateMachine;
     [SerializeField, Min(0)] float margin;
     [SerializeField] Vector2 padding;
     bool isInitialized = false;
@@ -74,8 +73,6 @@ public class PlayerSelection : MonoBehaviour
 
         }
         
-       
-
         Reposition();
     }
 
