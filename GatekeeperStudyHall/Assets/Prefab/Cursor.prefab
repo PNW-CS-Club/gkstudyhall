@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorTextureDefault: {fileID: 2800000, guid: 6445edef56116e042b2b6bec7d33997b, type: 3}
-  clickPosition: {x: 0, y: 0}
+  clickOffset: {x: 20, y: 16}
+  cursorMode: 0

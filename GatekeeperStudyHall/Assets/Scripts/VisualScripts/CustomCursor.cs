@@ -1,17 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings.Switch;
 
 public class CustomCursor : MonoBehaviour
 {
     [SerializeField] private Texture2D cursorTextureDefault;
-    [SerializeField] private Vector2 clickPosition = Vector2.zero;
-    // Start is called before the first frame update
+    [SerializeField] private Vector2 clickOffset = Vector2.zero;
+    [SerializeField] private CursorMode cursorMode = CursorMode.Auto;
+    
     void Start()
     {
-
-        Cursor.SetCursor(cursorTextureDefault, clickPosition, CursorMode.Auto);
+        Cursor.SetCursor(cursorTextureDefault, clickOffset, cursorMode);
     }
-
 }
