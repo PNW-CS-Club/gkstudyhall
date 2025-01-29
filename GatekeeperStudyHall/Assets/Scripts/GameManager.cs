@@ -227,6 +227,9 @@ public class GameManager : MonoBehaviour
                     if (!playerListSO.list[0].isAlive) {
                         NextTurn();
                     }
+                    else {
+                        currentState = State.ChoosingGate;
+                    }
                 }
             }
         }
