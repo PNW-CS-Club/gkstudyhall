@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8162490601543812173}
-  - component: {fileID: 8671949588540443749}
+  - component: {fileID: 6656387952119449694}
   m_Layer: 0
   m_Name: Cursor
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8671949588540443749
+--- !u!114 &6656387952119449694
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +41,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3970919763842077758}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ab706b8e4b7be94e95f39021a715ef5, type: 3}
+  m_Script: {fileID: 11500000, guid: ffdbae1acbd4ff149a677a7dd9071f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorTextureDefault: {fileID: 2800000, guid: 6445edef56116e042b2b6bec7d33997b, type: 3}
-  clickOffset: {x: 20, y: 16}
   cursorMode: 0
+  arrowTexture: {fileID: 2800000, guid: 909b9521c84d3674f868db7eef6f877b, type: 3}
+  arrowOffset: {x: 7, y: 7}
+  pointerTexture: {fileID: 2800000, guid: f4f87d21b9cad61498ab4c0113c4a3c6, type: 3}
+  pointerOffset: {x: 14, y: 8}
+  textBeamTexture: {fileID: 2800000, guid: 07a74004377810c4ba986f7a3c9d6084, type: 3}
+  textBeamOffset: {x: 24, y: 24}
+  instance: {fileID: 0}
