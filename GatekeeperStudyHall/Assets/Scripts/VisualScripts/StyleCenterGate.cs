@@ -8,17 +8,20 @@ public class CenterGateStyle : MonoBehaviour {
     [ SerializeField ] CenterGateSO gate;
     [ SerializeField ] Image hpImage;
 
-    private Sprite[] spriteSheet;
+    private Sprite[] spriteSheet = new Sprite[ 10 ];
     private readonly List< Sprite > spriteList = new();
 
     // Start is called before the first frame update
     void Start() {
         spriteSheet = Resources.LoadAll< Sprite >( "hp_sheet" );
 
+        foreach ( Sprite spr in spriteSheet ) {
+            Debug.Log( spr.name );
+        }
+
         for ( int i = 1; i <= 10; i++ ) {
             string str = "hp_sheet_" + i;
 
-            //Sprite fireBallSprite = abilityIconsAtlas.Single(s => s.name == "FireBall");
             spriteList.Add( spriteSheet.Single( s => s.name == str ) );
         }
     }
