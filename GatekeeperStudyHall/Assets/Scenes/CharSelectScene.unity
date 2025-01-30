@@ -900,6 +900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
   randomCard: {fileID: 11400000, guid: be14ec4658680d641a7748feea97e494, type: 2}
+  clearCard: {fileID: 11400000, guid: ec1cb9dfab6e1744e9a3c91fe224c8ac, type: 2}
   cardList:
   - {fileID: 11400000, guid: 4892601165fcc284ba39f75bfef40d1d, type: 2}
   - {fileID: 11400000, guid: 97a8a00ea8b7f804fbde4b2c248af807, type: 2}
@@ -4644,7 +4645,7 @@ MonoBehaviour:
     m_PressedColor: {r: 0.509434, g: 0.14658241, b: 0.14658241, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
+    m_ColorMultiplier: 5
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
