@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum CursorType
 {
@@ -47,16 +48,39 @@ public class CursorSwapper : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            SwapCursor((CursorType)(((int)currType + 1) % 3));
+        var type = GetHoveredCursorType();
+        
+        if (currType != type) 
+            SwapCursor(type);
+    }
+    
+    CursorType GetHoveredCursorType()
+    {
+        // Gets all event system raycast results of current mouse or touch position.
+        var eventData = new PointerEventData(EventSystem.current);
+        eventData.position = Input.mousePosition;
+        List<RaycastResult> raycastResults = new();
+        EventSystem.current.RaycastAll(eventData, raycastResults);
+        //print(raycastResults.Aggregate("", (current, curRaycastResult) => current + (curRaycastResult.gameObject.name + ", "))));
+
+        if (raycastResults.Count == 0) 
+            return CursorType.Arrow;
+
+        GameObject currObject = raycastResults[0].gameObject;
+        CursorPreference pref = null;
+
+        do {
+            pref = currObject.GetComponent<CursorPreference>();
+            if (pref != null) break;
+            currObject = currObject.transform.parent?.gameObject;
         }
+        while (currObject != null);
+        
+        return pref == null ? CursorType.Arrow : pref.type;
     }
 
-    public void SwapCursor(CursorType type)
+    void SwapCursor(CursorType type)
     {
-        if (currType == type) return;
-        
         currType = type;
         
         var texture = type switch
