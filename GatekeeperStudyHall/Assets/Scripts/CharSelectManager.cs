@@ -8,13 +8,25 @@ public class CharSelectManager : MonoBehaviour
     List<PlayerSO> playerList; // refers to list in playerListObject
     
     [SerializeField] PlayerSO player1;
+    [SerializeField] PlayerSO player2;
 
     public CardSO selectedCard;
 
+    public CardSO clearCard;
+
+    
+
     private void Start() 
     {
-        playerList = playerListObject.list;
-        playerList.Clear();
-        playerList.Add(player1);
+        if(Globals.sessionMatchesPlayed == 0) {
+            playerList = playerListObject.list;
+            playerList.Clear();
+            playerList.Add(player1);
+            playerList.Add(player2);
+            player1.card = clearCard;    
+        }
+        else {
+            playerList = playerListObject.list;
+        }
     }
 }

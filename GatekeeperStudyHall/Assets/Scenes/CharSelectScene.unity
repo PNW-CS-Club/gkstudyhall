@@ -405,7 +405,7 @@ PrefabInstance:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
-      objectReference: {fileID: 11400000, guid: b1148e97bcd5d4a4dac0725497919a04, type: 2}
+      objectReference: {fileID: 11400000, guid: ec1cb9dfab6e1744e9a3c91fe224c8ac, type: 2}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: canMagnify
       value: 0
@@ -414,6 +414,10 @@ PrefabInstance:
       propertyPath: isPlayerSlot
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: cardMagnifier
+      value: 
+      objectReference: {fileID: 1656571057}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1831,7 +1835,7 @@ PrefabInstance:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
-      objectReference: {fileID: 11400000, guid: 8d206240aaf07a64c83811e8091fd269, type: 2}
+      objectReference: {fileID: 11400000, guid: ec1cb9dfab6e1744e9a3c91fe224c8ac, type: 2}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: collapsed
       value: 0
@@ -2410,7 +2414,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
   player1: {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
+  player2: {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
   selectedCard: {fileID: 0}
+  clearCard: {fileID: 11400000, guid: ec1cb9dfab6e1744e9a3c91fe224c8ac, type: 2}
 --- !u!1001 &735981607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2733,7 +2739,7 @@ PrefabInstance:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
-      objectReference: {fileID: 11400000, guid: 97a8a00ea8b7f804fbde4b2c248af807, type: 2}
+      objectReference: {fileID: 11400000, guid: ec1cb9dfab6e1744e9a3c91fe224c8ac, type: 2}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: canMagnify
       value: 0
@@ -2745,7 +2751,7 @@ PrefabInstance:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardMagnifier
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1656571057}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4081,7 +4087,7 @@ PrefabInstance:
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: cardData
       value: 
-      objectReference: {fileID: 11400000, guid: b1148e97bcd5d4a4dac0725497919a04, type: 2}
+      objectReference: {fileID: 11400000, guid: ec1cb9dfab6e1744e9a3c91fe224c8ac, type: 2}
     - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: canMagnify
       value: 0
@@ -4090,6 +4096,10 @@ PrefabInstance:
       propertyPath: isPlayerSlot
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4173000368655346186, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
+      propertyPath: cardMagnifier
+      value: 
+      objectReference: {fileID: 1656571057}
     - target: {fileID: 4727293630484987062, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

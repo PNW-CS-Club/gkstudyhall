@@ -1067,10 +1067,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   cardData: {fileID: 0}
+  startExpanded: 1
+  type: 0
   cardMagnifier: {fileID: 0}
   canMagnify: 1
-  isPlayerSlot: 0
-  startExpanded: 1
 --- !u!1 &5626725871422286626
 GameObject:
   m_ObjectHideFlags: 0
