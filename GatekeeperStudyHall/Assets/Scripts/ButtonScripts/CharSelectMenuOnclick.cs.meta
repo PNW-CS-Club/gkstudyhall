@@ -3,7 +3,10 @@ guid: 2baa4318a7005dd49aaba4a85afc0368
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - playerListObject: {instanceID: 0}
+  - randomCard: {instanceID: 0}
+  - clearCard: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

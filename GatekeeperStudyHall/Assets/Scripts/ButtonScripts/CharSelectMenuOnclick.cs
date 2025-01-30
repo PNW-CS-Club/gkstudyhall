@@ -8,18 +8,24 @@ public class CharSelectMenuOnClick : MonoBehaviour
     [SerializeField] PlayerListSO playerListObject;
     List<PlayerSO> players;
     public CardSO randomCard;
+    public CardSO clearCard;
+    
     
     [SerializeField] List<CardSO> cardList;
 
     void Start() 
     {
-        
-        players = playerListObject.list;
-        
+        players = playerListObject.list;   
     }
 
     public void StartGame()
     {
+        foreach (var v in players)
+        {
+            if(v.card == clearCard)
+                return;
+        }
+
         //reset players
         for(int i = 0; i < players.Count; i++)
         {
