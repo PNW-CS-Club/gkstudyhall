@@ -4351,7 +4351,7 @@ GameObject:
   - component: {fileID: 2032233719}
   - component: {fileID: 2032233723}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Pause Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4418,7 +4418,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 41
+  m_SortingOrder: 50
   m_TargetDisplay: 0
 --- !u!224 &2032233722
 RectTransform:
@@ -4984,8 +4984,8 @@ SceneRoots:
   - {fileID: 413017097}
   - {fileID: 8032676241996327843}
   - {fileID: 1263615590}
+  - {fileID: 2032233722}
   - {fileID: 1203752073}
   - {fileID: 156278715}
   - {fileID: 3781830426346999334}
   - {fileID: 435228243}
-  - {fileID: 2032233722}
