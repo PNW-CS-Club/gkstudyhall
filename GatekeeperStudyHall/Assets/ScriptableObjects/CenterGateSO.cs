@@ -8,8 +8,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New_CenterGateSO", menuName = "Scriptable Objects/CenterGateSO")]
 public class CenterGateSO : ScriptableObject
 {
-    const int MAX_HEALTH = 10;
-    const int STARTING_HEALTH = 10;
+    public const int MAX_HEALTH = 10;
+    public const int STARTING_HEALTH = 10;
     
     public int Health => health;
     [SerializeField] int health = STARTING_HEALTH;
