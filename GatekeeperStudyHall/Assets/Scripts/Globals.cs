@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,21 +14,33 @@ public static class Globals
     /// </summary>
     public static GateSO selectedGate = null;
 
-    /// <summary>
-    ///  A structure of data relevant to battles.
-    ///  <c>data</c> needs to be init'd so that it's technically a valid object.
-    /// </summary>
-    public struct BattleData {
-        public static void Reset() {
-            data = new();
-            isAttackerRolling = false;
+    
+    public class BattleData {
+        public PlayerSO attacker;
+        public PlayerSO defender;
+        public int attackerRoll = 0;
+        public int defenderRoll = 0;
+        public bool isAttackerRolling;
+        public int mult;
+        
+        public BattleData(PlayerSO attacker, PlayerSO defender) {
+            this.attacker = attacker;
+            this.defender = defender;
+            isAttackerRolling = true;
             mult = 1;
         }
-
-        public static List<(PlayerSO player, int roll)> data = new();
-        public static bool isAttackerRolling;
-        public static int mult;
+        
+        public bool IsTied() => attackerRoll == defenderRoll;
+        
+        public PlayerSO Winner => (attackerRoll > defenderRoll) ? attacker : defender;
+        public PlayerSO Loser => (attackerRoll > defenderRoll) ? defender : attacker;
+        
     }
+    
+    /// <summary>
+    /// Contains all the data that needs to persist through a single battle.
+    /// </summary>
+    public static BattleData battleData = null;
 
     /// <summary>
     /// The number of players still alive 
