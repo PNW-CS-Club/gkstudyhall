@@ -1,33 +1,34 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEditor;
+using System;
 
 public class CenterGateStyle : MonoBehaviour {
     [ SerializeField ] CenterGateSO gate;
     [ SerializeField ] Image hpImage;
 
-    private Sprite[] spriteSheet = new Sprite[ 10 ];
+    // this needs UnityEngine. because of ambiguity between UnityEngine.Object and System.Object
+    // System is used for Math.Clamp below
+    private UnityEngine.Object[] spriteSheet = new Sprite[ 10 ];
     private readonly List< Sprite > spriteList = new();
 
     // Start is called before the first frame update
     void Start() {
-        spriteSheet = Resources.LoadAll< Sprite >( "hp_sheet" );
+        spriteSheet = AssetDatabase.LoadAllAssetsAtPath( "Assets/Images/gate_hp.png" );
 
-        foreach ( Sprite spr in spriteSheet ) {
-            Debug.Log( spr.name );
-        }
+        for ( int i = 0; i <= 10; i++ ) {
+            string str = "gate_hp_" + i;
 
-        for ( int i = 1; i <= 10; i++ ) {
-            string str = "hp_sheet_" + i;
-
-            spriteList.Add( spriteSheet.Single( s => s.name == str ) );
+            // scary downcast! but everything's okay
+            spriteList.Add( ( Sprite )spriteSheet.Single( s => s.name == str ) );
         }
     }
 
     // Update is called once per frame
     void Update() {
-        hpImage.sprite = spriteList[ gate.Health - 1 ];
+        // no more errors if, for some odd reason, our HP is out of bounds
+        hpImage.sprite = spriteList[ Math.Clamp( gate.Health, 0, CenterGateSO.MAX_HEALTH ) ];
     }
 }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: db4afdf9b1b1bd04a94db6c69445f7c2
+guid: 26e4f525e45ce65469e4d7f80d0f7077
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 256
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hp_sheet_1
+      name: gate_hp_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,20 +118,20 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0dc1a9b4ff5481646b186695b8b00027
-      internalID: 2093527706
+      spriteID: 45189bc4fdd4cd745a3ab365cf4e3033
+      internalID: -750601138
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hp_sheet_2
+      name: gate_hp_1
       rect:
         serializedVersion: 2
         x: 256
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1c513715601cf84793b75b44cee7804
-      internalID: 578132030
+      spriteID: 43d617ec1662a204bb46324bddacfec2
+      internalID: 1327452975
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hp_sheet_3
+      name: gate_hp_2
       rect:
         serializedVersion: 2
         x: 512
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fdece955c3b39d84eb2a505ec0d53b49
-      internalID: 1131433461
+      spriteID: f88251f652f74e545a05cb6f1efb1f91
+      internalID: -401309458
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hp_sheet_4
+      name: gate_hp_3
       rect:
         serializedVersion: 2
         x: 768
@@ -187,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8f26d0b97153a5409b3def0449f17a0
-      internalID: -2082790062
+      spriteID: b7705671b96c180469d339699ca45790
+      internalID: 74087315
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hp_sheet_5
+      name: gate_hp_4
       rect:
         serializedVersion: 2
         x: 1024
@@ -208,18 +208,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3038db2b2ddab1544bfeb8c5160c4638
-      internalID: -1011585568
+      spriteID: a5296d4c15c17cf45a2ab94d3d24acce
+      internalID: 1538267913
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hp_sheet_6
+      name: gate_hp_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 1280
+        y: 256
         width: 256
         height: 256
       alignment: 0
@@ -229,14 +229,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 199ddf6ffbdb84b458a6eeb8da4b0a4e
-      internalID: -914468514
+      spriteID: 32b10c85fc76e374d9101fc20eb5d981
+      internalID: 1949660561
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hp_sheet_7
+      name: gate_hp_6
       rect:
         serializedVersion: 2
         x: 256
@@ -250,14 +250,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ebd39eca036a794fbe209c0eb750503
-      internalID: 891321922
+      spriteID: 8f92b7ec835161645af6d6e8f4a3e1db
+      internalID: 56607502
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hp_sheet_8
+      name: gate_hp_7
       rect:
         serializedVersion: 2
         x: 512
@@ -271,14 +271,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59355ae3104c9d640b61b3748c1ed6be
-      internalID: -3358424
+      spriteID: 9538ce1caf4b83f488bc1708609f1537
+      internalID: 1151998265
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hp_sheet_9
+      name: gate_hp_8
       rect:
         serializedVersion: 2
         x: 768
@@ -292,14 +292,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c689874c373a42741941a47e1622271a
-      internalID: -1248955701
+      spriteID: 341510ef26473fc46aafbeb6df8d6a0b
+      internalID: 61981382
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hp_sheet_10
+      name: gate_hp_9
       rect:
         serializedVersion: 2
         x: 1024
@@ -313,8 +313,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 284554c11e6a39b42b2e5d3f9dce57cd
-      internalID: 1106361328
+      spriteID: 6b25112ffa4ebf04684d5ce4aae8404d
+      internalID: -687349835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gate_hp_10
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6070d878df71f04cbd045dfe372e6c6
+      internalID: -1218555402
       vertices: []
       indices: 
       edges: []
@@ -330,16 +351,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      hp_sheet_1: 2093527706
-      hp_sheet_10: 1106361328
-      hp_sheet_2: 578132030
-      hp_sheet_3: 1131433461
-      hp_sheet_4: -2082790062
-      hp_sheet_5: -1011585568
-      hp_sheet_6: -914468514
-      hp_sheet_7: 891321922
-      hp_sheet_8: -3358424
-      hp_sheet_9: -1248955701
+      gate_hp_0: -750601138
+      gate_hp_1: 1327452975
+      gate_hp_10: -1218555402
+      gate_hp_2: -401309458
+      gate_hp_3: 74087315
+      gate_hp_4: 1538267913
+      gate_hp_5: 1949660561
+      gate_hp_6: 56607502
+      gate_hp_7: 1151998265
+      gate_hp_8: 61981382
+      gate_hp_9: -687349835
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
