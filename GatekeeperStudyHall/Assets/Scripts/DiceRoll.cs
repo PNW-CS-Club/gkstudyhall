@@ -41,8 +41,9 @@ public class DiceRoll : MonoBehaviour
     [SerializeField] float lerpFactor = 0.25f;
 
     float slideTimer = 0f;
-    [SerializeField, Range(0f, 1.5f)] float slideDuration = 0.75f;
-
+    // this controls how long the dice is stopped after rolling
+    // it includes a brief pause before resetting, so consider that when setting the value
+    [SerializeField, Range(0f, 3f)] float slideDuration = 1.5f;
 
     [Header("Boundaries")]
     // the dice is restricted between these while sliding
@@ -85,11 +86,14 @@ public class DiceRoll : MonoBehaviour
                 DoneRollingEvent?.Invoke(this, roll);
             }
         } else {
+            // ( 10, -5 ) is the bottom-right of the board plus some padding
+            // don't really know why but coordinate systems are not my job :P
             float x = Mathf.Lerp( transform.position.x, 10f, lerpFactor );
             float y = Mathf.Lerp( transform.position.y, -5f, lerpFactor );
             float z = transform.position.z;
 
-            float r = Mathf.Lerp( spriteRenderer.transform.rotation.z, 0, lerpFactor );
+            // whats a quarternion
+            float r = Mathf.Lerp( spriteRenderer.transform.eulerAngles.z, 0f, lerpFactor );
 
             transform.position = new( x, y, z );
             spriteRenderer.transform.eulerAngles = new( 0f, 0f, r );
@@ -227,7 +231,7 @@ public class DiceRoll : MonoBehaviour
 
         ClampDice();
 
-        if ( slideTimer >= slideDuration * 2f ) {
+        if ( slideTimer >= slideDuration ) {
             CleanUpAfterRoll();
             return true;
         }
@@ -244,8 +248,6 @@ public class DiceRoll : MonoBehaviour
 
         // shift this transform to be directly under the dice sprite's transform
         transform.position = rb.transform.position;
-        // 10, -5
-
 
         rb.transform.localPosition = Vector2.zero;
 
