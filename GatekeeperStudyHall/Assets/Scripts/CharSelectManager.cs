@@ -10,6 +10,9 @@ public class CharSelectManager : MonoBehaviour
     [SerializeField] PlayerSO player1;
     [SerializeField] PlayerSO player2;
 
+    [SerializeField] GameObject Card3;
+    [SerializeField] GameObject Card4;
+
     public CardSO selectedCard;
 
     public CardSO clearCard;
@@ -23,10 +26,19 @@ public class CharSelectManager : MonoBehaviour
             playerList.Clear();
             playerList.Add(player1);
             playerList.Add(player2);
-            player1.card = clearCard;    
+            player1.card = clearCard;   
+            player2.card = clearCard;
+            Card3.SetActive(false); 
+            Card4.SetActive(false);   
         }
         else {
-            playerList = playerListObject.list;
+            playerList = Globals.playerList;
+            if(playerList.Count < 3) {
+                Card3.SetActive(false); 
+            }
+            if(playerList.Count < 4) {
+                Card4.SetActive(false); 
+            }
         }
     }
 }

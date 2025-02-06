@@ -41,6 +41,8 @@ public static class Globals
 
     public static int sessionMatchesPlayed = 0;
 
+    public static List<PlayerSO> playerList;
+
     
 }
 
