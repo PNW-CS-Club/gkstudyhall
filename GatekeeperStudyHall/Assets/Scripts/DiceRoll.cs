@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,8 +33,8 @@ public class DiceRoll : MonoBehaviour
 
 
     [Header("Sliding")]
-    [SerializeField] float releaseMultiplier = 12f;
-    [SerializeField] float throwMultiplier = 36f;
+    [SerializeField] float releaseSpeedMultiplier = 12f;
+    [SerializeField] float throwSpeedMultiplier = 36f;
     [SerializeField] float lowSpeedThreshold = 0.1f;
     [SerializeField, Range(0, 0.1f)] float frictionFactor = 0.002f;
     [SerializeField] float lerpFactor = 0.25f;
@@ -53,6 +52,8 @@ public class DiceRoll : MonoBehaviour
     [SerializeField] GameObject barrier;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
+    
+    Vector3 startPos;
 
 
     [HideInInspector] public event System.EventHandler<int> DoneRollingEvent;
@@ -63,6 +64,7 @@ public class DiceRoll : MonoBehaviour
     Vector2 lastMousePos;
 
     void Start() {
+        startPos = transform.position;
         if (sprites.Length != 6) {
             Debug.LogError($"There should be 6 sprites in DiceRoll array (actual: {sprites.Length})");
         }
@@ -86,10 +88,8 @@ public class DiceRoll : MonoBehaviour
                 DoneRollingEvent?.Invoke(this, roll);
             }
         } else {
-            // ( 10, -5 ) is the bottom-right of the board plus some padding
-            // don't really know why but coordinate systems are not my job :P
-            float x = Mathf.Lerp( transform.position.x, 10f, lerpFactor );
-            float y = Mathf.Lerp( transform.position.y, -5f, lerpFactor );
+            float x = Mathf.Lerp( transform.position.x, startPos.x, lerpFactor );
+            float y = Mathf.Lerp( transform.position.y, startPos.y, lerpFactor );
             float z = transform.position.z;
 
             // whats a quarternion
@@ -169,7 +169,7 @@ public class DiceRoll : MonoBehaviour
     /// </summary>
     public void MouseUpFunc() {
         if (isHeld)
-            ReleaseDice(Random.Range(1, 7));
+            ReleaseDice(Random.Range(0, 6) + 1);
     }
 
     
@@ -204,13 +204,14 @@ public class DiceRoll : MonoBehaviour
 
         roll = finalRoll;
         spriteRenderer.sprite = sprites[finalRoll - 1];
+            print(mouseDelta.magnitude);
         
         // gives the dice a boost
         if ( this.mouseDelta.magnitude <= lowSpeedThreshold ) {
             // if you're lazy and aren't shaking the die, throw it in a random direction anyway
-            rb.velocity *= releaseMultiplier;
+            rb.velocity = Random.insideUnitCircle * releaseSpeedMultiplier;
         } else {
-            rb.velocity = this.mouseDelta * throwMultiplier;
+            rb.velocity = this.mouseDelta * throwSpeedMultiplier;
         }
 
         // restrict the dice's position to inside the screen bounds
