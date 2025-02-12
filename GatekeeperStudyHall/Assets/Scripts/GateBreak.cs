@@ -1,19 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GateBreak : MonoBehaviour
 {
-    
     [SerializeField] PlayerListSO playerListSO;
+    [SerializeField] PlayerSelection playerSelect;
     GameManager gameManager;
-    StateMachine stateMachine;
     
     void Start()
     {
         GameObject gmObject = GameObject.FindWithTag("GameManager");
         gameManager = gmObject.GetComponent<GameManager>();
-        stateMachine = gmObject.GetComponent<StateMachine>();
     }
 
     
@@ -22,22 +19,22 @@ public class GateBreak : MonoBehaviour
     /// and a player has rolled even or odd.
     /// </summary>
     /// <returns>The next state the player should enter this turn, or null if the turn should end.</returns>
-    public IState DoBreakEffect(PlayerSO player, GateSO gate, int roll) 
+    public State? DoBreakEffect(PlayerSO player, GateSO gate, int roll) 
     {
-        return (roll % 2 == 0) ? DoNegativeEffect(player, gate, roll) : DoPositiveEffect(player, gate, roll);
+        return (roll % 2 == 0) ? DoEvenEffect(player, gate, roll) : DoOddEffect(player, gate, roll);
     }
     
     
-    IState DoPositiveEffect(PlayerSO player, GateSO gate, int roll)
+    State? DoOddEffect(PlayerSO player, GateSO gate, int roll)
     {
         switch (gate.Color) 
         {
             case GateColor.BLACK:
-                stateMachine.choosingPlayerState.playerSelect.OnSelect = (selectedPlayer) => {
+                playerSelect.OnSelect = (selectedPlayer) => {
                     gameManager.PlayerAttacksPlayer(player, selectedPlayer, 4 * player.doubleGateAbil);
                     gameManager.NextTurn();
                 };
-                return stateMachine.choosingPlayerState;
+                return State.ChoosingPlayer;
 
             case GateColor.GREEN:
                 gameManager.PlayerChangeHealth(player, 3 * player.doubleGateAbil);
@@ -57,7 +54,7 @@ public class GateBreak : MonoBehaviour
         return null;
     }
 
-    IState DoNegativeEffect(PlayerSO player, GateSO gate, int roll)
+    State? DoEvenEffect(PlayerSO player, GateSO gate, int roll)
     {
         switch (gate.Color) 
         {

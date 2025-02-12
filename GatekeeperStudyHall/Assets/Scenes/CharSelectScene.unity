@@ -630,9 +630,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
-  p4: {fileID: 11400000, guid: b50d6f6fe5f8fd345bae2e06ea9e783e, type: 2}
+  backupListObject: {fileID: 11400000, guid: 7dc3ed68a51dcc745bc75f8452ade14d, type: 2}
   randomCard: {fileID: 11400000, guid: be14ec4658680d641a7748feea97e494, type: 2}
   clearCard: {fileID: 11400000, guid: ec1cb9dfab6e1744e9a3c91fe224c8ac, type: 2}
+  p3: {fileID: 11400000, guid: b5a7460747c7bab41906f3d7a94bc689, type: 2}
+  p4: {fileID: 11400000, guid: b50d6f6fe5f8fd345bae2e06ea9e783e, type: 2}
   Card3: {fileID: 978868925}
   Card4: {fileID: 1066359031}
   cardList:

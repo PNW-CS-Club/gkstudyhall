@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -32,7 +31,6 @@ public enum Trait
 public class TraitHandler : MonoBehaviour
 {
     [SerializeField] GameManager gameManager;
-    [SerializeField] StateMachine stateMachine;
     [SerializeField] PlayerSelection playerSelection;
     [SerializeField] PlayerListSO playerListObject;
     
@@ -49,7 +47,7 @@ public class TraitHandler : MonoBehaviour
     /// </summary>
     /// <param name="roll">The roll (1-4) that the trait corresponds to.</param>
     /// <returns>The state the game should enter after the trait roll is activated.</returns>
-    public IState ActivateCurrentPlayerTrait(int roll) 
+    public State ActivateCurrentPlayerTrait(int roll) 
     {
         return ActivateTrait(players[0], roll); 
     }
@@ -62,7 +60,7 @@ public class TraitHandler : MonoBehaviour
     /// <param name="player">The player whose trait is being activated.</param>
     /// <param name="roll">The roll (1-4) that the trait corresponds to.</param>
     /// <returns>The state the game should enter after the trait roll is activated.</returns>
-    public IState ActivateTrait(PlayerSO player, int roll)
+    public State ActivateTrait(PlayerSO player, int roll)
     {
         Assert.IsTrue(1 <= roll && roll <= 4, "Trait value must be between 1 and 4");
 
@@ -77,10 +75,10 @@ public class TraitHandler : MonoBehaviour
                 Debug.Log("Select a player to deal 3 damage to");
                 playerSelection.OnSelect = (selectedPlayer) => {
                     gameManager.PlayerAttacksPlayer(player, selectedPlayer, 3);
-                    stateMachine.TransitionTo(stateMachine.choosingGateState);
+                    gameManager.currentState = State.ChoosingGate;
                 };
 
-                return stateMachine.choosingPlayerState;
+                return State.ChoosingGate;
 
             case Trait.minus2GateKeeper:
                 //Selected gate health - 2
@@ -103,10 +101,10 @@ public class TraitHandler : MonoBehaviour
                 Debug.Log("Select a player to deal 2 damage to");
                 playerSelection.OnSelect = (selectedPlayer) => {
                     gameManager.PlayerAttacksPlayer(player, selectedPlayer, 2);
-                    stateMachine.TransitionTo(stateMachine.choosingGateState);
+                    gameManager.currentState = State.ChoosingGate;
                 };
 
-                return stateMachine.choosingPlayerState;
+                return State.ChoosingPlayer;
 
             case Trait.reduceGateDamage:
                 // Player deals 2 less damage to gates this turn
@@ -156,6 +154,6 @@ public class TraitHandler : MonoBehaviour
                 break;
         }
 
-        return stateMachine.choosingGateState;
+        return State.ChoosingGate;
     }
 }
