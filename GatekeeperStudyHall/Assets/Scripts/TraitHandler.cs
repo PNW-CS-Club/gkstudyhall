@@ -56,10 +56,6 @@ public class TraitHandler : MonoBehaviour
         return ActivateTrait(players[0], roll); 
     }
 
-
-    void Update() {
-    }
-
     /// <summary>
     /// Determines the trait to activate using the player and the roll. 
     /// Then performs the actions that that trait describes.
