@@ -35,8 +35,6 @@ public class TraitHandler : MonoBehaviour
     [SerializeField] PlayerListSO playerListObject;
 
     AbilityDisplay abilityDisplay;
-    float displayAbilityUntil = 0f;
-    float displayingAbility = 0f;
     
     List<PlayerSO> players; // refers to list in playerListObject
 
@@ -60,15 +58,6 @@ public class TraitHandler : MonoBehaviour
 
 
     void Update() {
-        if ( this.displayAbilityUntil != 0f ) {
-            this.displayingAbility += Time.deltaTime;
-
-            if ( this.displayingAbility >= this.displayAbilityUntil ) {
-                this.abilityDisplay.gameObject.SetActive( false );
-                this.displayAbilityUntil = 0f;
-                this.displayingAbility = 0f;
-            }
-        }
     }
 
     /// <summary>
@@ -83,9 +72,8 @@ public class TraitHandler : MonoBehaviour
         Assert.IsTrue(1 <= roll && roll <= 4, "Trait value must be between 1 and 4");
 
         Trait trait = player.card.traits[roll - 1];
-
+        
         this.abilityDisplay.gameObject.SetActive( true );
-        this.displayAbilityUntil = 1f;
 
         // some branches return early with a special state
         // all others will just return choosing gate state
