@@ -34,7 +34,7 @@ public class AbilityDisplay : MonoBehaviour {
             alpha = Mathf.Clamp( alpha + ( ( 192f / fadeInTime ) * Time.deltaTime ), 0f, 192f );
         }
 
-        this.abilImg.color = new( 1f, 1f, 1f, ( alpha / 255f ) + 0.25f );
+        this.abilImg.color = new( 1f, 1f, 1f, ( alpha / 255f ) * 1.33f );
         this.abilImg.transform.localScale += new Vector3( growScale, growScale, 0f );
         this.backgroundImg.color = new( 0f, 0f, 0f, alpha / 255f );
 
