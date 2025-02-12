@@ -18,9 +18,10 @@ public class CharSelectMenuOnClick : MonoBehaviour
     
     [SerializeField] List<CardSO> cardList;
 
-    void Start() 
+    //in here we set the list of players before starting the game
+    void Start()  
     {
-        if(Globals.sessionMatchesPlayed == 0) 
+        if(Globals.sessionMatchesPlayed == 0) //if it is the first game make the globalplayerlist a shadow copy of the playerlistobject
             Globals.playerList = playerListObject.list;
         players = playerListObject.list;        
     }

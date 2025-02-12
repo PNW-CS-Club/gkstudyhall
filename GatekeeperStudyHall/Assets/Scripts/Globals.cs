@@ -49,9 +49,9 @@ public static class Globals
 
     public static PlayerSO winningPlayer;
 
-    public static int sessionMatchesPlayed = 0;
+    public static int sessionMatchesPlayed = 0; //to know if is the first game of the session
 
-    public static List<PlayerSO> playerList;
+    public static List<PlayerSO> playerList; //playerlist used for multiple game
 
     
 }

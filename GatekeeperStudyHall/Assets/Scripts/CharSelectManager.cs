@@ -18,7 +18,9 @@ public class CharSelectManager : MonoBehaviour
     public CardSO clearCard;
 
     
-
+    //Every time we check if this is a new game or not
+    //if is a new game we clear everything and set the game for 2 players
+    //if is not a new game we are setting everything whit the last game information
     private void Start() 
     {
         if(Globals.sessionMatchesPlayed == 0) {
@@ -32,7 +34,7 @@ public class CharSelectManager : MonoBehaviour
             Card4.SetActive(false);   
         }
         else {
-            playerListObject.list = Globals.playerList;
+            playerListObject.list = Globals.playerList; //if it's not the first game we are making a shadow copy of the globalplayerlist
             playerList = playerListObject.list;
             Card3.SetActive(playerList.Count >= 3);
             Card4.SetActive(playerList.Count == 4);     
