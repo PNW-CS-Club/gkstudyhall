@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 /// <summary>
 /// Holds references to any objects we want easy access to. 
 /// Cannot be instantiated; instead the references are stored in static fields.
@@ -47,4 +48,11 @@ public static class Globals
     public static int playersAlive = -1;
 
     public static PlayerSO winningPlayer;
+
+    public static int sessionMatchesPlayed = 0; //to know if is the first game of the session
+
+    public static List<PlayerSO> playerList; //playerlist used for multiple game
+
+    
 }
+
