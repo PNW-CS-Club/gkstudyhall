@@ -5061,9 +5061,33 @@ PrefabInstance:
       value: Resume
       objectReference: {fileID: 0}
     - target: {fileID: 3836370788147611266, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836370788147611266, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836370788147611266, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836370788147611266, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836370788147611266, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_fontSizeBase
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 3836370788147611266, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968832974814074799, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: cdd8a2a9f036ab5498635677161c483e, type: 2}
     - target: {fileID: 4102163874504718069, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -5092,9 +5116,17 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4261791158230596617, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: cdd8a2a9f036ab5498635677161c483e, type: 2}
+    - target: {fileID: 5882237186779866963, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: cdd8a2a9f036ab5498635677161c483e, type: 2}
     - target: {fileID: 6267592348131671415, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_Name
-      value: Button
+      value: Custom Resume Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

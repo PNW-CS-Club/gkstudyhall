@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class ButtonBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public UnityEvent OnClick;
     [SerializeField] Gradient gradient;
+    public UnityEvent OnClick;
     
     bool hovering = false;
 
