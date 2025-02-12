@@ -772,7 +772,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c70f5f1e61a82f24aac0e39ae098863a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e035188e37f9a714999fa44bf0d99924, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4361,6 +4361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilImg: {fileID: 308107693}
+  backgroundImg: {fileID: 1933374620}
 --- !u!114 &1933374620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4420,7 +4421,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 25
+  m_SortingOrder: 35
   m_TargetDisplay: 0
 --- !u!1 &1942969832
 GameObject:
