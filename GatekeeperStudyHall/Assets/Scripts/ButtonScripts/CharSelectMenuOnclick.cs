@@ -22,7 +22,6 @@ public class CharSelectMenuOnClick : MonoBehaviour
     {
         if(Globals.sessionMatchesPlayed == 0) 
             Globals.playerList = playerListObject.list;
-
         players = playerListObject.list;        
     }
 

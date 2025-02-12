@@ -339,10 +339,10 @@ MonoBehaviour:
       - m_Target: {fileID: 102629915}
         m_TargetAssemblyTypeName: CharSelectMenuOnClick, Assembly-CSharp
         m_MethodName: AddPlayer
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: b5a7460747c7bab41906f3d7a94bc689, type: 2}
-          m_ObjectArgumentAssemblyTypeName: PlayerSO, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1168,10 +1168,10 @@ MonoBehaviour:
       - m_Target: {fileID: 102629915}
         m_TargetAssemblyTypeName: CharSelectMenuOnClick, Assembly-CSharp
         m_MethodName: RemovePlayer
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: b5a7460747c7bab41906f3d7a94bc689, type: 2}
-          m_ObjectArgumentAssemblyTypeName: PlayerSO, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
