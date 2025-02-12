@@ -130,8 +130,6 @@ public class DiceRoll : MonoBehaviour
 
         // update the delta
         this.mouseDelta = ( Vector2 )mousePosition - this.lastMousePos;
-    
-        this.lastMousePos = mousePosition;
 
         // shake the dice once every `shakeInterval` seconds
         if (shakeTimer >= shakeInterval) {
@@ -161,6 +159,8 @@ public class DiceRoll : MonoBehaviour
 
         // tick the timer
         shakeTimer += Time.deltaTime;
+    
+        this.lastMousePos = mousePosition;
     }
 
 
@@ -204,7 +204,6 @@ public class DiceRoll : MonoBehaviour
 
         roll = finalRoll;
         spriteRenderer.sprite = sprites[finalRoll - 1];
-            print(mouseDelta.magnitude);
         
         // gives the dice a boost
         if ( this.mouseDelta.magnitude <= lowSpeedThreshold ) {
