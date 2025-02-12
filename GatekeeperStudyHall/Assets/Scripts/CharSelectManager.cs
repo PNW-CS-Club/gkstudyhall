@@ -32,13 +32,10 @@ public class CharSelectManager : MonoBehaviour
             Card4.SetActive(false);   
         }
         else {
-            playerList = Globals.playerList;
-            if(playerList.Count < 3) {
-                Card3.SetActive(false); 
-            }
-            if(playerList.Count < 4) {
-                Card4.SetActive(false); 
-            }
+            playerListObject.list = Globals.playerList;
+            playerList = playerListObject.list;
+            Card3.SetActive(playerList.Count >= 3);
+            Card4.SetActive(playerList.Count == 4);     
         }
     }
 }

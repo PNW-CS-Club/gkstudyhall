@@ -19,8 +19,10 @@ public class CharSelectMenuOnClick : MonoBehaviour
 
     void Start() 
     {
-        players = playerListObject.list;
-        Globals.playerList = playerListObject.list;  
+        if(Globals.sessionMatchesPlayed == 0) 
+            Globals.playerList = playerListObject.list;
+
+        players = playerListObject.list;        
     }
 
     public void StartGame()
