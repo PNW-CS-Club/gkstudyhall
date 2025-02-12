@@ -354,7 +354,6 @@ GameObject:
   - component: {fileID: 79121190}
   - component: {fileID: 79121193}
   - component: {fileID: 79121192}
-  - component: {fileID: 79121191}
   m_Layer: 5
   m_Name: HoveringBlueGateText
   m_TagString: Untagged
@@ -381,19 +380,6 @@ RectTransform:
   m_AnchoredPosition: {x: 287.12784, y: -323.24423}
   m_SizeDelta: {x: 324.62, y: 50}
   m_Pivot: {x: 0.000000082288864, y: 0.000000048428774}
---- !u!114 &79121191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79121189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 752bfa79c9d8c43c29b35bb63f4f255f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverTextBox: {fileID: 0}
 --- !u!114 &79121192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1873,8 +1859,8 @@ GameObject:
   - component: {fileID: 590737257}
   - component: {fileID: 590737258}
   - component: {fileID: 590737259}
-  - component: {fileID: 590737261}
   - component: {fileID: 590737260}
+  - component: {fileID: 590737261}
   m_Layer: 5
   m_Name: Green Gate
   m_TagString: Untagged
@@ -2278,8 +2264,6 @@ GameObject:
   - component: {fileID: 745546657}
   - component: {fileID: 745546661}
   - component: {fileID: 745546660}
-  - component: {fileID: 745546659}
-  - component: {fileID: 745546658}
   m_Layer: 5
   m_Name: HoveringGreenGateText
   m_TagString: Untagged
@@ -2306,32 +2290,6 @@ RectTransform:
   m_AnchoredPosition: {x: 87, y: -51}
   m_SizeDelta: {x: 324.62, y: 50}
   m_Pivot: {x: 0.000000082288864, y: 0.000000048428774}
---- !u!114 &745546658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 745546656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 752bfa79c9d8c43c29b35bb63f4f255f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverTextBox: {fileID: 0}
---- !u!114 &745546659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 745546656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 752bfa79c9d8c43c29b35bb63f4f255f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverTextBox: {fileID: 0}
 --- !u!114 &745546660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2937,7 +2895,6 @@ GameObject:
   - component: {fileID: 1084374197}
   - component: {fileID: 1084374200}
   - component: {fileID: 1084374199}
-  - component: {fileID: 1084374198}
   m_Layer: 5
   m_Name: HoveringRedGateText
   m_TagString: Untagged
@@ -2964,19 +2921,6 @@ RectTransform:
   m_AnchoredPosition: {x: -16.468779, y: -199.01147}
   m_SizeDelta: {x: 324.62, y: 50}
   m_Pivot: {x: 0.000000082288864, y: 0.000000048428774}
---- !u!114 &1084374198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1084374196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 752bfa79c9d8c43c29b35bb63f4f255f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverTextBox: {fileID: 0}
 --- !u!114 &1084374199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4239,7 +4183,6 @@ GameObject:
   - component: {fileID: 1470516003}
   - component: {fileID: 1470516006}
   - component: {fileID: 1470516005}
-  - component: {fileID: 1470516004}
   m_Layer: 5
   m_Name: HoveringBlackGateText
   m_TagString: Untagged
@@ -4266,19 +4209,6 @@ RectTransform:
   m_AnchoredPosition: {x: 279.18625, y: -63.705994}
   m_SizeDelta: {x: 324.62, y: 50}
   m_Pivot: {x: 0.000000082288864, y: 0.000000048428774}
---- !u!114 &1470516004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1470516002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 752bfa79c9d8c43c29b35bb63f4f255f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverTextBox: {fileID: 0}
 --- !u!114 &1470516005
 MonoBehaviour:
   m_ObjectHideFlags: 0
