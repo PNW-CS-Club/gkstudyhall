@@ -20,13 +20,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ButtonMat
+  m_Name: ButtonYellow
   m_Shader: {fileID: -6465566751694194690, guid: defc6d58792f59d49bff98a8861d4191, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _BUTTONTYPE_RED
-  m_InvalidKeywords: []
+  - _BUTTONTYPE_YELLOW
+  m_InvalidKeywords:
+  - _BUTTONTYPE_ORANGE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -85,7 +86,7 @@ Material:
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _BUTTONTYPE: 1
+    - _BUTTONTYPE: 0
     - _BumpScale: 1
     - _ColorMask: 15
     - _Cutoff: 0.5

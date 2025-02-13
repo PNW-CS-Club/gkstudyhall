@@ -5,18 +5,13 @@ using UnityEngine.EventSystems;
 
 public class ButtonBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] Gradient gradient;
     public UnityEvent OnClick;
     
     bool hovering = false;
 
     void OnDisable()
     {
-        if (hovering)
-        {
-            print("OnDisable");
-            hovering = false;
-        }
+        if (hovering) EndHover();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -26,13 +21,24 @@ public class ButtonBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnte
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        hovering = true;
-        print("OnPointerEnter");
+        StartHover();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        EndHover();
+    }
+
+
+    void StartHover()
+    {
+        hovering = true;
+        //print("StartHover");
+    }
+
+    void EndHover()
+    {
         hovering = false;
-        print("OnPointerExit");
+        //print("EndHover");
     }
 }
