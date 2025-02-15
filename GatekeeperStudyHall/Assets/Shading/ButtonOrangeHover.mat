@@ -20,14 +20,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ButtonYellow
+  m_Name: ButtonOrangeHover
   m_Shader: {fileID: -6465566751694194690, guid: defc6d58792f59d49bff98a8861d4191, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _BUTTONTYPE_YELLOW
-  m_InvalidKeywords:
   - _BUTTONTYPE_ORANGE
+  m_InvalidKeywords:
+  - _BUTTONTYPE_YELLOW
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -79,7 +79,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpriteTexture:
-        m_Texture: {fileID: 2800000, guid: 4eab46c9a77f36840a0e96f994eefd23, type: 3}
+        m_Texture: {fileID: 2800000, guid: 19a0d49359ee1ac40a7536eec957c9d2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []

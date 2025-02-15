@@ -170,7 +170,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 45.19084, y: 80}
+  m_SizeDelta: {x: 43.35878, y: 80}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &3413782587174159008
 CanvasRenderer:
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1381575548, guid: 4eab46c9a77f36840a0e96f994eefd23, type: 3}
+  m_Sprite: {fileID: 1591268958, guid: 19a0d49359ee1ac40a7536eec957c9d2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -258,7 +258,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 209.61832, y: 80}
+  m_SizeDelta: {x: 213.28244, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8989546810750565486
 CanvasRenderer:
@@ -288,7 +288,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2106426027, guid: 4eab46c9a77f36840a0e96f994eefd23, type: 3}
+  m_Sprite: {fileID: -67471568, guid: 19a0d49359ee1ac40a7536eec957c9d2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -346,7 +346,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 45.19084, y: 80}
+  m_SizeDelta: {x: 43.35878, y: 80}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &952278587681525169
 CanvasRenderer:
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 376495850, guid: 4eab46c9a77f36840a0e96f994eefd23, type: 3}
+  m_Sprite: {fileID: -1392569330, guid: 19a0d49359ee1ac40a7536eec957c9d2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 7392341957681097002}
   - component: {fileID: 4102163874504718069}
   m_Layer: 5
-  m_Name: CustomButton
+  m_Name: HexButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -478,33 +478,7 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls: []
-  gradient:
-    serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
+  defaultMaterial: {fileID: 0}
+  hoverMaterial: {fileID: 0}
+  pressMaterial: {fileID: 0}
+  buttonImages: []
