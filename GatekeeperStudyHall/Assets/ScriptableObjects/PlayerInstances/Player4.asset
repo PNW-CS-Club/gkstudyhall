@@ -12,6 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42957912d8c19b47bc77e73fb084e8b, type: 3}
   m_Name: Player4
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: c7b50c4b34a1aff4f8fb5e0ec0802c42, type: 2}
-  health: 10
+  card: {fileID: 11400000, guid: ec1cb9dfab6e1744e9a3c91fe224c8ac, type: 2}
   hasStockade: 0
+  health: 10
+  isAlive: 1
+  doubleDamageToCenter: 1
+  doubleDamageToSelf: 1
+  reduceGateDamage: 0
+  increaseGateDamage: 0
+  noDamageTurn: 0
+  doubleGateAbil: 1
+  totalDamageToOtherPlayers: 0
+  totalDamageToGates: 0
+  totalDamageToGatekeeper: 0
+  totalAmountHealed: 0
+  totalDamageTaken: 0
+  totalStockade: 0
+  battlesStarted: 0
