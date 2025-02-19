@@ -159,7 +159,7 @@ PrefabInstance:
     - target: {fileID: 4102163874504718069, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: pressMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: cdd8a2a9f036ab5498635677161c483e, type: 2}
+      objectReference: {fileID: 2100000, guid: c2cb95a2e30ace04a96faa5dbd59d048, type: 2}
     - target: {fileID: 4102163874504718069, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: defaultMaterial
       value: 

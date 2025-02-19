@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ButtonBehaviour : MonoBehaviour, 
-    IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+    IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
     public UnityEvent OnClick;
     
@@ -25,11 +25,9 @@ public class ButtonBehaviour : MonoBehaviour,
     }
 
     public void OnPointerEnter(PointerEventData eventData) => StartHover();
-
     public void OnPointerExit(PointerEventData eventData) => EndHover();
     public void OnPointerDown(PointerEventData eventData) => StartPress();
     public void OnPointerUp(PointerEventData eventData) => EndPress();
-    public void OnPointerClick(PointerEventData eventData) => OnClick.Invoke();
 
 
     void StartHover()
@@ -52,17 +50,17 @@ public class ButtonBehaviour : MonoBehaviour,
 
     void EndPress()
     {
+        bool finishedClick = hovering && pressing;
         pressing = false;
         UpdateMaterials();
+        if (finishedClick) OnClick.Invoke();
     }
 
     void UpdateMaterials()
     {
         Material mat = defaultMaterial;
-        if (pressing)
-            mat = pressMaterial;
-        else if (hovering)
-            mat = hoverMaterial;
+        if (hovering)
+            mat = pressing ? pressMaterial : hoverMaterial;
         
         foreach (Image image in buttonImages) 
             image.material = mat;
