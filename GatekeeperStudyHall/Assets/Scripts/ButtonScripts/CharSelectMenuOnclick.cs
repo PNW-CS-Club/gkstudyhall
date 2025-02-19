@@ -10,8 +10,10 @@ public class CharSelectMenuOnClick : MonoBehaviour
     public CardSO randomCard;
     public CardSO clearCard;
 
+    [SerializeField] PlayerSO p2;   
     [SerializeField] PlayerSO p3;
     [SerializeField] PlayerSO p4;
+    [SerializeField] GameObject Card2;
     [SerializeField] GameObject Card3;
     [SerializeField] GameObject Card4;
     
@@ -30,7 +32,7 @@ public class CharSelectMenuOnClick : MonoBehaviour
     {
         foreach (var v in players)
         {
-            if(v.card == clearCard)
+            if(v.card == clearCard || players.Count < 2)
                 return;
         }
 
@@ -44,7 +46,7 @@ public class CharSelectMenuOnClick : MonoBehaviour
 
         foreach (var c in players)
         {
-            if( c.card == randomCard ){
+            if( c.card == randomCard){
                 int r = UnityEngine.Random.Range(0, cardList.Count);
                 c.card = cardList[r];
             }
@@ -61,24 +63,57 @@ public class CharSelectMenuOnClick : MonoBehaviour
     {
         switch (players.Count)
         {
-            case <= 2:
+            case 1:
+                players.Add(p2);
+                Card2.SetActive(true);
+                p2.isBot = false;
+                p2.card = clearCard;
+                return;
+            case 2:
                 players.Add(p3);
                 Card3.SetActive(true);
+                p3.isBot = false;
+                p3.card = clearCard;
                 return;
             case 3:
                 players.Add(p4);
                 Card4.SetActive(true);
+                p4.isBot = false;
+                p4.card = clearCard;
                 return;
             case >= 4:
                 return;
         }
+        
     }
 
     ///This function will be for the AddBotButton.
     ///When the button is clicked, an instance of the Bot class should be made and added to the list of players.
     public void AddBot()
     {
-    
+        switch (players.Count)
+        {
+            case 1:
+                players.Add(p2);
+                Card2.SetActive(true);
+                p2.isBot = true;
+                p2.card = randomCard;
+                return;
+            case 2:
+                players.Add(p3);
+                Card3.SetActive(true);
+                p3.isBot = true;
+                p3.card = randomCard;
+                return;
+            case 3:
+                players.Add(p4);
+                Card4.SetActive(true);
+                p4.isBot = true;
+                p4.card = randomCard;
+                return;
+            case >= 4:
+                return;
+        }
     }
 
     ///This function is for the RemovePlayerButton on both Bots and Players.
@@ -87,7 +122,11 @@ public class CharSelectMenuOnClick : MonoBehaviour
     {
         switch (players.Count)
         {
-            case <= 2:
+            case <= 1:
+                return;
+            case 2:
+                players.Remove(p2);
+                Card2.SetActive(false);
                 return;
             case 3:
                 players.Remove(p3);

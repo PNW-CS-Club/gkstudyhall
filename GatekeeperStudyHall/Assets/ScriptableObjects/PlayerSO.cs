@@ -10,6 +10,7 @@ public class PlayerSO : ScriptableObject
 
     // These are regular fields so that we can inspect them in the editor.
     // Using a boolean for the stockade because it doesn't seem like we'll use the multiple stockade rule.
+    public bool isBot = false;
     public CardSO card;
     public bool hasStockade;
     
