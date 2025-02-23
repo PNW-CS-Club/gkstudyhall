@@ -15,6 +15,7 @@ public class GateButtonActions : MonoBehaviour
     /// </summary>
     public void ChooseGate(GateSO gate) 
     {
+
         if (!gameManager.currentState.CanChooseGate()) 
             return;
 

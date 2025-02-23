@@ -32,8 +32,8 @@ public class CharSelectManager : MonoBehaviour
             playerList.Add(player1);
             player1.card = clearCard;
             player2.card = clearCard;
-            player3.card = clearCard; 
-            player4.card = clearCard;  
+            player3.card = clearCard;
+            player4.card = clearCard; 
             Card2.SetActive(false);
             Card3.SetActive(false); 
             Card4.SetActive(false);   

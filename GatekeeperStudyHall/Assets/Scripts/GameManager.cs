@@ -21,11 +21,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] CenterGateSO centerGate;
 
     bool wasPlayerSelectShowing = false;
+
+    [SerializeField] List<GateSO> gateList;
     
 
     void RollEventHandler(object sender, int roll) => UseRollResult(roll);
     void OnEnable() => diceRoll.DoneRollingEvent += RollEventHandler;
     void OnDestroy() => diceRoll.DoneRollingEvent -= RollEventHandler;
+
 
     void Awake() 
     {
@@ -35,6 +38,7 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
+        PlayerSO currentPlayer = Globals.playerList[0];
         // show/hide playerSelect only when current state changes to/from ChoosingPlayerState
         bool isPlayerSelectShowing = currentState == State.ChoosingPlayer;
         if (wasPlayerSelectShowing != isPlayerSelectShowing)
@@ -45,6 +49,9 @@ public class GameManager : MonoBehaviour
                 playerSelect.Hide();
             
             wasPlayerSelectShowing = isPlayerSelectShowing;
+        }
+        if(currentPlayer.isBot && currentState == State.ChoosingGate) {
+            currentState = State.AttackingGate;
         }
     }
     
@@ -167,8 +174,15 @@ public class GameManager : MonoBehaviour
             {
                 // Player rolls a 5, initiate battle with another player
                 currentPlayer.battlesStarted++;
-                currentState = State.ChoosingPlayer;
-                playerSelect.OnSelect = defender => DoBattle(playerListSO.list[0], defender);
+                if(currentPlayer.isBot) { //the bot choose a random opponent
+                    int index = Random.Range(1, playerListSO.list.Count);
+                    DoBattle(playerListSO.list[0], playerListSO.list[index]);
+                }
+                else {
+                    currentState = State.ChoosingPlayer;
+                    playerSelect.OnSelect = defender => DoBattle(playerListSO.list[0], defender);
+                }
+                
             }
             else 
             {
@@ -181,7 +195,14 @@ public class GameManager : MonoBehaviour
             int attack = roll + currentPlayer.increaseGateDamage - currentPlayer.reduceGateDamage;
             attack = Mathf.Max(0, attack); // set to 0 if attack comes out negative
             Debug.Log($"attacking for {attack} damage");
-            GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
+            if(currentPlayer.isBot) {
+                int index = Random.Range(0, 3);
+                Globals.selectedGate = gateList[index];
+                GateChangeHealth(currentPlayer, gateList[index], -attack); //TODO: we need to put the randomGate in the function
+            }
+            else
+                GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
+
             if (Globals.selectedGate.Health == 0) {
                 Debug.Log("You broke the gate!");
                 currentState = State.BreakingGate;
@@ -261,6 +282,7 @@ public class GameManager : MonoBehaviour
         cardQueue.RepositionCards();
         
         currentState = State.TraitRoll;
+
     }
 
     /// <summary>
@@ -272,4 +294,5 @@ public class GameManager : MonoBehaviour
         currentState = State.Battling;
         Debug.Log($"Battle begun between {attacker.card.characterName} and {defender.card.characterName}");
     }
+
 }

@@ -59,8 +59,6 @@ public class DiceRoll : MonoBehaviour
     [HideInInspector] public event System.EventHandler<int> DoneRollingEvent;
     int roll = -1;
 
-    PlayerSO currentPlayer = Globals.playerList[0];
-
     Vector2 mouseDelta;
     Vector2 lastMousePos;
 
@@ -77,9 +75,22 @@ public class DiceRoll : MonoBehaviour
 
 
     void Update() {
-        if(currentPlayer.isBot){
-            ReleaseDice(Random.Range(0, 6) + 1);// roll a random number for the bot
+    
+        PlayerSO currentPlayer = Globals.playerList[0];
+
+        try {
+            if((currentPlayer.isBot || Globals.battleData.defender.isBot) && !isSliding && gameManager.currentState.CanRoll()){
+                ReleaseDice(Random.Range(0, 6) + 1);// roll a random number for the bot
+            }
         }
+        catch {
+            if((currentPlayer.isBot) && !isSliding && gameManager.currentState.CanRoll()){
+                ReleaseDice(Random.Range(0, 6) + 1);// roll a random number for the bot
+            }
+        }
+        
+        
+        
         if (canCheatRolls)
             TryCheating();
         

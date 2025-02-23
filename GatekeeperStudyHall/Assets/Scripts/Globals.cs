@@ -14,6 +14,7 @@ public static class Globals
     /// </summary>
     public static GateSO selectedGate = null;
 
+
     
     public class BattleData {
         public PlayerSO attacker;
@@ -22,6 +23,8 @@ public static class Globals
         public int defenderRoll = 0;
         public bool isAttackerRolling;
         public int mult;
+
+        public PlayerSO currentPlayer;
         
         public BattleData(PlayerSO attacker, PlayerSO defender) {
             this.attacker = attacker;
