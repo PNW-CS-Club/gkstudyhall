@@ -5042,6 +5042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textObj: {fileID: 1794497802}
+  startTime: 0
 --- !u!114 &1794497802
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -18,14 +16,14 @@ public class ClockDisplay : MonoBehaviour {
     void Update() {
         float timeElapsed = ( Time.time - this.startTime );
 
-        // hours is untested, but i'm not sitting for an hour until it hits it LOL
-        // it should only show ##:## if < 1 hour and ##:##:## if > 1 hour
+        int numHours = ( int )timeElapsed / ( 60 * 60 );
+        int numMins = ( int )( timeElapsed / 60 ) % 60;
+        int numSecs = ( int )( timeElapsed % 60 );
+
         if ( timeElapsed >= 60f * 60f ) {
-            textObj.text = String.Format( "{0:D2}:{1:D2}:{2:D2}", ( int )( timeElapsed / ( 60 * 60 ) ),
-                                                                  ( int )( timeElapsed / 60 ), 
-                                                                  ( int )( timeElapsed % 60 ) );
+            textObj.text = String.Format( "{0:D2}:{1:D2}:{2:D2}", numHours, numMins, numSecs );
         } else {
-            textObj.text = String.Format( "{0:D2}:{1:D2}", ( int )( timeElapsed / 60 ), ( int )( timeElapsed % 60 ) );
+            textObj.text = String.Format( "{0:D2}:{1:D2}", numMins, numSecs );
         }
     }
 
