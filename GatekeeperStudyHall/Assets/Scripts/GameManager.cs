@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] CenterGateSO centerGate;
 
+    [SerializeField] List< GateSO > gates;
+
     bool wasPlayerSelectShowing = false;
     
 
@@ -279,13 +281,9 @@ public class GameManager : MonoBehaviour
         // heal center gate back to full
         centerGate.Heal( CenterGateSO.STARTING_HEALTH );
 
-        // heal all gates back to full
-        // VSCode gives a warning because GateSO is not a Unity Component, whatever
-        // *should* check validity of GameObject.Find calls, but they should always exist...right?
-        GameObject.Find( "BlackGate" ).GetComponent< GateSO >().Heal( GateSO.STARTING_HEALTH );
-        GameObject.Find( "BlueGate" ).GetComponent< GateSO >().Heal( GateSO.STARTING_HEALTH );
-        GameObject.Find( "GreenGate" ).GetComponent< GateSO >().Heal( GateSO.STARTING_HEALTH );
-        GameObject.Find( "RedGate" ).GetComponent< GateSO >().Heal( GateSO.STARTING_HEALTH );
+        foreach ( GateSO gate in gates ) {
+            gate.Heal( GateSO.STARTING_HEALTH );
+        }
 
         // we had two calls to loading the EndScene, one async and one not
         // not sure why, but i kept both functionalities

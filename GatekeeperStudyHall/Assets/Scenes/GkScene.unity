@@ -1498,6 +1498,26 @@ PrefabInstance:
       propertyPath: traitHandler
       value: 
       objectReference: {fileID: 413017098}
+    - target: {fileID: 3649130508021954605, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+      propertyPath: gates.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3649130508021954605, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+      propertyPath: gates.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 392ac465f7634784fb4a8949abf8b36c, type: 2}
+    - target: {fileID: 3649130508021954605, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+      propertyPath: gates.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: c34ceb3b11676f344931a8e7886e7a1a, type: 2}
+    - target: {fileID: 3649130508021954605, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+      propertyPath: gates.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a4cae344093a314196b496206f66a2b, type: 2}
+    - target: {fileID: 3649130508021954605, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+      propertyPath: gates.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 39a1afa8f22991a4bb80a5a7616ed6da, type: 2}
     - target: {fileID: 5598449455276713471, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
