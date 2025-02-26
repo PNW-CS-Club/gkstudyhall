@@ -159,12 +159,14 @@ public class GameManager : MonoBehaviour
     private void UseRollResult(int roll) 
     {
         PlayerSO currentPlayer = playerListSO.list[0];
+        //Debug.Log($"{currentPlayer} rolled a {roll}!");
+
         if (currentState == State.TraitRoll) 
         {
             if (roll <= 4) 
             {
                 State nextState = traitHandler.ActivateCurrentPlayerTrait(roll);
-                if (!playerListSO.list[0].isAlive){
+                if (!currentPlayer.isAlive){
                     NextTurn(); // If the player dies from their trait, end their turn
                 } else {
                     currentState = nextState; // TODO: what if the player dies after choosing another player?
@@ -174,13 +176,13 @@ public class GameManager : MonoBehaviour
             {
                 // Player rolls a 5, initiate battle with another player
                 currentPlayer.battlesStarted++;
-                if(currentPlayer.isBot) { //the bot choose a random opponent
+                if(currentPlayer.isBot) { //the bot chooses a random opponent
                     int index = Random.Range(1, playerListSO.list.Count);
-                    DoBattle(playerListSO.list[0], playerListSO.list[index]);
+                    DoBattle(currentPlayer, playerListSO.list[index]);
                 }
                 else {
                     currentState = State.ChoosingPlayer;
-                    playerSelect.OnSelect = defender => DoBattle(playerListSO.list[0], defender);
+                    playerSelect.OnSelect = defender => DoBattle(currentPlayer, defender);
                 }
                 
             }
@@ -194,17 +196,17 @@ public class GameManager : MonoBehaviour
         {
             int attack = roll + currentPlayer.increaseGateDamage - currentPlayer.reduceGateDamage;
             attack = Mathf.Max(0, attack); // set to 0 if attack comes out negative
-            Debug.Log($"attacking for {attack} damage");
+            
             if(currentPlayer.isBot) {
                 int index = Random.Range(0, 3);
                 Globals.selectedGate = gateList[index];
-                GateChangeHealth(currentPlayer, gateList[index], -attack); //TODO: we need to put the randomGate in the function
             }
-            else
-                GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
+            
+            GateChangeHealth(currentPlayer, Globals.selectedGate, -attack);
+            Debug.Log($"{currentPlayer} is attacking {Globals.selectedGate} for {attack} damage");
 
             if (Globals.selectedGate.Health == 0) {
-                Debug.Log("You broke the gate!");
+                Debug.Log($"{currentPlayer} broke the gate!");
                 currentState = State.BreakingGate;
             }
             else {
@@ -213,7 +215,7 @@ public class GameManager : MonoBehaviour
         }
         else if (currentState == State.BreakingGate) 
         {
-            State? maybeNextState = gateBreak.DoBreakEffect(playerListSO.list[0], Globals.selectedGate, roll);
+            State? maybeNextState = gateBreak.DoBreakEffect(currentPlayer, Globals.selectedGate, roll);
             Globals.selectedGate.Reset();
 
             if (maybeNextState is State nextState)
@@ -245,7 +247,7 @@ public class GameManager : MonoBehaviour
 
                     Globals.battleData = null;
                     // If the current player died, transition to the next player
-                    if (!playerListSO.list[0].isAlive) {
+                    if (!currentPlayer.isAlive) {
                         NextTurn();
                     }
                     else {
@@ -282,7 +284,7 @@ public class GameManager : MonoBehaviour
         cardQueue.RepositionCards();
         
         currentState = State.TraitRoll;
-
+        Globals.currentPlayer = players[0];
     }
 
     /// <summary>

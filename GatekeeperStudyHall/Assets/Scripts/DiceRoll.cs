@@ -39,10 +39,10 @@ public class DiceRoll : MonoBehaviour
     [SerializeField, Range(0, 0.1f)] float frictionFactor = 0.002f;
     [SerializeField] float lerpFactor = 0.25f;
 
-    float slideTimer = 0f;
+    float slideTimer = 0.5f;
     // this controls how long the dice is stopped after rolling
     // it includes a brief pause before resetting, so consider that when setting the value
-    [SerializeField, Range(0f, 3f)] float slideDuration = 1.5f;
+    [SerializeField, Range(0f, 3f)] float slideDuration = 2.0f;
 
     [Header("Boundaries")]
     // the dice is restricted between these while sliding

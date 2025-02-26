@@ -19,7 +19,7 @@ public class GateButtonActions : MonoBehaviour
         if (!gameManager.currentState.CanChooseGate()) 
             return;
 
-        Debug.Log($"Chose gate: {gate.Color}");
+        Debug.Log($"{Globals.currentPlayer} chose gate: {gate.Color}");
         Globals.selectedGate = gate;
         gameManager.currentState = State.AttackingGate;
     }

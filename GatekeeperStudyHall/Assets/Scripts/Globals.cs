@@ -13,7 +13,7 @@ public static class Globals
     /// Holds <c>null</c> if the player has not yet chosen a gate or has already attacked a gate.
     /// </summary>
     public static GateSO selectedGate = null;
-
+    public static PlayerSO currentPlayer;
 
     
     public class BattleData {
@@ -24,7 +24,6 @@ public static class Globals
         public bool isAttackerRolling;
         public int mult;
 
-        public PlayerSO currentPlayer;
         
         public BattleData(PlayerSO attacker, PlayerSO defender) {
             this.attacker = attacker;
