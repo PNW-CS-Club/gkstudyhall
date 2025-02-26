@@ -14,8 +14,8 @@ public enum GateColor
 [CreateAssetMenu(fileName = "New_GateSO", menuName = "Scriptable Objects/GateSO")]
 public class GateSO : ScriptableObject
 {
-    const int STARTING_HEALTH = 6;
-    const int MAX_HEALTH = 6;
+    public const int STARTING_HEALTH = 6;
+    public const int MAX_HEALTH = 6;
 
     public GateColor Color => color;
     [SerializeField] GateColor color;

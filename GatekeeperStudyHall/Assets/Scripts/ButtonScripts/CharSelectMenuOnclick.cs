@@ -41,6 +41,7 @@ public class CharSelectMenuOnClick : MonoBehaviour
             player.ResetEffects();
         }
         AsyncOperation _ = SceneManager.LoadSceneAsync("GkScene");
+        // RESET CLOCK HERE - THIS BRANCH DOES NOT HAVE THE CLOCK YET
 
         foreach (var c in players)
         {

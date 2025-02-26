@@ -65,8 +65,7 @@ public class GameManager : MonoBehaviour
                 }
             }
             
-            // Transition to End Scene
-            AsyncOperation _ = SceneManager.LoadSceneAsync("EndScene");
+            DoEndGameCleanup( true );
         }
     }
 
@@ -95,7 +94,7 @@ public class GameManager : MonoBehaviour
         if (centerGate.Health == 0)
         {
             Globals.winningPlayer = attacker;
-            SceneManager.LoadScene("EndScene");
+            DoEndGameCleanup( false );
         }
     }
 
@@ -271,5 +270,29 @@ public class GameManager : MonoBehaviour
         Globals.battleData = new Globals.BattleData(attacker, defender);
         currentState = State.Battling;
         Debug.Log($"Battle begun between {attacker.card.characterName} and {defender.card.characterName}");
+    }
+
+    /// <summary>
+    /// Do everything we need to end the game
+    /// </summary>
+    public void DoEndGameCleanup( bool bAsync ) {
+        // heal center gate back to full
+        centerGate.Heal( CenterGateSO.STARTING_HEALTH );
+
+        // heal all gates back to full
+        // VSCode gives a warning because GateSO is not a Unity Component, whatever
+        // *should* check validity of GameObject.Find calls, but they should always exist...right?
+        GameObject.Find( "BlackGate" ).GetComponent< GateSO >().Heal( GateSO.STARTING_HEALTH );
+        GameObject.Find( "BlueGate" ).GetComponent< GateSO >().Heal( GateSO.STARTING_HEALTH );
+        GameObject.Find( "GreenGate" ).GetComponent< GateSO >().Heal( GateSO.STARTING_HEALTH );
+        GameObject.Find( "RedGate" ).GetComponent< GateSO >().Heal( GateSO.STARTING_HEALTH );
+
+        // we had two calls to loading the EndScene, one async and one not
+        // not sure why, but i kept both functionalities
+        if ( bAsync ) {
+            AsyncOperation _ = SceneManager.LoadSceneAsync( "EndScene" );
+        } else {
+            SceneManager.LoadScene( "EndScene" );
+        }
     }
 }
