@@ -55,6 +55,8 @@ public static class Globals
 
     public static List<PlayerSO> playerList; //playerlist used for multiple game
 
+    public static List<PlayerSO> playerListStart; //playerlist used for restarting the game
+
     
 }
 

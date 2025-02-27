@@ -198,7 +198,8 @@ public class GameManager : MonoBehaviour
             attack = Mathf.Max(0, attack); // set to 0 if attack comes out negative
             
             if(currentPlayer.isBot) {
-                int index = Random.Range(0, 3);
+                //int index = Random.Range(0, 4);
+                int index = 0;
                 Globals.selectedGate = gateList[index];
             }
             

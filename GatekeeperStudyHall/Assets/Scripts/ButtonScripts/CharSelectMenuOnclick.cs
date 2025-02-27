@@ -25,7 +25,8 @@ public class CharSelectMenuOnClick : MonoBehaviour
     {
         if(Globals.sessionMatchesPlayed == 0) //if it is the first game make the globalplayerlist a shadow copy of the playerlistobject
             Globals.playerList = playerListObject.list;
-        players = playerListObject.list;        
+        players = playerListObject.list;  
+        
     }
 
     public void StartGame()

@@ -30,9 +30,17 @@ public class GateBreak : MonoBehaviour
         switch (gate.Color) 
         {
             case GateColor.BLACK:
-                playerSelect.OnSelect = (selectedPlayer) => {
-                    gameManager.PlayerAttacksPlayer(player, selectedPlayer, 4 * player.doubleGateAbil);
+                if(player.isBot) {
+                    int index = Random.Range(1, playerListSO.list.Count);
+                    gameManager.PlayerAttacksPlayer(player, playerListSO.list[index], 4 * player.doubleGateAbil);
                     gameManager.NextTurn();
+                }
+                else {
+                    playerSelect.OnSelect = (selectedPlayer) => {
+                        gameManager.PlayerAttacksPlayer(player, selectedPlayer, 4 * player.doubleGateAbil);
+                        gameManager.NextTurn();
+                    };
+                
                 };
                 return State.ChoosingPlayer;
 

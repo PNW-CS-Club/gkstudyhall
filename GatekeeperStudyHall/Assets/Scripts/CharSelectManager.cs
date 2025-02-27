@@ -36,7 +36,7 @@ public class CharSelectManager : MonoBehaviour
             player4.card = clearCard; 
             Card2.SetActive(false);
             Card3.SetActive(false); 
-            Card4.SetActive(false);   
+            Card4.SetActive(false);  
         }
         else {
             playerListObject.list = Globals.playerList; //if it's not the first game we are making a shadow copy of the globalplayerlist
