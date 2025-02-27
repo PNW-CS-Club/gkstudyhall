@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
+    private bool isOptionsMenuOpen = false;
+    
     [SerializeField] GameObject pauseBackground;
     [SerializeField] GameObject pauseButtonContainer;
     [SerializeField] GameObject optionsContainer;
@@ -34,7 +36,9 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameIsPaused)
+            if (isOptionsMenuOpen)
+                CloseOptions();
+            else if (GameIsPaused)
                 Resume();
             else
                 Pause();
@@ -57,6 +61,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OpenOptions()
     {
+        isOptionsMenuOpen = true;
         optionsContainer.SetActive(true);
         pauseButtonContainer.SetActive(false);
         SelectSoundTab();
@@ -64,6 +69,7 @@ public class PauseMenu : MonoBehaviour
 
     public void CloseOptions()
     {
+        isOptionsMenuOpen = false;
         optionsContainer.SetActive(false);
         pauseButtonContainer.SetActive(true);
     }
