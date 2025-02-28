@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,9 +15,8 @@ public class DiceRoll : MonoBehaviour
     bool isHeld = false;
     bool isSliding = false;
     public bool canCheatRolls = false;
-    
-    [SerializeField] StateMachine stateMachine;
 
+    [SerializeField] GameManager gameManager;
     [SerializeField] Sprite[] sprites; // the 6 dice faces
 
 
@@ -35,14 +33,16 @@ public class DiceRoll : MonoBehaviour
 
 
     [Header("Sliding")]
-    [SerializeField] float releaseMultiplier = 12f;
-    [SerializeField] float throwMultiplier = 36f;
+    [SerializeField] float releaseSpeedMultiplier = 12f;
+    [SerializeField] float throwSpeedMultiplier = 36f;
     [SerializeField] float lowSpeedThreshold = 0.1f;
     [SerializeField, Range(0, 0.1f)] float frictionFactor = 0.002f;
+    [SerializeField] float lerpFactor = 0.25f;
 
     float slideTimer = 0f;
-    [SerializeField, Range(0f, 1.5f)] float slideDuration = 0.75f;
-
+    // this controls how long the dice is stopped after rolling
+    // it includes a brief pause before resetting, so consider that when setting the value
+    [SerializeField, Range(0f, 3f)] float slideDuration = 1.5f;
 
     [Header("Boundaries")]
     // the dice is restricted between these while sliding
@@ -52,6 +52,8 @@ public class DiceRoll : MonoBehaviour
     [SerializeField] GameObject barrier;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
+    
+    Vector3 startPos;
 
 
     [HideInInspector] public event System.EventHandler<int> DoneRollingEvent;
@@ -62,6 +64,7 @@ public class DiceRoll : MonoBehaviour
     Vector2 lastMousePos;
 
     void Start() {
+        startPos = transform.position;
         if (sprites.Length != 6) {
             Debug.LogError($"There should be 6 sprites in DiceRoll array (actual: {sprites.Length})");
         }
@@ -78,14 +81,22 @@ public class DiceRoll : MonoBehaviour
         
         if (isHeld) {
             UpdateHeldDice();
-        } 
-
-        else if (isSliding) {
+        } else if (isSliding) {
             bool isDone = UpdateSlidingDice();
 
             if (isDone) {
                 DoneRollingEvent?.Invoke(this, roll);
             }
+        } else {
+            float x = Mathf.Lerp( transform.position.x, startPos.x, lerpFactor );
+            float y = Mathf.Lerp( transform.position.y, startPos.y, lerpFactor );
+            float z = transform.position.z;
+
+            // whats a quarternion
+            float r = Mathf.Lerp( spriteRenderer.transform.eulerAngles.z, 0f, lerpFactor );
+
+            transform.position = new( x, y, z );
+            spriteRenderer.transform.eulerAngles = new( 0f, 0f, r );
         }
     }
 
@@ -96,7 +107,7 @@ public class DiceRoll : MonoBehaviour
     /// </summary>
     public void MouseDownFunc()
     {
-        if (!stateMachine.CurrentState.CanRoll || isSliding) return;
+        if (!gameManager.currentState.CanRoll() || isSliding) return;
         
         isHeld = true;
         shakeTimer = shakeInterval;
@@ -119,8 +130,6 @@ public class DiceRoll : MonoBehaviour
 
         // update the delta
         this.mouseDelta = ( Vector2 )mousePosition - this.lastMousePos;
-    
-        this.lastMousePos = mousePosition;
 
         // shake the dice once every `shakeInterval` seconds
         if (shakeTimer >= shakeInterval) {
@@ -150,6 +159,8 @@ public class DiceRoll : MonoBehaviour
 
         // tick the timer
         shakeTimer += Time.deltaTime;
+    
+        this.lastMousePos = mousePosition;
     }
 
 
@@ -158,13 +169,13 @@ public class DiceRoll : MonoBehaviour
     /// </summary>
     public void MouseUpFunc() {
         if (isHeld)
-            ReleaseDice(Random.Range(1, 7));
+            ReleaseDice(Random.Range(0, 6) + 1);
     }
 
     
     void TryCheating()
     {
-        if (!stateMachine.CurrentState.CanRoll || isSliding) return;
+        if (!gameManager.currentState.CanRoll() || isSliding) return;
         
         if (Input.GetKeyDown(KeyCode.Alpha1))
             ReleaseDice(1);
@@ -197,9 +208,9 @@ public class DiceRoll : MonoBehaviour
         // gives the dice a boost
         if ( this.mouseDelta.magnitude <= lowSpeedThreshold ) {
             // if you're lazy and aren't shaking the die, throw it in a random direction anyway
-            rb.velocity *= releaseMultiplier;
+            rb.velocity = Random.insideUnitCircle * releaseSpeedMultiplier;
         } else {
-            rb.velocity = this.mouseDelta * throwMultiplier;
+            rb.velocity = this.mouseDelta * throwSpeedMultiplier;
         }
 
         // restrict the dice's position to inside the screen bounds
@@ -220,8 +231,7 @@ public class DiceRoll : MonoBehaviour
 
         ClampDice();
 
-        if (slideTimer >= slideDuration) 
-        {
+        if ( slideTimer >= slideDuration ) {
             CleanUpAfterRoll();
             return true;
         }
@@ -238,6 +248,7 @@ public class DiceRoll : MonoBehaviour
 
         // shift this transform to be directly under the dice sprite's transform
         transform.position = rb.transform.position;
+
         rb.transform.localPosition = Vector2.zero;
 
         barrier.SetActive(false);
