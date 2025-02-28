@@ -5024,11 +5024,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1263615590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 675.65, y: 501}
-  m_SizeDelta: {x: 518.69, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -20, y: -20}
+  m_SizeDelta: {x: 300, y: 50}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &1794497801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5042,7 +5042,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textObj: {fileID: 1794497802}
-  startTime: 0
 --- !u!114 &1794497802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5063,7 +5062,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00:00
+  m_text: 0:00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 280df0ef8ab2f604b954fa9a91d846dc, type: 2}
   m_sharedMaterial: {fileID: 1142235021684992739, guid: 280df0ef8ab2f604b954fa9a91d846dc, type: 2}
@@ -5098,7 +5097,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 4
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 8192
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
