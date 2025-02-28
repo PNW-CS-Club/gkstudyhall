@@ -1,22 +1,23 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CharSelectManager : MonoBehaviour
 {
     [SerializeField] PlayerListSO playerListObject;
-    [SerializeField] PlayerListSO backupListObject;
     List<PlayerSO> playerList;
-    List<PlayerSO> backupList;
     public CardSO randomCard;
     public CardSO clearCard;
 
     [SerializeField] List<PlayerSO> all4Players;
     [SerializeField] List<GameObject> all4CardDisplays;
     
-    [SerializeField] List<CardSO> cardList;
+    [SerializeField] List<CardSO> randomCardChoices;
 
     public CardSO selectedCard;
+    
+    List<CardSO> savedCards;
     
     const int MAX_PLAYERS = 4;
     
@@ -27,49 +28,38 @@ public class CharSelectManager : MonoBehaviour
         UnityEngine.Assertions.Assert.IsTrue(all4CardDisplays.Count == MAX_PLAYERS, 
             $"all4CardDisplays must have {MAX_PLAYERS} elements");
         
-        Globals.playerList = playerListObject.list;
         playerList = playerListObject.list;
-        backupList = backupListObject.list;
+        savedCards = Globals.charSelectCards;
         
         playerList.Clear();
         
         foreach (var obj in all4CardDisplays)
             obj.SetActive(false);
+
+        if (savedCards.Count == 0)
+        {
+            // occurs only the first time the char select screen is loaded
+            savedCards.Add(clearCard);
+            savedCards.Add(clearCard);
+        }
         
-        Debug.Log($"Globals.sessionMatchesPlayed: {Globals.sessionMatchesPlayed}");
-        if (Globals.sessionMatchesPlayed == 0) {
-            // On the first match of the session, we just add 2 new players
-            AddPlayer(clearCard);
-            AddPlayer(clearCard);
-        }
-        else {
-            // If it's not the first match then we add the previously selected players
-            foreach (var backupPlayer in backupList)
-                AddPlayer(backupPlayer.card);
-        }
+        LoadSelectedCards();
     }
 
     /// Cleans up and starts the match if everyone has selected their character
     public void StartGame()
     {
         // return early if anyone hasn't selected their character yet
-        foreach (var player in playerList)
-        {
-            if (player.card == clearCard) return;
-        }
+        if (playerList.Any(player => player.card == clearCard)) return;
         
-        backupList.Clear();
-
-        // initialize each player and copy them to the backup list
+        SaveSelectedCards();
+        
+        // initialize each player
         foreach (var player in playerList)
         {
-            // if the player chose the random selection, back their card up *before* it is replaced
-            // note: nevermind this doesn't work because the backup list copies the players instead of the cards
-            backupList.Add(player);
-            
             if (player.card == randomCard) {
-                int r = Random.Range(0, cardList.Count);
-                player.card = cardList[r];
+                int r = Random.Range(0, randomCardChoices.Count);
+                player.card = randomCardChoices[r];
             }
             
             player.GameReset();
@@ -82,7 +72,22 @@ public class CharSelectManager : MonoBehaviour
     /// Return to the title menu
     public void StartMenu()
     {
+        SaveSelectedCards();
         AsyncOperation _ = SceneManager.LoadSceneAsync("StartScene");
+    }
+
+    void SaveSelectedCards()
+    {
+        savedCards.Clear();
+        
+        foreach (var player in playerList)
+            savedCards.Add(player.card);
+    }
+
+    void LoadSelectedCards()
+    {
+        foreach (var card in savedCards)
+            AddPlayer(card);
     }
 
     /// This function is for the "Add Player" button.
