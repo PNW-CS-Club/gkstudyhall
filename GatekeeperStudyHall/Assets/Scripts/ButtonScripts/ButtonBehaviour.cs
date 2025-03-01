@@ -15,6 +15,8 @@ public class ButtonBehaviour : MonoBehaviour,
     [SerializeField] Material unselectableMaterial;
     [SerializeField] List<Image> buttonImages;
 
+    CursorPreference cursorPref;
+
     public bool isSelectable = true;
     bool wasSelectable = true; // holds value of isSelectable from last frame
     bool hovering = false;
@@ -29,6 +31,7 @@ public class ButtonBehaviour : MonoBehaviour,
 
     void Start()
     {
+        cursorPref = GetComponent<CursorPreference>();
         UpdateMaterials();
     }
 
@@ -37,6 +40,7 @@ public class ButtonBehaviour : MonoBehaviour,
         if (isSelectable != wasSelectable)
         {
             wasSelectable = isSelectable;
+            cursorPref.type = isSelectable ? CursorType.Pointer : CursorType.Arrow;
             hovering = false;
             pressing = false;
             UpdateMaterials();

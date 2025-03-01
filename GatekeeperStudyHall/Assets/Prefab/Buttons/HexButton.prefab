@@ -410,6 +410,7 @@ GameObject:
   - component: {fileID: 753770346084354462}
   - component: {fileID: 7392341957681097002}
   - component: {fileID: 4102163874504718069}
+  - component: {fileID: 1514146658578244646}
   m_Layer: 5
   m_Name: HexButton
   m_TagString: Untagged
@@ -484,3 +485,16 @@ MonoBehaviour:
   unselectableMaterial: {fileID: 2100000, guid: 2575ff79c909099478fb216635cd4650, type: 2}
   buttonImages: []
   isSelectable: 1
+--- !u!114 &1514146658578244646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6267592348131671415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29bc39225fd23164698ee306c2313468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
