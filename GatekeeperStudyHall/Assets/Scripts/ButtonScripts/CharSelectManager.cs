@@ -9,6 +9,7 @@ public class CharSelectManager : MonoBehaviour
     List<PlayerSO> playerList;
     public CardSO randomCard;
     public CardSO clearCard;
+    [SerializeField] ButtonBehaviour startButton;
 
     [SerializeField] List<PlayerSO> all4Players;
     [SerializeField] List<GameObject> all4CardDisplays;
@@ -21,7 +22,7 @@ public class CharSelectManager : MonoBehaviour
     
     const int MAX_PLAYERS = 4;
     
-    private void Start() 
+    void Start() 
     {
         UnityEngine.Assertions.Assert.IsTrue(all4Players.Count == MAX_PLAYERS, 
             $"all4Players must have {MAX_PLAYERS} elements");
@@ -44,6 +45,11 @@ public class CharSelectManager : MonoBehaviour
         }
         
         LoadSelectedCards();
+    }
+
+    void Update()
+    {
+        startButton.isSelectable = playerList.All(player => player.card != clearCard);
     }
 
     /// Cleans up and starts the match if everyone has selected their character

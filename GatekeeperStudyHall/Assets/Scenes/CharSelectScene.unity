@@ -2053,6 +2053,7 @@ MonoBehaviour:
   playerListObject: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
   randomCard: {fileID: 11400000, guid: be14ec4658680d641a7748feea97e494, type: 2}
   clearCard: {fileID: 11400000, guid: ec1cb9dfab6e1744e9a3c91fe224c8ac, type: 2}
+  startButton: {fileID: 1566300754}
   all4Players:
   - {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
   - {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
@@ -3768,6 +3769,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6332778165153915594, guid: 8db72b93f624d6d4fa0ee26802df4710, type: 3}
   m_PrefabInstance: {fileID: 1566300752}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1566300754 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5583554905432152004, guid: 8db72b93f624d6d4fa0ee26802df4710, type: 3}
+  m_PrefabInstance: {fileID: 1566300752}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075e3176461ede3418ed7ee10775c71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1577195422
 PrefabInstance:
   m_ObjectHideFlags: 0

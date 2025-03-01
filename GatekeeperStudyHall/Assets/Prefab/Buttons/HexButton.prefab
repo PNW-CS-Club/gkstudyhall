@@ -481,4 +481,6 @@ MonoBehaviour:
   defaultMaterial: {fileID: 0}
   hoverMaterial: {fileID: 0}
   pressMaterial: {fileID: 0}
+  unselectableMaterial: {fileID: 2100000, guid: 2575ff79c909099478fb216635cd4650, type: 2}
   buttonImages: []
+  isSelectable: 1
