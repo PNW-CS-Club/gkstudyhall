@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71215d64da1f3274ebca7cee4f8c4db3, type: 3}
   m_Name: BackupPlayerList
   m_EditorClassIdentifier: 
-  list: []
+  list:
+  - {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
+  - {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
