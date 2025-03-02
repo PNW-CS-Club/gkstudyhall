@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +30,8 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public CardMagnifier cardMagnifier;
     public bool canMagnify = true;
 
-    public const float COLLAPSE_HEIGHT_DIFF = 172f;
+    public const float EXPANDED_HEIGHT = 350f;
+    public const float COLLAPSED_HEIGHT = 178f;
     const float HIGHLIGHT_STRENGTH = 0.20f; // 0 -> no highlight; 1 -> full white
 
     CharSelectManager charSelectManager;
@@ -111,8 +111,8 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        expandedSize = rectTransform.rect.size;
-        collapsedSize = expandedSize - new Vector2(0, COLLAPSE_HEIGHT_DIFF);
+        expandedSize = new Vector2(rectTransform.rect.size.x, EXPANDED_HEIGHT);
+        collapsedSize = new Vector2(rectTransform.rect.size.x, COLLAPSED_HEIGHT);
 
         SetExpanded(startExpanded);
     }

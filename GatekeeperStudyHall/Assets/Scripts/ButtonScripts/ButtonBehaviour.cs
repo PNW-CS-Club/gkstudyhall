@@ -12,8 +12,13 @@ public class ButtonBehaviour : MonoBehaviour,
     [SerializeField] Material defaultMaterial;
     [SerializeField] Material hoverMaterial;
     [SerializeField] Material pressMaterial;
+    [SerializeField] Material unselectableMaterial;
     [SerializeField] List<Image> buttonImages;
-    
+
+    CursorPreference cursorPref;
+
+    public bool isSelectable = true;
+    bool wasSelectable = true; // holds value of isSelectable from last frame
     bool hovering = false;
     bool pressing = false;
 
@@ -24,6 +29,24 @@ public class ButtonBehaviour : MonoBehaviour,
         UpdateMaterials();
     }
 
+    void Start()
+    {
+        cursorPref = GetComponent<CursorPreference>();
+        UpdateMaterials();
+    }
+
+    void Update()
+    {
+        if (isSelectable != wasSelectable)
+        {
+            wasSelectable = isSelectable;
+            cursorPref.type = isSelectable ? CursorType.Pointer : CursorType.Arrow;
+            hovering = false;
+            pressing = false;
+            UpdateMaterials();
+        }
+    }
+
     public void OnPointerEnter(PointerEventData eventData) => StartHover();
     public void OnPointerExit(PointerEventData eventData) => EndHover();
     public void OnPointerDown(PointerEventData eventData) => StartPress();
@@ -32,24 +55,32 @@ public class ButtonBehaviour : MonoBehaviour,
 
     void StartHover()
     {
+        if (!isSelectable) return;
+        
         hovering = true;
         UpdateMaterials();
     }
 
     void EndHover()
     {
+        if (!isSelectable) return;
+        
         hovering = false;
         UpdateMaterials();
     }
 
     void StartPress()
     {
+        if (!isSelectable) return;
+        
         pressing = true;
         UpdateMaterials();
     }
 
     void EndPress()
     {
+        if (!isSelectable) return;
+        
         bool finishedClick = hovering && pressing;
         pressing = false;
         UpdateMaterials();
@@ -59,7 +90,9 @@ public class ButtonBehaviour : MonoBehaviour,
     void UpdateMaterials()
     {
         Material mat = defaultMaterial;
-        if (hovering)
+        if (!isSelectable) 
+            mat = unselectableMaterial;
+        else if (hovering)
             mat = pressing ? pressMaterial : hoverMaterial;
         
         foreach (Image image in buttonImages) 
