@@ -1,22 +1,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
-    public GameObject pauseMenuUI;
+    private bool isOptionsMenuOpen = false;
+    
+    [SerializeField] GameObject pauseBackground;
+    [SerializeField] GameObject pauseButtonContainer;
+    [SerializeField] GameObject optionsContainer;
+    
+    [SerializeField] GameObject soundPanel;
+    [SerializeField] GameObject videoPanel;
+    
+    [SerializeField] GameObject soundControls;
+    [SerializeField] GameObject videoControls;
 
-    void Start()
+    GameObject currControls;
+
+    void Awake()
     {
-        pauseMenuUI.SetActive(false);
+        pauseBackground.SetActive(false);
         GameIsPaused = false;
+
+        pauseButtonContainer.SetActive(true);
+        optionsContainer.SetActive(false);
+        
+        soundControls.SetActive(false);
+        videoControls.SetActive(false);
+        currControls = soundControls;
     }
     
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameIsPaused)
+            if (isOptionsMenuOpen)
+                CloseOptions();
+            else if (GameIsPaused)
                 Resume();
             else
                 Pause();
@@ -25,17 +47,45 @@ public class PauseMenu : MonoBehaviour
     
     public void Resume()
     {
-        pauseMenuUI.SetActive(false);
+        pauseBackground.SetActive(false);
         //Time.timeScale = 1f;
         GameIsPaused = false;
     }
     
     void Pause()
     {
-        pauseMenuUI.SetActive(true);
+        pauseBackground.SetActive(true);
         //Time.timeScale = 0f;
         GameIsPaused = true;
     }
+
+    public void OpenOptions()
+    {
+        isOptionsMenuOpen = true;
+        optionsContainer.SetActive(true);
+        pauseButtonContainer.SetActive(false);
+        SelectSoundTab();
+    }
+
+    public void CloseOptions()
+    {
+        isOptionsMenuOpen = false;
+        optionsContainer.SetActive(false);
+        pauseButtonContainer.SetActive(true);
+    }
+
+    void SelectTab(GameObject panel, GameObject controls)
+    {
+        // disable previous controls, enable the ones in the selected tab
+        currControls.SetActive(false);
+        currControls = controls;
+        currControls.SetActive(true);
+        
+        // this puts the selected panel in front of the rest of them
+        panel.transform.SetAsLastSibling();
+    }
+    public void SelectSoundTab() => SelectTab(soundPanel, soundControls);
+    public void SelectVideoTab() => SelectTab(videoPanel, videoControls);
     
     public void LoadMenu()
     {
