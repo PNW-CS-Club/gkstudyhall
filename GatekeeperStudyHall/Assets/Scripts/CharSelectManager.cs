@@ -32,8 +32,6 @@ public class CharSelectManager : MonoBehaviour
         playerList = playerListObject.list;
         savedCards = Globals.charSelectCards;
         
-        playerList.Clear();
-        
         foreach (var obj in all4CardDisplays)
             obj.SetActive(false);
 

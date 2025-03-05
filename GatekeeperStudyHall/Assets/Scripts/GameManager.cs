@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -96,7 +97,7 @@ public class GameManager : MonoBehaviour
         if (centerGate.Health == 0)
         {
             Globals.winningPlayer = attacker;
-            DoEndGameCleanup( false );
+            DoEndGameCleanup( true );
         }
     }
 
@@ -225,7 +226,7 @@ public class GameManager : MonoBehaviour
 
                     Globals.battleData = null;
                     // If the current player died, transition to the next player
-                    if (!playerListSO.list[0].isAlive) {
+                    if ( playerListSO.list.Count > 0 && !playerListSO.list[0].isAlive) {
                         NextTurn();
                     }
                     else {
@@ -248,20 +249,23 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void NextTurn() 
     {
-        Globals.selectedGate = null;
+        if ( playerListSO.list.Count != 0 ) {
 
-        List<PlayerSO>players = playerListSO.list;
+            Globals.selectedGate = null;
 
-        players[0].ResetEffects(); // reset all temporary effects the current player may have
-        do {      
-            players.Insert(players.Count, players[0]);
-            players.RemoveAt(0);
-        } 
-        while (!players[0].isAlive); // TODO: This will loop infinitely if all players are dead
+            List<PlayerSO>players = playerListSO.list;
 
-        cardQueue.RepositionCards();
-        
-        currentState = State.TraitRoll;
+            players[0].ResetEffects(); // reset all temporary effects the current player may have
+            do {      
+                players.Insert(players.Count, players[0]);
+                players.RemoveAt(0);
+            } 
+            while (!players[0].isAlive); // TODO: This will loop infinitely if all players are dead
+
+            cardQueue.RepositionCards();
+            
+            currentState = State.TraitRoll;
+        }
     }
 
     /// <summary>
@@ -288,7 +292,7 @@ public class GameManager : MonoBehaviour
         // we had two calls to loading the EndScene, one async and one not
         // not sure why, but i kept both functionalities
         if ( bAsync ) {
-            AsyncOperation _ = SceneManager.LoadSceneAsync( "EndScene" );
+            AsyncOperation op = SceneManager.LoadSceneAsync( "EndScene" );
         } else {
             SceneManager.LoadScene( "EndScene" );
         }

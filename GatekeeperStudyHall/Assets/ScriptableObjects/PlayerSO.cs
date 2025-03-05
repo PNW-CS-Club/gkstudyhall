@@ -134,4 +134,8 @@ public class PlayerSO : ScriptableObject
         health = Mathf.Min(health + amount, MAX_HEALTH);
         totalAmountHealed += amount;
     }
+
+    public override string ToString() {
+        return this.card.characterName;
+    }
 }

@@ -9,6 +9,8 @@ public class EndSceneInfo : MonoBehaviour
     {
         Globals.sessionMatchesPlayed++;
 
+        Debug.Log( Globals.winningPlayer );
+
         Debug.Log($"{Globals.winningPlayer} won the game!");
     }
 

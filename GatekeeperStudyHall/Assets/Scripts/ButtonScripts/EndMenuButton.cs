@@ -8,5 +8,6 @@ public class EndMenuButton : MonoBehaviour
     public void MainMenu()
     {
         AsyncOperation _= SceneManager.LoadSceneAsync("StartScene");
+        Globals.winningPlayer = null;
     }
 }
