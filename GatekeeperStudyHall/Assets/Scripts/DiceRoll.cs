@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -33,9 +34,9 @@ public class DiceRoll : MonoBehaviour
 
 
     [Header("Sliding")]
-    [SerializeField] float releaseSpeedMultiplier = 12f;
-    [SerializeField] float throwSpeedMultiplier = 36f;
-    [SerializeField] float lowSpeedThreshold = 0.1f;
+    [SerializeField] float throwSpeedMultiplier = 2.5f;
+    [SerializeField] float lowSpeedThreshold = 10f;
+    [SerializeField] float slidingWindowDuration = 0.1f;
     [SerializeField, Range(0, 0.1f)] float frictionFactor = 0.002f;
     [SerializeField] float lerpFactor = 0.25f;
 
@@ -54,14 +55,15 @@ public class DiceRoll : MonoBehaviour
     Rigidbody2D rb;
     
     Vector3 startPos;
-
-
+    
+    // stores each frame's mouseDelta and the time it was calculated
+    readonly Queue<(Vector2, float)> prevMouseDeltas = new();
+    Vector2 avgMouseDelta;
+    float avgMouseDistance;
+    
     [HideInInspector] public event System.EventHandler<int> DoneRollingEvent;
     int roll = -1;
 
-
-    Vector2 mouseDelta;
-    Vector2 lastMousePos;
 
     void Start() {
         startPos = transform.position;
@@ -72,10 +74,27 @@ public class DiceRoll : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponentInChildren<Rigidbody2D>();
         barrier.SetActive(false);
+
+        prevMouseDeltas.Enqueue((Vector2.zero, Time.time));
     }
-
-
+    
+        
     void Update() {
+        prevMouseDeltas.Enqueue((new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")), Time.time));
+        // Dequeue expired deltas unless there are only 3 deltas left
+        while (prevMouseDeltas.Count > 3 && Time.time >= prevMouseDeltas.Peek().Item2 + slidingWindowDuration)
+            prevMouseDeltas.Dequeue();
+        
+        var mouseSum = prevMouseDeltas
+            .Select(x => x.Item1)
+            .Aggregate(Vector2.zero, (current, next) => current + next);
+        avgMouseDelta = mouseSum / prevMouseDeltas.Count; 
+        
+        var mouseDistanceSum = prevMouseDeltas
+            .Select(x => x.Item1)
+            .Aggregate(0f, (current, next) => current + next.magnitude);
+        avgMouseDistance = mouseDistanceSum / prevMouseDeltas.Count;
+        
         if (canCheatRolls)
             TryCheating();
         
@@ -111,9 +130,6 @@ public class DiceRoll : MonoBehaviour
         
         isHeld = true;
         shakeTimer = shakeInterval;
-            
-        // init the delta so we can actually do stuff to it
-        this.mouseDelta = new( 0f, 0f );
     }
 
 
@@ -127,9 +143,6 @@ public class DiceRoll : MonoBehaviour
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         mousePosition.z = transform.position.z;
         transform.position = mousePosition;
-
-        // update the delta
-        this.mouseDelta = ( Vector2 )mousePosition - this.lastMousePos;
 
         // shake the dice once every `shakeInterval` seconds
         if (shakeTimer >= shakeInterval) {
@@ -159,8 +172,6 @@ public class DiceRoll : MonoBehaviour
 
         // tick the timer
         shakeTimer += Time.deltaTime;
-    
-        this.lastMousePos = mousePosition;
     }
 
 
@@ -204,13 +215,20 @@ public class DiceRoll : MonoBehaviour
 
         roll = finalRoll;
         spriteRenderer.sprite = sprites[finalRoll - 1];
-        
+
         // gives the dice a boost
-        if ( this.mouseDelta.magnitude <= lowSpeedThreshold ) {
-            // if you're lazy and aren't shaking the die, throw it in a random direction anyway
-            rb.velocity = Random.insideUnitCircle * releaseSpeedMultiplier;
-        } else {
-            rb.velocity = this.mouseDelta * throwSpeedMultiplier;
+        var avgMouseSpeed = avgMouseDistance / Time.fixedDeltaTime;
+        var avgMouseVel = avgMouseDelta.normalized * avgMouseSpeed;
+        
+        if ( avgMouseSpeed <= lowSpeedThreshold ) {
+            // if you're lazy and aren't shaking the die very much, boost it to reach some speed
+            var effort = avgMouseSpeed / lowSpeedThreshold;
+            // the less effort you put in, the more weight the random direction will have
+            var newDirection = Random.insideUnitCircle * (1 - effort) + avgMouseVel.normalized * effort;
+            rb.velocity = newDirection.normalized * (lowSpeedThreshold * throwSpeedMultiplier);
+        }
+        else {
+            rb.velocity = avgMouseVel * throwSpeedMultiplier;
         }
 
         // restrict the dice's position to inside the screen bounds
