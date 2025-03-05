@@ -7,6 +7,7 @@ public class ClockDisplay : MonoBehaviour {
     private float startTime = 0f;
 
     void Start() {
+        // automatically called when its parent scene GKScene is loaded
         this.startTime = Time.time;
     }
 
