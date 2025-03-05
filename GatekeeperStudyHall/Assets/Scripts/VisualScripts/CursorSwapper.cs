@@ -56,19 +56,22 @@ public class CursorSwapper : MonoBehaviour
     
     CursorType GetHoveredCursorType()
     {
-        // Gets all event system raycast results of current mouse or touch position.
-        var eventData = new PointerEventData(EventSystem.current);
+        // get all event system raycast results of current mouse or touch position
+        PointerEventData eventData = new(EventSystem.current);
         eventData.position = Input.mousePosition;
         List<RaycastResult> raycastResults = new();
         EventSystem.current.RaycastAll(eventData, raycastResults);
         //print(raycastResults.Aggregate("", (current, curRaycastResult) => current + (curRaycastResult.gameObject.name + ", "))));
 
+        // when not hovering over anything, default to the normal arrow
         if (raycastResults.Count == 0) 
             return CursorType.Arrow;
 
+        // consider only the first object that was hit
         GameObject currObject = raycastResults[0].gameObject;
         CursorPreference pref = null;
 
+        // find the first ancestor that has a CursorPreference attached to it
         do {
             pref = currObject.GetComponent<CursorPreference>();
             if (pref != null) break;
@@ -76,6 +79,7 @@ public class CursorSwapper : MonoBehaviour
         }
         while (currObject != null);
         
+        // if a CursorPreference was found, return its type (otherwise default to arrow)
         return pref == null ? CursorType.Arrow : pref.type;
     }
 
