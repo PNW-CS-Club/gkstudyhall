@@ -8,9 +8,10 @@ public class AbilityDisplay : MonoBehaviour {
 
     float alpha = 0f; // ranges from 0 to 1
     const float backGroundMaxAlpha = 0.75f;
-    const float fadeInTime = 0.5f;
-    const float growScale = 0.04f; // this had to be so tiny because it wasn't adjusted by Time.deltaTime (the FPS is ~400)
-    public static readonly float timeShown = 2.5f;
+    [ SerializeField ] float fadeTime = 0.5f;
+    [ SerializeField ] float growScale = 0.04f; // this had to be so tiny because it wasn't adjusted by Time.deltaTime (the FPS is ~400)
+    [ SerializeField ] float timeShown = 2.5f; // this INCLUDES fading in AND out, so
+    // default settings 2.5 = fade in for 0.5, hold for 1.5, fade out for 0.5
 
     float startTime = 0f;
 
@@ -27,8 +28,8 @@ public class AbilityDisplay : MonoBehaviour {
 
     void Update()
     {
-        var alphaChange = Time.deltaTime / fadeInTime;
-        var isFadingOut = Time.time >= this.startTime + ( timeShown - fadeInTime );
+        var alphaChange = Time.deltaTime / fadeTime;
+        var isFadingOut = Time.time >= this.startTime + ( timeShown - fadeTime );
         alpha = Mathf.Clamp01(isFadingOut ? alpha - alphaChange : alpha + alphaChange);
 
         this.abilImg.color = new( 1f, 1f, 1f, alpha );
