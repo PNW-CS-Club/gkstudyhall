@@ -35,8 +35,8 @@ public class CardQueue : MonoBehaviour
         Vector2 expandedSize = cardPrefab.GetComponent<RectTransform>().sizeDelta;
 
         // precalculate some values so we can use them in RepositionCards
-        expandedHeight = expandedSize.y;
-        collapsedHeight = expandedHeight - CardDisplay.COLLAPSE_HEIGHT_DIFF;
+        expandedHeight = CardDisplay.EXPANDED_HEIGHT;
+        collapsedHeight = CardDisplay.COLLAPSED_HEIGHT;
         startingOffset = new Vector3(expandedSize.x / 2f, -expandedSize.y / 2f, 0f);
 
         // create all of the cards and health bars we will start with
@@ -106,7 +106,7 @@ public class CardQueue : MonoBehaviour
             else 
             {
                 cardDisplay.SetExpanded(false);
-                cardTransform.localPosition += CardDisplay.COLLAPSE_HEIGHT_DIFF / 2f * Vector3.up;
+                cardTransform.localPosition += (CardDisplay.EXPANDED_HEIGHT - CardDisplay.COLLAPSED_HEIGHT) / 2f * Vector3.up;
                 offset.y -= margin + collapsedHeight;
             }
         }
