@@ -32,17 +32,13 @@ public class CharSelectManager : MonoBehaviour
         playerList = playerListObject.list;
         savedCards = Globals.charSelectCards;
         
+        playerList.Clear();
+        
         foreach (var obj in all4CardDisplays)
             obj.SetActive(false);
-
-        if (savedCards.Count == 0)
-        {
-            // occurs only the first time the char select screen is loaded
-            savedCards.Add(clearCard);
-            savedCards.Add(clearCard);
-        }
-        
-        LoadSelectedCards();
+            
+        AddPlayer();
+        AddPlayer();
     }
 
     void Update()
