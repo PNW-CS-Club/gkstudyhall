@@ -4788,7 +4788,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1086835038}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6455,9 +6455,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1067787599088389007}
-  - component: {fileID: 325844102870110650}
   - component: {fileID: 6826788537736604176}
   - component: {fileID: 1357012321930797599}
+  - component: {fileID: 6826788537736604177}
   m_Layer: 5
   m_Name: Clock Text
   m_TagString: Untagged
@@ -6790,7 +6790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5583554905432152004, guid: 8db72b93f624d6d4fa0ee26802df4710, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: Resume
       objectReference: {fileID: 0}
     - target: {fileID: 5583554905432152004, guid: 8db72b93f624d6d4fa0ee26802df4710, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -6962,7 +6962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7231415693630476969, guid: 1e88f6f654a2883408165bec4aedd2d6, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: QuitGame
       objectReference: {fileID: 0}
     - target: {fileID: 7231415693630476969, guid: 1e88f6f654a2883408165bec4aedd2d6, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -7171,7 +7171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7231415693630476969, guid: 1e88f6f654a2883408165bec4aedd2d6, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: LoadMenu
       objectReference: {fileID: 0}
     - target: {fileID: 7231415693630476969, guid: 1e88f6f654a2883408165bec4aedd2d6, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -7355,6 +7355,14 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &6826788537736604177
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833293081721758334}
+  m_CullTransparentMesh: 1
 --- !u!222 &8732173833015802377
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7389,3 +7397,4 @@ SceneRoots:
   - {fileID: 156278715}
   - {fileID: 3781830426346999334}
   - {fileID: 435228243}
+  - {fileID: 1349890609}
