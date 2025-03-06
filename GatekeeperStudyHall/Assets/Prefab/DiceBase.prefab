@@ -63,8 +63,50 @@ MonoBehaviour:
   lowSpeedThreshold: 12
   slidingWindowDuration: 0.1
   frictionFactor: 0.002
-  lerpFactor: 0.25
   slideDuration: 1.15
+  returnDuration: 0.35
+  returnCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.30707213
+      value: 0.14984986
+      inSlope: 1.084729
+      outSlope: 1.084729
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.28310084
+    - serializedVersion: 3
+      time: 0.5918633
+      value: 0.7078008
+      inSlope: 1.6323395
+      outSlope: 1.6323395
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.24972466
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   topLeftBound: {x: -11.55556, y: 6.5}
   bottomRightBound: {x: 11.55556, y: -6.5}
   barrier: {fileID: 0}
