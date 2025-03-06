@@ -15,6 +15,7 @@ public class DiceRoll : MonoBehaviour
 {
     bool isHeld = false;
     bool isSliding = false;
+    bool isReturning = false;
     public bool canCheatRolls = false;
 
     [SerializeField] GameManager gameManager;
@@ -38,12 +39,18 @@ public class DiceRoll : MonoBehaviour
     [SerializeField] float lowSpeedThreshold = 10f;
     [SerializeField] float slidingWindowDuration = 0.1f;
     [SerializeField, Range(0, 0.1f)] float frictionFactor = 0.002f;
-    [SerializeField] float lerpFactor = 0.25f;
-
+    
     float slideTimer = 0f;
     // this controls how long the dice is stopped after rolling
     // it includes a brief pause before resetting, so consider that when setting the value
-    [SerializeField, Range(0f, 3f)] float slideDuration = 1.5f;
+    [SerializeField, Range(0f, 3f)] float slideDuration = 1.25f;
+    
+    [Header("Returning")]
+    [SerializeField, Min(0)] float returnDuration = 0.5f;
+    float returnTimer = 0f;
+    [SerializeField] AnimationCurve returnCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+    Vector3 stopPosition;
+    float stopAngle;
 
     [Header("Boundaries")]
     // the dice is restricted between these while sliding
@@ -54,7 +61,7 @@ public class DiceRoll : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
     
-    Vector3 startPos;
+    Vector3 startPosition;
     
     // stores each frame's mouseDelta and the time it was calculated
     readonly Queue<(Vector2, float)> prevMouseDeltas = new();
@@ -66,7 +73,7 @@ public class DiceRoll : MonoBehaviour
 
 
     void Start() {
-        startPos = transform.position;
+        startPosition = transform.position;
         if (sprites.Length != 6) {
             Debug.LogError($"There should be 6 sprites in DiceRoll array (actual: {sprites.Length})");
         }
@@ -100,30 +107,44 @@ public class DiceRoll : MonoBehaviour
         
         if (isHeld) {
             UpdateHeldDice();
-        } else if (isSliding) {
+        } 
+        else if (isSliding) {
             bool isDone = UpdateSlidingDice();
 
             if (isDone) {
+                isSliding = false;
                 DoneRollingEvent?.Invoke(this, roll);
+                
+                // this code below makes the dice return IMMEDIATELY after it stops rolling
+                isReturning = true;
+                returnTimer = returnDuration;
+                stopPosition = transform.position;
+                stopAngle = spriteRenderer.transform.eulerAngles.z;
             }
-        } else {
-            float x = Mathf.Lerp( transform.position.x, startPos.x, lerpFactor );
-            float y = Mathf.Lerp( transform.position.y, startPos.y, lerpFactor );
-            float z = transform.position.z;
+        } 
+        else if (isReturning) {
+            returnTimer -= Time.deltaTime;
+            returnTimer = Mathf.Max(0f, returnTimer);
+            
+            float t = Mathf.InverseLerp(returnDuration, 0f, returnTimer);
+            float progress = returnCurve.Evaluate(t);
+            transform.position = Vector3.Lerp(stopPosition, startPosition, progress);
 
+            // round to nearest 180-degree rotation (the dice has 180-degree symmetry)
+            float targetAngle = Mathf.Round(stopAngle / 180f) * 180f;
             // whats a quarternion
-            float r = Mathf.Lerp( spriteRenderer.transform.eulerAngles.z, 0f, lerpFactor );
+            float zRot = Mathf.Lerp(stopAngle, targetAngle, progress);
+            spriteRenderer.transform.eulerAngles = new( 0f, 0f, zRot );
 
-            transform.position = new( x, y, z );
-            spriteRenderer.transform.eulerAngles = new( 0f, 0f, r );
+            if (returnTimer <= 0f) {
+                isReturning = false;
+            }
         }
     }
 
 
-    /// <summary>
     /// Method called whenever the user mouses down on the dice.
     /// If the user is allowed to pick up the dice now, it begins shaking.
-    /// </summary>
     public void MouseDownFunc()
     {
         if (!gameManager.currentState.CanRoll() || isSliding) return;
@@ -133,9 +154,7 @@ public class DiceRoll : MonoBehaviour
     }
 
 
-    /// <summary>
     /// Continues the process of shaking the dice.
-    /// </summary>
     private void UpdateHeldDice() {
 
         // move the dice base to the mouse's x and y position
@@ -175,9 +194,7 @@ public class DiceRoll : MonoBehaviour
     }
 
 
-    /// <summary>
     /// Method called whenever the user mouses up on the dice.
-    /// </summary>
     public void MouseUpFunc() {
         if (isHeld)
             ReleaseDice(Random.Range(0, 6) + 1);

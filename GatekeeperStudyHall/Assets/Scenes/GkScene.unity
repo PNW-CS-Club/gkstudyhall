@@ -604,6 +604,70 @@ PrefabInstance:
       propertyPath: canCheatRolls
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnDuration
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[1].time
+      value: 0.30707213
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[2].time
+      value: 0.5918633
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[3].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[1].value
+      value: 0.14984986
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[2].value
+      value: 0.7078008
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[3].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[1].inSlope
+      value: 1.084729
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[2].inSlope
+      value: 1.6323395
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[1].outSlope
+      value: 1.084729
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[2].inWeight
+      value: 0.24972466
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[2].outSlope
+      value: 1.6323395
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[1].outWeight
+      value: 0.28310084
+      objectReference: {fileID: 0}
+    - target: {fileID: 684854875458366825, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
+      propertyPath: returnCurve.m_Curve.Array.data[2].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
     - target: {fileID: 3541283527795119838, guid: 0a14f55c547bc3643bda3ab759a7e0ce, type: 3}
       propertyPath: m_Name
       value: Dice Base
