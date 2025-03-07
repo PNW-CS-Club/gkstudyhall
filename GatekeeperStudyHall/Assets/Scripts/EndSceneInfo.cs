@@ -5,38 +5,53 @@ using UnityEngine;
 
 public class EndSceneInfo : MonoBehaviour
 {
-    [SerializeField] GameObject cardPrefab;
+
+    public GameObject EndStatDisplay;
+    List<GameObject> displayList;
     [SerializeField] PlayerListSO playerListSO;
     List<PlayerSO> playerList; // refers to list in playerListSO
-    List<GameObject> cardObjectList; // instances of cardDisplay
-    List<GameObject> statDisplayList; // instances of statDisplay
-
+    
     Vector3 offset; // the offset of the bottom three players
 
     // Start is called before the first frame update
     void Start()
     {
+        playerList = playerListSO.list;
+        displayList = new();
         Globals.sessionMatchesPlayed++;
 
-        Debug.Log($"{Globals.winningPlayer} won the game!");
-                
-    }
+        Debug.Log($"{Globals.winningPlayer} won the game!");      
 
-    void Awake(){
-        playerList = playerListSO.list;
+        //set starting offset to top-left of screen
+        offset = new Vector3(100f, 50f, 0f); // TODO: Find a good value for this
 
         // move the winning player to the front of the list
         playerList.Remove(Globals.winningPlayer);
         playerList.Insert(0, Globals.winningPlayer);
-           
-        // create a list of card displays for each player
-        cardObjectList = new(playerList.Count); // same length as playerList
-        statDisplayList = new(playerList.Count); 
 
-        //set starting offset to top-left of screen
-        offset = new Vector3(100f, 50f, 0f); // TODO
-       
+        //create all of the stat displays we need ,0f
+        for(int i = 0; i < playerList.Count; i++){
+            GameObject newStatDisplay = Instantiate(EndStatDisplay,transform);
+            displayList.Add(newStatDisplay);
+        }
+
+        for(int i = 0; i < displayList.Count;i++){
+            Transform displayTransform = displayList[i].transform;
+            CardDisplay cardDisplay = displayTransform.GetChild(0).GetComponent<CardDisplay>();
+            displayTransform.localPosition = offset;
+
+            cardDisplay.ChangeCardData(playerList[i].card); 
+            cardDisplay.player = playerList[i];
+            offset.x += 200;
+        }
+
+    }
+
+    void Awake(){
+        
+
         // initialize the cards and displays
+        /*
         for(int i = 0; i < playerList.Count; i++){
             GameObject newCard = Instantiate(cardPrefab, transform);
             cardObjectList.Add(newCard);
@@ -45,7 +60,8 @@ public class EndSceneInfo : MonoBehaviour
             // TODO: make a statDisplay prefab
 
         }
-
+        */
+        /*
         // set the displays
         for(int i = 0; i < playerList.Count; i++){
             Transform cardTransform = cardObjectList[i].transform;
@@ -56,7 +72,7 @@ public class EndSceneInfo : MonoBehaviour
 
             offset.x += 300;
         }
-        
+        */
         /*
         statDisplay1.GetComponent<TMP_Text>().text = 
             $"Total Damage Dealt to Other Players: {Globals.winningPlayer.totalDamageToOtherPlayers}\n" +
