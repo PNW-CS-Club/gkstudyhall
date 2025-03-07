@@ -7,6 +7,7 @@ MonoImporter:
   - playerListSO: {fileID: 11400000, guid: ab9e637cbfc42da4e805bd63c82ffc2d, type: 2}
   - cardDisplayPrefab: {fileID: 5016061653640422755, guid: b1673ac7a0b6ae243811b05b94e23439, type: 3}
   - stateMachine: {fileID: 1430531344522203847, guid: 30bd3cc3706cd6f489ded94e9157af34, type: 3}
+  - randomCard: {fileID: 11400000, guid: be14ec4658680d641a7748feea97e494, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

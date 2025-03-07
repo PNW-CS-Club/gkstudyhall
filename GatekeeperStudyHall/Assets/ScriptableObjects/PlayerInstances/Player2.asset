@@ -30,3 +30,18 @@ MonoBehaviour:
   totalDamageTaken: 0
   totalStockade: 0
   battlesStarted: 0
+  health: 10
+  isAlive: 1
+  doubleDamageToCenter: 1
+  doubleDamageToSelf: 1
+  reduceGateDamage: 0
+  increaseGateDamage: 0
+  noDamageTurn: 0
+  doubleGateAbil: 1
+  totalDamageToOtherPlayers: 0
+  totalDamageToGates: 0
+  totalDamageToGatekeeper: 0
+  totalAmountHealed: 0
+  totalDamageTaken: 0
+  totalStockade: 0
+  battlesStarted: 0
