@@ -1,16 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
-using UnityEngine.UI;
 
 
-public class Hover_Object : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
-
+public class HoverText : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler
 {
-    // Start is called before the first frame update
- public GameObject hoverTextBox; // The Text or InputField object to show/hide
+    public GameObject hoverTextBox; // The Text or InputField object to show/hide
     private TMP_Text textComponent;
 
     void Start()
