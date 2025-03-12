@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -96,6 +97,10 @@ public class GameManager : MonoBehaviour
         {
             Globals.winningPlayer = attacker;
             SceneManager.LoadScene("EndScene");
+        }
+
+        if(centerGate.Health <= CenterGateSO.MAX_HEALTH / 2.0){
+        
         }
     }
 
@@ -237,6 +242,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("The player should not be able to roll the dice now!");
         }
+        Globals.battleData.turnCount++;
     }
 
 

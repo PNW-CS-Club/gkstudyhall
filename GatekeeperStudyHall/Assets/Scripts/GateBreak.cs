@@ -37,12 +37,16 @@ public class GateBreak : MonoBehaviour
                 return State.ChoosingPlayer;
 
             case GateColor.GREEN:
-                gameManager.PlayerChangeHealth(player, 3 * player.doubleGateAbil);
+                gameManager.PlayerChangeHealth(player, roll * player.doubleGateAbil);
                 break;
 
-            case GateColor.RED:
+            case GateColor.RED: //player will not be able to attack the red gate first turn
+                if(Globals.battleData.turnCount == 1){
+                    return 0;
+                } else {
                 player.doubleDamageToCenter = 2; 
                 gameManager.PlayerAttacksCenterGate(player, roll * player.doubleDamageToCenter * player.doubleGateAbil);
+                }
                 break;
 
             case GateColor.BLUE:
@@ -66,9 +70,14 @@ public class GateBreak : MonoBehaviour
                 gameManager.HealCenterGate(3 * player.doubleGateAbil);
                 break;
 
-            case GateColor.RED:
-                player.doubleDamageToSelf = 2;
-                gameManager.PlayerChangeHealth(player, -roll * player.doubleDamageToSelf * player.doubleGateAbil);
+            case GateColor.RED: //if the turnCount is == this will not allow the player to attack the red gate first turn chagnes can be made such as even or odd turns
+                if(Globals.battleData.turnCount == 1){
+                    return 0;
+                }
+                 else {
+                player.totalDamageToGates = 1; //have to figure out how to change from 1 to 0.5
+                gameManager.PlayerChangeHealth(player, -roll * player.totalDamageToGates * player.doubleGateAbil);
+                }
                 break;
 
             case GateColor.BLUE:
