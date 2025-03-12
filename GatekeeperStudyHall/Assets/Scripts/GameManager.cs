@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GateBreak gateBreak;
 
     [SerializeField] PlayerListSO playerListSO;
+    public PlayerListSO iPlayerListSO;
     [SerializeField] CardQueue cardQueue;
 
     [SerializeField] PlayerSelection playerSelect;
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     void Awake() 
     {
         // set the amount of players alive to the initial size of the player list
+        iPlayerListSO = playerListSO;
         Globals.playersAlive = playerListSO.list.Count;
     }
     
@@ -90,8 +92,7 @@ public class GameManager : MonoBehaviour
     /// <param name="damage"></param>
     public void PlayerAttacksCenterGate(PlayerSO attacker, int damage)
     {
-        centerGate.TakeDamage(damage);
-        attacker.totalDamageToGatekeeper += damage;
+        centerGate.TakeDamageFromPlayer( damage, attacker );
         if (centerGate.Health == 0)
         {
             Globals.winningPlayer = attacker;

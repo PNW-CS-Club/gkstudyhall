@@ -89,7 +89,8 @@ public class TraitHandler : MonoBehaviour
                 //Selected gate health - 2
                 //GameManager.GateChangeHealth(player, selectedGate,-2);
                 
-                Debug.LogWarning("Trait minus2GateKeeper not implemented");
+                //Debug.LogWarning("Trait minus2GateKeeper not implemented");
+                gameManager.PlayerAttacksCenterGate( player, 2 );
                 break;
 
             case Trait.plus1Health:
@@ -123,8 +124,7 @@ public class TraitHandler : MonoBehaviour
 
             case Trait.swapGateHP:
                 // Swap the HP of two chosen gates
-                Debug.LogWarning("Trait swapGateHP not implemented");
-                break;
+                return State.SwappingGates;
 
             case Trait.increaseGateDamage:
                 // Player deals 1 more damage to gates this turn
@@ -145,8 +145,12 @@ public class TraitHandler : MonoBehaviour
             case Trait.chooseGateForOp:
                 // Choose a gate for another player to attack
                 // that player will only be able to attack that gate during their next turn
-                Debug.LogWarning("Trait chooseGateForOp not implemented");
-                break;
+                Debug.Log("Select a player to force gate");
+                playerSelection.OnSelect = ( selectedPly ) => {
+                    Globals.forcedPlayer = selectedPly;
+                    gameManager.currentState = State.ForcingGate;
+                };
+                return State.ChoosingPlayer;
 
             case Trait.plusStockade:
                 player.hasStockade = true;

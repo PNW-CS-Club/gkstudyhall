@@ -26,7 +26,7 @@ MonoBehaviour:
   - Take 2 damage
   - Deal 1 damage to all opponents
   - Choose a gate for an opponent
-  traits: 08000000090000000a00000002000000
+  traits: 08000000090000000a0000000b000000
   flavorText: 
   flavorTextColor: {r: 0, g: 0, b: 0, a: 1}
   outerColor: {r: 0.80392164, g: 0.8196079, b: 0.91372555, a: 1}

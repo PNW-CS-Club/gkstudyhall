@@ -25,6 +25,7 @@ public class PlayerSO : ScriptableObject
     public int increaseGateDamage; // Player deals more damage to gate this turn
     public bool noDamageTurn; // Player takes no damage this turn
     public int doubleGateAbil; // Gate abilities double this turn                       (Multiplier)
+    public GateColor forcedGate;
 
     // Statistic variables
     public int totalDamageToOtherPlayers; // Total damage dealt to other players
@@ -49,6 +50,7 @@ public class PlayerSO : ScriptableObject
         increaseGateDamage = 0;
         doubleGateAbil = 1;
         doubleDamageToSelf = 1;
+        forcedGate = GateColor.INVALID;
 
         // Initialize Statistic Variables
         totalDamageToOtherPlayers = 0; 
@@ -93,6 +95,7 @@ public class PlayerSO : ScriptableObject
         reduceGateDamage = 0;
         doubleGateAbil = 1;
         doubleDamageToSelf = 1;
+        forcedGate = GateColor.INVALID;
     }
 
     /// <summary>

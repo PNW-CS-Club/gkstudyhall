@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum GateColor 
 {
-    BLACK = 0, GREEN = 1, RED = 2, BLUE = 3
+    INVALID = -1, BLACK = 0, GREEN = 1, RED = 2, BLUE = 3
 }
 
 
@@ -45,6 +45,10 @@ public class GateSO : ScriptableObject
         if (amount <= 0) return;
         
         health = Mathf.Min(health + amount, MAX_HEALTH);
+    }
+
+    public void SetHealth( int health ) {
+        this.health = health;
     }
 
     public void Reset()
