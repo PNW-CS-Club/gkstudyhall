@@ -24,7 +24,7 @@ public class CenterGateSO : ScriptableObject
     
     public void TakeDamage(int damage)
     {
-        if (damage <= 0) return;
+        if (damage <= 0) return;  
         
         health = Mathf.Max(0, health - damage);
     }

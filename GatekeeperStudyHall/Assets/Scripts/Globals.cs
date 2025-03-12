@@ -22,6 +22,9 @@ public static class Globals
         public int defenderRoll = 0;
         public bool isAttackerRolling;
         public int mult;
+
+        public int turnCount = 0;
+        
         
         public BattleData(PlayerSO attacker, PlayerSO defender) {
             this.attacker = attacker;
