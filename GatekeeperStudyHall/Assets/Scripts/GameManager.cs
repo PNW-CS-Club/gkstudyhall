@@ -159,7 +159,7 @@ public class GameManager : MonoBehaviour
         PlayerSO currentPlayer = playerListSO.list[0]; 
         if (currentState == State.TraitRoll)
         {
-            SpecialEvents.specialEvent(currentPlayer)    
+            SpecialEvents.specialEvent(currentPlayer);    
             if (roll <= 4) 
             {
                 State nextState = traitHandler.ActivateCurrentPlayerTrait(roll);
