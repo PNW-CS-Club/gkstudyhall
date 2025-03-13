@@ -44,6 +44,7 @@ public class CharSelectManager : MonoBehaviour
             Card2.SetActive(playerList.Count >= 2);
             Card3.SetActive(playerList.Count >= 3);
             Card4.SetActive(playerList.Count == 4);     
-        }
+        } //change of branch to fix the bugs, DONT MERGE IN THE MAIN.
+          //dont remove yet this branch
     }
 }
