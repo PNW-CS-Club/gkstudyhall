@@ -6,32 +6,44 @@ using UnityEngine.
 
 public enum RandomEvent
 {
-[InspectorName("Deal one damage to player")]    pDmg = 1;
-[InspectorName("Gain a shield at the start of the round")] overShield = 5;
-[InspectorName("Add 1 to gate attack roll")] gateAttack = 1;
-}
+[InspectorName("Deal one damage to player")]    pDmg = 0;
+[InspectorName("Gain a shield at the start of the round")] overShield = 1;
+[InspectorName("Add 1 dmg to gate attack roll")] gateAttack = 2;
+} //numbers are the index
 
 
-public class Event : MonoBehavior
+public static class SpecialEvents
 {
 
 List<PlayerSO> players;
 
-float randomNum = Random.Range(0.0f, 100.0f);
+int randomNum = Random.Range(0, 100); //
 
-public State Event(PlayerSO player){
-    if(randomNum < 30.0f){ //this will be a special round 
-        switch(RandomEvent){
+RandomEvent randEvent = Random.Range(0, 3);
+
+public static void specialEvent(PlayerSO player){ 
+    Debug.Log("START OF SPECIAL EVENT");
+    if(randomNum < 10){ //this will be a special round 
+        switch(randEvent){
             case RandomEvent.pDmg:
-            player.damage(1);
+            player.TakeDamage(1);
+            Debug.Log("All player take damage");
             break;
 
             case RandomEvent.overShield:
-            player.shield;
+            player.hasStockade = true;
+            Debug.Log("Random player will get shield");
             break;
 
             case RandomEvent.gateAttack:
-            
+            player.increaseGateDamage = 1;
+            Debug.Log("Player does 1 dmg to gate attack roll")
+            break;
+
+            default:
+            // We shouldn't ever reach this statement.
+            Debug.LogError($"Event not handled: {RandomEvent}");
+            break;
         }
     }
 }

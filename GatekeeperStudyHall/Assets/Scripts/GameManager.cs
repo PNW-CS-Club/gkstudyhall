@@ -156,9 +156,10 @@ public class GameManager : MonoBehaviour
     /// <param name="roll">The rolled value of the dice.</param>
     private void UseRollResult(int roll) 
     {
-        PlayerSO currentPlayer = playerListSO.list[0];
-        if (currentState == State.TraitRoll) 
+        PlayerSO currentPlayer = playerListSO.list[0]; 
+        if (currentState == State.TraitRoll)
         {
+            SpecialEvents.specialEvent(currentPlayer)    
             if (roll <= 4) 
             {
                 State nextState = traitHandler.ActivateCurrentPlayerTrait(roll);
