@@ -84,7 +84,7 @@ public class TraitHandler : MonoBehaviour
                     gameManager.currentState = State.ChoosingGate;
                 };
 
-                return State.ChoosingGate;
+                return State.ChoosingPlayer;
 
             case Trait.minus2GateKeeper:
                 //Selected gate health - 2
