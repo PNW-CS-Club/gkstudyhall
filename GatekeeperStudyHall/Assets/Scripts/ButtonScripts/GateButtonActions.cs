@@ -14,11 +14,13 @@ public class GateButtonActions : MonoBehaviour
     /// The game must be in a state where <c>CanChooseGate</c> is true; otherwise this does nothing.  
     /// </summary>
     public void ChooseGate( GateSO gate ) {
+        PlayerSO ply = gameManager.iPlayerListSO.list[ 0 ];
+
         if (!gameManager.currentState.CanChooseGate()) 
             return;
 
-        if ( gameManager.iPlayerListSO.list[ 0 ].forcedGate != gate.Color && 
-            gameManager.iPlayerListSO.list[ 0 ].forcedGate != GateColor.INVALID &&
+        if ( ply.forcedGate != gate.Color && 
+            ply.forcedGate != GateColor.INVALID &&
             gameManager.currentState == State.ChoosingGate )
             return;
 
@@ -26,7 +28,6 @@ public class GateButtonActions : MonoBehaviour
 
         // is this redundant, stupid, or both?  too tired to care right now
         if ( ( Globals.selectedGate == null && gameManager.currentState == State.SwappingGates ) || gameManager.currentState != State.SwappingGates ) {
-
             Globals.selectedGate = gate;
         } else {
             Globals.swapGate = gate;

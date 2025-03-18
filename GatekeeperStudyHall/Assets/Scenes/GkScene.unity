@@ -3142,7 +3142,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.14901961, g: 0.8705883, b: 0.21176472, a: 1}
-    m_HighlightedColor: {r: 0.29546398, g: 0.94699997, b: 0.35269356, a: 1}
+    m_HighlightedColor: {r: 0.5576078, g: 0.94509804, b: 0.592622, a: 1}
     m_PressedColor: {r: 0.12574577, g: 0.7660377, b: 0.18320788, a: 1}
     m_SelectedColor: {r: 0.14901961, g: 0.8705883, b: 0.21176472, a: 1}
     m_DisabledColor: {r: 0.14901961, g: 0.8705883, b: 0.21176472, a: 0.5019608}
@@ -5573,7 +5573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

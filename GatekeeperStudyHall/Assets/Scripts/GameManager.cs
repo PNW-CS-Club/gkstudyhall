@@ -186,8 +186,10 @@ public class GameManager : MonoBehaviour
             if (Globals.selectedGate.Health == 0) {
                 Debug.Log("You broke the gate!");
                 currentState = State.BreakingGate;
-            }
-            else {
+            } else if ( currentPlayer.twoGates ) {
+                currentState = State.ChoosingGate;
+                currentPlayer.twoGates = false;
+            } else {
                 NextTurn();
             }
         }
@@ -196,10 +198,14 @@ public class GameManager : MonoBehaviour
             State? maybeNextState = gateBreak.DoBreakEffect(playerListSO.list[0], Globals.selectedGate, roll);
             Globals.selectedGate.Reset();
 
-            if (maybeNextState is State nextState)
+            if (maybeNextState is State nextState) {
                 currentState = nextState;
-            else
+            } else if ( currentPlayer.twoGates ) {
+                currentState = State.ChoosingGate;
+                currentPlayer.twoGates = false;
+            } else {
                 NextTurn();
+            }
         }
         else if (currentState == State.Battling) {
             if (Globals.battleData.isAttackerRolling) {

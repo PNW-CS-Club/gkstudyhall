@@ -22,6 +22,7 @@ public enum Trait
     [InspectorName("Deal 1 Damage to Everyone")]    allMinus1HP = 10,
     [InspectorName("Choose Gate for Other Player")] chooseGateForOp = 11,
     [InspectorName("Gain Stockade")]                plusStockade = 12,
+    [InspectorName("Attack two gates")]             attackTwoGates = 13
 }
 
 
@@ -155,6 +156,10 @@ public class TraitHandler : MonoBehaviour
             case Trait.plusStockade:
                 player.hasStockade = true;
                 player.totalStockade++;
+                break;
+
+            case Trait.attackTwoGates:
+                player.twoGates = true;
                 break;
 
             default:
