@@ -17,6 +17,6 @@ public class StateDebug : MonoBehaviour
     {
         textbox.text = 
             $"Current State: {gameManager.currentState}\nCan Roll: {gameManager.currentState.CanRoll()}\n" 
-            + $"Can Choose Gate: {gameManager.currentState.CanChooseGate()}\nChosen Gate: {Globals.selectedGate}";
+            + $"Can Choose Gate: {gameManager.currentState.CanChooseGate()}\nChosen Gates: {Globals.selectedGate} & {Globals.swapGate}";
     }
 }

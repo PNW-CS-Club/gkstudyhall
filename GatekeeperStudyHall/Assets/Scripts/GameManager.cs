@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     void Awake() 
     {
         // set the amount of players alive to the initial size of the player list
-        iPlayerListSO = playerListSO;
+        iPlayerListSO = playerListSO; // this is dumb but i think it works
         Globals.playersAlive = playerListSO.list.Count;
     }
     
