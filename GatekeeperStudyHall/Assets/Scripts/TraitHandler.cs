@@ -22,7 +22,8 @@ public enum Trait
     [InspectorName("Deal 1 Damage to Everyone")]    allMinus1HP = 10,
     [InspectorName("Choose Gate for Other Player")] chooseGateForOp = 11,
     [InspectorName("Gain Stockade")]                plusStockade = 12,
-    [InspectorName("Attack two gates")]             attackTwoGates = 13
+    [InspectorName("Attack two gates")]             attackTwoGates = 13,
+    [InspectorName("Attack a gate for 1 damage")]   oneDamageToGate = 14
 }
 
 
@@ -161,6 +162,10 @@ public class TraitHandler : MonoBehaviour
             case Trait.attackTwoGates:
                 player.twoGates = true;
                 break;
+
+            case Trait.oneDamageToGate:
+                player.directAttack = true;
+                return State.ChoosingGate;
 
             default:
                 // We shouldn't ever reach this statement.

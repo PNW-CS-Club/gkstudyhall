@@ -26,6 +26,14 @@ public class GateButtonActions : MonoBehaviour
 
         Debug.Log($"Chose gate: {gate.Color}");
 
+        // player direct attack, cut short afterwards
+        if ( ply.directAttack ) {
+            gameManager.GateChangeHealth( ply, gate, -1 );
+            ply.directAttack = false;
+            gameManager.currentState = State.ChoosingGate;
+            return;
+        }
+
         // is this redundant, stupid, or both?  too tired to care right now
         if ( ( Globals.selectedGate == null && gameManager.currentState == State.SwappingGates ) || gameManager.currentState != State.SwappingGates ) {
             Globals.selectedGate = gate;
