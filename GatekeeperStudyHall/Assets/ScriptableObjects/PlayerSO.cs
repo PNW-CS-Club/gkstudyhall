@@ -28,6 +28,7 @@ public class PlayerSO : ScriptableObject
     public GateColor forcedGate; // Player forced to attack a gate, manually
     public bool twoGates; // Player can attack two gates
     public bool directAttack; // Player attacks gate for 1 HP
+    public bool skipMe;
 
     // Statistic variables
     public int totalDamageToOtherPlayers; // Total damage dealt to other players
@@ -55,6 +56,7 @@ public class PlayerSO : ScriptableObject
         forcedGate = GateColor.INVALID;
         twoGates = false;
         directAttack = false;
+        skipMe = false;
 
         // Initialize Statistic Variables
         totalDamageToOtherPlayers = 0; 
@@ -102,6 +104,7 @@ public class PlayerSO : ScriptableObject
         forcedGate = GateColor.INVALID;
         twoGates = false;
         directAttack = false;
+        skipMe = false;
     }
 
     /// <summary>

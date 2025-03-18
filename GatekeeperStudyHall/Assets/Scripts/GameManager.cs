@@ -266,6 +266,11 @@ public class GameManager : MonoBehaviour
         while (!players[0].isAlive); // TODO: This will loop infinitely if all players are dead
 
         cardQueue.RepositionCards();
+
+        if ( players[ 0 ].skipMe ) {
+            NextTurn();
+            return;
+        }
         
         currentState = State.TraitRoll;
     }

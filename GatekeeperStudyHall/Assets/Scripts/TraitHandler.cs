@@ -23,7 +23,8 @@ public enum Trait
     [InspectorName("Choose Gate for Other Player")] chooseGateForOp = 11,
     [InspectorName("Gain Stockade")]                plusStockade = 12,
     [InspectorName("Attack two gates")]             attackTwoGates = 13,
-    [InspectorName("Attack a gate for 1 damage")]   oneDamageToGate = 14
+    [InspectorName("Attack a gate for 1 damage")]   oneDamageToGate = 14,
+    [InspectorName("Skip target player's turn")]    skipTargetTurn = 15
 }
 
 
@@ -167,6 +168,13 @@ public class TraitHandler : MonoBehaviour
                 player.directAttack = true;
                 return State.ChoosingGate;
 
+            case Trait.skipTargetTurn:
+                playerSelection.OnSelect = ( selectedPly ) => {
+                    selectedPly.skipMe = true;
+                    gameManager.currentState = State.ChoosingGate;
+                };
+
+                return State.ChoosingPlayer;
             default:
                 // We shouldn't ever reach this statement.
                 Debug.LogError($"Trait not handled: {trait}");
