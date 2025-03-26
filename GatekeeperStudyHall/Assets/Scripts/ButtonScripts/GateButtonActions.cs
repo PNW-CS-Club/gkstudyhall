@@ -29,8 +29,12 @@ public class GateButtonActions : MonoBehaviour
         // player direct attack, cut short afterwards
         if ( ply.directAttack ) {
             gameManager.GateChangeHealth( ply, gate, -1 );
-            ply.directAttack = false;
-            gameManager.currentState = State.ChoosingGate;
+            if ( gate.Health == 0 ) {
+                Globals.selectedGate = gate;
+                Debug.Log("You broke the gate!");
+                gameManager.currentState = State.BreakingGate;
+            }
+            //gameManager.currentState = State.ChoosingGate;
             return;
         }
 

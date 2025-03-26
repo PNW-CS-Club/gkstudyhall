@@ -200,9 +200,10 @@ public class GameManager : MonoBehaviour
 
             if (maybeNextState is State nextState) {
                 currentState = nextState;
-            } else if ( currentPlayer.twoGates ) {
+            } else if ( currentPlayer.twoGates || currentPlayer.directAttack ) {
                 currentState = State.ChoosingGate;
                 currentPlayer.twoGates = false;
+                currentPlayer.directAttack = false;
             } else {
                 NextTurn();
             }
