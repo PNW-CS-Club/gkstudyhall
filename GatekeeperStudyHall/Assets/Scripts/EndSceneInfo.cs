@@ -23,7 +23,7 @@ public class EndSceneInfo : MonoBehaviour
         Debug.Log($"{Globals.winningPlayer} won the game!");      
 
         //set starting offset to top-left of screen
-        offset = new Vector3(100f, 50f, 0f); // TODO: Find a good value for this
+        offset = new Vector3(0f, 0f, 0f); // TODO: Find a good value for this
 
         // move the winning player to the front of the list
         playerList.Remove(Globals.winningPlayer);
@@ -39,10 +39,10 @@ public class EndSceneInfo : MonoBehaviour
             Transform displayTransform = displayList[i].transform;
             CardDisplay cardDisplay = displayTransform.GetChild(0).GetComponent<CardDisplay>();
             displayTransform.localPosition = offset;
-
+            
             cardDisplay.ChangeCardData(playerList[i].card); 
             cardDisplay.player = playerList[i];
-            offset.x += 200;
+            offset.x += 350;
         }
 
     }
