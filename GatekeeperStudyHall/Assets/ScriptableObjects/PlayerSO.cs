@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -111,19 +112,20 @@ public class PlayerSO : ScriptableObject
     /// Player's health is subtracted by damage parameter. 
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(int damage)
+    public int TakeDamage(int damage)
     {
-        if (damage <= 0) return;
+        if (damage <= 0) return 0;
         if (noDamageTurn) {
             Debug.Log($"{name} takes no damage this turn!");
-            return;
+            return 0;
         }
         if (hasStockade) {
             hasStockade = false;
             Debug.Log("Stockade blocked the attack!");
-            return;
+            return 0;
         }
         
+        int actualDmg = Math.Min( health, damage );
         health -= damage;
         totalDamageTaken += damage;
         
@@ -133,6 +135,8 @@ public class PlayerSO : ScriptableObject
             isAlive = false;
             Globals.playersAlive--;
         }
+
+        return actualDmg;
         
     }
     /// <summary>

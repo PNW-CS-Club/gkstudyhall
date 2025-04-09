@@ -77,10 +77,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PlayerAttacksPlayer(PlayerSO attacker, PlayerSO defender, int damage)
     {
-        defender.TakeDamage(damage);
-        attacker.totalDamageToOtherPlayers +=  damage;
-        Debug.Log($"{attacker.name} attacked {defender.name} for {damage} damage!");
-        CheckWinBySurvival();
+        int dmgDealt = defender.TakeDamage(damage);
+        if ( dmgDealt > 0 ) {
+            attacker.totalDamageToOtherPlayers +=  damage;
+            Debug.Log($"{attacker.name} attacked {defender.name} for {damage} damage!");
+            CheckWinBySurvival();
+        }
     }
 
    
