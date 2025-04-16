@@ -29,7 +29,7 @@ public class EndSceneInfo : MonoBehaviour
         playerList.Remove(Globals.winningPlayer);
         playerList.Insert(0, Globals.winningPlayer);
 
-        //create all of the stat displays we need ,0f
+        //create all of the stat displays we need
         for(int i = 0; i < playerList.Count; i++){
             GameObject newStatDisplay = Instantiate(EndStatDisplay,transform);
             displayList.Add(newStatDisplay);
