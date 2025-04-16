@@ -14,12 +14,11 @@ public enum RandomEvent
 public static class SpecialEvents
 {
 
-
 static int randomNum =Random.Range(0, 100); 
 
 static RandomEvent randEvent = Random.Range(0, 3);
 
-public static void specialEvent(PlayerSO player){ 
+public static void specialEvent(PlayerListSO player){ 
     Debug.Log("START OF SPECIAL EVENT");
     if(randomNum > 10){ //this will be a special round 
         switch(randEvent){
@@ -42,12 +41,10 @@ public static void specialEvent(PlayerSO player){
             // We shouldn't ever reach this statement.
             Debug.LogError($"Event not handled: {RandomEvent}");
             break;
+            }
         }
     }
-}
 
 //enum using a switch
 //enum will have the effects
-//
-
 }
