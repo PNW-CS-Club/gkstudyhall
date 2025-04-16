@@ -22,8 +22,8 @@ public class EndSceneInfo : MonoBehaviour
 
         Debug.Log($"{Globals.winningPlayer} won the game!");      
 
-        //set starting offset to top-left of screen
-        offset = new Vector3(0f, 0f, 0f); // TODO: Find a good value for this
+        //set starting offset to middle-left of screen
+        offset = new Vector3(-Screen.width/4f,  -250f, 0f); // (player display dimensions are (300x500) and pivot is lover-left corner (0,0) ) 
 
         // move the winning player to the front of the list
         playerList.Remove(Globals.winningPlayer);
@@ -40,9 +40,22 @@ public class EndSceneInfo : MonoBehaviour
             CardDisplay cardDisplay = displayTransform.GetChild(0).GetComponent<CardDisplay>();
             displayTransform.localPosition = offset;
             
+            // Update the card
             cardDisplay.ChangeCardData(playerList[i].card); 
             cardDisplay.player = playerList[i];
             offset.x += 350;
+
+            // Set the stat displays
+            TMP_Text stats = displayTransform.GetChild(1).GetComponent<TMP_Text>();
+            stats.text =
+            $"Damage to Players: {playerList[i].totalDamageToOtherPlayers}\n" +
+            $"Damage to Gates: {playerList[i].totalDamageToGates}\n" +
+            $"Damage to Gatekeeper: {playerList[i].totalDamageToGatekeeper}\n" +
+            $"Amount Healed: {playerList[i].totalAmountHealed}\n" +
+            $"Damage Taken: {playerList[i].totalDamageTaken}\n" +
+            $"Stockade Collected: {playerList[i].totalStockade}\n" +
+            $"Battles Started: {playerList[i].battlesStarted}\n";
+            stats.fontSize = 22;
         }
 
     }
