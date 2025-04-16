@@ -15,9 +15,9 @@ public static class SpecialEvents
 {
 
 
-int static randomNum = Random.Range(0, 100); //
+static int randomNum =Random.Range(0, 100); 
 
-RandomEvent randEvent = Random.Range(0, 3);
+static RandomEvent randEvent = Random.Range(0, 3);
 
 public static void specialEvent(PlayerSO player){ 
     Debug.Log("START OF SPECIAL EVENT");

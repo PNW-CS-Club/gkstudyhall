@@ -242,6 +242,7 @@ public class GameManager : MonoBehaviour
         else 
         {
             Debug.LogError("The player should not be able to roll the dice now!");
+            SpecialEvents.specialEvent(playerListSO);
         }
         Globals.battleData.turnCount++;
     }
