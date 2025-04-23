@@ -21,6 +21,12 @@ public enum State
     
     /// The state where the game waits for the current player to roll to attack another player
     Battling = 5, 
+
+    /// The state where a player is picking two gates to swap
+    SwappingGates = 6,
+
+    /// The state where a player forces another player to choose a gate
+    ForcingGate = 7
 }
 
 
@@ -34,6 +40,8 @@ public static class StateMethods
         State.BreakingGate => true,
         State.ChoosingPlayer => false,
         State.Battling => true,
+        State.SwappingGates => false,
+        State.ForcingGate => false,
         _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
     };
     
@@ -45,6 +53,8 @@ public static class StateMethods
         State.BreakingGate => false,
         State.ChoosingPlayer => false,
         State.Battling => false,
+        State.SwappingGates => true,
+        State.ForcingGate => true,
         _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
     };
 }

@@ -10,6 +10,12 @@ public static class Globals
     /// Holds <c>null</c> if the player has not yet chosen a gate or has already attacked a gate.
     public static GateSO selectedGate = null;
 
+    // the gate the player is choosing to swap with
+    // will use selectedGate as the other half
+    public static GateSO swapGate = null;
+
+    // the player whose gate is being forced
+    public static PlayerSO forcedPlayer = null;
     
     public class BattleData {
         public PlayerSO attacker;

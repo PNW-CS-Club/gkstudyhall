@@ -58,9 +58,12 @@ public class DiceRoll : MonoBehaviour
     [SerializeField] Vector2 bottomRightBound;
 
     [SerializeField] GameObject barrier;
-    SpriteRenderer spriteRenderer;
+    SpriteRenderer diceNum;
+    SpriteRenderer diceBackground;
     Rigidbody2D rb;
     
+    public static PlayerSO owner;
+
     Vector3 startPosition;
     
     // stores each frame's mouseDelta and the time it was calculated
@@ -78,7 +81,16 @@ public class DiceRoll : MonoBehaviour
             Debug.LogError($"There should be 6 sprites in DiceRoll array (actual: {sprites.Length})");
         }
 
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        // this is stupid but i don't see any docs specifying which order elements are returned in,
+        // so i have to assume it's just arbitrary
+        SpriteRenderer[] diceImages = GetComponentsInChildren<SpriteRenderer>();
+        if ( diceImages[ 0 ].name == "Dice Background" ) {
+            diceBackground = diceImages[ 0 ];
+            diceNum = diceImages[ 1 ];
+        } else {
+            diceBackground = diceImages[ 1 ];
+            diceNum = diceImages[ 0 ];
+        }
         rb = GetComponentInChildren<Rigidbody2D>();
         barrier.SetActive(false);
 
@@ -119,7 +131,7 @@ public class DiceRoll : MonoBehaviour
                 isReturning = true;
                 returnTimer = returnDuration;
                 stopPosition = transform.position;
-                stopAngle = spriteRenderer.transform.eulerAngles.z;
+                stopAngle = diceNum.transform.eulerAngles.z;
             }
         } 
         else if (isReturning) {
@@ -134,12 +146,17 @@ public class DiceRoll : MonoBehaviour
             float targetAngle = Mathf.Round(stopAngle / 180f) * 180f;
             // whats a quarternion
             float zRot = Mathf.Lerp(stopAngle, targetAngle, progress);
-            spriteRenderer.transform.eulerAngles = new( 0f, 0f, zRot );
+            diceNum.transform.eulerAngles = new( 0f, 0f, zRot );
 
             if (returnTimer <= 0f) {
                 isReturning = false;
             }
         }
+
+        diceBackground.transform.SetPositionAndRotation( diceNum.transform.position, diceNum.transform.rotation );
+
+        diceBackground.color = owner.card.outerColor;
+        diceNum.color = owner.card.detailColor;
     }
 
 
@@ -167,7 +184,7 @@ public class DiceRoll : MonoBehaviour
         if (shakeTimer >= shakeInterval) {
 
             // change the face to show a random number
-            spriteRenderer.sprite = sprites[Random.Range(0, 6)];
+            diceNum.sprite = sprites[Random.Range(0, 6)];
 
             // get a random point `shakeRadius` units away from the mouse,
             // then start moving the dice sprite towards it
@@ -231,7 +248,7 @@ public class DiceRoll : MonoBehaviour
         slideTimer = 0;
 
         roll = finalRoll;
-        spriteRenderer.sprite = sprites[finalRoll - 1];
+        diceNum.sprite = sprites[finalRoll - 1];
 
         // gives the dice a boost
         var avgMouseSpeed = avgMouseDistance / Time.fixedDeltaTime;
