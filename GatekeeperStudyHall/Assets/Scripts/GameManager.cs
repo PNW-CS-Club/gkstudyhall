@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GateBreak gateBreak;
 
     [SerializeField] PlayerListSO playerListSO;
+    public PlayerListSO iPlayerListSO;
     [SerializeField] CardQueue cardQueue;
 
     [SerializeField] PlayerSelection playerSelect;
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     void Awake() 
     {
         // set the amount of players alive to the initial size of the player list
+        iPlayerListSO = playerListSO; // this is dumb but i think it works
         Globals.playersAlive = playerListSO.list.Count;
     }
     
@@ -75,10 +77,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PlayerAttacksPlayer(PlayerSO attacker, PlayerSO defender, int damage)
     {
-        defender.TakeDamage(damage);
-        attacker.totalDamageToOtherPlayers +=  damage;
-        Debug.Log($"{attacker.name} attacked {defender.name} for {damage} damage!");
-        CheckWinBySurvival();
+        int dmgDealt = defender.TakeDamage(damage);
+        if ( dmgDealt > 0 ) {
+            attacker.totalDamageToOtherPlayers +=  damage;
+            Debug.Log($"{attacker.name} attacked {defender.name} for {damage} damage!");
+            CheckWinBySurvival();
+        }
     }
 
    
@@ -90,8 +94,7 @@ public class GameManager : MonoBehaviour
     /// <param name="damage"></param>
     public void PlayerAttacksCenterGate(PlayerSO attacker, int damage)
     {
-        centerGate.TakeDamage(damage);
-        attacker.totalDamageToGatekeeper += damage;
+        centerGate.TakeDamageFromPlayer( damage, attacker );
         if (centerGate.Health == 0)
         {
             Globals.winningPlayer = attacker;
@@ -185,8 +188,10 @@ public class GameManager : MonoBehaviour
             if (Globals.selectedGate.Health == 0) {
                 Debug.Log("You broke the gate!");
                 currentState = State.BreakingGate;
-            }
-            else {
+            } else if ( currentPlayer.twoGates ) {
+                currentState = State.ChoosingGate;
+                currentPlayer.twoGates = false;
+            } else {
                 NextTurn();
             }
         }
@@ -195,10 +200,15 @@ public class GameManager : MonoBehaviour
             State? maybeNextState = gateBreak.DoBreakEffect(playerListSO.list[0], Globals.selectedGate, roll);
             Globals.selectedGate.Reset();
 
-            if (maybeNextState is State nextState)
+            if (maybeNextState is State nextState) {
                 currentState = nextState;
-            else
+            } else if ( currentPlayer.twoGates || currentPlayer.directAttack ) {
+                currentState = State.ChoosingGate;
+                currentPlayer.twoGates = false;
+                currentPlayer.directAttack = false;
+            } else {
                 NextTurn();
+            }
         }
         else if (currentState == State.Battling) {
             if (Globals.battleData.isAttackerRolling) {
@@ -259,6 +269,11 @@ public class GameManager : MonoBehaviour
         while (!players[0].isAlive); // TODO: This will loop infinitely if all players are dead
 
         cardQueue.RepositionCards();
+
+        if ( players[ 0 ].skipMe ) {
+            NextTurn();
+            return;
+        }
         
         currentState = State.TraitRoll;
     }

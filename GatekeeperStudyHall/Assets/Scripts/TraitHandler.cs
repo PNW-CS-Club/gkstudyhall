@@ -22,6 +22,9 @@ public enum Trait
     [InspectorName("Deal 1 Damage to Everyone")]    allMinus1HP = 10,
     [InspectorName("Choose Gate for Other Player")] chooseGateForOp = 11,
     [InspectorName("Gain Stockade")]                plusStockade = 12,
+    [InspectorName("Attack two gates")]             attackTwoGates = 13,
+    [InspectorName("Attack a gate for 1 damage")]   oneDamageToGate = 14,
+    [InspectorName("Skip target player's turn")]    skipTargetTurn = 15
 }
 
 
@@ -83,13 +86,14 @@ public class TraitHandler : MonoBehaviour
                     gameManager.currentState = State.ChoosingGate;
                 };
 
-                return State.ChoosingGate;
+                return State.ChoosingPlayer;
 
             case Trait.minus2GateKeeper:
                 //Selected gate health - 2
                 //GameManager.GateChangeHealth(player, selectedGate,-2);
                 
-                Debug.LogWarning("Trait minus2GateKeeper not implemented");
+                //Debug.LogWarning("Trait minus2GateKeeper not implemented");
+                gameManager.PlayerAttacksCenterGate( player, 2 );
                 break;
 
             case Trait.plus1Health:
@@ -123,8 +127,7 @@ public class TraitHandler : MonoBehaviour
 
             case Trait.swapGateHP:
                 // Swap the HP of two chosen gates
-                Debug.LogWarning("Trait swapGateHP not implemented");
-                break;
+                return State.SwappingGates;
 
             case Trait.increaseGateDamage:
                 // Player deals 1 more damage to gates this turn
@@ -145,14 +148,33 @@ public class TraitHandler : MonoBehaviour
             case Trait.chooseGateForOp:
                 // Choose a gate for another player to attack
                 // that player will only be able to attack that gate during their next turn
-                Debug.LogWarning("Trait chooseGateForOp not implemented");
-                break;
+                Debug.Log("Select a player to force gate");
+                playerSelection.OnSelect = ( selectedPly ) => {
+                    Globals.forcedPlayer = selectedPly;
+                    gameManager.currentState = State.ForcingGate;
+                };
+                return State.ChoosingPlayer;
 
             case Trait.plusStockade:
                 player.hasStockade = true;
                 player.totalStockade++;
                 break;
 
+            case Trait.attackTwoGates:
+                player.twoGates = true;
+                break;
+
+            case Trait.oneDamageToGate:
+                player.directAttack = true;
+                return State.ChoosingGate;
+
+            case Trait.skipTargetTurn:
+                playerSelection.OnSelect = ( selectedPly ) => {
+                    selectedPly.skipMe = true;
+                    gameManager.currentState = State.ChoosingGate;
+                };
+
+                return State.ChoosingPlayer;
             default:
                 // We shouldn't ever reach this statement.
                 Debug.LogError($"Trait not handled: {trait}");

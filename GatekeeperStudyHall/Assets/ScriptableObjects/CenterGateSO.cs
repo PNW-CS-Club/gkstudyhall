@@ -22,11 +22,15 @@ public class CenterGateSO : ScriptableObject
         return $"CenterGateSO[health=\"{health}\"]";
     }
     
-    public void TakeDamage(int damage)
+    public void TakeDamageFromPlayer( int damage, PlayerSO ply )
     {
         if (damage <= 0) return;
         
-        health = Mathf.Max(0, health - damage);
+        int actualDamage = Mathf.Min( health, damage );
+
+        health -= actualDamage;
+        ply.totalDamageToGatekeeper += actualDamage;
+
     }
 
     public void Heal(int amount)

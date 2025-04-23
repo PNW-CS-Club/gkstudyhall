@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,10 @@ public class PlayerSO : ScriptableObject
     public int increaseGateDamage; // Player deals more damage to gate this turn
     public bool noDamageTurn; // Player takes no damage this turn
     public int doubleGateAbil; // Gate abilities double this turn                       (Multiplier)
+    public GateColor forcedGate; // Player forced to attack a gate, manually
+    public bool twoGates; // Player can attack two gates
+    public bool directAttack; // Player attacks gate for 1 HP
+    public bool skipMe;
 
     // Statistic variables
     public int totalDamageToOtherPlayers; // Total damage dealt to other players
@@ -49,6 +54,10 @@ public class PlayerSO : ScriptableObject
         increaseGateDamage = 0;
         doubleGateAbil = 1;
         doubleDamageToSelf = 1;
+        forcedGate = GateColor.INVALID;
+        twoGates = false;
+        directAttack = false;
+        skipMe = false;
 
         // Initialize Statistic Variables
         totalDamageToOtherPlayers = 0; 
@@ -93,25 +102,30 @@ public class PlayerSO : ScriptableObject
         reduceGateDamage = 0;
         doubleGateAbil = 1;
         doubleDamageToSelf = 1;
+        forcedGate = GateColor.INVALID;
+        twoGates = false;
+        directAttack = false;
+        skipMe = false;
     }
 
     /// <summary>
     /// Player's health is subtracted by damage parameter. 
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(int damage)
+    public int TakeDamage(int damage)
     {
-        if (damage <= 0) return;
+        if (damage <= 0) return 0;
         if (noDamageTurn) {
             Debug.Log($"{name} takes no damage this turn!");
-            return;
+            return 0;
         }
         if (hasStockade) {
             hasStockade = false;
             Debug.Log("Stockade blocked the attack!");
-            return;
+            return 0;
         }
         
+        int actualDmg = Math.Min( health, damage );
         health -= damage;
         totalDamageTaken += damage;
         
@@ -121,6 +135,8 @@ public class PlayerSO : ScriptableObject
             isAlive = false;
             Globals.playersAlive--;
         }
+
+        return actualDmg;
         
     }
     /// <summary>
