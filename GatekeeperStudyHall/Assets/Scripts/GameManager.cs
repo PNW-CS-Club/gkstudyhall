@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
         // set the amount of players alive to the initial size of the player list
         iPlayerListSO = playerListSO; // this is dumb but i think it works
         Globals.playersAlive = playerListSO.list.Count;
+        DiceRoll.owner = playerListSO.list[ 0 ];
     }
     
     void Update()
@@ -216,6 +217,7 @@ public class GameManager : MonoBehaviour
                 Globals.battleData.attackerRoll = roll;
                 Globals.battleData.isAttackerRolling = false;
                 Debug.Log( "ATTACKER rolled a " + roll + ", it is now the DEFENDER's turn" );
+                DiceRoll.owner = Globals.battleData.defender;
             } else {
                 // defender has rolled
                 Globals.battleData.defenderRoll = roll;
@@ -226,20 +228,21 @@ public class GameManager : MonoBehaviour
                     Globals.battleData.mult++;
                     Globals.battleData.isAttackerRolling = true;
                     Debug.Log( "These rolls were equal...the stakes rise!  Damage is now " + Globals.battleData.mult + "x!" );
+                    DiceRoll.owner = Globals.battleData.attacker;
                 } else {
                     // a player takes damage
                     int damageDealt = Mathf.Abs(Globals.battleData.attackerRoll - Globals.battleData.defenderRoll) * Globals.battleData.mult;
                     PlayerAttacksPlayer(Globals.battleData.Winner, Globals.battleData.Loser, damageDealt);
                     Debug.Log( $"Battle concluded, {Globals.battleData.Loser} should have taken {damageDealt} damage. Continue with turn..." );
 
-                    Globals.battleData = null;
                     // If the current player died, transition to the next player
                     if (!playerListSO.list[0].isAlive) {
                         NextTurn();
-                    }
-                    else {
+                    } else {
+                        DiceRoll.owner = Globals.battleData.attacker;
                         currentState = State.ChoosingGate;
                     }
+                    Globals.battleData = null;
                 }
             }
         }
@@ -267,6 +270,8 @@ public class GameManager : MonoBehaviour
             players.RemoveAt(0);
         } 
         while (!players[0].isAlive); // TODO: This will loop infinitely if all players are dead
+
+        DiceRoll.owner = players[ 0 ];
 
         cardQueue.RepositionCards();
 
