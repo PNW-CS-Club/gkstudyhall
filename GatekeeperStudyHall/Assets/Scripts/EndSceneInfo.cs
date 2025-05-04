@@ -7,6 +7,7 @@ public class EndSceneInfo : MonoBehaviour
 {
 
     public GameObject EndStatDisplay;
+    public GameObject WinnerTextDisplay;
     List<GameObject> displayList;
     [SerializeField] PlayerListSO playerListSO;
     List<PlayerSO> playerList; // refers to list in playerListSO
@@ -22,14 +23,20 @@ public class EndSceneInfo : MonoBehaviour
 
         Debug.Log($"{Globals.winningPlayer} won the game!");      
 
-        //set starting offset to middle-left of screen
-        offset = new Vector3(-Screen.width/4f,  -250f, 0f); // (player display dimensions are (300x500) and pivot is lover-left corner (0,0) ) 
+        // Set starting offset to middle-left of screen
+        offset = new Vector3(-Screen.width/3f,  -250f, 0f); // (player display dimensions are (300x500) and pivot is lover-left corner (0,0) ) 
 
-        // move the winning player to the front of the list
+        // Move the winning player to the front of the list
         playerList.Remove(Globals.winningPlayer);
         playerList.Insert(0, Globals.winningPlayer);
 
-        //create all of the stat displays we need
+        // Announce the winner of the game
+        GameObject newTextObject = Instantiate(WinnerTextDisplay,transform);
+        newTextObject.transform.localPosition = new Vector3(0,Screen.height/3f,0f);
+        TMP_Text winnerText = newTextObject.GetComponent<TMP_Text>();
+        winnerText.text = Globals.winningPlayer.username + " Is The Winner!";
+
+        // Create all of the stat displays we need
         for(int i = 0; i < playerList.Count; i++){
             GameObject newStatDisplay = Instantiate(EndStatDisplay,transform);
             displayList.Add(newStatDisplay);
