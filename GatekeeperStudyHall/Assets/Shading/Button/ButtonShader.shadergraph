@@ -72,10 +72,17 @@
         },
         {
             "m_Id": "81a839e40fc641769f2cf32e5e0ace47"
+        },
+        {
+            "m_Id": "981da0b937e7412bbacc67cf183c6f8c"
         }
     ],
     "m_GroupDatas": [],
-    "m_StickyNoteDatas": [],
+    "m_StickyNoteDatas": [
+        {
+            "m_Id": "12c2f74efc944fbcb78f1ec5a282f1fd"
+        }
+    ],
     "m_Edges": [
         {
             "m_OutputSlot": {
@@ -481,6 +488,38 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "SurfaceDescription.Alpha"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "12c2f74efc944fbcb78f1ec5a282f1fd",
+    "m_Title": "Old Orange Color",
+    "m_Content": "old",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": 267.20001220703127,
+        "y": -873.5999755859375,
+        "width": 193.5999755859375,
+        "height": 100.0
+    },
+    "m_Group": {
+        "m_Id": ""
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.GradientMaterialSlot",
+    "m_ObjectId": "12d3f31109274a19b5afa4bee9393c26",
+    "m_Id": 0,
+    "m_DisplayName": "Out",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3
 }
 
 {
@@ -1595,6 +1634,85 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.GradientNode",
+    "m_ObjectId": "981da0b937e7412bbacc67cf183c6f8c",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Gradient",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 259.20001220703127,
+            "y": -817.5999755859375,
+            "width": 208.0,
+            "height": 103.199951171875
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "12d3f31109274a19b5afa4bee9393c26"
+        }
+    ],
+    "synonyms": [
+        "ramp"
+    ],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Value": 0.0,
+    "m_SerializableColorKeys": [
+        {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.1117723360657692
+        },
+        {
+            "x": 0.10943388938903809,
+            "y": 0.03064148873090744,
+            "z": 0.0,
+            "w": 0.1282368153333664
+        },
+        {
+            "x": 0.550000011920929,
+            "y": 0.1565040796995163,
+            "z": 0.0,
+            "w": 0.21568627655506135
+        },
+        {
+            "x": 0.9200000166893005,
+            "y": 0.3820967972278595,
+            "z": 0.037096794694662097,
+            "w": 0.3784390091896057
+        },
+        {
+            "x": 1.0,
+            "y": 0.7194771766662598,
+            "z": 0.545098066329956,
+            "w": 0.6458838582038879
+        }
+    ],
+    "m_SerializableAlphaKeys": [
+        {
+            "x": 1.0,
+            "y": 0.0
+        },
+        {
+            "x": 1.0,
+            "y": 1.0
+        }
+    ],
+    "m_SerializableMode": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.GradientNode",
     "m_ObjectId": "98fcde070e424017b5c3902b6cfe1838",
     "m_Group": {
         "m_Id": ""
@@ -1811,26 +1929,26 @@
             "w": 0.1117723360657692
         },
         {
-            "x": 0.10943388938903809,
-            "y": 0.03064148873090744,
+            "x": 0.0784313753247261,
+            "y": 0.04313725605607033,
             "z": 0.0,
             "w": 0.1282368153333664
         },
         {
-            "x": 0.550000011920929,
-            "y": 0.1565040796995163,
+            "x": 0.2980392277240753,
+            "y": 0.15895426273345948,
             "z": 0.0,
             "w": 0.21568627655506135
         },
         {
-            "x": 0.9200000166893005,
-            "y": 0.3820967972278595,
-            "z": 0.037096794694662097,
+            "x": 0.7215686440467835,
+            "y": 0.45549023151397707,
+            "z": 0.02745099551975727,
             "w": 0.3784390091896057
         },
         {
             "x": 1.0,
-            "y": 0.7194771766662598,
+            "y": 0.8180392384529114,
             "z": 0.545098066329956,
             "w": 0.6458838582038879
         }

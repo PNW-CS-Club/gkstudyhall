@@ -110,7 +110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3836370788147611266, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_fontSize
-      value: 40
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3836370788147611266, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_fontAsset
@@ -134,7 +134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3836370788147611266, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_fontSizeBase
-      value: 40
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3836370788147611266, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_sharedMaterial
@@ -210,11 +210,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 29509d1e502ec104aa17978165ae0a6b, type: 2}
     - target: {fileID: 4337949201142908989, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 54.198475
+      value: 32.519085
       objectReference: {fileID: 0}
     - target: {fileID: 4337949201142908989, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4457299072995920339, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_SizeDelta.x
@@ -230,11 +230,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5342206754122064730, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 54.198475
+      value: 32.519085
       objectReference: {fileID: 0}
     - target: {fileID: 5342206754122064730, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5882237186779866963, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_Material
@@ -246,11 +246,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6899451251882359198, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 391.60306
+      value: 184.96182
       objectReference: {fileID: 0}
     - target: {fileID: 6899451251882359198, guid: 89ab3129eff100645accf4a79a9f1f95, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
