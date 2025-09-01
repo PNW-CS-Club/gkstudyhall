@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class CharSelectManager : MonoBehaviour
     List<CardSO> savedCards;
     
     const int MAX_PLAYERS = 4;
+    [SerializeField] float loadDelay = 0.2f;
     
     void Start() 
     {
@@ -52,6 +54,14 @@ public class CharSelectManager : MonoBehaviour
         startButton.isSelectable = playerList.All(player => player.card != clearCard);
     }
 
+    /// Coroutine that loads the scene with name <c>sceneName</c> after <c>loadDelay</c> seconds.  
+    IEnumerator LoadAfterDelay(string sceneName) {
+        yield return new WaitForSeconds(loadDelay);
+        
+        var _ = SceneManager.LoadSceneAsync(sceneName);
+        yield return null;
+    }
+
     /// Cleans up and starts the match if everyone has selected their character
     public void StartGame()
     {
@@ -72,14 +82,14 @@ public class CharSelectManager : MonoBehaviour
             player.ResetEffects();
         }
         
-        AsyncOperation _ = SceneManager.LoadSceneAsync("GkScene");
+        StartCoroutine(nameof(LoadAfterDelay), "GkScene");
     }
     
     /// Return to the title menu
     public void StartMenu()
     {
         SaveSelectedCards();
-        AsyncOperation _ = SceneManager.LoadSceneAsync("StartScene");
+        StartCoroutine(nameof(LoadAfterDelay), "StartScene");
     }
 
     void SaveSelectedCards()

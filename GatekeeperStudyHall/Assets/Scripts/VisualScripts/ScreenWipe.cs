@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ScreenWipe : MonoBehaviour
 {
+    [FormerlySerializedAs("isExitWipe")] [SerializeField] bool isTransitionOut = false;
+    
     [SerializeField] Vector2 displacement = new(-10f, 0f);
     Vector2 startPos;
     
@@ -14,10 +17,15 @@ public class ScreenWipe : MonoBehaviour
     // Update is called once per frame
     void Start() {
         startPos = transform.position;
+
+        if (isTransitionOut) {
+            startPos -= displacement;
+            transform.position = startPos;
+            StartWipe();
+        }
     }
     
     void Update() {
-        if (Input.GetMouseButtonDown(0)) StartWipe();
         if (doWipe) {
             timer += Time.deltaTime;
 
