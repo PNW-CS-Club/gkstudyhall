@@ -12,7 +12,7 @@ public class PlayerSO : ScriptableObject
     // These are regular fields so that we can inspect them in the editor.
     // Using a boolean for the stockade because it doesn't seem like we'll use the multiple stockade rule.
     
-    public string username;
+    public string username; // This should be unique for each player
     public CardSO card;
     public bool hasStockade;
     
