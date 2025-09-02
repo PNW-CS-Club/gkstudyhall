@@ -21,10 +21,10 @@ public class EndSceneInfo : MonoBehaviour
         displayList = new();
         Globals.sessionMatchesPlayed++;
 
-        Debug.Log($"{Globals.winningPlayer} won the game!");      
+        Debug.Log($"{Globals.winningPlayer} Wins!");      
 
         // Set starting offset to middle-left of screen
-        offset = new Vector3(-Screen.width/3f,  -250f, 0f); // (player display dimensions are (300x500) and pivot is lover-left corner (0,0) ) 
+        offset = new Vector3(-Screen.width/3f,  -250f, 0f); // (player display dimensions are (300x500) and pivot is lower-left corner (0,0) ) 
 
         // Move the winning player to the front of the list
         playerList.Remove(Globals.winningPlayer);
@@ -34,7 +34,7 @@ public class EndSceneInfo : MonoBehaviour
         GameObject newTextObject = Instantiate(WinnerTextDisplay,transform);
         newTextObject.transform.localPosition = new Vector3(0,Screen.height/3f,0f);
         TMP_Text winnerText = newTextObject.GetComponent<TMP_Text>();
-        winnerText.text = Globals.winningPlayer.username + " Is The Winner!";
+        winnerText.text = Globals.winningPlayer.username + " Wins!";
 
         // Create all of the stat displays we need
         for(int i = 0; i < playerList.Count; i++){
@@ -67,43 +67,7 @@ public class EndSceneInfo : MonoBehaviour
 
     }
 
-    void Awake(){
-        
-
-        // initialize the cards and displays
-        /*
-        for(int i = 0; i < playerList.Count; i++){
-            GameObject newCard = Instantiate(cardPrefab, transform);
-            cardObjectList.Add(newCard);
-
-            // look at CardQueue.cs for example
-            // TODO: make a statDisplay prefab
-
-        }
-        */
-        /*
-        // set the displays
-        for(int i = 0; i < playerList.Count; i++){
-            Transform cardTransform = cardObjectList[i].transform;
-            CardDisplay cardDisplay = cardTransform.GetComponent<CardDisplay>();
-            cardTransform.localPosition = offset;
-            cardDisplay.ChangeCardData(playerList[i].card);
-            cardDisplay.player = playerList[i];
-
-            offset.x += 300;
-        }
-        */
-        /*
-        statDisplay1.GetComponent<TMP_Text>().text = 
-            $"Total Damage Dealt to Other Players: {Globals.winningPlayer.totalDamageToOtherPlayers}\n" +
-            $"Total Damage Dealt to Gates: {Globals.winningPlayer.totalDamageToGates}\n" +
-            $"Total Damage Dealt to Gatekeeper: {Globals.winningPlayer.totalDamageToGatekeeper}\n" +
-            $"Total Amount Healed: {Globals.winningPlayer.totalAmountHealed}\n" +
-            $"Total Damage Taken: {Globals.winningPlayer.totalDamageTaken}\n" +
-            $"Total Stockade Collected: {Globals.winningPlayer.totalStockade}\n" +
-            $"Battles Started: {Globals.winningPlayer.battlesStarted}\n";
-        */
-    }
+    void Awake(){}
 
     // Update is called once per frame
     void Update() {}

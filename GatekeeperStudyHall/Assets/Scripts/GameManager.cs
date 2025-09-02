@@ -69,8 +69,8 @@ public class GameManager : MonoBehaviour
                 }
             }
             
-            // Transition to End Scene
-            AsyncOperation _ = SceneManager.LoadSceneAsync("EndScene");
+            // Transition to ResultScene
+            AsyncOperation _ = SceneManager.LoadSceneAsync("ResultScene");
         }
     }
 
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         {
             Globals.winningPlayer = attacker;
             Globals.winningPlayerUsername = attacker.username;
-            SceneManager.LoadScene("EndScene");
+            SceneManager.LoadScene("ResultScene");
         }
     }
 
