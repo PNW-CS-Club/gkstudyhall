@@ -482,8 +482,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280332768
-  m_fontColor: {r: 0.8792453, g: 0.6935808, b: 0.12442138, a: 1}
+    rgba: 4280328416
+  m_fontColor: {r: 0.8792453, g: 0.627451, b: 0.12442138, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -668,7 +668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5e0f23b1af8c34aaee0da007015f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.2
+  loadDelay: 0.2
 --- !u!82 &1394940608
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1312,8 +1312,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280332768
-  m_fontColor: {r: 0.8792453, g: 0.6935808, b: 0.12442138, a: 1}
+    rgba: 4280328416
+  m_fontColor: {r: 0.8792453, g: 0.627451, b: 0.12442138, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
