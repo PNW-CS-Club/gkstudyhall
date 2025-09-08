@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: CurrentPlayers
   m_EditorClassIdentifier: 
   list:
-  - {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
   - {fileID: 11400000, guid: cbf5a54e4c1703c4f95eecfcb3285be4, type: 2}
+  - {fileID: 11400000, guid: b5a7460747c7bab41906f3d7a94bc689, type: 2}
+  - {fileID: 11400000, guid: 530b904106ea01c4e91e8e0ef8251d36, type: 2}
