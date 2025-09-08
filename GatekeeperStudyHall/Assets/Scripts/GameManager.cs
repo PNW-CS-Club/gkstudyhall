@@ -64,12 +64,13 @@ public class GameManager : MonoBehaviour
             foreach(PlayerSO player in playerList){
                 if (player.isAlive) {
                     Globals.winningPlayer = player;  
+                    Globals.winningPlayerUsername = player.username;
                     break;
                 }
             }
             
-            // Transition to End Scene
-            AsyncOperation _ = SceneManager.LoadSceneAsync("EndScene");
+            // Transition to ResultScene
+            AsyncOperation _ = SceneManager.LoadSceneAsync("ResultScene");
         }
     }
 
@@ -99,7 +100,8 @@ public class GameManager : MonoBehaviour
         if (centerGate.Health == 0)
         {
             Globals.winningPlayer = attacker;
-            SceneManager.LoadScene("EndScene");
+            Globals.winningPlayerUsername = attacker.username;
+            SceneManager.LoadScene("ResultScene");
         }
     }
 

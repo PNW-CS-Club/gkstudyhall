@@ -46,6 +46,7 @@ public static class Globals
     public static int playersAlive = -1;
 
     public static PlayerSO winningPlayer;
+    public static string winningPlayerUsername;
 
     public static int sessionMatchesPlayed = 0; //to know if is the first game of the session
 
